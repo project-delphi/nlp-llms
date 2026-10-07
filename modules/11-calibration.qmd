@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/11-calibration.html
 title: "{{< var modules.m11.title >}}"
 live:
   - {section: 1, minutes: 3}

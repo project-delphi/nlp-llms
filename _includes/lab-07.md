@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb){.btn-colab}
 
-6 exercises in 4 parts. The notebook budgets 50 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
+6 exercises in 4 parts. The notebook budgets 50 minutes for them; the lab slot is 55 minutes. Each exercise you write is a `# TODO` stub with a folded solution beneath it and a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |

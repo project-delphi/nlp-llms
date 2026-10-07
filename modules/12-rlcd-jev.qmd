@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/12-rlcd-jev.html
 title: "{{< var modules.m12.title >}}"
 live:
   - {section: 1, minutes: 3}

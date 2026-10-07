@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/09-preference-learning.html
 title: "{{< var modules.m09.title >}}"
 live:
   - {section: 1, minutes: 4}

@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/01-text-as-data.html
 title: "{{< var modules.m01.title >}}"
 live:
   - {section: 1, minutes: 5}

@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/04-seq2seq-attention.ipynb){.btn-colab}
 
-5 exercises in 3 parts. The notebook budgets 47 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
+5 exercises in 3 parts. The notebook budgets 47 minutes for them; the lab slot is 50 minutes. Each exercise you write is a `# TODO` stub with a folded solution beneath it and a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |

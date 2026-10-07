@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb){.btn-colab}
 
-6 exercises in 2 parts. The notebook budgets 48 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
+6 exercises in 2 parts. The notebook budgets 48 minutes for them; the lab slot is 55 minutes. Each exercise you write is a `# TODO` stub with a folded solution beneath it and a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -17,6 +17,12 @@
 | **Part B · Reranking and answers** | |
 | Exercise 4 · Rerank the candidates | 9 min |
 | Exercise 5 · Faithfulness | 10 min |
+:::
+
+::: {.challenge}
+### Challenge · Hybrid retrieval with BM25 {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

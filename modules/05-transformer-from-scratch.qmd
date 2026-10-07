@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/05-transformer-from-scratch.html
 title: "{{< var modules.m05.title >}}"
 live:
   - {section: 1, minutes: 5}

@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/04-seq2seq-attention.html
 title: "{{< var modules.m04.title >}}"
 live:
   - {section: 1, minutes: 5}

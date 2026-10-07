@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/02-word-vectors.html
 title: "{{< var modules.m02.title >}}"
 live:
   - {section: 1, minutes: 3}

@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/08-llm-apis.html
 title: "{{< var modules.m08.title >}}"
 live:
   - {section: 1, minutes: 3}

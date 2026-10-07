@@ -803,6 +803,9 @@ def module_block(v: dict, key: str, m: dict) -> str:
     return "\n".join(lines)
 
 
+LAB_PENDING = "## In the lab {#in-the-lab}\n\n[Lab in preparation]{.lab-note}"
+
+
 def lab_block(v: dict, key: str, m: dict) -> str:
     """'In the lab': the notebook's own parts and exercises, with the link that opens it."""
     found = lab_steps.rows(m["slug"])
@@ -818,8 +821,8 @@ def lab_block(v: dict, key: str, m: dict) -> str:
     )
     lead = (
         f"{exercises} exercises in {parts} parts. The notebook budgets {minutes} minutes for"
-        f" them; {budget}. Every exercise is a `# TODO` stub with a folded solution beneath"
-        " it, and ends in a checkpoint that passes or fails."
+        f" them; {budget}. Each exercise you write is a `# TODO` stub with a folded solution"
+        " beneath it and a checkpoint that passes or fails."
     )
     out = [
         "## In the lab {#in-the-lab}",
@@ -1119,10 +1122,13 @@ def main() -> None:
     for key, m in modules_in_order(v):
         write(INCLUDES / f"module-{m['n']:02d}.md", module_block(v, key, m))
         lab = INCLUDES / f"lab-{m['n']:02d}.md"
-        if has_notebook(m) and notebook_exists(m["slug"]) and lab_steps.rows(m["slug"]):
+        if not has_notebook(m):
+            # No lab at all (pre-work): the page never includes the file.
+            lab.unlink(missing_ok=True)
+        elif notebook_exists(m["slug"]) and lab_steps.rows(m["slug"]):
             write(lab, lab_block(v, key, m))
         else:
-            lab.unlink(missing_ok=True)
+            write(lab, LAB_PENDING)
         briefing = live_plan.read(m["slug"])
         live, pace = INCLUDES / f"live-{m['n']:02d}.md", INCLUDES / f"pace-{m['n']:02d}.md"
         if briefing["front"].get("live"):

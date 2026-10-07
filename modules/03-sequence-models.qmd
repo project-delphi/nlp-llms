@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/03-sequence-models.html
 title: "{{< var modules.m03.title >}}"
 live:
   - {section: 1, minutes: 2}

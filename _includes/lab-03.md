@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/03-sequence-models.ipynb){.btn-colab}
 
-5 exercises in 5 parts. The notebook budgets 37 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
+5 exercises in 5 parts. The notebook budgets 37 minutes for them; the lab slot is 50 minutes. Each exercise you write is a `# TODO` stub with a folded solution beneath it and a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -13,8 +13,6 @@
 | Exercise 1 · An RNN cell by hand | 8 min |
 | Exercise 2 · Loss, perplexity and bits per character | 6 min |
 | Exercise 3 · Vanishing and exploding gradients | 9 min |
-| **Part A · How far back does the gradient reach?** | |
-| **Part B · Gradient clipping** | |
 | **Part B · The LSTM** | |
 | Exercise 4 · The LSTM cell | 6 min |
 | **Part C · Generating text** | |

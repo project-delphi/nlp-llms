@@ -31,11 +31,24 @@ ACCENT = (214, 122, 63)
 RULE = (44, 66, 90)
 
 # The site ships Inter and Source Serif 4 as woff2, which Pillow cannot read; these are
-# the nearest faces installed on macOS. The first that loads wins.
+# the nearest faces installed on macOS, then on Debian/Ubuntu (WSL included). The first
+# that loads wins.
 FACES = {
-    "bold": ["/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/Library/Fonts/Arial Bold.ttf"],
-    "regular": ["/System/Library/Fonts/Supplemental/Arial.ttf", "/Library/Fonts/Arial.ttf"],
+    "bold": [
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/Library/Fonts/Arial Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+    ],
+    "regular": [
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/Library/Fonts/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    ],
 }
+# For the eyebrow: "A FIVE-DAY WORKSHOP", from workshop.days.
+WORDS = {3: "THREE", 4: "FOUR", 5: "FIVE", 6: "SIX", 7: "SEVEN", 10: "TEN"}
 
 
 def font(weight: str, size: int) -> ImageFont.FreeTypeFont:
@@ -43,6 +56,18 @@ def font(weight: str, size: int) -> ImageFont.FreeTypeFont:
         if Path(path).exists():
             return ImageFont.truetype(path, size)
     raise SystemExit(f"no {weight} font found; add one to FACES")
+
+
+def wrap(text: str, face: ImageFont.FreeTypeFont, width: int) -> list[str]:
+    """Greedy word wrap to `width` pixels, so a retitled workshop still fits the card."""
+    lines: list[str] = []
+    for word in text.split():
+        trial = f"{lines[-1]} {word}" if lines else word
+        if lines and face.getbbox(trial)[2] <= width:
+            lines[-1] = trial
+        else:
+            lines.append(word)
+    return lines
 
 
 def facts(v: dict) -> str:
@@ -64,13 +89,20 @@ def main() -> None:
     d.rectangle([0, 0, 10, H], fill=ACCENT)
 
     x = 86
+    span = WORDS.get(w["days"], str(w["days"]))
     d.text(
-        (x, 108), f"{w['org'].upper()}   ·   FIVE-DAY WORKSHOP", font=font("bold", 23), fill=ACCENT
+        (x, 108),
+        f"{w['org'].upper()}   ·   {span}-DAY WORKSHOP",
+        font=font("bold", 23),
+        fill=ACCENT,
     )
 
-    # The title wraps by hand: two lines, broken where the sense breaks.
-    d.text((x, 170), "From Traditional NLP", font=font("bold", 76), fill=INK)
-    d.text((x, 258), "to Modern LLMs", font=font("bold", 76), fill=INK)
+    # The title is workshop.title, wrapped to the card and bottom-aligned on the rule
+    # below it, so a longer title grows upward into the space the eyebrow leaves.
+    title = font("bold", 76)
+    lines = wrap(w["title"], title, W - 2 * x)
+    for i, line in enumerate(lines):
+        d.text((x, 346 - 88 * (len(lines) - i)), line, font=title, fill=INK)
 
     d.text((x, 372), w["subtitle"], font=font("regular", 34), fill=MUTED)
 

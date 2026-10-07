@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/07-finetuning-lora.html
 title: "{{< var modules.m07.title >}}"
 live:
   - {section: 1, minutes: 4}

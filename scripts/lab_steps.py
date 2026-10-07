@@ -23,8 +23,8 @@ NOTEBOOKS = ROOT / "notebooks"
 PART = re.compile(r"^#+\s+Part\s+(\S+)\s+·\s+(.+?)\s*$")
 # `## Exercise 3 · The chat template (6 minutes)`; `## Step 0 · ... (3 minutes)`
 TASK = re.compile(r"^#+\s+(Exercise|Step)\s+(\d+)\s+·\s+(.+?)(?:\s*\((\d+)\s*minutes?\))?\s*$")
-# `## Stretch (optional) · BM25`, and the bare `## Stretch (optional)`
-STRETCH = re.compile(r"^##\s+Stretch\s*\(optional\)(?:\s*·\s*(.+?))?\s*$")
+# `## Stretch (optional) · BM25`, the bare `## Stretch (optional)`, and Lab 13's `#`.
+STRETCH = re.compile(r"^#+\s+Stretch\s*\(optional\)(?:\s*·\s*(.+?))?\s*$")
 
 # `### Stretch A · A verification node`: one of several challenges under the stretch.
 SUBSTRETCH = re.compile(r"^###\s+Stretch\s+([A-Z])\s+·\s+(.+?)\s*$")
@@ -104,12 +104,24 @@ def totals(found: list[dict]) -> tuple[int, int, int]:
     )
 
 
+def _has_tasks(found: list[dict], i: int) -> bool:
+    """Whether the part at `i` has any task of its own before the next part."""
+    for r in found[i + 1 :]:
+        if r["kind"] == "part":
+            return False
+        if r["kind"] == "task":
+            return True
+    return False
+
+
 def table(found: list[dict]) -> str:
     """The core path as a two-column table: a part is a bold row spanning its tasks.
     The challenge is not in it; challenge() states it on its own."""
     lines = ["| Task | Time |", "|---|---|"]
-    for r in found:
+    for i, r in enumerate(found):
         if r["kind"].startswith("challenge"):
+            continue
+        if r["kind"] == "part" and not _has_tasks(found, i):
             continue
         if r["kind"] == "task":
             time = f"{r['minutes']} min" if r["minutes"] else "—"

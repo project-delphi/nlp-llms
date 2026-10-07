@@ -1,5 +1,7 @@
 ---
 title: "Knowledge checks"
+aliases:
+  - /assessments.html
 subtitle: "Entry check and knowledge checks"
 ---
 

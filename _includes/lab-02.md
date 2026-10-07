@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/02-word-vectors.ipynb){.btn-colab}
 
-4 exercises in 2 parts. The notebook budgets 33 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
+4 exercises in 2 parts. The notebook budgets 33 minutes for them; the lab slot is 50 minutes. Each exercise you write is a `# TODO` stub with a folded solution beneath it and a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |

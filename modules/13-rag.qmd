@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/13-rag.html
 title: "{{< var modules.m13.title >}}"
 live:
   - {section: 1, minutes: 3}

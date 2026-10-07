@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/00-coding-agents.html
 title: "{{< var modules.m00.title >}}"
 ---
 

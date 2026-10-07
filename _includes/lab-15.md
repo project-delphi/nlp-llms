@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/15-capstone.ipynb){.btn-colab}
 
-3 exercises in 3 parts. The notebook budgets 7 minutes for them; the rest of the 240 minutes is your own pair work. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
+3 exercises in 3 parts. The notebook budgets 7 minutes for them; the rest of the 240 minutes is your own pair work. Each exercise you write is a `# TODO` stub with a folded solution beneath it and a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -14,7 +14,6 @@
 | Exercise 1 · The verifier's rule | 5 min |
 | **Part B · One change, measured on `dev`** | |
 | Exercise 2 · The hypothesis card (before your first modified run) | — |
-| **Part C · Evaluate and share** | |
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

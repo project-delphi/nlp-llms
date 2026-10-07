@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/06-pretraining-huggingface.html
 title: "{{< var modules.m06.title >}}"
 live:
   - {section: 1, minutes: 3}

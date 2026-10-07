@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/15-capstone.html
 title: "{{< var modules.m15.title >}}"
 ---
 
