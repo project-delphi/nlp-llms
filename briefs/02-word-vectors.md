@@ -1,11 +1,11 @@
 # Lab brief: `notebooks/02-word-vectors.ipynb`
 
-**From:** Academic Director. **To:** Neural Lab Engineer. **Lecture:** `lectures/02-word-vectors.qmd` (equation labels below refer to it).
+**From:** Academic Director. **To:** Neural Lab Engineer. **Briefing:** `modules/02-word-vectors.qmd` (equation labels below refer to it).
 **Status:** the notebook is built and was run locally on CPU (not on Colab). The numbers in the sections below are the original targets and estimates; the measured values and the deviations are in "As built" at the end.
 
 ## Purpose
 
-Participants write the skip-gram negative-sampling (SGNS) loss, train embeddings, inspect them, and then **replace Lab 1's TF-IDF features with averaged embeddings on the same classification split, reporting the same metrics (accuracy and macro-F1 on the test split)**. The lab must show the two rows side by side and report the result whichever way it falls. Do not tune until embeddings win; the lecture tells participants this is an empirical question.
+Participants write the skip-gram negative-sampling (SGNS) loss, train embeddings, inspect them, and then **replace Lab 1's TF-IDF features with averaged embeddings on the same classification split, reporting the same metrics (accuracy and macro-F1 on the test split)**. The lab must show the two rows side by side and report the result whichever way it falls. Do not tune until embeddings win; the briefing tells participants this is an empirical question.
 
 ## Data
 
@@ -16,7 +16,7 @@ Participants write the skip-gram negative-sampling (SGNS) loss, train embeddings
 
 ## Provided (participants do not write)
 
-Setup and seeds; data loading; `make_pairs` (windowing, with frequent-word subsampling); `noise_distribution` (@eq-noise); negative sampler; `SkipGram` module (`E`, `U` as in the lecture's refresher code); both training loops; `analogy` (@eq-analogy); the PCA plot; the TF-IDF + logistic regression baseline, recomputed in a cell so the notebook runs cold without Lab 1's outputs; the results table.
+Setup and seeds; data loading; `make_pairs` (windowing, with frequent-word subsampling); `noise_distribution` (@eq-noise); negative sampler; `SkipGram` module (`E`, `U` as in the briefing's refresher code); both training loops; `analogy` (@eq-analogy); the PCA plot; the TF-IDF + logistic regression baseline, recomputed in a cell so the notebook runs cold without Lab 1's outputs; the results table.
 
 Suggested starting hyperparameters, to be confirmed by measurement: $d = 100$, window half-width $m = 5$, $K = 5$, vocabulary capped near 20,000 by minimum count, large batches (several thousand pairs), Adam.
 
@@ -48,24 +48,24 @@ Target, not measured: under 10 minutes of compute cold on a free Colab T4 for th
 ## Coordination and open questions
 
 1. Lab 1 must expose its split, tokenizer and vocabulary in a form Lab 2 can reuse exactly; Lab 6 reuses the same split and metrics again.
-2. The Exercise 1 function signature above is the one shown in the lecture's refresher code. If it changes, tell the Academic Director so the lecture changes too.
-3. The lecture's equation-to-lab table uses the function names in this brief: `sgns_loss`, `nearest_neighbors`, `average_embeddings`, `FeedForwardClassifier`, `noise_distribution`, `analogy`.
-4. The lecture has a placeholder for a PCA figure to be produced from this lab's trained embeddings; save the plotted words and coordinates.
+2. The Exercise 1 function signature above is the one shown in the briefing's refresher code. If it changes, tell the Academic Director so the briefing changes too.
+3. The briefing's equation-to-lab table uses the function names in this brief: `sgns_loss`, `nearest_neighbors`, `average_embeddings`, `FeedForwardClassifier`, `noise_distribution`, `analogy`.
+4. The briefing has a placeholder for a PCA figure to be produced from this lab's trained embeddings; save the plotted words and coordinates.
 5. If 50 minutes proves too tight in a dry run, cut the analogy step to a demonstration cell first; Exercises 1, 3 and 4 and the results table are the part the module objectives require.
 
 ## As built (Director review, 2026-10-05)
 
-The notebook departs from this brief in these ways. All are accepted; the lecture now matches the notebook.
+The notebook departs from this brief in these ways. All are accepted; the briefing now matches the notebook.
 
 - **Exercise 2:** `nearest_neighbors(query, E, k=10, exclude=(), words=None)`. `query` is a word or a vector, so `analogy` can reuse it; `exclude` and `words` serve the analogy and the toy checkpoint. The scaffold handles the lookup and the excluded set; participants write the cosine, the masking and the top-k.
 - **Analogies:** `analogy(a, b, a2, E)`, provided, built on `nearest_neighbors`.
 - **Exercise 1 checkpoint:** a hand-computed two-pair batch replaces "a reference value on a fixed seeded batch", and a large-score case checks that the loss stays finite. The gradient check covers all three lines of @eq-sgns-grad.
 - **Exercise 2 metric:** the neighbor hit rate is asserted (at least 0.5), not only printed, after the engineer measured 0.72 to 0.83 across seeds.
 - **Exercise 3:** `average_embeddings(token_ids, mask, E)`, with an explicit mask, as specified.
-- **SkipGram:** adds word2vec's initialization, $E \sim \mathcal{U}(-0.5/d, 0.5/d)$ and $U = 0$, so the first loss is exactly $(K + 1)\log 2$; the training cell asserts it. The lecture's refresher code now shows it.
-- **Pair pipeline:** `make_pairs` adds word2vec's dynamic window and keeps windows inside one abstract; subsampling uses $\tau = 10^{-3}$. The lecture's optional box now states both.
+- **SkipGram:** adds word2vec's initialization, $E \sim \mathcal{U}(-0.5/d, 0.5/d)$ and $U = 0$, so the first loss is exactly $(K + 1)\log 2$; the training cell asserts it. The briefing's refresher code now shows it.
+- **Pair pipeline:** `make_pairs` adds word2vec's dynamic window and keeps windows inside one abstract; subsampling uses $\tau = 10^{-3}$. The briefing's optional box now states both.
 - **Hyperparameters as run:** $d = 100$, $m = 5$, $K = 5$, 3 epochs, batch 16,384 pairs, Adam with learning rate $10^{-2}$; classifier hidden size 256, 30 epochs, best epoch chosen on validation macro-F1. The vocabulary is Lab 1's (`min_df = 2`, 12,469 words), not a separate cap near 20,000, so TF-IDF and the embeddings share one vocabulary.
-- **PCA groups:** Vision, Language, Robotics and Numbers (the brief's examples were left over from an earlier dataset). The figure in the lecture is drawn from the run's saved coordinates, `images/02-embedding-pca.csv`, by `scripts/make_figures_02.py`.
+- **PCA groups:** Vision, Language, Robotics and Numbers (the brief's examples were left over from an earlier dataset). The figure in the briefing is drawn from the run's saved coordinates, `images/02-embedding-pca.csv`, by `scripts/make_figures_02.py`.
 
 Measured (`data/baselines.json`, CPU, 2 PyTorch threads on a shared machine): embedding corpus 1,091,692 tokens, 4.31 million pairs per epoch, SGNS training 695 s, loss 4.159 at the first step and 2.342 over the last 50 steps. Neighbor hit rate 0.72, analogy accuracy 0.20 (4 of 20). Test accuracy and macro-F1: TF-IDF + logistic regression 0.884 / 0.884; averaged SGNS + feed-forward 0.867 / 0.867 (0.864 to 0.872 over four runs); stretch, averaged GloVe 0.805 / 0.805, with 92% vocabulary coverage, neighbor hit rate 0.61 and 11 of 19 analogies.
 
@@ -73,6 +73,6 @@ The exercise minutes in the core-path table sum to 50 (4 + 12 + 4 + 7 + 5 + 6 + 
 
 ## Not verified by the Director
 
-- The notebook was not re-executed for this review; it was checked by reading its source against the lecture and `data/baselines.json`.
+- The notebook was not re-executed for this review; it was checked by reading its source against the briefing and `data/baselines.json`.
 - Run time on Colab, on either a CPU or a T4 runtime. SGNS training took 695 s on the shared CPU, so a cold Colab CPU run may exceed the 10-minute target; the T4 time is unknown.
 - The notebook's statement that two principal components keep about a fifth of the variance of the 60 plotted vectors: the saved CSV holds only the coordinates.

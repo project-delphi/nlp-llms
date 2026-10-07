@@ -1,6 +1,6 @@
-"""Every lecture's live plan (front matter `live`, scripts/live_plan.py) covers its
+"""Every briefing's live plan (front matter `live`, scripts/live_plan.py) covers its
 sections, names real activity blocks, holds enough activity time, and fills the module's
-lecture minutes exactly; the generated tables are current."""
+briefing minutes exactly; the generated tables are current."""
 
 import sys
 import tempfile
@@ -15,13 +15,13 @@ import gen_tables as g  # noqa: E402
 import live_plan  # noqa: E402
 
 V = g.load_variables()
-# Modules 1 to 14 have a lecture. Module 0 is pre-work and Module 15 is the capstone.
+# Modules 1 to 14 have a briefing. Module 0 is pre-work and Module 15 is the capstone.
 LECTURED = [(key, m) for key, m in g.modules_in_order(V) if 1 <= m["n"] <= 14]
 MIN_ACTIVITY_MINUTES = 8
 
 
 def lecture_minutes(key: str) -> int:
-    return g.shape(V, key)["lecture"]
+    return g.shape(V, key)["briefing"]
 
 
 class Plans(unittest.TestCase):
@@ -38,15 +38,15 @@ class Plans(unittest.TestCase):
 
     def test_each_lecture_uses_its_demo_in_the_room(self):
         for _key, m in LECTURED:
-            lecture = live_plan.read(m["slug"])
-            demos = [b for b, kind in lecture["blocks"].items() if kind == "demo"]
+            briefing = live_plan.read(m["slug"])
+            demos = [b for b, kind in briefing["blocks"].items() if kind == "demo"]
             planned = {a["block"] for r in live_plan.rows(m["slug"]) for a in r["activities"]}
             with self.subTest(m["slug"]):
                 self.assertTrue(set(demos) & planned or not demos, "the demo is not planned")
 
     def test_the_lecture_includes_its_generated_table(self):
         for _key, m in LECTURED:
-            text = (ROOT / "lectures" / f"{m['slug']}.qmd").read_text(encoding="utf-8")
+            text = (ROOT / "modules" / f"{m['slug']}.qmd").read_text(encoding="utf-8")
             with self.subTest(m["slug"]):
                 self.assertIn(f"{{{{< include /_includes/live-{m['n']:02d}.md >}}}}", text)
                 self.assertNotIn("\n## Timing\n", text)
@@ -71,11 +71,11 @@ live:
 """
 
     def page(self, text: str):
-        """Run the test body against one temporary lecture, x.qmd."""
+        """Run the test body against one temporary briefing, x.qmd."""
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         (Path(tmp.name) / "x.qmd").write_text(text, encoding="utf-8")
-        patch = mock.patch.object(live_plan, "LECTURES", Path(tmp.name))
+        patch = mock.patch.object(live_plan, "MODULES", Path(tmp.name))
         patch.start()
         self.addCleanup(patch.stop)
 
@@ -113,9 +113,9 @@ live:
             "\n```markdown\n## 3. Inside a fence\n::: {#chk-z .self-check}\n:::\n```\n"
         )
         self.page(self.PAGE + extra)
-        lecture = live_plan.read("x")
-        self.assertEqual(list(lecture["sections"]), [1])
-        self.assertNotIn("chk-z", lecture["blocks"])
+        briefing = live_plan.read("x")
+        self.assertEqual(list(briefing["sections"]), [1])
+        self.assertNotIn("chk-z", briefing["blocks"])
 
     def test_a_malformed_entry_is_reported_not_raised(self):
         bad = [

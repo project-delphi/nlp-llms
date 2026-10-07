@@ -8,7 +8,7 @@ Thank you for helping improve this workshop. Corrections, clearer explanations a
 |---|---|---|
 | A module's title, duration, objectives or summary | `_variables.yml` | Run both generators |
 | The schedule | `_variables.yml` (`schedule`, `days`) | Run `gen_tables.py` |
-| Lecture content | `lectures/NN-slug.qmd` | `quarto preview` |
+| Briefing content | `modules/NN-slug.qmd` | `quarto preview` |
 | A lab | `notebooks/NN-slug.ipynb`, any cell except the first and last | Run `gen_notebooks.py` |
 | Site pages | the `.qmd` file at the repository root | `quarto preview` |
 
@@ -59,7 +59,7 @@ Work on a branch and open a pull request against `main`.
 
 ## Style
 
-American English. Plain, direct sentences. Define a term the first time it appears. Every equation in a lecture should map to a named step in its lab.
+American English. Plain, direct sentences. Define a term the first time it appears. Every equation in a briefing should map to a named step in its lab.
 
 ## License
 

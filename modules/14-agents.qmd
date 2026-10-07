@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/14-agents.html
 title: "{{< var modules.m14.title >}}"
 live:
   - {section: 1, minutes: 5}
@@ -18,11 +20,13 @@ live:
 [Module 13](13-rag.qmd) built a fixed pipeline: retrieve, rerank, generate. It cannot branch, it cannot act on the world, and it cannot stop to ask a person. [Module 8](08-llm-apis.qmd)'s tool loop can act, but nothing stands between the model's choice of a tool and the tool running. This module answers one question: how do we let a language model choose steps while the program decides which of those choices are carried out?
 :::
 
-## Live plan
+{{< include /_includes/lab-14.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-14.md >}}
 
-Section 9 and the harness material of section 1 were added on 2026-10-06. To keep the 45 minutes of exposition, the detail of sections 1, 3, 5, 6, 7 and 9 sits in collapsed callouts, among them the ARC-AGI worked example, escalation and the hand-off, and the rules for subagents and context. These timings were checked on paper against the other lectures (words per budgeted minute), not yet aloud. If the clock slips, give section 9 as reading instead of talking through it: the core lab does not depend on it, only the stretch does, and the [pace sheet](../instructor-pace.md) says when.
+Section 9 and the harness material of section 1 were added on 2026-10-06. To keep the 45 minutes of exposition, the detail of sections 1, 3, 5, 6, 7 and 9 sits in collapsed callouts, among them the ARC-AGI worked example, escalation and the hand-off, and the rules for subagents and context. These timings were checked on paper against the other briefings (words per budgeted minute), not yet aloud. If the clock slips, give section 9 as reading instead of talking through it: the core lab does not depend on it, only the stretch does, and the [pace sheet](../instructor-pace.md) says when.
 
 ::: {.callout-important appearance="simple"}
 **Frameworks change; the graph does not.** The LangGraph and LangChain behavior on this page was checked on 2026-10-05 against the installed source of the versions the lab pins: `langgraph==1.2.12` (with `langgraph-checkpoint` 4.2.0), `langchain-core==1.6.6` and `langchain-typesafe==0.0.1a3`, and by running small graphs offline. The LangChain documentation site could not be reached from the build environment, so nothing here was checked against it. The ideas will outlast the syntax: an explicit state, nodes that update it, edges that read it, a checkpoint after every step, and a pause that waits for a person.
@@ -62,7 +66,7 @@ New in this module:
 
 ## 1. What the Module 8 loop cannot do
 
-**Objective for this section:** name the four things a tool loop needs before it can be trusted with an action.
+**In this section:** name the four things a tool loop needs before it can be trusted with an action.
 
 In Module 8 you wrote the tool loop by hand: call the model, run the tools it requests, append the results, repeat until it answers or reaches $K_{\max}$. Module 8 ended its tools section with "every agent framework is this loop with state added." This module adds the state, and three things that follow from having it.
 
@@ -77,7 +81,7 @@ An **agent**, in this module, is a program in which a language model chooses som
 
 **The harness.** The program around the model has a name: the **harness**. A model on its own maps a context to a reply. An agent is a model plus a harness (Trivedy, 2026a), and Anthropic's engineers describe the same split as "the combination of an AI model and the software scaffolding around it" (Schluntz, 2025). The harness is all the code and configuration that is not the model. It runs the loop and decides five things: what the model sees at each step (the context), what it may do (the tools, and the checks and permissions between a requested action and the world), what is remembered (the saved state), how the work is checked, and when the run stops. Claude Code, Codex and Gemini CLI, the coding agents of [Module 0](00-coding-agents.qmd), are harnesses that their makers ship around their own models. Module 8's tool loop was the smallest harness that works; the four gaps above are what it lacks.
 
-The rest of the lecture builds a harness in four layers: ReAct for the model's part (section 2), tools (section 3), an explicit graph for the program's part (sections 4 and 5), and a calibrated decision model where the program must decide (section 7). Section 9 steps back to the design choices.
+The rest of the briefing builds a harness in four layers: ReAct for the model's part (section 2), tools (section 3), an explicit graph for the program's part (sections 4 and 5), and a calibrated decision model where the program must decide (section 7). Section 9 steps back to the design choices.
 
 ::: {.callout-tip collapse="true" title="Optional: three meanings of the word harness, and the harness you add"}
 An **agent harness**, this module's sense, runs a model in a loop and acts on its choices. An **evaluation harness**, such as EleutherAI's `lm-evaluation-harness` or the one you built in [Module 8](08-llm-apis.qmd), runs a model or a system over fixed test items and scores it. A **test harness**, in software testing, is the stubs and drivers that run code under test; the lab's checkpoints, which drive the graph with a scripted model, are one. The first runs the system, the second measures it, the third checks its code. An agent harness is usually measured with an evaluation harness, which is where the words collide.
@@ -123,7 +127,7 @@ It needs the message list so far (the model's context), the pending `send_email`
 
 ## 2. ReAct: reasoning and acting in one loop
 
-**Objective for this section:** state the ReAct pattern and say what it adds to chain-of-thought prompting and to plain tool use.
+**In this section:** state the ReAct pattern and say what it adds to chain-of-thought prompting and to plain tool use.
 
 Yao et al. (2023) compared three ways to use a language model on tasks that need outside information. **Reasoning only** (chain-of-thought) lets the model think in text before it answers, but it can only use what it already knows, so it invents facts when it lacks them. **Acting only** lets it call tools, such as a Wikipedia search, but it does not plan or track what it has learned. **ReAct** interleaves the two: a thought, an action, an observation, another thought.
 
@@ -153,7 +157,7 @@ Today's function-calling APIs are the structured descendant of ReAct's text form
 
 ## 3. Tools: LangChain tools, runnables and tool design
 
-**Objective for this section:** say what a LangChain tool and a runnable are, and write a tool description and error results that a model can act on.
+**In this section:** say what a LangChain tool and a runnable are, and write a tool description and error results that a model can act on.
 
 **A tool** is a function with a name, a description and a schema for its arguments: exactly Module 8's `Tool(name, description, args, fn)`. LangChain's `@tool` decorator builds one from a typed Python function. The function's name becomes the tool's name, its docstring the description, and its type hints a Pydantic schema:
 
@@ -214,7 +218,7 @@ The model writes the argument, but the model's context contains text you did not
 
 ## 4. LangGraph: state, nodes, edges, conditional routing
 
-**Objective for this section:** describe an agent as a graph over an explicit state, and read a graph from its state table.
+**In this section:** describe an agent as a graph over an explicit state, and read a graph from its state table.
 
 **The model.** A LangGraph program is a directed graph. The **state** $s$ is a typed dictionary that every node can read. A **node** $v$ is a function $f_v$ that reads the state and returns an update: a dictionary with some of the state's fields. An **edge** says which node runs next; a **conditional edge** is a function of the state that names the next node. One step of the graph is
 
@@ -317,7 +321,7 @@ graph = g.compile(checkpointer=InMemorySaver())
 
 ## 5. Checkpoints, memory, interrupts and replay
 
-**Objective for this section:** explain how a graph pauses for a person and resumes, and how a saved run is inspected and replayed.
+**In this section:** explain how a graph pauses for a person and resumes, and how a saved run is inspected and replayed.
 
 **Checkpoints.** Compiled with a **checkpointer**, the graph saves a snapshot of the state after every step (the lab uses `InMemorySaver`, which keeps them in memory; databases are available for production). Snapshots are grouped by a **thread**, named in the call's configuration:
 
@@ -371,7 +375,7 @@ Run all on Colab, and the CI run of every notebook, must finish without a person
 
 ## 6. Where agents fail
 
-**Objective for this section:** name four failure modes of a tool-using agent, the defense for each, and why prompt injection has no complete defense inside the model.
+**In this section:** name four failure modes of a tool-using agent, the defense for each, and why prompt injection has no complete defense inside the model.
 
 | Failure | What it looks like | Defense in the graph |
 |---|---|---|
@@ -417,7 +421,7 @@ A asks for an email to an address that is not on the registration record. Rule P
 
 ## 7. A decision model in the control loop: route, guard, verify
 
-**Objective for this section:** place a calibrated decision model at the router and the guard, and set each threshold from that role's costs.
+**In this section:** place a calibrated decision model at the router and the guard, and set each threshold from that role's costs.
 
 Module 12, section 4, named three roles for a decision model in an LLM system. Here they become nodes.
 
@@ -557,7 +561,7 @@ Only (c). (a) Anger is not complexity: a parking question is a `retrieve` route,
 
 ## 8. Measuring an agent
 
-**Objective for this section:** define the three numbers the lab reports, each with its denominator.
+**In this section:** define the three numbers the lab reports, each with its denominator.
 
 An agent is a system; evaluate its parts on labelled items, then the whole on a few end-to-end runs. All three numbers come from the decision set, whose labels follow from the written policy.
 
@@ -609,7 +613,7 @@ Two cautions. The guard set is small (about 90 test items), so the standard erro
 
 ## 9. Designing the harness: patterns, subagents and context
 
-**Objective for this section:** choose the simplest harness that does the job, say what a subagent sees and returns, and name three ways to keep an agent's context small.
+**In this section:** choose the simplest harness that does the job, say what a subagent sees and returns, and name three ways to keep an agent's context small.
 
 **How much should the model choose?** Section 1 split an agent into a model and a harness. Where the line runs, which steps the model chooses and which the code fixes, is the main design decision. Two widely read sources frame it. Anthropic's engineers distinguish **workflows**, "systems where LLMs and tools are orchestrated through predefined code paths", from **agents**, systems where LLMs "dynamically direct their own processes and tool usage" (Schluntz and Zhang, 2024). Andrew Ng prefers an adjective to the noun: "there are different degrees to which systems can be agentic" (Ng, 2024c). Both describe a short list of patterns, and each has already appeared in this workshop.
 
@@ -670,9 +674,9 @@ In 2024 Ng rated reflection and tool use as working "fairly reliably" and planni
 :::
 
 ::: {.callout-tip collapse="true" title="Optional: the same harness in Claude's Agent SDK, and tools over MCP"}
-Anthropic ships the harness inside Claude Code as a library, the **Claude Agent SDK**: "the same tools, agent loop, and context management that power Claude Code". Each idea of this lecture has a counterpart there. Checked on 2026-10-06 against the SDK documentation (code.claude.com, the agent-loop, hooks, subagents and sessions pages) and the Messages API page on stop reasons; not run.
+Anthropic ships the harness inside Claude Code as a library, the **Claude Agent SDK**: "the same tools, agent loop, and context management that power Claude Code". Each idea of this briefing has a counterpart there. Checked on 2026-10-06 against the SDK documentation (code.claude.com, the agent-loop, hooks, subagents and sessions pages) and the Messages API page on stop reasons; not run.
 
-| This lecture | Claude Agent SDK and Messages API |
+| This briefing | Claude Agent SDK and Messages API |
 |---|---|
 | a run ends on a final answer; $K_{\max}$ is a guard (section 6) | the reply's `stop_reason`: `tool_use` continues the loop and `end_turn` ends it; `max_tokens`, `stop_sequence`, `pause_turn`, `refusal` and `model_context_window_exceeded` each need their own handling |
 | the guard in front of `send_email` (sections 4 and 7) | a `PreToolUse` hook, which can answer a pending call with `allow`, `deny`, `ask` or `defer`, or rewrite its input |
@@ -712,7 +716,7 @@ The summary and the misconceptions also cover the optional callouts; a point mar
 - Report route accuracy, unsafe-action rate and injection success rate with their denominators (@eq-route-acc, @eq-uar, @eq-isr), and measure how far injected text moves the guard (@eq-shift).
 - Design the harness from the simplest pattern that works (a chain, routing, parallel calls, a checker) and let the model plan only where the path cannot be written in advance. The same model can score very differently in different harnesses, at very different costs. Subagents see only their task description, return summaries and cost several times the tokens of one agent. Keep the context small: trim tool results, keep facts in typed state, compact or isolate. (*Optional:* their failures come back as results, and the coordinator checks coverage.)
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"An agent framework makes the model more capable", or its opposite, "the harness is just plumbing".** The model's weights are the same in any harness. What the system can do is not: the same model scores very differently in different harnesses (section 1), because the harness decides what the model sees, what it may try and how its work is checked. Reliability comes from the harness too.
 - **"The model's stated reason explains its tool call."** It is more generated text. Log it, read it, and do not act on it.
@@ -731,11 +735,11 @@ The summary and the misconceptions also cover the optional callouts; a point mar
 - **"Asking the model to check its own work makes it reliable."** With nothing new to go on, self-correction often fails to help. A check that runs a test, reads a source or asks a separate model is what pays. *(optional)*
 - **"The local decider's numbers tell us about Jev."** They measure our toy model or a small open model. Only the keyed path measures Jev, and only on this synthetic domain.
 
-## What Module 15 picks up
+## Next steps
 
 You can now build an agent as an explicit graph, pause it for a person, replay it, and put a decision model at its router and its guard with thresholds from costs. [Module 15](15-capstone.qmd) combines this graph with the retrieval of [Module 13](13-rag.qmd) into a research assistant over the workshop's reading list, adds the verify step as part of the core system, and asks you to improve one component and report accuracy, abstention and cost against a fixed evaluation set.
 
-## Readings
+## Further reading
 
 1. Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K. and Cao, Y. (2023). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629). *ICLR*. Sections 1 to 3: the pattern, its notation and the comparison with reasoning-only and acting-only prompting. *Title, authors, venue and summary checked by web search on 2026-10-05; the notation in section 2 of this page follows the paper as recalled, not re-read.*
 2. LangGraph documentation, the pages on persistence and interrupts (docs.langchain.com, "LangGraph"). *Not read by the workshop authors: the build environment could not reach the documentation site. The behavior on this page was checked against the `langgraph` 1.2.12 source and by running small graphs.* Read the current pages before teaching.

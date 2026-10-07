@@ -158,7 +158,7 @@ def quote_errors(items: list[dict], corpus: dict[str, str]) -> list[str]:
 
 
 def spec_errors(items: list[dict], corpus: dict[str, str]) -> list[str]:
-    """Split sizes, kind shares (within one item), key_facts share, lecture coverage."""
+    """Split sizes, kind shares (within one item), key_facts share, briefing coverage."""
     errors = []
     for split, n in SPLITS.items():
         its = [it for it in items if it["split"] == split]

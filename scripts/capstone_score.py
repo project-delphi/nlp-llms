@@ -4,12 +4,12 @@ The block between the BEGIN and END markers below is restated verbatim in that n
 tests/test_capstone_score.py fails if the two differ. The notebook writes `scoring_hash()` into
 every submission; scripts/collect_capstone.py recomputes it from this file and refuses to compare
 a submission whose hash differs. Specification: briefs/15-capstone.md, section (e); equations from
-lecture 15 (eq-cap-acc, eq-cap-abstain, eq-cap-unsupported, eq-cap-cost, eq-sign-test).
+Module 15 (eq-cap-acc, eq-cap-abstain, eq-cap-unsupported, eq-cap-cost, eq-sign-test).
 
 Standard library only, so the CI test job (PyYAML and nbformat only) can import it.
 
 The block reads three names defined outside it, here and in the notebook: ABSTAIN (Lab 13's
-abstention sentence), LOSS (lecture eq-cap-cost) and REFERENCE_JUDGE (the notebook's setup sets
+abstention sentence), LOSS (briefing eq-cap-cost) and REFERENCE_JUDGE (the notebook's setup sets
 it to the NLI judge, or to the stub judge offline); and the standard-library modules below.
 """
 
@@ -22,7 +22,7 @@ import statistics
 import unicodedata
 
 ABSTAIN = "I cannot answer from the provided sources."  # Lab 13's abstention sentence
-LOSS = dict(wrong=5, abstain=1)  # lecture eq-cap-cost; fixed for every pair
+LOSS = dict(wrong=5, abstain=1)  # briefing eq-cap-cost; fixed for every pair
 REFERENCE_JUDGE = None  # the notebook sets it; here, pass judge= explicitly
 
 # ---- BEGIN SCORING (restated verbatim in notebooks/15-capstone.ipynb) ----
@@ -35,7 +35,7 @@ def is_abstention(answer):
 
 
 def split_claims(answer):
-    """The answer's sentences, citations removed (lecture section 9: one sentence is one claim)."""
+    """The answer's sentences, citations removed (briefing section 9: one sentence is one claim)."""
     if is_abstention(answer):
         return []
     text = " ".join(CITATION.sub("", answer).split())

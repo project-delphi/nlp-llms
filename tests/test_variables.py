@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import gen_tables as g  # noqa: E402  (units, placements, minutes_of)
 
 V = yaml.safe_load((ROOT / "_variables.yml").read_text(encoding="utf-8"))
-MODULE_FIELDS = {"n", "slug", "day", "minutes", "title", "summary", "objectives", "stack"}
+MODULE_FIELDS = {"n", "slug", "day", "level", "minutes", "title", "summary", "objectives", "stack"}
 
 
 def slot_key(slot) -> str:
@@ -34,6 +34,10 @@ class Modules(unittest.TestCase):
             self.assertEqual(MODULE_FIELDS - set(m), set(), key)
             self.assertTrue(m["objectives"], key)
 
+    def test_level_is_on_the_published_scale(self):
+        for key, m in V["modules"].items():
+            self.assertIn(m["level"], V["levels"], key)
+
     def test_keys_numbers_and_slugs_agree(self):
         for key, m in V["modules"].items():
             self.assertEqual(key, f"m{m['n']:02d}")
@@ -44,9 +48,9 @@ class Modules(unittest.TestCase):
         numbers = sorted(m["n"] for m in V["modules"].values())
         self.assertEqual(numbers, list(range(0, len(numbers))))
 
-    def test_every_module_has_a_lecture_page(self):
+    def test_every_module_has_a_module_page(self):
         for m in V["modules"].values():
-            self.assertTrue((ROOT / "lectures" / f"{m['slug']}.qmd").exists(), m["slug"])
+            self.assertTrue((ROOT / "modules" / f"{m['slug']}.qmd").exists(), m["slug"])
 
     def test_notebook_flag(self):
         for key, m in V["modules"].items():
@@ -68,7 +72,7 @@ class Clocks(unittest.TestCase):
             for s in clk["slots"]:
                 self.assertIn(s["kind"], SLOT_KINDS, (name, s))
                 self.assertEqual("label" in s, s["kind"] == "break", (name, s))
-                self.assertIn(s.get("part"), (None, "lecture", "lab"), (name, s))
+                self.assertIn(s.get("part"), (None, "briefing", "lab"), (name, s))
                 if "part" in s:
                     self.assertEqual(s["kind"], "module", (name, s))
 
@@ -81,12 +85,12 @@ class Clocks(unittest.TestCase):
 
     def test_shape(self):
         for name, clk in CLOCKS.items():
-            self.assertEqual(list(clk["shape"])[:2], ["lecture", "lab"], name)
-            self.assertLessEqual(set(clk["shape"]), {"lecture", "lab", "debrief"}, name)
+            self.assertEqual(list(clk["shape"])[:2], ["briefing", "lab"], name)
+            self.assertLessEqual(set(clk["shape"]), {"briefing", "lab", "debrief"}, name)
 
     def test_unit_minutes_equal_the_shape(self):
         # Slot arithmetic per clock, without the generator: a whole module slot is the
-        # shape's total; a lecture part is the lecture; the lab part after it is the rest.
+        # shape's total; a briefing part is the briefing; the lab part after it is the rest.
         for name, clk in CLOCKS.items():
             total = sum(clk["shape"].values())
             for s in clk["slots"]:
@@ -95,8 +99,8 @@ class Clocks(unittest.TestCase):
                 length = to_minutes(s["end"]) - to_minutes(s["start"])
                 expected = {
                     None: total,
-                    "lecture": clk["shape"]["lecture"],
-                    "lab": total - clk["shape"]["lecture"],
+                    "briefing": clk["shape"]["briefing"],
+                    "lab": total - clk["shape"]["briefing"],
                 }[s.get("part")]
                 self.assertEqual(length, expected, (name, s))
 
@@ -197,7 +201,7 @@ class Site(unittest.TestCase):
         left = self.quarto["website"]["navbar"]["left"]
         menu = next(item["menu"] for item in left if item.get("text") == "Days")
         hrefs = [item["href"] for item in menu]
-        self.assertEqual(hrefs[0], "lectures/00-coding-agents.qmd")  # pre-work first
+        self.assertEqual(hrefs[0], "modules/00-coding-agents.qmd")  # pre-work first
         days = g.days_in_order(V)
         self.assertEqual(hrefs[1:], [f"day-{d['n']}.qmd" for d in days])
         texts = [item["text"] for item in menu[1:]]

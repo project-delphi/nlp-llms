@@ -1,7 +1,7 @@
 <!--
 Hand-written, not generated: edit the entry check here. scripts/gen_tables.py owns
 everything under _includes/; this file is kept apart from those on purpose.
-Included by prepare.qmd (the Before Day 1 page) and assessments.md, which both sit at
+Included by prepare.qmd (the Before Day 1 page) and knowledge-checks.md, which both sit at
 the site root, so relative links resolve the same way from either page. The scoring
 rule and the remediation for each area are on prepare.qmd, section "Read your score".
 -->

@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 1 · Foundations](/day-1.qmd){.module-day} [Module 1]{.module-num} [95 minutes (45 lecture, 50 lab)]{.module-time} [09:10 lecture · 09:55 lab]{.module-clock}
+[Day 1 · Foundations](/day-1.qmd){.module-day} [Module 1]{.module-num} [95 minutes (45 briefing, 50 lab)]{.module-time} [09:10 briefing · 09:55 lab]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -14,12 +14,37 @@ Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-b
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   95 minutes (45 briefing, 50 lab)
 
-By the end of this module you can:
+Level
+:   200 · Intermediate
+
+Lab runtime
+:   Google Colab, CPU runtime · about 2 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   the lab always runs its real models
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Tokenize text and justify the choices
 - Build and evaluate an n-gram language model
 - Train a linear text classifier and read its errors
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Setup and environment check](/setup.qmd): the 10-minute notebook that checks your Colab runtime and loads any keys.
+- A Google account. Colab's default CPU runtime is enough.
+- No API keys: the lab runs its own models throughout.
 :::

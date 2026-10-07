@@ -32,14 +32,14 @@ Modern language models did not appear from nowhere. Each step, from counting wor
 ## The five days
 
 ::: {.section-lede}
-Each day answers one question. Modules 1 to 14 are each a short lecture followed by a hands-on lab in Google Colab; the capstone fills most of Day 5 with hands-on pair work.
+Each day answers one question. Modules 1 to 14 are each a short briefing followed by a hands-on lab in Google Colab; the capstone fills most of Day 5 with hands-on pair work.
 :::
 
 {{< include /_includes/days.md >}}
 
 See the full [schedule](schedule.qmd) or go straight to the [notebooks](notebooks.qmd).
 
-Before Day 1, [Module 0 · {{< var modules.m00.title >}}](lectures/00-coding-agents.qmd) is optional pre-work on your own laptop. If you get stuck, an optional drop-in clinic runs on Day 1 from 08:00 to 09:00.
+Before Day 1, [Module 0 · {{< var modules.m00.title >}}](modules/00-coding-agents.qmd) is optional pre-work on your own laptop. If you get stuck, an optional drop-in clinic runs on Day 1 from 08:00 to 09:00.
 
 ## The path {#path}
 
@@ -92,6 +92,6 @@ The labs follow one rhythm:
 
 Each exercise has a solution folded directly beneath it, and each lab ends with an optional stretch section for those who finish early.
 
-## Sources and inspiration
+## Where the material comes from
 
 The approach draws on Stanford [CS224N](https://web.stanford.edu/class/cs224n/), CMU [CS 11-747](https://phontron.com/class/nn4nlp2021/) and MIT [6.S191](https://introtodeeplearning.com/). The full reading list is on the [References](references.qmd) page.

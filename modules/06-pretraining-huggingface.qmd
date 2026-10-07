@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/06-pretraining-huggingface.html
 title: "{{< var modules.m06.title >}}"
 live:
   - {section: 1, minutes: 3}
@@ -16,7 +18,9 @@ live:
 **Where we are.** [Module 5](05-transformer-from-scratch.qmd) built a decoder-only transformer and trained it from random parameters on one megabyte of text, one character at a time. The architecture was sound; the data and the token were the limits. This module answers one question: how do we train a transformer once, on far more text and with a better token, so that every later task starts from what it learned?
 :::
 
-## Live plan
+{{< include /_includes/lab-06.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-06.md >}}
 
@@ -693,7 +697,7 @@ Three things changed with scale.
 
 What is still missing. A pretrained causal LM *continues text*. Give it a question and it may answer, or it may continue with another question, because both are plausible continuations. It is not yet an assistant that follows instructions. And fine-tuning as done in Section 7 updates every parameter, which is affordable for 66 million and not for tens of billions. [Module 7](07-finetuning-lora.qmd) takes up both: instruction tuning, and LoRA, which adapts a large model by training a small number of new parameters.
 
-## Equation-to-lab map
+## Equations and where you implement them
 
 | Equation or algorithm | What it is | In Lab 6 |
 |---|---|---|
@@ -721,7 +725,7 @@ What is still missing. A pretrained causal LM *continues text*. Give it a questi
 - Fine-tuning for classification is logistic regression on $h_{\texttt{[CLS]}}$ (@eq-head), trained end to end with a small learning rate for a few epochs.
 - On a topic task with a strong TF-IDF baseline, expect the fine-tuned encoder to match the baseline or gain a little. Measure it.
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"A token is a word."** A token is a subword, and a word is often several. The 4,000-entry BPE of Exercise 2 needs 1.548 tokens per word on the arXiv validation abstracts (measured); the lab measures the pretrained tokenizers on the same texts. Limits and prices are in tokens.
 - **"BPE finds morphemes."** It finds frequent character sequences. Some coincide with stems and suffixes; many do not. Exercise 2 prints examples.
@@ -733,7 +737,7 @@ What is still missing. A pretrained causal LM *continues text*. Give it a questi
 - **"The warning about newly initialized weights means something is broken."** When you load a pretrained body into a classification class, the head has to be new. The message is a bug only if you expected a finished classifier.
 - **"A bigger pretrained model understands; a small one memorizes."** Both minimize the same loss on text. What scale buys is measured by evaluation on tasks, not settled by the word *understand*.
 
-## Readings
+## Further reading
 
 1. Sennrich, R., Haddow, B. and Birch, A. (2016). [Neural Machine Translation of Rare Words with Subword Units](https://aclanthology.org/P16-1162/). *ACL*, 1715–1725. BPE for words. Section 3.2 and Algorithm 1 are the algorithm of Section 2, in 20 lines of Python.
 2. Radford, A., Narasimhan, K., Salimans, T. and Sutskever, I. (2018). [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf). OpenAI technical report. GPT: causal pretraining of a 12-layer decoder, then fine-tuning. Read section 3.

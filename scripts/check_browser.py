@@ -9,7 +9,7 @@ is built for (AGENTS.md, "Target devices"), in the light and the dark theme:
 On every page it checks that the requested theme applied, that the page does not
 scroll sideways, that the navbar has the expected entries, that no script error or
 failed request is logged, that every math element was typeset by KaTeX, and that
-every demo drew without an Observable error. On one lecture per size and theme it
+every demo drew without an Observable error. On one briefing per size and theme it
 checks the keyboard path through an answer: Tab reaches its <summary>, the focus
 ring is visible, Enter opens it and Space closes it.
 
@@ -48,12 +48,12 @@ REPRESENTATIVE = [
     "prepare.html",
     "schedule.html",
     "day-4.html",
-    "lectures/01-text-as-data.html",
-    "lectures/06-pretraining-huggingface.html",
-    "lectures/11-calibration.html",
-    "lectures/12-rlcd-jev.html",
+    "modules/01-text-as-data.html",
+    "modules/06-pretraining-huggingface.html",
+    "modules/11-calibration.html",
+    "modules/12-rlcd-jev.html",
 ]
-KEYBOARD_PAGE = "lectures/01-text-as-data.html"
+KEYBOARD_PAGE = "modules/01-text-as-data.html"
 DEMO_TIMEOUT_MS = 20_000
 
 

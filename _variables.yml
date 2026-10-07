@@ -63,7 +63,7 @@ packages:
   llama_index_retrievers_bm25: "0.8.0"
   langchain_text_splitters: "1.1.3"
 
-# Terminal coding agents (Module 0, lectures/00-coding-agents.qmd). Versions whose
+# Terminal coding agents (Module 0, modules/00-coding-agents.qmd). Versions whose
 # --help output and install docs the page was checked against. The page does not
 # pin them: each installer fetches the latest release. Re-check before each delivery.
 assistants:
@@ -145,11 +145,11 @@ datasets:
     route_options: [retrieve, calculate, send_email, ask_user, escalate]
     seed: 0
     splits: {train: 2000, dev: 100, test: 300}
-  # Built by data/build_lectures_corpus.py from lectures 01-12 and references.qmd at
+  # Built by data/build_lectures_corpus.py from Modules 01-12 and references.qmd at
   # `source_commit` (spec: briefs/13-rag.md, decision (a)). references.qmd is complete
-  # for Modules 1-15 at this commit. Status stays "provisional" because lecture 12's
-  # quotations of TypeSafe's documentation await sign-off and lectures may still change
-  # after their Colab T4 runs and spoken dry runs. Set "final" once lectures 1-12 are frozen, rebuilding first (new
+  # for Modules 1-15 at this commit. Status stays "provisional" because Module 12's
+  # quotations of TypeSafe's documentation await sign-off and briefings may still change
+  # after their Colab T4 runs and spoken dry runs. Set "final" once Modules 1-12 are frozen, rebuilding first (new
   # sha256, bytes, source_commit, characters) if any page changed; questions come after.
   # tests/test_rag_questions.py fails if data/rag_questions_v1.jsonl exists while
   # this status is provisional, and on any evidence quote a rebuild breaks.
@@ -269,22 +269,30 @@ datasets:
     invoices: 18432
     lines: 48953
 
+# The audience level shown in each module's details panel, on the 100 to 400 scale
+# that technical workshops use. Each module names its own `level`.
+levels:
+  100: "Foundational"
+  200: "Intermediate"
+  300: "Advanced"
+  400: "Expert"
+
 # The daily clocks. Each day names its clock (days.dN.clock). A clock's `shape`
-# splits one module unit into lecture, lab and (optionally) debrief minutes, in
+# splits one module unit into briefing, lab and (optionally) debrief minutes, in
 # that order; its `slots` run back to back. Slot kinds:
 #   clinic   optional drop-in help before the day starts; filled by days.dN.clinic
 #   opening  the start of the day; days.dN.opening is its label
 #   module   one module unit; a day's `slots` fill the clock's units in order
 #   break    a break or lunch, with its label
 #   closing  the end of the day; days.dN.closing is its label
-# A `part: lecture` module slot opens a unit that the next `part: lab` slot closes,
-# so one module can span lunch: its lecture before, its lab (and debrief) after.
+# A `part: briefing` module slot opens a unit that the next `part: lab` slot closes,
+# so one module can span lunch: its briefing before, its lab (and debrief) after.
 # modules.mNN.minutes must equal the minutes the clock gives the module
 # (tests/test_variables.py).
 schedule:
   clocks:
     standard:
-      shape: {lecture: 45, lab: 50}
+      shape: {briefing: 45, lab: 50}
       slots:
         - {start: "08:00", end: "09:00", kind: clinic}
         - {start: "09:00", end: "09:10", kind: opening}
@@ -296,12 +304,12 @@ schedule:
         - {start: "15:10", end: "15:25", kind: break, label: "Break"}
         - {start: "15:25", end: "17:00", kind: module}
     long:
-      shape: {lecture: 55, lab: 55, debrief: 10}
+      shape: {briefing: 55, lab: 55, debrief: 10}
       slots:
         - {start: "09:00", end: "09:15", kind: opening}
         - {start: "09:15", end: "11:15", kind: module}
         - {start: "11:15", end: "11:30", kind: break, label: "Break"}
-        - {start: "11:30", end: "12:25", kind: module, part: lecture}
+        - {start: "11:30", end: "12:25", kind: module, part: briefing}
         - {start: "12:25", end: "13:25", kind: break, label: "Lunch"}
         - {start: "13:25", end: "14:30", kind: module, part: lab}
         - {start: "14:30", end: "14:45", kind: break, label: "Break"}
@@ -327,8 +335,8 @@ days:
     title: "Transformers and pretrained models"
     short: "Transformers and pretraining"
     question: "How does one architecture, pretrained at scale, become a general tool?"
-    opening: "Retrieval practice"
-    closing: "Synthesis"
+    opening: "Warm-up"
+    closing: "Wrap-up"
     slots: [m05, m06, m07]
   d3:
     n: 3
@@ -336,8 +344,8 @@ days:
     title: "Using and aligning LLMs"
     short: "Using and aligning LLMs"
     question: "How do we use these models, and what are they trained to want?"
-    opening: "Retrieval practice"
-    closing: "Synthesis"
+    opening: "Warm-up"
+    closing: "Wrap-up"
     slots: [m08, m09, m10]
   d4:
     n: 4
@@ -345,8 +353,8 @@ days:
     title: "Calibration, decisions and retrieval"
     short: "Calibration, decisions, RAG"
     question: "When should a model's answer be trusted, and how do we ground it in sources?"
-    opening: "Retrieval practice"
-    closing: "Synthesis"
+    opening: "Warm-up"
+    closing: "Wrap-up"
     slots: [m11, m12, m13]
   d5:
     n: 5
@@ -354,8 +362,8 @@ days:
     title: "Agents and the capstone"
     short: "Agents and capstone"
     question: "How do we build reliable systems out of these models?"
-    opening: "Retrieval practice"
-    closing: "Synthesis and wrap-up"
+    opening: "Warm-up"
+    closing: "Wrap-up and close"
     slots:
       - m14
       - {module: m15, label: "Capstone: build"}
@@ -411,7 +419,7 @@ readiness:
       modules: [15]
       check: {exists: data/capstone_questions_v1.jsonl}
     lectures-snapshot-final:
-      title: "The lecture snapshot that Labs 13 to 15 quote is frozen (status final)"
+      title: "The briefing snapshot that Labs 13 to 15 quote is frozen (status final)"
       modules: [13, 14, 15]
       check: {var: datasets.lectures.status, equals: final}
     decision-hand-items:
@@ -435,15 +443,15 @@ readiness:
       modules: [11]
       check: {exists: data/lab06_logits.npz}
     typesafe-statements:
-      title: "TypeSafe's own statements about Jev and RLCD, read from its documentation and signed off for lecture 12"
+      title: "TypeSafe's own statements about Jev and RLCD, read from its documentation and signed off for Module 12"
       modules: [12]
-      check: {absent: lectures/12-rlcd-jev.qmd, pattern: "typesafe-unverified"}
+      check: {absent: modules/12-rlcd-jev.qmd, pattern: "typesafe-unverified"}
     module0-laptops:
       title: "Module 0 run end to end on a fresh laptop on macOS, Windows (WSL 2) and Linux"
       modules: [0]
       check: {manual: true, done: false}
-    lecture-dry-runs:
-      title: "Each lecture given aloud once against its clock"
+    briefing-dry-runs:
+      title: "Each briefing given aloud once against its clock"
       modules: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
       check: {manual: true, done: false}
 
@@ -472,6 +480,7 @@ modules:
     n: 0
     slug: 00-coding-agents
     day: 0
+    level: 100
     minutes: 60
     notebook: false
     title: "Coding agents in the terminal"
@@ -482,7 +491,7 @@ modules:
       - "Publish them with GitHub and GitHub Pages"
     stack: [Claude Code, Codex, Gemini CLI, git, GitHub CLI, Python or R, three.js]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: none
       runtime: own-laptop
       estimate_minutes: 90
@@ -495,6 +504,7 @@ modules:
     n: 1
     slug: 01-text-as-data
     day: 1
+    level: 200
     minutes: 95
     title: "Text as data"
     summary: "Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against."
@@ -504,7 +514,7 @@ modules:
       - "Train a linear text classifier and read its errors"
     stack: [NumPy, scikit-learn]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-cpu
       estimate_minutes: 2
@@ -515,6 +525,7 @@ modules:
     n: 2
     slug: 02-word-vectors
     day: 1
+    level: 200
     minutes: 95
     title: "Word vectors and neural networks"
     summary: "From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model."
@@ -524,7 +535,7 @@ modules:
       - "Assemble a feed-forward classifier over averaged embeddings and evaluate it against TF-IDF"
     stack: [PyTorch]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 10
@@ -535,6 +546,7 @@ modules:
     n: 3
     slug: 03-sequence-models
     day: 1
+    level: 200
     minutes: 95
     title: "Sequence models"
     summary: "RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences."
@@ -544,7 +556,7 @@ modules:
       - "Evaluate the LSTM against the n-gram baseline in a like-for-like perplexity comparison"
     stack: [PyTorch]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 10
@@ -555,6 +567,7 @@ modules:
     n: 4
     slug: 04-seq2seq-attention
     day: 1
+    level: 300
     minutes: 95
     title: "Seq2seq and attention"
     summary: "Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix."
@@ -564,7 +577,7 @@ modules:
       - "Implement dot-product and additive attention and read attention maps against the expected alignment"
     stack: [PyTorch]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 10
@@ -575,6 +588,7 @@ modules:
     n: 5
     slug: 05-transformer-from-scratch
     day: 2
+    level: 300
     minutes: 120
     title: "The transformer"
     summary: "Self-attention, multi-head attention and positional encodings, assembled into a small GPT."
@@ -584,7 +598,7 @@ modules:
       - "Train a small GPT with the provided loop and evaluate it against the LSTM"
     stack: [PyTorch]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 10
@@ -595,6 +609,7 @@ modules:
     n: 6
     slug: 06-pretraining-huggingface
     day: 2
+    level: 300
     minutes: 120
     title: "Pretraining and the Hugging Face stack"
     summary: "Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face."
@@ -604,7 +619,7 @@ modules:
       - "Configure a supplied fine-tuning run for an encoder classifier and evaluate it against Labs 1 and 2"
     stack: [Hugging Face, PyTorch]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 7
@@ -616,6 +631,7 @@ modules:
     n: 7
     slug: 07-finetuning-lora
     day: 2
+    level: 300
     minutes: 120
     title: "Fine-tuning and LoRA"
     summary: "Turning a pretrained language model into an instruction follower, efficiently."
@@ -625,7 +641,7 @@ modules:
       - "Choose decoding settings and evaluate generated text"
     stack: [Hugging Face, PEFT, PyTorch]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 7
@@ -636,6 +652,7 @@ modules:
     n: 8
     slug: 08-llm-apis
     day: 3
+    level: 200
     minutes: 120
     title: "LLMs through APIs"
     summary: "OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation."
@@ -645,7 +662,7 @@ modules:
       - "Reason about cost, latency and failure modes"
     stack: [OpenAI, Anthropic, Hugging Face, Pydantic]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-t4
       estimate_minutes: 3
@@ -657,6 +674,7 @@ modules:
     n: 9
     slug: 09-preference-learning
     day: 3
+    level: 300
     minutes: 120
     title: "Reinforcement and preference learning"
     summary: "Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons."
@@ -666,7 +684,7 @@ modules:
       - "Train a reward model from pairwise preferences"
     stack: [PyTorch, Hugging Face]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: written
       runtime: colab-cpu
       estimate_minutes: 10
@@ -678,6 +696,7 @@ modules:
     n: 10
     slug: 10-rlhf
     day: 3
+    level: 400
     minutes: 120
     title: "RLHF"
     summary: "The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways it goes wrong."
@@ -688,7 +707,7 @@ modules:
       - "Name RLHF's failure modes and observe one"
     stack: [PyTorch, Hugging Face]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: written
       runtime: colab-t4
       estimate_minutes: 7
@@ -700,6 +719,7 @@ modules:
     n: 11
     slug: 11-calibration
     day: 4
+    level: 300
     minutes: 120
     title: "Calibration"
     summary: "What a probability should mean, how to measure it, and how to use confidence to decide when to abstain."
@@ -710,7 +730,7 @@ modules:
       - "Use confidence to decide when to abstain"
     stack: [PyTorch, scikit-learn, OpenAI, Anthropic]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: written
       runtime: colab-cpu
       estimate_minutes: 7
@@ -723,6 +743,7 @@ modules:
     n: 12
     slug: 12-rlcd-jev
     day: 4
+    level: 400
     minutes: 120
     title: "Calibrated decisions: RLCD and Jev"
     summary: "Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public."
@@ -732,7 +753,7 @@ modules:
       - "State what is and is not public about RLCD, and evaluate a decision model's answers by their probabilities, not their confidence field"
     stack: [PyTorch, TypeSafe SDK]
     readiness:
-      lecture: reviewed
+      briefing: reviewed
       lab: written
       runtime: colab-cpu
       estimate_minutes: 3
@@ -740,11 +761,12 @@ modules:
       optional_accounts: [TypeSafe, OpenAI, Anthropic]
       cost: "Free without keys. Keyed run: under 5 cents on Jev; the stretch adds under 25 cents on Claude (estimates)"
       fallback: {kind: toy, note: "A small decision model trained in the lab answers in Jev's place. It is labeled 'not Jev', and its numbers say nothing about Jev"}
-      gaps: "TypeSafe's documentation was read on 2026-10-06 and quoted in lecture 12; the quotations await sign-off, and no live Jev call has been made"
+      gaps: "TypeSafe's documentation was read on 2026-10-06 and quoted in Module 12; the quotations await sign-off, and no live Jev call has been made"
   m13:
     n: 13
     slug: 13-rag
     day: 4
+    level: 300
     minutes: 120
     title: "Retrieval-augmented generation"
     summary: "Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately."
@@ -754,7 +776,7 @@ modules:
       - "Evaluate retrieval and answer quality separately"
     stack: [LlamaIndex, LangChain, Jev]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: written
       runtime: colab-t4
       estimate_minutes: 8
@@ -767,6 +789,7 @@ modules:
     n: 14
     slug: 14-agents
     day: 5
+    level: 400
     minutes: 120
     title: "Agents"
     summary: "Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop interrupts and confidence-gated control."
@@ -776,7 +799,7 @@ modules:
       - "Use a calibrated decision model for routing and tool-call approval, with thresholds from costs"
     stack: [LangChain, LangGraph, Jev]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: written
       runtime: colab-t4
       estimate_minutes: 6
@@ -788,6 +811,7 @@ modules:
     n: 15
     slug: 15-capstone
     day: 5
+    level: 400
     minutes: 240
     title: "Capstone"
     summary: "Combine retrieval, an agent graph and calibrated control into one system, evaluate it, and explain the design."
@@ -797,7 +821,7 @@ modules:
       - "Explain the design choices to others"
     stack: [LlamaIndex, LangGraph, Jev, OpenAI, Anthropic]
     readiness:
-      lecture: drafted
+      briefing: drafted
       lab: written
       runtime: colab-t4
       estimate_minutes: 15

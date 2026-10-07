@@ -19,9 +19,9 @@ $nl-on-navy-muted: #c5d3e2 !default;
 $nl-accent: #b3541e !default; // labs, calls to action
 $nl-accent-soft: #fbf1ea !default;
 $nl-on-accent: #ffffff !default;
-$nl-lecture: #2b5d8a !default; // lecture time in the schedule
-$nl-lecture-soft: #eaf1f8 !default;
-$nl-on-lecture: #ffffff !default;
+$nl-briefing: #2b5d8a !default; // briefing time in the schedule
+$nl-briefing-soft: #eaf1f8 !default;
+$nl-on-briefing: #ffffff !default;
 $nl-good: #2f6f4f !default; // self-checks, worked examples
 $nl-good-soft: #edf6f0 !default;
 $nl-code: #8a3b12 !default; // inline code
@@ -302,7 +302,7 @@ div.sourceCode pre.sourceCode {
 }
 
 // Equations: display math gets air and scrolls sideways if it must. KaTeX's
-// default is 1.21em; 1.1em gives the widest lecture equations (and their
+// default is 1.21em; 1.1em gives the widest briefing equations (and their
 // numbers) room in the text column. Check the long ones before raising it.
 .katex {
   font-size: 1.1em;
@@ -388,7 +388,7 @@ blockquote {
   }
 }
 
-// A collapsed callout titled "Optional: ..." sits outside the lecture's 45
+// A collapsed callout titled "Optional: ..." sits outside the briefing's 45
 // minutes. filters/pedagogy.lua adds the class; authors change nothing.
 .callout[data-optional] {
   // !important: Quarto colors the frame and header per callout type.
@@ -410,7 +410,7 @@ blockquote {
     }
 
     .callout-title-container::after {
-      content: "outside the lecture time";
+      content: "outside the briefing time";
       margin-left: 0.7rem;
       padding: 0.05rem 0.5rem;
       border: 1px solid $nl-border;
@@ -591,7 +591,7 @@ blockquote {
   }
 }
 
-// Previous / next module at the foot of a lecture.
+// Previous / next module at the foot of a briefing.
 .page-navigation {
   gap: 1rem;
   margin-top: 3.5rem;
@@ -655,10 +655,10 @@ blockquote {
   font-size: 0.82rem;
 }
 
-// A thin reading-progress line under the navbar on lecture pages. Pure CSS; a
+// A thin reading-progress line under the navbar on module pages. Pure CSS; a
 // browser without scroll-driven animations shows nothing.
 @supports (animation-timeline: scroll()) {
-  body.lecture::before {
+  body.briefing::before {
     content: "";
     position: fixed;
     z-index: 1040;
@@ -682,7 +682,8 @@ blockquote {
 }
 
 // ---------------------------------------------------------------------------
-// Lecture pages: module header and objectives (generated: _includes/module-NN.md)
+// Module pages: the header, details panel, outcomes and prerequisites
+// (generated: _includes/module-NN.md), and the lab's task list (lab-NN.md).
 // ---------------------------------------------------------------------------
 
 .module-header {
@@ -738,7 +739,7 @@ blockquote {
   }
 }
 
-.objectives {
+.module-outcomes {
   margin: 0 0 2rem;
   padding: 1rem 1.25rem 0.85rem;
   border: 1px solid $nl-border;
@@ -782,6 +783,99 @@ blockquote {
     border-left: 2px solid $nl-accent;
     border-bottom: 2px solid $nl-accent;
     transform: rotate(-45deg);
+  }
+}
+
+// The details panel under a module's header (generated: _includes/module-NN.md): a
+// definition list laid out as label/value rows, so duration, level, runtime and cost
+// are all answerable at a glance before the page is read.
+.module-details {
+  margin: -0.9rem 0 1.6rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid $nl-border;
+  border-radius: 9px;
+  background: $nl-raised;
+  font-size: 0.93rem;
+
+  dl {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, max-content) 1fr;
+    gap: 0.35rem 1.25rem;
+    margin: 0;
+  }
+
+  dt {
+    font-family: $font-family-sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $nl-muted;
+    // Align the label with the first line of its value, not the row's top.
+    padding-top: 0.17rem;
+  }
+
+  dd {
+    margin: 0;
+    color: $nl-heading;
+  }
+}
+
+// What a participant needs in place before the module (generated with the header).
+.prerequisites {
+  margin: 0 0 2rem;
+  padding: 0.9rem 1.25rem 0.95rem;
+  border: 1px solid $nl-border;
+  border-left: 4px solid $nl-border-strong;
+  border-radius: 9px;
+  background: $nl-surface;
+
+  h2 {
+    @extend .eyebrow;
+    margin: 0 0 0.45rem;
+    padding: 0;
+    border: 0;
+    font-family: $font-family-sans-serif;
+    color: $nl-muted;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  li + li {
+    margin-top: 0.25rem;
+  }
+}
+
+// The lab's task list (generated: _includes/lab-NN.md), read from the notebook's own
+// part and exercise headings. A part is a bold row; its tasks follow.
+.lab-steps {
+  margin-bottom: 1.4rem;
+
+  table {
+    width: 100%;
+    font-size: 0.93rem;
+  }
+
+  td:last-child {
+    width: 5.5rem;
+    white-space: nowrap;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: $nl-muted;
+  }
+
+  // A part row carries only its bold title; it opens a group, so it gets the rule.
+  td strong {
+    font-family: $headings-font-family;
+    color: $nl-heading;
+  }
+
+  tr:has(td strong) td {
+    padding-top: 0.75rem;
+    border-top: 1px solid $nl-border-strong;
   }
 }
 
@@ -840,13 +934,13 @@ blockquote {
 
 // ::: {.recap}  "Where we are": what earlier modules established.
 .recap {
-  border-left: 4px solid $nl-lecture;
-  background: $nl-lecture-soft;
+  border-left: 4px solid $nl-briefing;
+  background: $nl-briefing-soft;
   font-size: 0.95rem;
 
   &::before {
     content: "Where we are";
-    color: $nl-lecture;
+    color: $nl-briefing;
   }
 }
 
@@ -909,9 +1003,9 @@ blockquote {
   }
 }
 
-// The demo plots' colors. Lectures write `stroke: "var(--demo-blue)"` and so on,
+// The demo plots' colors. Briefings write `stroke: "var(--demo-blue)"` and so on,
 // never a hex value; tests/test_demo_colors.py checks it. The token cells of
-// lecture 6 are colored chips with their own ink, the same in both themes.
+// Module 6 are colored chips with their own ink, the same in both themes.
 :root {
   --demo-ink: #{$nl-demo-ink};
   --demo-blue: #{$nl-demo-blue};
@@ -1052,7 +1146,7 @@ blockquote {
   > p {
     margin: 1.2rem 0 0.35rem;
     padding-left: 0.7rem;
-    border-left: 3px solid $nl-lecture;
+    border-left: 3px solid $nl-briefing;
   }
 
   > ul {
@@ -1215,7 +1309,7 @@ body.wide main.content {
   color: $nl-muted;
 }
 
-.legend-lecture,
+.legend-briefing,
 .legend-lab,
 .legend-debrief,
 .legend-break,
@@ -1231,8 +1325,8 @@ body.wide main.content {
   }
 }
 
-.legend-lecture::before {
-  background: $nl-lecture;
+.legend-briefing::before {
+  background: $nl-briefing;
 }
 
 .legend-lab::before {
@@ -1308,7 +1402,7 @@ body.wide main.content {
     }
   }
 
-  // The bar under a module: lecture, lab and debrief, each as wide as its minutes
+  // The bar under a module: briefing, lab and debrief, each as wide as its minutes
   // (the generator sets flex-grow inline from the clock's shape).
   .slot-split {
     display: flex;
@@ -1321,7 +1415,7 @@ body.wide main.content {
     white-space: nowrap;
   }
 
-  .slot-lecture,
+  .slot-briefing,
   .slot-lab,
   .slot-debrief {
     flex: 1 1 0;
@@ -1339,9 +1433,9 @@ body.wide main.content {
     border-bottom-right-radius: 4px;
   }
 
-  .slot-lecture {
-    background: $nl-lecture;
-    color: $nl-on-lecture;
+  .slot-briefing {
+    background: $nl-briefing;
+    color: $nl-on-briefing;
   }
 
   .slot-lab {
@@ -1770,7 +1864,7 @@ body.landing {
 }
 
 
-// The live plan (scripts/live_plan.py): the lecture's timing table, the blocks used in
+// The live plan (scripts/live_plan.py): the briefing's timing table, the blocks used in
 // the room, and the sections left for reading afterwards.
 .live-plan table {
   font-size: 0.9rem;
@@ -1853,4 +1947,36 @@ section.reference > h2::after {
 
 .discuss::before {
   content: "Discuss";
+}
+
+// The lab's optional challenge (generated: _includes/lab-NN.md), named from the
+// notebook's stretch section. Quieter than a callout: it is work, not a warning.
+.challenge {
+  margin: 1.1rem 0 1.4rem;
+  padding: 0.9rem 1.25rem 1rem;
+  border: 1px dashed $nl-border-strong;
+  border-radius: 9px;
+  background: $nl-surface;
+
+  h3 {
+    margin: 0 0 0.4rem;
+    padding: 0;
+    border: 0;
+    font-size: 1.02rem;
+    color: $nl-accent;
+  }
+
+  p {
+    margin: 0;
+    color: $nl-muted;
+  }
+
+  ul {
+    margin: 0.55rem 0 0;
+    padding-left: 1.1rem;
+  }
+
+  li {
+    color: $nl-heading;
+  }
 }

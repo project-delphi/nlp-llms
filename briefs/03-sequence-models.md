@@ -1,7 +1,7 @@
 # Lab brief: `notebooks/03-sequence-models.ipynb`
 
-**From:** Academic Director. **To:** Neural Lab Engineer. **Lecture:** `lectures/03-sequence-models.qmd`.
-**Status:** built (commit a5c4c84) and reviewed against the lecture (2026-10-05). The brief below is the original; the notebook's departures from it, and the measured values, are under "As built" at the end.
+**From:** Academic Director. **To:** Neural Lab Engineer. **Briefing:** `modules/03-sequence-models.qmd`.
+**Status:** built (commit a5c4c84) and reviewed against the briefing (2026-10-05). The brief below is the original; the notebook's departures from it, and the measured values, are under "As built" at the end.
 
 ## Objectives exercised
 
@@ -21,7 +21,7 @@
 
 Participants write only the functions named below. Data loading, batching, the model classes, both training loops, the n-gram baseline and all plots are provided. Each exercise follows Predict → Run → Explain → Check, as a `# TODO N` stub with a folded solution.
 
-| # | Min | Participant writes | Lecture equation | Checkpoint (what it tests) |
+| # | Min | Participant writes | Briefing equation | Checkpoint (what it tests) |
 |---|---|---|---|---|
 | 1 | 8 | `rnn_cell_step(x_t, h_prev, W, U, b)` | RNN step | `torch.allclose` with `nn.RNNCell` given the same weights (atol 1e-5), output shape `(B, d_h)`. Tests correctness of the recurrence. |
 | 2 | 6 | `lm_loss_and_ppl(logits, targets)` returning mean NLL (nats), PPL, BPC | loss, perplexity | Uniform logits give PPL equal to $|V|$ and loss equal to $\ln|V|$; agrees with `F.cross_entropy`. Tests the metric used in every later comparison. |
@@ -43,8 +43,8 @@ Target: under 10 minutes of compute for Run all with solutions, stretch included
 
 ## Notes for the engineer
 
-- Use the lecture's symbols as variable names (`W`, `U`, `b`, `h_prev`, `c_prev`, `tau`, `kappa`). The count function and the cell state must not share the name `c`: use `counts` for the baseline.
-- `nn.RNNCell` and `nn.LSTMCell` each have two bias vectors (`bias_ih`, `bias_hh`); the lecture has one. In the checkpoints, pass their sum or zero one of them. `nn.LSTMCell` documents its gates in the order input, forget, cell, output (checked against the PyTorch 2.14 documentation); slice `weight_ih` and `weight_hh` in that order, and let the Exercise 4 checkpoint confirm it.
+- Use the briefing's symbols as variable names (`W`, `U`, `b`, `h_prev`, `c_prev`, `tau`, `kappa`). The count function and the cell state must not share the name `c`: use `counts` for the baseline.
+- `nn.RNNCell` and `nn.LSTMCell` each have two bias vectors (`bias_ih`, `bias_hh`); the briefing has one. In the checkpoints, pass their sum or zero one of them. `nn.LSTMCell` documents its gates in the order input, forget, cell, output (checked against the PyTorch 2.14 documentation); slice `weight_ih` and `weight_hh` in that order, and let the Exercise 4 checkpoint confirm it.
 - Set seeds in the setup cell. Sampling checkpoints take an explicit `torch.Generator`.
 - Report measured values for: test PPL and BPC of all four models, the decay factor in Exercise 3A, the tolerance in Exercise 5, and run time per section. Set the assertion thresholds from at least three seeds.
 - If the LSTM does not beat the character trigram within the budget, or if the RNN's gradient-distance curve does not decay visibly, report it to the Academic Director. Do not weaken the comparison or the assertion to make the notebook pass.
@@ -52,12 +52,12 @@ Target: under 10 minutes of compute for Run all with solutions, stretch included
 
 ## As built (Director review, 2026-10-05)
 
-The notebook departs from this brief in these ways. All are accepted; the lecture now matches the notebook.
+The notebook departs from this brief in these ways. All are accepted; the briefing now matches the notebook.
 
 - **Baseline.** Lab 1 already measures character n-grams, so the "may be word-level" concern above did not arise. Lab 3 restates Lab 1's add-$k$ code (vectorized with NumPy), chooses $k$ on validation from Lab 1's grid, and asserts that it reproduces Lab 1's test values in `data/baselines.json` to 1e-4. It adds Lab 1's best order, the 5-gram, beside the bigram and trigram.
 - **RNN.** Trained with the participant's `rnn_cell_step` in a Python loop (`RNNLM`), not with `nn.RNN`. **LSTM.** `nn.LSTM` (`LSTMLM`), forget-gate bias initialized to 1, checked step by step against `lstm_cell_step` before training.
 - **Training.** Each step draws 64 random 128-character chunks from train, each run from $h_0 = 0$. Evaluation reads the split as one stream in 1,000-character chunks with the state carried across, after an unscored warm-up on the 1,000 characters before the split.
-- **Not equal compute.** The RNN trains for 1,000 steps (103,041 parameters) and the LSTM for 2,000 (350,593). The notebook and the lecture both say the RNN–LSTM gap is not measured at equal compute. `QUICK = True` trains each for a quarter of the steps; its numbers are not the baselines.
+- **Not equal compute.** The RNN trains for 1,000 steps (103,041 parameters) and the LSTM for 2,000 (350,593). The notebook and the briefing both say the RNN–LSTM gap is not measured at equal compute. `QUICK = True` trains each for a quarter of the steps; its numbers are not the baselines.
 - **Exercise 3A.** Measured on 64 validation chunks of 200 characters, loss at the last position only. Checkpoint: the norm at distance 1 exceeds the norm at distance 199 by more than 1e4 (in the build runs the ratio was infinite because the gradient underflowed to 0).
 - **Exercise 3B demonstration.** Plain SGD at learning rate 2.0, 150 steps, batch 32, chunk length 64, with and without the participant's `clip_gradients` at $\kappa = 1$, instead of a high learning rate with Adam: Adam's normalized steps hide most of clipping's effect. Asserts that the unclipped run ends above $\ln 65$ and the clipped run at least 1 nat lower.
 - **Exercise 4 follow-up.** The gradient–distance plot is repeated for the LSTM, unrolled with `lstm_cell_step`, with forget-gate statistics printed. Checkpoint: LSTM/RNN gradient ratio at distance 50 above 1e3.
@@ -81,8 +81,8 @@ From the Neural Lab Engineer's report of the same run (not recorded in `data/bas
 
 ## Not verified by the Director
 
-- The notebook was not executed in this review; the numbers above are the engineer's. The gradient, forget-gate and clipping numbers are not in `data/baselines.json`, so no test checks them against the lecture.
+- The notebook was not executed in this review; the numbers above are the engineer's. The gradient, forget-gate and clipping numbers are not in `data/baselines.json`, so no test checks them against the briefing.
 - Run time on a Colab T4, and therefore whether the 50 minutes and the 10-minute compute target hold. On a CPU runtime they do not: 72 minutes of compute at full settings.
 - The comment in Checkpoint 3A says the gradient underflowed to 0 "before distance 110" in every build run; the engineer reports about 138 for the full-settings run. One of the two needs correcting (Neural Lab Engineer).
 - The brief asked for assertion thresholds set from at least three seeds. The checkpoint comments cite seed 0 at full settings and seeds 1 and 2 with `QUICK = True` only.
-- How much of the RNN's gradient decay comes from saturated units and how much from the structure of $W$ (the lecture says the lab does not separate them).
+- How much of the RNN's gradient decay comes from saturated units and how much from the structure of $W$ (the briefing says the lab does not separate them).

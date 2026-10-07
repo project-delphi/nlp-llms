@@ -1,6 +1,6 @@
 # Lab brief: `notebooks/13-rag.ipynb`
 
-From the Academic Director to the **Agentic Systems Engineer**, who owns Lab 13 (`AGENTS.md`, "Who owns what"). Lecture: `lectures/13-rag.qmd` (same symbols and equation names: `budget`, `dense`, `topk`, `contrastive`, `bm25-recall`, `rrf`, `cross`, `expected-level`, `recall`, `mrr`, `faith`). Lab standards: `PLAN.md` section 5. Verified Jev API surface: `briefs/jev-verification.md` (cited below as JV §n). Provider wrapper: `notebooks/08-llm-apis.ipynb` and `briefs/08-llm-apis.md`. This file is not rendered by Quarto.
+From the Academic Director to the **Agentic Systems Engineer**, who owns Lab 13 (`AGENTS.md`, "Who owns what"). Briefing: `modules/13-rag.qmd` (same symbols and equation names: `budget`, `dense`, `topk`, `contrastive`, `bm25-recall`, `rrf`, `cross`, `expected-level`, `recall`, `mrr`, `faith`). Lab standards: `PLAN.md` section 5. Verified Jev API surface: `briefs/jev-verification.md` (cited below as JV §n). Provider wrapper: `notebooks/08-llm-apis.ipynb` and `briefs/08-llm-apis.md`. This file is not rendered by Quarto.
 
 **Objectives exercised** (from `_variables.yml`, `m13`): build a RAG pipeline; choose chunking, embedding and reranking settings from measurements; evaluate retrieval and answer quality separately.
 
@@ -8,19 +8,19 @@ From the Academic Director to the **Agentic Systems Engineer**, who owns Lab 13 
 
 ## The lab in one paragraph
 
-Participants index a committed snapshot of the workshop's own lecture pages with LlamaIndex, then measure retrieval against a human-labelled question set: they write recall@k and MRR, build the index, and sweep chunk size and k, choosing a setting on `dev` at a fixed context budget and reporting it on `test`. They rebuild the same retriever as a LangChain runnable and check that the two frameworks return the same chunks, which fails until LlamaIndex's default of embedding metadata is switched off. They add a reranking step over 20 candidates: Jev through a postprocessor written in the notebook on `typesafe-sdk` when a `TYPESAFE_API_KEY` is set, otherwise a cross-encoder, and measure what it changes. Finally they generate cited answers through Lab 8's `PROVIDER` switch, score faithfulness with a judge, check correctness against recorded answer forms, and fill the lecture's two-by-two table that separates retrieval failures from generation failures. The stretch adds BM25 and reciprocal rank fusion. Every checkpoint tests the participant's function on hand-made inputs or fakes, so it gives the same verdict on every path. No retrieval or answer metric of any model is asserted.
+Participants index a committed snapshot of the workshop's own module pages with LlamaIndex, then measure retrieval against a human-labelled question set: they write recall@k and MRR, build the index, and sweep chunk size and k, choosing a setting on `dev` at a fixed context budget and reporting it on `test`. They rebuild the same retriever as a LangChain runnable and check that the two frameworks return the same chunks, which fails until LlamaIndex's default of embedding metadata is switched off. They add a reranking step over 20 candidates: Jev through a postprocessor written in the notebook on `typesafe-sdk` when a `TYPESAFE_API_KEY` is set, otherwise a cross-encoder, and measure what it changes. Finally they generate cited answers through Lab 8's `PROVIDER` switch, score faithfulness with a judge, check correctness against recorded answer forms, and fill the briefing's two-by-two table that separates retrieval failures from generation failures. The stretch adds BM25 and reciprocal rank fusion. Every checkpoint tests the participant's function on hand-made inputs or fakes, so it gives the same verdict on every path. No retrieval or answer metric of any model is asserted.
 
 ## Design decisions (resolved here; for Romeo to confirm)
 
 ### (a) The document set: Workshop Lectures v1
 
-**Recommendation: a committed, versioned plain-text snapshot of lecture pages 01–12 plus `references.qmd`.** One corpus serves Labs 13, 14 and 15. Reasons:
+**Recommendation: a committed, versioned plain-text snapshot of module pages 01–12 plus `references.qmd`.** One corpus serves Labs 13, 14 and 15. Reasons:
 
 1. **It is ours.** The pages are CC BY 4.0 workshop content (`LICENSE`). No third-party license, no Hub, no download from anywhere but our repository. The pages quote short passages of third-party material (for example TypeSafe's MIT-licensed `SKILL.md`), as quotations with sources; that does not change the corpus license.
-2. **It is the capstone's subject.** Module 15 is "a research-assistant agent over the workshop's own reading list". The lecture pages *are* the annotated reading list: every page ends with readings and says why each matters, and `references.qmd` collects them. A participant can ask the capstone "which paper introduced in-batch negatives, and which lab uses the idea?" and the answer is in this corpus.
+2. **It is the capstone's subject.** Module 15 is "a research-assistant agent over the workshop's own reading list". The module pages *are* the annotated reading list: every page ends with readings and says why each matters, and `references.qmd` collects them. A participant can ask the capstone "which paper introduced in-batch negatives, and which lab uses the idea?" and the answer is in this corpus.
 3. **It contains facts no model knows.** Measured numbers (Lab 2's 0.8669 test accuracy), our notation ($\kappa$ for Jev's `confidence`), our design choices (Lab 12's thresholds 0.375 and 0.969). Questions about these separate grounded answers from parametric memory, which questions about general ML do not.
 4. **It is the right size.** About 495,000 characters (*checked*, current pages 01–12); 1,400 / 660 / 320 chunks at 128 / 256 / 512 tokens with overlap $L/8$ (*checked*, `SentenceSplitter`). Small enough to embed three times on a CPU, large enough that retrieval is not trivial.
-5. **It contains a natural injection test.** Lecture 8, section 8 quotes a prompt-injection string. A question about prompt injection retrieves it (lecture 13, section 7), and Lab 14 builds on that.
+5. **It contains a natural injection test.** Module 8, section 8 quotes a prompt-injection string. A question about prompt injection retrieves it (Module 13, section 7), and Lab 14 builds on that.
 
 **Not recommended for v1: arXiv abstracts.** The `data/arxiv_topics_v1.csv.gz` abstracts (CC0) are 7,000 papers from January–June 2024 and contain none of the reading-list papers (*checked*: no title match for "Attention Is All You Need", "Dense Passage", "Lost in the Middle", "RAGAS"). They would serve only as distractors. Abstracts of the reading-list papers themselves would need the arXiv API, which the build container cannot reach (*checked*: no response from `export.arxiv.org`), and would invite questions a frontier model answers from memory. **Proposal for Module 15's brief, not Lab 13:** an optional "reading-list abstracts" file built on a networked machine with the pattern of `data/build_arxiv_topics.py`, and an optional distractor experiment with the 1,600 arXiv Topics test abstracts.
 
@@ -28,7 +28,7 @@ Participants index a committed snapshot of the workshop's own lecture pages with
 
 | File | Contents |
 |---|---|
-| `data/build_lectures_corpus.py` | Standard library plus PyYAML, no network. Reads `lectures/01-*.qmd` … `lectures/12-*.qmd` and `references.qmd` at the current commit and writes the snapshot deterministically (sorted keys, gzip `mtime=0`), so the hash is reproducible |
+| `data/build_lectures_corpus.py` | Standard library plus PyYAML, no network. Reads `modules/01-*.qmd` … `modules/12-*.qmd` and `references.qmd` at the current commit and writes the snapshot deterministically (sorted keys, gzip `mtime=0`), so the hash is reproducible |
 | `data/workshop_lectures_v1.jsonl.gz` | One JSON object per page: `slug` (e.g. `01-text-as-data`; `references` for the reading list), `module` (1–12, or `null`), `title`, `text`, `source_commit`, `source_sha256` (of the `.qmd`). About 500 KB uncompressed, an estimated 150 KB compressed |
 
 Rules for `text`, fixed in the builder and documented in `data/README.md`:
@@ -39,14 +39,14 @@ Rules for `text`, fixed in the builder and documented in `data/README.md`:
 - Keep headings (`## 4. Dense retrieval`), tables and LaTeX as written. Encoders handle LaTeX poorly; that is a property of the corpus worth seeing, not something to clean away.
 - `tests/test_data.py` gains the snapshot's hash and size; `_variables.yml` gains a `datasets.lectures` entry (proposed below).
 
-**The snapshot is frozen.** Lectures will keep changing; the snapshot does not, so the question set's evidence quotes stay valid. A `v2` is built only with a re-check of every quote (the validator below fails otherwise). Lecture 13 itself is not in v1: it was not written when the questions were, and a corpus that explains RAG to a RAG lab adds nothing.
+**The snapshot is frozen.** Briefings will keep changing; the snapshot does not, so the question set's evidence quotes stay valid. A `v2` is built only with a re-check of every quote (the validator below fails otherwise). Module 13 itself is not in v1: it was not written when the questions were, and a corpus that explains RAG to a RAG lab adds nothing.
 
 ### (b) The question set: Workshop RAG Questions v1
 
 **The decision-set rule applies: people write and label every item; no language model writes, proposes or labels any.** Reasons specific to retrieval:
 
 1. **Model-written questions copy the passage.** A model asked for questions about a passage reuses its words. That inflates BM25 and any encoder that matches surface form, and it would bias exactly the dense-against-BM25 comparison the stretch makes.
-2. **The labels are the yardstick.** Recall@k is only as good as the evidence labels. A model that labels relevance is the kind of judge lecture section 9 asks participants to check, not to trust; using one to build the reference would be circular.
+2. **The labels are the yardstick.** Recall@k is only as good as the evidence labels. A model that labels relevance is the kind of judge briefing section 9 asks participants to check, not to trust; using one to build the reference would be circular.
 3. **Lab 15 reuses the `test` split as part of its fixed evaluation set.** Its numbers would inherit any bias.
 4. **License.** Items written by us are ours; nothing needs a provenance check.
 
@@ -63,9 +63,9 @@ Rules for `text`, fixed in the builder and documented in `data/README.md`:
 | `lookup` | 40% | a fact stated in one place, asked in different words | "Why do dot-product scores need scaling as the key dimension grows?" |
 | `specific` | 30% | a fact that only exists in this corpus: a measured number, our notation, a lab's design choice | "What test accuracy did the averaged-embedding classifier reach on arXiv Topics?" |
 | `multi` | 15% | needs two pieces of evidence, usually from two modules | "Which earlier loss does the contrastive retrieval loss generalize, and in which lab was that loss implemented?" |
-| `unanswerable` | 15% | plausible, on a topic the corpus covers, but the fact is not in it | "What learning rate did Lab 7 use for LoRA?" (only true if the lecture does not state it) |
+| `unanswerable` | 15% | plausible, on a topic the corpus covers, but the fact is not in it | "What learning rate did Lab 7 use for LoRA?" (only true if the briefing does not state it) |
 
-At least 70% of answerable items must have `key_facts` (below) so correctness can be checked by a program. Cover every lecture 01–12 with at least four questions across both splits.
+At least 70% of answerable items must have `key_facts` (below) so correctness can be checked by a program. Cover every Module 01–12 with at least four questions across both splits.
 
 **File:** `data/rag_questions_v1.jsonl`, uncompressed so diffs are readable. One object per line:
 
@@ -79,7 +79,7 @@ At least 70% of answerable items must have `key_facts` (below) so correctness ca
  "author": "RA", "checker": "IN", "notes": ""}
 ```
 
-- `evidence` is a list of **groups** (all needed); each group is a list of **alternative** spans (any one suffices); `[]` for `unanswerable`. Lecture section 8 defines recall over exactly this structure.
+- `evidence` is a list of **groups** (all needed); each group is a list of **alternative** spans (any one suffices); `[]` for `unanswerable`. Briefing section 8 defines recall over exactly this structure.
 - `quote` is copied verbatim from the snapshot's `text`, one or two sentences, at most 60 words. Character offsets are computed at load time by exact search, so a quote must occur **exactly once** in its page.
 - `key_facts`: case-insensitive strings, any one of which a correct answer must contain (alternatives such as `["κ", "kappa"]`). Empty when the answer is not short.
 - `author` and `checker` are initials.
@@ -143,7 +143,7 @@ Rules for the offline path, as in Labs 8 and 11:
 
 ### (e) Faithfulness: how, with what judge, and its limits
 
-- **Claims are sentences.** `split_claims(answer)` (provided): strip the citations `[n]`, split on sentence ends, drop empty strings; the abstention sentence yields no claims. Lecture section 9 states this simplification.
+- **Claims are sentences.** `split_claims(answer)` (provided): strip the citations `[n]`, split on sentence ends, drop empty strings; the abstention sentence yields no claims. Briefing section 9 states this simplification.
 - **Judge interface:** `judge(sentence, sources) -> float`, the probability that the sources support the sentence.
   - **NLI judge** (open path, and always computed when the Hub is reachable): for each source, `CrossEncoder.predict([(source_text, sentence)])` with softmax over the three labels; $J$ is the largest entailment probability over the $k$ sources. Read the label index from the model config. Pairs longer than the model's limit are truncated by the library; chunks of 256 tokens plus a sentence fit in 512.
   - **LLM judge** (keyed): Lab 8's `extract` with `class Verdict(BaseModel): supported: Literal["yes", "no"]`, one call per sentence, a pinned prompt that says what "supported" means ("every factual statement in the sentence follows from the sources; background knowledge does not count"). $J$ = 1 or 0. Print the agreement between the NLI and LLM judges on the same sentences.
@@ -157,7 +157,7 @@ Rules for the offline path, as in Labs 8 and 11:
 
 **Adopted from Lab 14's request** (`briefs/14-agents.md`, constraint (c)): `build_retriever(docs)` over **any** list of `{"doc_id", "title", "text"}` dicts, `retrieve(query, k)` with `k` chosen at call time, and `Passage` carrying at least `doc_id`, `text` and `score`, plus a BM25 path that needs no download so CI can run it. Lab 13 adds fields and keyword arguments with defaults, so a call written to Lab 14's minimal form works unchanged. Lab 13's own corpus goes through the same function: `load_corpus()` returns the snapshot as that list of dicts (`doc_id` is the page slug, `title` the module title).
 
-Colab notebooks share no runtime, so Labs 14 and 15 **restate** this cell verbatim and rebuild the index (seconds for a small corpus; under a minute for the lecture snapshot with a neural encoder; estimates), as they restate Lab 12's `LocalDecider`. Mark the cell "provided; reused by Labs 14 and 15". Lab 15's settings come from Lab 13's recorded run (`data/baselines.json` `lab13.chosen`, proposed), restated as constants.
+Colab notebooks share no runtime, so Labs 14 and 15 **restate** this cell verbatim and rebuild the index (seconds for a small corpus; under a minute for the briefing snapshot with a neural encoder; estimates), as they restate Lab 12's `LocalDecider`. Mark the cell "provided; reused by Labs 14 and 15". Lab 15's settings come from Lab 13's recorded run (`data/baselines.json` `lab13.chosen`, proposed), restated as constants.
 
 ```python
 @dataclass(frozen=True)
@@ -183,7 +183,7 @@ def build_retriever(docs: list[dict], *,
                     candidates: int = 20) -> "Retriever": ...
     # "auto": "dense" with bge-small if the encoder loads, else "bm25" (prints which, and why)
     # "bm25": llama-index-retrievers-bm25 only; no model download, no network: the CI and stub path
-    # "hybrid": RRF of dense and BM25 (lecture eq-rrf), r0 = 60
+    # "hybrid": RRF of dense and BM25 (briefing eq-rrf), r0 = 60
     # Documents shorter than chunk_size stay one chunk each, so a small corpus of short pages
     # (Lab 14's desk corpus) is retrieved document by document.
 
@@ -212,11 +212,11 @@ Lab 14 builds it over its own desk corpus and wraps `retrieve(query, k=3)` in `s
 
 ## Provided scaffolding
 
-- **Setup:** pinned installs; seeds; `get_secret`; Lab 8's provider cell restated verbatim (`Reply`, adapters, `FakeProvider`, `StubProvider`, `make_provider`, `label`, `extract`), as Lab 8 marks it "reused by Labs 11, 13 and 14". `Settings.llm = MockLLM()` and an explicit encoder before anything else (lecture section 11: LlamaIndex otherwise tries to load OpenAI's model). `logging` for `typesafe_sdk` left at its default (JV §2: request bodies are logged unredacted at DEBUG).
-- **Corpus and questions:** `load_corpus`, `load_questions` (computes each quote's character offsets by exact search and fails loudly if a quote is missing or repeated), a printout of corpus size in characters and in tokens of the encoder's tokenizer (this replaces the lecture's "about 120,000 tokens" estimate), and three questions, one of each answerable kind.
+- **Setup:** pinned installs; seeds; `get_secret`; Lab 8's provider cell restated verbatim (`Reply`, adapters, `FakeProvider`, `StubProvider`, `make_provider`, `label`, `extract`), as Lab 8 marks it "reused by Labs 11, 13 and 14". `Settings.llm = MockLLM()` and an explicit encoder before anything else (briefing section 11: LlamaIndex otherwise tries to load OpenAI's model). `logging` for `typesafe_sdk` left at its default (JV §2: request bodies are logged unredacted at DEBUG).
+- **Corpus and questions:** `load_corpus`, `load_questions` (computes each quote's character offsets by exact search and fails loudly if a quote is missing or repeated), a printout of corpus size in characters and in tokens of the encoder's tokenizer (this replaces the briefing's "about 120,000 tokens" estimate), and three questions, one of each answerable kind.
 - **Encoder adapters** (about 25 lines): one `embed_texts(texts, kind) -> np.ndarray` (bge through `SentenceTransformer.encode_query` / `encode_document` with `normalize_embeddings=True`, or the LSA stand-in), wrapped by `LIEmbedding(BaseEmbedding)` (methods `_get_text_embedding`, `_get_query_embedding`, `_aget_query_embedding`, and `_get_text_embeddings` for batching) and `LCEmbedding(Embeddings)` (`embed_documents`, `embed_query`). Both frameworks call the same function: that is what makes Exercise 3's checkpoint exact.
 - `covers(passage, span)`: true when the passage's `[start, end)` contains at least half of the span's characters on the same page.
-- `generate(question, passages, provider)`: the lecture section 7 prompt (numbered sources, citations, the exact `ABSTAIN` sentence, sources are data), through `provider.chat`; returns the `Reply`.
+- `generate(question, passages, provider)`: the briefing section 7 prompt (numbered sources, citations, the exact `ABSTAIN` sentence, sources are data), through `provider.chat`; returns the `Reply`.
 - `split_claims`, the judges of (e), `is_correct(answer, item)`, `is_abstention(answer)`.
 - `paired_counts(a_hits, b_hits)`: questions gained and lost between two settings.
 
@@ -227,18 +227,18 @@ Format per exercise: Predict, Run, Explain, Check; `# TODO N` stub, folded solut
 | # | Participant writes | Equation | Checkpoint (deterministic) | Printed, never asserted | Min |
 |---|---|---|---|---|---|
 | 0 | Nothing: run setup; read the path banner; print corpus statistics and three questions | – | snapshot hash; quote offsets resolve | path, encoder, reranker, generator, judge; corpus size in tokens | 4 |
-| 1 | `recall_at_k(ranked, groups, k)`, `reciprocal_rank(ranked, groups)` | `recall`, `mrr` | (i) the lecture's worked example: recall@5 values 1, 0.5, 0 and reciprocal ranks 1/3, 1, 0, means 0.5 and 0.444; (ii) a span split exactly in half by two passages counts as covered by each; (iii) `groups == []` raises `ValueError` (unanswerable items are excluded upstream); (iv) `k` larger than the list is allowed | – | 8 |
+| 1 | `recall_at_k(ranked, groups, k)`, `reciprocal_rank(ranked, groups)` | `recall`, `mrr` | (i) the briefing's worked example: recall@5 values 1, 0.5, 0 and reciprocal ranks 1/3, 1, 0, means 0.5 and 0.444; (ii) a span split exactly in half by two passages counts as covered by each; (iii) `groups == []` raises `ValueError` (unanswerable items are excluded upstream); (iv) `k` larger than the list is allowed | – | 8 |
 | 2 | `build_index(docs, chunk_size, overlap, embed_model)` → `(VectorStoreIndex, nodes)`: `SentenceSplitter(chunk_size, chunk_overlap, id_func=...)` with deterministic IDs, `excluded_embed_metadata_keys` set on every node, `VectorStoreIndex(nodes, embed_model=...)` | `dense`, `topk`, `budget` | (i) node IDs equal on two calls; (ii) no node embeds its metadata (`node.get_content(metadata_mode=MetadataMode.EMBED) == node.get_content()`); (iii) every node's text equals `doc.text[start:end]` (*checked* that LlamaIndex 0.14.25 sets these offsets); (iv) a query made of one node's own first sentence retrieves that node at rank 1 | Provided sweep: $L \in \{128, 256, 512\}$, $L_o = L/8$, $k = 1..10$ on `dev`; plot recall@k and MRR against $n_{\text{ctx}} = kL$; table of recall at $n_{\text{ctx}} \le 1{,}024$ tokens per $L$; the participant picks $(L, k)$ on `dev`; then the pick and the runner-up on `test`, with $N$ and `paired_counts` | 9 |
 | 3 | `make_lc_retriever(nodes, embed_fn, k)`: `InMemoryVectorStore(embedding=LCEmbedding(...))`, documents added with `ids=[n.node_id ...]` and the passage fields in metadata, returned as `.as_retriever(search_kwargs={"k": k})`; plus `lc_chain = retriever | RunnableLambda(to_passages)` | `dense`, `topk` | (i) for every `dev` question the LangChain and LlamaIndex top-$k$ ID lists are equal, except where adjacent scores tie within 1e-6; (ii) `lc_chain.invoke(q)` and `lc_chain.batch([q1, q2])` return lists of `Passage` | Provided cell **before** the TODO: the same comparison with LlamaIndex's default metadata embedding, printing on how many questions the two disagree (*checked* on six test queries with the LSA stand-in: 3 of 6 agree with metadata embedded, 6 of 6 with it excluded, identical scores) | 8 |
-| 4 | `relevance_question(query)` → `typesafe_sdk.Score` with the four-level rubric of lecture section 6, in increasing order, and `instructions` that contain the full question (question names are not sent to the model, JV §2); `rerank_by_scores(nodes, scores, top_n)` → `list[NodeWithScore]` sorted by score, ties kept in retrieval order, scores replaced | `cross`, `expected-level` | (i) the `Score` validates, has 4 criteria, contains the query; (ii) hand case: scores `[0.1, 2.6, 0.4, 2.6, 0.0]`, `top_n=3` gives node order `[1, 3, 2]`; (iii) `JevRerank` with a fake async client returning real `SystemOneResponse` objects (built with `from_http_response` and an `x-typesafe-request-id` header, JV §8) reranks as expected; (iv) one simulated `TypeSafeError` → the first `top_n` in retrieval order, with a printed message (fail open). (iii)–(iv) *checked* in the build container against `typesafe-sdk` 0.7.2 and `llama-index-core` 0.14.25 | Retrieve $k_0 = 20$ with the chosen $(L, k)$, rerank to $k$: recall@k and MRR before and after on `dev` and `test`, `paired_counts`, median and 95th-percentile reranking latency per query; with a key, `resp.model`, total Jev input tokens and measured USD; with both a key and the Hub, Jev and the cross-encoder side by side on the same candidates | 9 |
-| 5 | `faithfulness(answer, sources, judge, threshold=0.5)` → `(score or None, verdicts)` | `faith` | (i) fake judge returning `[0.9, 0.2, 0.7]` for three sentences gives 2/3 and verdicts `[True, False, True]`; (ii) citations `[1]`, `[2, 3]` are removed before the judge sees the sentence; (iii) the `ABSTAIN` sentence gives `(None, [])`; (iv) `threshold` is respected at exactly 0.5 (counts as supported) | Provided: generate for every `test` question (CPU open path: a fixed 12-item subset, as Lab 8) with the chosen retriever and reranker; per kind: answered, correct (of auto-checkable), faithfulness, abstention on `unanswerable`, false abstention on answerable; the lecture's two-by-two table (evidence retrieved × correct); the judge banner; cost | 10 |
+| 4 | `relevance_question(query)` → `typesafe_sdk.Score` with the four-level rubric of briefing section 6, in increasing order, and `instructions` that contain the full question (question names are not sent to the model, JV §2); `rerank_by_scores(nodes, scores, top_n)` → `list[NodeWithScore]` sorted by score, ties kept in retrieval order, scores replaced | `cross`, `expected-level` | (i) the `Score` validates, has 4 criteria, contains the query; (ii) hand case: scores `[0.1, 2.6, 0.4, 2.6, 0.0]`, `top_n=3` gives node order `[1, 3, 2]`; (iii) `JevRerank` with a fake async client returning real `SystemOneResponse` objects (built with `from_http_response` and an `x-typesafe-request-id` header, JV §8) reranks as expected; (iv) one simulated `TypeSafeError` → the first `top_n` in retrieval order, with a printed message (fail open). (iii)–(iv) *checked* in the build container against `typesafe-sdk` 0.7.2 and `llama-index-core` 0.14.25 | Retrieve $k_0 = 20$ with the chosen $(L, k)$, rerank to $k$: recall@k and MRR before and after on `dev` and `test`, `paired_counts`, median and 95th-percentile reranking latency per query; with a key, `resp.model`, total Jev input tokens and measured USD; with both a key and the Hub, Jev and the cross-encoder side by side on the same candidates | 9 |
+| 5 | `faithfulness(answer, sources, judge, threshold=0.5)` → `(score or None, verdicts)` | `faith` | (i) fake judge returning `[0.9, 0.2, 0.7]` for three sentences gives 2/3 and verdicts `[True, False, True]`; (ii) citations `[1]`, `[2, 3]` are removed before the judge sees the sentence; (iii) the `ABSTAIN` sentence gives `(None, [])`; (iv) `threshold` is respected at exactly 0.5 (counts as supported) | Provided: generate for every `test` question (CPU open path: a fixed 12-item subset, as Lab 8) with the chosen retriever and reranker; per kind: answered, correct (of auto-checkable), faithfulness, abstention on `unanswerable`, false abstention on answerable; the briefing's two-by-two table (evidence retrieved × correct); the judge banner; cost | 10 |
 | – | Nothing: read and answer the closing cell | – | none | – | 2 |
 
 Minutes: 4 + 8 + 9 + 8 + 9 + 10 + 2 = 50.
 
 **Where the slow cells go.** The three-size sweep embeds about 2,400 chunks (estimate from the *checked* counts); start it at the top of Exercise 2 with the solution `build_index`, so it runs while participants write their own. On the keyed Jev path, `JevRerank` makes $k_0 = 20$ calls per question: 1,600 for `dev` and `test`. Run `test` only if time is short, and say so.
 
-**`JevRerank` itself is provided**, about 35 lines (JV §10). The design was *checked* offline in the build container: a `BaseNodePostprocessor` subclass with the client in a Pydantic `PrivateAttr`, `_apostprocess_nodes` scoring all candidates with `asyncio.gather` under `asyncio.Semaphore(8)`, sorting by `answer.score` (the expected level, lecture @eq-expected-level), storing `answer.confidence` in node metadata as `jev_confidence` without using it, and returning the first `top_n` in retrieval order on any `TypeSafeError`. **Call it with `await reranker.apostprocess_nodes(nodes, query_bundle=QueryBundle(q))`**: the synchronous `postprocess_nodes` would call `asyncio.run` inside Jupyter's running event loop and fail. State: `{"question": q, "passage": node.get_content()}`. Default `RetryPolicy`. Never construct `AsyncTypeSafeClient` without a key: it raises (*checked*).
+**`JevRerank` itself is provided**, about 35 lines (JV §10). The design was *checked* offline in the build container: a `BaseNodePostprocessor` subclass with the client in a Pydantic `PrivateAttr`, `_apostprocess_nodes` scoring all candidates with `asyncio.gather` under `asyncio.Semaphore(8)`, sorting by `answer.score` (the expected level, briefing @eq-expected-level), storing `answer.confidence` in node metadata as `jev_confidence` without using it, and returning the first `top_n` in retrieval order on any `TypeSafeError`. **Call it with `await reranker.apostprocess_nodes(nodes, query_bundle=QueryBundle(q))`**: the synchronous `postprocess_nodes` would call `asyncio.run` inside Jupyter's running event loop and fail. State: `{"question": q, "passage": node.get_content()}`. Default `RetryPolicy`. Never construct `AsyncTypeSafeClient` without a key: it raises (*checked*).
 
 **Closing cell: "What this lab showed and what it did not"** (markdown, then two questions):
 
@@ -246,7 +246,7 @@ Minutes: 4 + 8 + 9 + 8 + 9 + 10 + 2 = 50.
 - Whether reranking changed recall@k and MRR by more than the pairwise noise; on the keyed path, what Jev cost. Nothing here says anything about Jev beyond these 50 questions on this corpus.
 - If you ran offline, every number is the stand-ins' and measures the notebook's code.
 - Faithfulness was scored by a judge that has (or has not) been compared with human labels; say which.
-- Questions: (1) In your two-by-two table, which cell held most of the failures, and which component would you change first in Lab 15? (2) Lab 14 lets an agent call this retriever and then send an email. What could a passage like lecture 8's quoted injection string do there, and what would stop it?
+- Questions: (1) In your two-by-two table, which cell held most of the failures, and which component would you change first in Lab 15? (2) Lab 14 lets an agent call this retriever and then send an email. What could a passage like Module 8's quoted injection string do there, and what would stop it?
 
 ## What is asserted on each path
 
@@ -260,8 +260,8 @@ Minutes: 4 + 8 + 9 + 8 + 9 + 10 + 2 = 50.
 
 **Hybrid retrieval with BM25.**
 
-1. Provided: `BM25Retriever.from_defaults(nodes=nodes, similarity_top_k=k0)` over the same nodes, metadata excluded. Its scores equal lecture @eq-bm25-recall divided by $k_1 + 1$, with $k_1 = 1.5$, $b = 0.75$, English stopwords removed and stemming on by default. *Checked* on a five-document corpus with `skip_stemming=True` and bm25s's English stopword list: maximum absolute difference $2.8 \times 10^{-8}$ against Lab 1's formula divided by 2.5. The provided checkpoint restates Lab 1's solution `bm25_scores` and repeats that check on three chunks of the snapshot.
-2. Participant writes `rrf(rankings, r0=60)`: `rankings` is a list of ranked ID lists; returns IDs sorted by @eq-rrf, missing IDs contributing nothing, ties broken by first appearance. Checkpoint: the lecture's worked example (the chunk ranked 3rd and 3rd beats the one ranked 1st and 10th); one input list returns that list unchanged.
+1. Provided: `BM25Retriever.from_defaults(nodes=nodes, similarity_top_k=k0)` over the same nodes, metadata excluded. Its scores equal briefing @eq-bm25-recall divided by $k_1 + 1$, with $k_1 = 1.5$, $b = 0.75$, English stopwords removed and stemming on by default. *Checked* on a five-document corpus with `skip_stemming=True` and bm25s's English stopword list: maximum absolute difference $2.8 \times 10^{-8}$ against Lab 1's formula divided by 2.5. The provided checkpoint restates Lab 1's solution `bm25_scores` and repeats that check on three chunks of the snapshot.
+2. Participant writes `rrf(rankings, r0=60)`: `rankings` is a list of ranked ID lists; returns IDs sorted by @eq-rrf, missing IDs contributing nothing, ties broken by first appearance. Checkpoint: the briefing's worked example (the chunk ranked 3rd and 3rd beats the one ranked 1st and 10th); one input list returns that list unchanged.
 3. Printed: dense, BM25 and hybrid recall@k and MRR on `test` at the chosen $k$, **by question kind**. Predict before running: on which kind should BM25 help most? (Our expectation is `specific`, with its numbers and identifiers; not asserted.)
 4. Do not use LlamaIndex's `QueryFusionRetriever` for this: it resolves `Settings.llm` at construction even with `num_queries=1`, and without a configured model it tries to import OpenAI's and raises (*checked*: `ImportError: llama-index-llms-openai package not found`). With `llm=MockLLM()` it runs. Mention it as the library route after participants have written `rrf`.
 
@@ -285,7 +285,7 @@ Minutes: 4 + 8 + 9 + 8 + 9 + 10 + 2 = 50.
 
 ## Flags for the Lab Engineer
 
-1. **Names.** Use the lecture's: `recall_at_k`, `reciprocal_rank`, `chunk_size` ($L$), `overlap` ($L_o$), `k`, `k0` (candidates), `n_ctx`, `groups`, `judge`. Do not call the reranked list "confidence"-sorted.
+1. **Names.** Use the briefing's: `recall_at_k`, `reciprocal_rank`, `chunk_size` ($L$), `overlap` ($L_o$), `k`, `k0` (candidates), `n_ctx`, `groups`, `judge`. Do not call the reranked list "confidence"-sorted.
 2. **Never sort by `confidence`.** `JevRerank` sorts by `score`; `confidence` is stored only.
 3. **Metadata out of the embedding and out of BM25.** Set `excluded_embed_metadata_keys` to every metadata key on every node; `BM25Retriever` also indexes `MetadataMode.EMBED` text (*checked* in its source).
 4. **Deterministic node IDs** through `SentenceSplitter(id_func=lambda i, doc: f"{doc.id_}:{i:04d}")`; the default is a random UUID (*checked*, `default_id_func`).
@@ -295,7 +295,7 @@ Minutes: 4 + 8 + 9 + 8 + 9 + 10 + 2 = 50.
 8. **The CI path never touches the network** beyond the repository's own data URLs: no Hub, no `api.typesafe.ai`, no provider APIs.
 9. **Package names.** Install only `typesafe-sdk==0.7.2` for Jev. The unaffiliated LlamaIndex reranker package on PyPI (JV §4, §6) is not mentioned in the notebook; `tests/test_package_names.py` fails on it in an install line.
 10. **No personal data in Jev state**: the corpus has none; keep it that way if participants add documents.
-11. **Report back:** measured corpus size in tokens; chunk counts per size; the sweep table on `dev` and `test` for each path you ran; Exercise 3's agreement count with and without metadata on the real encoder; reranking gains with $N$ and gained/lost; Jev `resp.model`, tokens, cost and latency if a key was available; Exercise 5's table; run time per section on CPU and on a T4; anything in the lecture the notebook contradicts (in particular the 495,000-character and 120,000-token figures, and the units and metadata claims of lecture section 3).
+11. **Report back:** measured corpus size in tokens; chunk counts per size; the sweep table on `dev` and `test` for each path you ran; Exercise 3's agreement count with and without metadata on the real encoder; reranking gains with $N$ and gained/lost; Jev `resp.model`, tokens, cost and latency if a key was available; Exercise 5's table; run time per section on CPU and on a T4; anything in the briefing the notebook contradicts (in particular the 495,000-character and 120,000-token figures, and the units and metadata claims of briefing section 3).
 
 ## Proposed changes (not made; for Romeo or the Architect)
 
@@ -312,20 +312,20 @@ Minutes: 4 + 8 + 9 + 8 + 9 + 10 + 2 = 50.
 - **`_variables.yml` `modules.m13.stack`:** add "Hugging Face" (sentence-transformers is the open path), giving `[LlamaIndex, LangChain, Hugging Face, Jev]`.
 - **`data/`:** `build_lectures_corpus.py` and the snapshot (an agent may build both now); `rag_questions_v1.jsonl` (people, decision (b)); `README.md` sections for both, replacing the "Built on build Day 9" row; `baselines.json` `lab13.chosen` and `lab13.offline` after the recorded run.
 - **`tests/`:** `test_rag_questions.py` (validator above, on the fixture until the real file lands); snapshot hash and size in `test_data.py`.
-- **`PLAN.md` section 4, Module 13:** Stack → "LlamaIndex, LangChain, sentence-transformers (open encoder, cross-encoder and NLI judge), Jev, OpenAI/Claude (fallback: Qwen through Lab 8's wrapper)". Readings → "Lewis et al. 2020 (RAG); Karpukhin et al. 2020 (DPR); Liu et al. 2024 (Lost in the Middle); Es et al. 2024 (RAGAs); Thakur et al. 2021 (BEIR); the installed source of the pinned LlamaIndex and LangChain packages". Lab → add "on a committed snapshot of the workshop's lecture pages (`data/workshop_lectures_v1.jsonl.gz`) with a human-written question set (`data/rag_questions_v1.jsonl`)".
+- **`PLAN.md` section 4, Module 13:** Stack → "LlamaIndex, LangChain, sentence-transformers (open encoder, cross-encoder and NLI judge), Jev, OpenAI/Claude (fallback: Qwen through Lab 8's wrapper)". Readings → "Lewis et al. 2020 (RAG); Karpukhin et al. 2020 (DPR); Liu et al. 2024 (Lost in the Middle); Es et al. 2024 (RAGAs); Thakur et al. 2021 (BEIR); the installed source of the pinned LlamaIndex and LangChain packages". Lab → add "on a committed snapshot of the workshop's module pages (`data/workshop_lectures_v1.jsonl.gz`) with a human-written question set (`data/rag_questions_v1.jsonl`)".
 - **`PLAN.md` section 6, new row.** Item: "RAG question set needs two human authors". Risk: "an agent can build the corpus snapshot and the validator but must not write or label questions; without them Lab 13 has no recall numbers and Lab 15 no fixed evaluation set". Mitigation: "Romeo and one instructor write and check 80 questions (estimated 4 and 3 hours), 40 first to unblock the build; the faithfulness judge audit is a further 1–2 hours each after one keyed run".
 - **`PLAN.md` section 6, new row.** Item: "Lab 13 open models need the Hub". Risk: "bge-small, the cross-encoder and the NLI model cannot be downloaded in the build container; their paths will be written, not run". Mitigation: "offline LSA and lexical stand-ins exercise the code under a banner; run the open path on a Colab T4 and pin revisions".
-- **`PLAN.md` section 7, Day 9:** tick "Draft lecture 13: Retrieval-augmented generation", with the note "(not rendered; lab brief in `briefs/13-rag.md`)"; under "Code `13-rag.ipynb`" add "(blocked on `data/rag_questions_v1.jsonl`; build against the fixture meanwhile)".
-- **`references.qmd`:** under Module 13, the five readings and the "also cited" list of the lecture.
-- **Lecture 1's lab** says "Module 13 uses BM25 again through a library": true as designed (the stretch uses `llama-index-retrievers-bm25` and checks it against Lab 1's function). No change needed.
+- **`PLAN.md` section 7, Day 9:** tick "Draft briefing 13: Retrieval-augmented generation", with the note "(not rendered; lab brief in `briefs/13-rag.md`)"; under "Code `13-rag.ipynb`" add "(blocked on `data/rag_questions_v1.jsonl`; build against the fixture meanwhile)".
+- **`references.qmd`:** under Module 13, the five readings and the "also cited" list of the briefing.
+- **Module 1's lab** says "Module 13 uses BM25 again through a library": true as designed (the stretch uses `llama-index-retrievers-bm25` and checks it against Lab 1's function). No change needed.
 
 ## Checked in the build container (2026-10-05)
 
 Scratch environment as listed at the top; scripts not committed.
 
-- **LlamaIndex interfaces:** `BaseNodePostprocessor` has one abstract method, `_postprocess_nodes`, and an async `apostprocess_nodes`; `BaseEmbedding` needs `_get_text_embedding`, `_get_query_embedding`, `_aget_query_embedding`; `SentenceSplitter(chunk_size=1024, chunk_overlap=200, ..., id_func=...)` defaults; `TextNode.start_char_idx` / `end_char_idx` index the document text exactly; `default_id_func` returns `uuid4`; the default QA prompt text quoted in lecture section 11.
+- **LlamaIndex interfaces:** `BaseNodePostprocessor` has one abstract method, `_postprocess_nodes`, and an async `apostprocess_nodes`; `BaseEmbedding` needs `_get_text_embedding`, `_get_query_embedding`, `_aget_query_embedding`; `SentenceSplitter(chunk_size=1024, chunk_overlap=200, ..., id_func=...)` defaults; `TextNode.start_char_idx` / `end_char_idx` index the document text exactly; `default_id_func` returns `uuid4`; the default QA prompt text quoted in briefing section 11.
 - **LangChain interfaces:** `Embeddings` needs `embed_documents`, `embed_query`; `BaseRetriever` needs `_get_relevant_documents`; `InMemoryVectorStore.add_documents(docs, ids=...)`, `.as_retriever(search_kwargs={"k": k})`, `.similarity_search_with_score`; an LCEL chain of a retriever and `RunnableLambda` runs.
-- **Corpus:** lecture pages 01–12, 494,904 characters after removing front matter, shortcodes and HTML comments; 1,400 / 659 / 324 nodes at $L$ = 128 / 256 / 512 with $L_o = L/8$; median 59 / 129 / 274 words per chunk.
+- **Corpus:** module pages 01–12, 494,904 characters after removing front matter, shortcodes and HTML comments; 1,400 / 659 / 324 nodes at $L$ = 128 / 256 / 512 with $L_o = L/8$; median 59 / 129 / 274 words per chunk.
 - **Same retriever in two frameworks:** LSA stand-in encoder (TF-IDF, `min_df=2`, sublinear tf, SVD 256), six test queries, top 5: LlamaIndex and LangChain agree on 3 of 6 with LlamaIndex's default metadata embedding and 6 of 6 with metadata excluded, with scores equal to six decimals.
 - **BM25 library against Lab 1's formula:** as in the stretch.
 - **`QueryFusionRetriever`** raises without a configured model, runs with `llm=MockLLM()`.

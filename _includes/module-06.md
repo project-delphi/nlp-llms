@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 2 · Transformers and pretraining](/day-2.qmd){.module-day} [Module 6]{.module-num} [120 minutes (55 lecture, 55 lab, 10 debrief)]{.module-time} [11:30 lecture · 13:25 lab · 14:20 debrief]{.module-clock}
+[Day 2 · Transformers and pretraining](/day-2.qmd){.module-day} [Module 6]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [11:30 briefing · 13:25 lab · 14:20 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -14,12 +14,37 @@ Subword tokenization, masked and causal pretraining, and using pretrained models
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 7 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Explain subword tokenization and the masked and causal pretraining objectives
 - Load, inspect and run pretrained models with Hugging Face
 - Configure a supplied fine-tuning run for an encoder classifier and evaluate it against Labs 1 and 2
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 5 · The transformer](/modules/05-transformer-from-scratch.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

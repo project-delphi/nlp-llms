@@ -56,7 +56,7 @@ class Current(unittest.TestCase):
             with self.subTest(day=d["n"]):
                 self.assertIn(f"{{{{< include /_includes/run-{d['n']}.md >}}}}", page)
                 for _key, m in g.day_modules(V, d):
-                    self.assertIn(f"lectures/{m['slug']}.qmd", sheet)
+                    self.assertIn(f"modules/{m['slug']}.qmd", sheet)
 
     def test_sidebar_is_current(self):
         self.assertEqual(committed("sidebar.yml"), f"{g.YAML_NOTICE}\n{g.sidebar_yaml(V)}")
@@ -71,7 +71,7 @@ class Sidebar(unittest.TestCase):
         self.assertEqual(sections[1:], [f"Day {d['n']} · {d['short']}" for d in g.days_in_order(V)])
         self.assertEqual(len(sections) - 1, V["workshop"]["days"])
         hrefs = [item["href"] for section in sidebar["contents"] for item in section["contents"]]
-        self.assertEqual(hrefs, [f"lectures/{m['slug']}.qmd" for _, m in g.modules_in_order(V)])
+        self.assertEqual(hrefs, [f"modules/{m['slug']}.qmd" for _, m in g.modules_in_order(V)])
         for href in hrefs:
             self.assertTrue((ROOT / href).exists(), href)
 
@@ -83,17 +83,17 @@ def clock_named(name: str) -> dict:
 class Clock(unittest.TestCase):
     def test_units(self):
         # Day 1 (standard): four one-slot units. Days 2-5 (long): the middle unit is
-        # a lecture slot before lunch and a lab slot after it.
+        # a briefing slot before lunch and a lab slot after it.
         self.assertEqual([len(u) for u in g.units(clock_named("standard"))], [1, 1, 1, 1])
         long_units = g.units(clock_named("long"))
         self.assertEqual([len(u) for u in long_units], [1, 2, 1])
-        self.assertEqual([s.get("part") for s in long_units[1]], ["lecture", "lab"])
+        self.assertEqual([s.get("part") for s in long_units[1]], ["briefing", "lab"])
 
     def test_units_reject_an_unclosed_or_orphan_part(self):
-        lecture = {"start": "09:00", "end": "10:00", "kind": "module", "part": "lecture"}
+        briefing = {"start": "09:00", "end": "10:00", "kind": "module", "part": "briefing"}
         lab = {"start": "10:00", "end": "11:00", "kind": "module", "part": "lab"}
         whole = {"start": "11:00", "end": "12:00", "kind": "module"}
-        for slots in ([lecture], [lab], [lecture, whole, lab]):
+        for slots in ([briefing], [lab], [briefing, whole, lab]):
             with self.assertRaises(ValueError):
                 g.units({"slots": slots})
 
@@ -108,7 +108,7 @@ class Clock(unittest.TestCase):
                         sum(m for _, _, m in g.segments(clk["shape"], s)), g.span(s), (name, s)
                     )
                 if len(unit) == 2:
-                    self.assertEqual(g.span(unit[0]), clk["shape"]["lecture"], name)
+                    self.assertEqual(g.span(unit[0]), clk["shape"]["briefing"], name)
 
     def test_placements_match_units_one_to_one(self):
         for d in g.days_in_order(V):
@@ -133,9 +133,11 @@ class Clock(unittest.TestCase):
         self.assertEqual(g.minutes_of(V, "m01"), 95)
         self.assertEqual(g.minutes_of(V, "m06"), 120)
         self.assertEqual(g.minutes_of(V, "m15"), 240)
-        self.assertEqual(g.timing(V, "m04", V["modules"]["m04"]), "95 minutes (45 lecture, 50 lab)")
         self.assertEqual(
-            g.timing(V, "m08", V["modules"]["m08"]), "120 minutes (55 lecture, 55 lab, 10 debrief)"
+            g.timing(V, "m04", V["modules"]["m04"]), "95 minutes (45 briefing, 50 lab)"
+        )
+        self.assertEqual(
+            g.timing(V, "m08", V["modules"]["m08"]), "120 minutes (55 briefing, 55 lab, 10 debrief)"
         )
         self.assertEqual(g.timing(V, "m15", V["modules"]["m15"]), "240 minutes")
         self.assertIsNone(g.shape(V, "m15"))
@@ -143,11 +145,11 @@ class Clock(unittest.TestCase):
         self.assertIn("pre-work", g.timing(V, "m00", V["modules"]["m00"]))
 
     def test_schedule_bars_fill_their_row(self):
-        # In every timetable cell with a lecture/lab/debrief bar, the first part starts at the
+        # In every timetable cell with a briefing/lab/debrief bar, the first part starts at the
         # row's start, each part starts where the last ended, and the last ends at the row's end.
         hidden = r"(?:\{\.visually-hidden\}\])?"  # the debrief's label is visually hidden
         part = re.compile(
-            r"(Lecture|Lab|Debrief) (\d\d:\d\d)\]" + hidden + r"\{[^}]*flex-grow: (\d+)"
+            r"(Briefing|Lab|Debrief) (\d\d:\d\d)\]" + hidden + r"\{[^}]*flex-grow: (\d+)"
         )
         table = g.schedule(V)
         checked = 0
@@ -163,7 +165,7 @@ class Clock(unittest.TestCase):
                     t += int(minutes)
                 self.assertEqual(t, g.to_minutes(end), cell)
                 checked += 1
-        # One bar per clock slot of every module with a lecture/lab shape (not the capstone).
+        # One bar per clock slot of every module with a briefing/lab shape (not the capstone).
         expected = sum(
             len(p["slots"])
             for d in g.days_in_order(V)
@@ -186,7 +188,7 @@ class Clock(unittest.TestCase):
     def test_facts_take_their_ranges_from_the_clocks(self):
         facts = g.facts_strip(V)
         self.assertIn(f"**{V['workshop']['days']}** days", facts)
-        self.assertIn("**45–55** min lectures, **50–55** min labs", facts)
+        self.assertIn("**45–55** min briefings, **50–55** min labs", facts)
 
 
 class Content(unittest.TestCase):
@@ -194,10 +196,10 @@ class Content(unittest.TestCase):
         path = g.path_steps(V)
         self.assertEqual(path.count("{.path-num}"), len(V["modules"]))
         for m in V["modules"].values():
-            self.assertIn(f"](lectures/{m['slug']}.qmd){{.path-title}}", path)
+            self.assertIn(f"](modules/{m['slug']}.qmd){{.path-title}}", path)
 
     def test_module_header_links_resolve_from_lectures(self):
-        # The header is included from lectures/, so its internal links are project-absolute.
+        # The header is included from modules/, so its internal links are project-absolute.
         for key, m in g.modules_in_order(V):
             block = g.module_block(V, key, m)
             target = "/setup.qmd#module-0" if g.is_prework(m) else f"/day-{m['day']}.qmd"

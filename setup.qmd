@@ -39,7 +39,7 @@ Take the 15-minute [entry check](prepare.qmd#entry-check) on the Before Day 1 pa
 
 ## 4. Module 0: optional pre-work {#module-0}
 
-[Module 0 · {{< var modules.m00.title >}}](lectures/00-coding-agents.qmd) is optional pre-work: do it at home, before Day 1. If you get stuck, bring your laptop to the drop-in clinic from 08:00 to 09:00 on Day 1, before the welcome; it is optional too. Unlike the labs, Module 0 runs on your own laptop, not in Colab: you install a terminal coding agent, git and the GitHub CLI, so you need permission to install software and a GitHub account. Its page walks you through the installs. Nothing later in the workshop depends on it.
+[Module 0 · {{< var modules.m00.title >}}](modules/00-coding-agents.qmd) is optional pre-work: do it at home, before Day 1. If you get stuck, bring your laptop to the drop-in clinic from 08:00 to 09:00 on Day 1, before the welcome; it is optional too. Unlike the labs, Module 0 runs on your own laptop, not in Colab: you install a terminal coding agent, git and the GitHub CLI, so you need permission to install software and a GitHub account. Its page walks you through the installs. Nothing later in the workshop depends on it.
 
 
 ## Running locally (optional)

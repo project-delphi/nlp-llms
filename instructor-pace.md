@@ -4,29 +4,29 @@ subtitle: "Minute by minute, day by day"
 ---
 
 <!--
-Instructor page, rendered by Quarto. The lecture rows are generated: scripts/gen_tables.py writes
-_includes/pace-NN.md from the live plan in each lecture's front matter (scripts/live_plan.py), so
-change a lecture's minutes there, never here. Lab rows come from the minutes in each notebook's
+Instructor page, rendered by Quarto. The briefing rows are generated: scripts/gen_tables.py writes
+_includes/pace-NN.md from the live plan in each briefing's front matter (scripts/live_plan.py), so
+change a briefing's minutes there, never here. Lab rows come from the minutes in each notebook's
 exercise headings, which follow the "As built" sections of briefs/*.md. Debrief, retrieval-practice
-and synthesis rows follow the day pages (day-2.qmd to day-5.qmd) and the facilitator guide. The
-capstone rows follow lecture 15's timing. Module titles and slot lengths come from _variables.yml.
+and wrap-up rows follow the day pages (day-2.qmd to day-5.qmd) and the facilitator guide. The
+capstone rows follow Module 15's timing. Module titles and slot lengths come from _variables.yml.
 -->
 
 ## How to read this sheet
 
 {{< include /_includes/module-shape.md >}}
 
-Each module has two tables. The first is the lecture's **live plan**, generated from the lecture page: minutes count from the start of the lecture, and "In the room" lists the checks, predictions and demos whose minutes the row includes. The second is the **lab**: minutes count from the start of the lab. "CP" is a checkpoint; Checkpoint *N* belongs to Exercise *N*. The last column says what participants should have passed by the end of that row. If more than a third of the room has not, apply the module's "behind" rule. A behind rule's minute is a lab minute unless it says lecture minute or build minute. Clock times are on the [schedule](schedule.qmd).
+Each module has two tables. The first is the briefing's **live plan**, generated from the module page: minutes count from the start of the briefing, and "In the room" lists the checks, predictions and demos whose minutes the row includes. The second is the **lab**: minutes count from the start of the lab. "CP" is a checkpoint; Checkpoint *N* belongs to Exercise *N*. The last column says what participants should have passed by the end of that row. If more than a third of the room has not, apply the module's "behind" rule. A behind rule's minute is a lab minute unless it says briefing minute or build minute. Clock times are on the [schedule](schedule.qmd).
 
-**Day 1:** the lab is the {{< var schedule.clocks.standard.shape.lab >}}-minute core path and ends the module. **Days 2 to 5:** the lab is {{< var schedule.clocks.long.shape.lab >}} minutes: the same core path, with 5 minutes of slack for setup and downloads in its first row, so every later row starts 5 minutes later than the notebook's own minutes suggest. If setup goes quickly, the room runs ahead and keeps the minutes. The lab table ends with the {{< var schedule.clocks.long.shape.debrief >}}-minute **debrief**: the Explain step, taken with the whole room. Each day also opens with retrieval practice and closes with a synthesis, both on the day pages. What to say in each debrief, and what to cut when a day's clock slips, are in the [facilitator guide](facilitator-guide.md#shape).
+**Day 1:** the lab is the {{< var schedule.clocks.standard.shape.lab >}}-minute core path and ends the module. **Days 2 to 5:** the lab is {{< var schedule.clocks.long.shape.lab >}} minutes: the same core path, with 5 minutes of slack for setup and downloads in its first row, so every later row starts 5 minutes later than the notebook's own minutes suggest. If setup goes quickly, the room runs ahead and keeps the minutes. The lab table ends with the {{< var schedule.clocks.long.shape.debrief >}}-minute **debrief**: the Explain step, taken with the whole room. Each day also opens with a warm-up and closes with a wrap-up, both on the day pages. What to say in each debrief, and what to cut when a day's clock slips, are in the [facilitator guide](facilitator-guide.md#shape).
 
-**These minutes are planning estimates.** **No lab has been timed on Colab or on a T4.** Labs 1 to 5 were timed on a shared CPU only, and Labs 2 to 5 took far longer there than these minutes allow (see the [facilitator guide](facilitator-guide.md)). The lecture plans were set on paper; no lecture has yet been given aloud against its clock (see the [readiness page](readiness.qmd#open-work)). Treat every row as a target until you have run the notebook on the room's runtime and given the lecture once.
+**These minutes are planning estimates.** **No lab has been timed on Colab or on a T4.** Labs 1 to 5 were timed on a shared CPU only, and Labs 2 to 5 took far longer there than these minutes allow (see the [facilitator guide](facilitator-guide.md)). The briefing plans were set on paper; no briefing has yet been given aloud against its clock (see the [readiness page](readiness.qmd#open-work)). Treat every row as a target until you have run the notebook on the room's runtime and given the briefing once.
 
-Collapsed callouts marked **Optional**, sections marked **Reference**, and checks or demos that a live plan does not name sit outside the lecture minutes. The stretch section of every lab sits outside the lab minutes.
+Collapsed callouts marked **Optional**, sections marked **Reference**, and checks or demos that a live plan does not name sit outside the briefing minutes. The stretch section of every lab sits outside the lab minutes.
 
 ## Before Day 1: Module 0 · {{< var modules.m00.title >}}
 
-Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no lecture; the same rows pace the optional drop-in clinic on Day 1, 08:00–09:00. Minutes count from the start. **Provisional:** these rows follow the step plan on the [Module 0 page](lectures/00-coding-agents.qmd). No one has yet timed the module on a fresh laptop, so they are a target, not a measurement. Install failures and what to do about them are in the [facilitator guide](facilitator-guide.md#module-0).
+Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no briefing; the same rows pace the optional drop-in clinic on Day 1, 08:00–09:00. Minutes count from the start. **Provisional:** these rows follow the step plan on the [Module 0 page](modules/00-coding-agents.qmd). No one has yet timed the module on a fresh laptop, so they are a target, not a measurement. Install failures and what to do about them are in the [facilitator guide](facilitator-guide.md#module-0).
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -49,7 +49,7 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no l
 
 ### Module 1 · {{< var modules.m01.title >}}
 
-**Lecture** ({{< var schedule.clocks.standard.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.standard.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-01.md >}}
 
@@ -68,7 +68,7 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no l
 
 ### Module 2 · {{< var modules.m02.title >}}
 
-**Lecture** ({{< var schedule.clocks.standard.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.standard.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-02.md >}}
 
@@ -89,7 +89,7 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no l
 
 ### Module 3 · {{< var modules.m03.title >}}
 
-**Lecture** ({{< var schedule.clocks.standard.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.standard.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-03.md >}}
 
@@ -110,7 +110,7 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no l
 
 ### Module 4 · {{< var modules.m04.title >}}
 
-**Lecture** ({{< var schedule.clocks.standard.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.standard.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-04.md >}}
 
@@ -129,17 +129,17 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no l
 
 ## Day 2
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 2 page](day-2.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 2 page](day-2.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-2) | |
 
 ### Module 5 · {{< var modules.m05.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-05.md >}}
 
@@ -159,11 +159,11 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no l
 
 ### Module 6 · {{< var modules.m06.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes, before lunch)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes, before lunch)
 
 {{< include /_includes/pace-06.md >}}
 
-The lecture stops at lunch, wherever it has reached. On slow Wi-Fi, participants can open Lab 6, switch on a T4 and run the setup cell as they leave, so the checkpoints download over lunch.
+The briefing stops at lunch, wherever it has reached. On slow Wi-Fi, participants can open Lab 6, switch on a T4 and run the setup cell as they leave, so the checkpoints download over lunch.
 
 **Lab** ({{< var schedule.clocks.long.shape.lab >}} minutes, after lunch) **and debrief** ({{< var schedule.clocks.long.shape.debrief >}})
 
@@ -181,7 +181,7 @@ The lecture stops at lunch, wherever it has reached. On slow Wi-Fi, participants
 
 ### Module 7 · {{< var modules.m07.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-07.md >}}
 
@@ -200,26 +200,26 @@ The lecture stops at lunch, wherever it has reached. On slow Wi-Fi, participants
 
 **Behind at minute 37:** run Exercise 6's `SAMPLING` cell as a demonstration and keep `rouge_n`. The stretch is the first thing dropped on any day.
 
-### Closing synthesis
+### Day wrap-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–5 | In pairs: the three prompts on the [Day 2 page](day-2.qmd#synthesis) | |
+| 0–5 | In pairs: the three prompts on the [Day 2 page](day-2.qmd#wrap-up) | |
 | 5–15 | With the room: fixed and left open for Modules 5 to 7; the running table, from the debriefs' numbers; one claim | the table on the board, kept for Day 5 |
 
 ## Day 3
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 3 page](day-3.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 3 page](day-3.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-3) | |
 
 ### Module 8 · {{< var modules.m08.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-08.md >}}
 
@@ -240,11 +240,11 @@ The lecture stops at lunch, wherever it has reached. On slow Wi-Fi, participants
 
 ### Module 9 · {{< var modules.m09.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes, before lunch)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes, before lunch)
 
 {{< include /_includes/pace-09.md >}}
 
-The lecture stops at lunch, wherever it has reached.
+The briefing stops at lunch, wherever it has reached.
 
 **Lab** ({{< var schedule.clocks.long.shape.lab >}} minutes, after lunch) **and debrief** ({{< var schedule.clocks.long.shape.debrief >}})
 
@@ -262,7 +262,7 @@ The lecture stops at lunch, wherever it has reached.
 
 ### Module 10 · {{< var modules.m10.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-10.md >}}
 
@@ -280,26 +280,26 @@ The lecture stops at lunch, wherever it has reached.
 
 **Behind at minute 24:** do not cut a training run; ask the Predict questions while training runs (estimated 1.5 minutes per run on a T4, unmeasured).
 
-### Closing synthesis
+### Day wrap-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–5 | In pairs: the three prompts on the [Day 3 page](day-3.qmd#synthesis) | |
+| 0–5 | In pairs: the three prompts on the [Day 3 page](day-3.qmd#wrap-up) | |
 | 5–15 | With the room: fixed and left open for Modules 8 to 10; today's rows of the running table; what the numbers do not say | today's rows on the board, kept for Day 5 |
 
 ## Day 4
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 4 page](day-4.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 4 page](day-4.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-4), including the honesty rule | |
 
 ### Module 11 · {{< var modules.m11.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-11.md >}}
 
@@ -315,15 +315,15 @@ The lecture stops at lunch, wherever it has reached.
 | 47–55 | Exercise 5 (risk–coverage and the threshold), ending with the closing question: what would you let act alone? | CP5 |
 | 55–65 | **Debrief:** ECE, Brier score and log loss before and after temperature scaling, with accuracy unchanged; the stated confidence's ECE; the misconception "temperature scaling makes the model more accurate"; the closing question as the bridge to Module 12 | the room's numbers on the board |
 
-**Timing:** the closing question is part of Exercise 5's 8 minutes. If the room is late, take it into the debrief as the bridge to Module 12, whose lecture follows the break. **Behind at minute 35:** start `ask_all` before discussing Exercise 3's results.
+**Timing:** the closing question is part of Exercise 5's 8 minutes. If the room is late, take it into the debrief as the bridge to Module 12, whose briefing follows the break. **Behind at minute 35:** start `ask_all` before discussing Exercise 3's results.
 
 ### Module 12 · {{< var modules.m12.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes, before lunch)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes, before lunch)
 
 {{< include /_includes/pace-12.md >}}
 
-The lecture stops at lunch, wherever it has reached.
+The briefing stops at lunch, wherever it has reached.
 
 **Lab** ({{< var schedule.clocks.long.shape.lab >}} minutes, after lunch) **and debrief** ({{< var schedule.clocks.long.shape.debrief >}})
 
@@ -341,7 +341,7 @@ The lecture stops at lunch, wherever it has reached.
 
 ### Module 13 · {{< var modules.m13.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-13.md >}}
 
@@ -360,31 +360,31 @@ The lecture stops at lunch, wherever it has reached.
 
 **Behind at minute 34:** on the keyed Jev path, rerank `test` only.
 
-### Closing synthesis
+### Day wrap-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–5 | In pairs: the three prompts on the [Day 4 page](day-4.qmd#synthesis) | |
+| 0–5 | In pairs: the three prompts on the [Day 4 page](day-4.qmd#wrap-up) | |
 | 5–13 | With the room: fixed and left open for Modules 11 to 13; today's rows of the running table; ranking or values | today's rows on the board, kept for Day 5 |
 | 13–15 | Announce the capstone pairs; each pair decides tonight which keys it will use | every participant knows their pair |
 
 ## Day 5
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 5 page](day-5.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 5 page](day-5.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-5) | pairs and their path classes confirmed |
 
 ### Module 14 · {{< var modules.m14.title >}}
 
-**Lecture** ({{< var schedule.clocks.long.shape.lecture >}} minutes)
+**Briefing** ({{< var schedule.clocks.long.shape.briefing >}} minutes)
 
 {{< include /_includes/pace-14.md >}}
 
-Lecture 14 was the densest lecture in the desk timing of 2026-10-06, and its plan is checked on paper only. **Behind at lecture minute 38 (section 7 not yet started):** give section 9 as reading, as the lecture's live-plan note says; that recovers its 5 minutes, and the core lab does not depend on it.
+Module 14 was the densest briefing in the desk timing of 2026-10-06, and its plan is checked on paper only. **Behind at briefing minute 38 (section 7 not yet started):** give section 9 as reading, as the briefing's live-plan note says; that recovers its 5 minutes, and the core lab does not depend on it.
 
 **Lab** ({{< var schedule.clocks.long.shape.lab >}} minutes) **and debrief** ({{< var schedule.clocks.long.shape.debrief >}})
 
@@ -403,13 +403,13 @@ Lecture 14 was the densest lecture in the desk timing of 2026-10-06, and its pla
 
 ### Module 15 · {{< var modules.m15.title >}}
 
-{{< var modules.m15.minutes >}} minutes in the two module slots after Module 14, then the day's closing slot, where the wrap-up ends: 255 minutes in all. There is no lecture table and no lab table: the plan below follows [lecture 15's timing](lectures/15-capstone.qmd#timing) and the starter notebook, `15-capstone.ipynb`. The evaluation set does not exist yet, so the baseline and the comparison in this plan cannot be run as designed: see the [readiness page](readiness.qmd#open-work).
+{{< var modules.m15.minutes >}} minutes in the two module slots after Module 14, then the day's closing slot, where the wrap-up ends: 255 minutes in all. There is no briefing table and no lab table: the plan below follows [Module 15's timing](modules/15-capstone.qmd#timing) and the starter notebook, `15-capstone.ipynb`. The evaluation set does not exist yet, so the baseline and the comparison in this plan cannot be run as designed: see the [readiness page](readiness.qmd#open-work).
 
-**Part I and Part II** (the middle slot: the brief, then 110 minutes of build across lunch). Build minutes count from the end of the brief, as in lecture 15 and the notebook; lunch falls at build minute 45.
+**Part I and Part II** (the middle slot: the brief, then 110 minutes of build across lunch). Build minutes count from the end of the brief, as in Module 15 and the notebook; lunch falls at build minute 45.
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| brief, 0–10 | Part I. The brief (lecture sections 1–4): a walk through the tables | pairs formed; path class chosen |
+| brief, 0–10 | Part I. The brief (briefing sections 1–4): a walk through the tables | pairs formed; path class chosen |
 | build, 0–20 | Setup, self-test, write `after_verify`, baseline on `dev` then `test`, read ten traces | self-test green; both baselines run |
 | build, 20–30 | Choose one component; fill in the hypothesis card | hypothesis card filled |
 | build, 30–45 | Make the change; rerun the self-test after every edit; iterate on `dev` | self-test still green; the notebook saved to Drive |
@@ -438,6 +438,6 @@ Lecture 14 was the densest lecture in the desk timing of 2026-10-06, and its pla
 | 18–25 | Section 9, open problems | each pair has named one open problem and the measurement it would start with |
 | 25–30 | Section 10, further study; close | |
 
-### Closing synthesis
+### Day wrap-up
 
-On Day 5 the closing synthesis is not a separate slot: it is the wrap-up's last 15 minutes, and the prompts on the [Day 5 page](day-5.qmd#synthesis) run through the whole wrap-up. Item 1 (the whole line) is section 7's table. Item 2 (today's table) takes Lab 14's numbers from its debrief and the capstone's from Part III's combined table. Item 3 (what is still open) is section 9.
+On Day 5 the day wrap-up is not a separate slot: it is the wrap-up's last 15 minutes, and the prompts on the [Day 5 page](day-5.qmd#wrap-up) run through the whole wrap-up. Item 1 (the whole line) is section 7's table. Item 2 (today's table) takes Lab 14's numbers from its debrief and the capstone's from Part III's combined table. Item 3 (what is still open) is section 9.

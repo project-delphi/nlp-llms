@@ -14,12 +14,37 @@ Combine retrieval, an agent graph and calibrated control into one system, evalua
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   240 minutes
 
-By the end of this module you can:
+Level
+:   400 · Expert
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 15 minutes of compute
+
+Accounts and cost
+:   Google; optional: OpenAI, Anthropic, TypeSafe. Free without keys. Keyed, per pair for the capstone: under 2 USD on Claude, under 25 cents on OpenAI, under 10 cents on Jev (estimates)
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Combine retrieval, an agent graph and calibrated control into one system
 - Evaluate it for accuracy, abstention and cost
 - Explain the design choices to others
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 14 · Agents](/modules/14-agents.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

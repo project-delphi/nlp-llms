@@ -1,15 +1,15 @@
-"""Write the schematic figures of Lectures 5-8 as hand-laid-out SVG.
+"""Write the schematic figures of Modules 5-8 as hand-laid-out SVG.
 
-  images/05-self-attention.svg      one query reads the keys and values (Lecture 5, section 1)
+  images/05-self-attention.svg      one query reads the keys and values (Module 5, section 1)
   images/05-causal-mask.svg         lower-triangular attention weights (section 3)
   images/05-multi-head.svg          project, split into heads, attend, concatenate (section 4)
   images/05-transformer-block.svg   pre-norm block and the decoder-only model (section 6)
-  images/06-bpe-merges.svg          BPE merges on the toy corpus (Lecture 6, section 2)
+  images/06-bpe-merges.svg          BPE merges on the toy corpus (Module 6, section 2)
   images/06-pretrain-finetune.svg   the two-stage transfer recipe (section 3)
   images/06-clm-vs-mlm.svg          causal versus masked language modeling (section 5)
-  images/07-chat-template-mask.svg  chat template and response mask (Lecture 7, section 2)
+  images/07-chat-template-mask.svg  chat template and response mask (Module 7, section 2)
   images/07-lora-update.svg         the LoRA bypass W0 x + (alpha/r) B A x (section 5)
-  images/08-message-list.svg        the stateless message list (Lecture 8, section 2)
+  images/08-message-list.svg        the stateless message list (Module 8, section 2)
   images/08-validate-retry.svg      parse, validate, retry (section 4)
   images/08-tool-loop.svg           the tool-calling loop as a state machine (section 5)
 
@@ -241,7 +241,7 @@ def mix(a: str, b: str, t: float) -> str:
     return "#" + "".join(f"{round(x + (y - x) * t):02x}" for x, y in zip(ca, cb, strict=True))
 
 
-# ===================================================================== Lecture 5
+# ===================================================================== Module 5
 
 
 def fig_self_attention() -> str:
@@ -692,7 +692,7 @@ def fig_transformer_block() -> str:
     )
 
 
-# ===================================================================== Lecture 6
+# ===================================================================== Module 6
 
 
 def _symbols(b: list[str], x: float, y: float, syms: list[str], cw: float = 9.0) -> float:
@@ -896,7 +896,7 @@ def fig_clm_vs_mlm() -> str:
     )
 
 
-# ===================================================================== Lecture 7
+# ===================================================================== Module 7
 
 
 def _tokens(
@@ -1044,7 +1044,7 @@ def fig_lora_update() -> str:
     )
 
 
-# ===================================================================== Lecture 8
+# ===================================================================== Module 8
 
 
 def fig_message_list() -> str:

@@ -1,4 +1,4 @@
-"""Draw the measured attention map of Lecture 4 from the committed Lab 4 output.
+"""Draw the measured attention map of Module 4 from the committed Lab 4 output.
 
   images/04-attention-alignment.svg  attention weights alpha[t][i] for `3 March 2021` (Figure 4.2)
 
