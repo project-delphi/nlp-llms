@@ -8,7 +8,7 @@
 [0]{.path-num}
 
 ::: {.path-body}
-[Coding agents in the terminal](lectures/00-coding-agents.qmd){.path-title} [Optional pre-work]{.chip}
+[Coding agents in the terminal](modules/00-coding-agents.qmd){.path-title} [Optional pre-work]{.chip}
 
 Install a terminal coding agent and use it to build, check and publish two small data apps in Python or R, each with a three.js page. Pre-work, on your own laptop before Day 1.
 :::
@@ -21,7 +21,7 @@ Install a terminal coding agent and use it to build, check and publish two small
 [1]{.path-num}
 
 ::: {.path-body}
-[Text as data](lectures/01-text-as-data.qmd){.path-title}
+[Text as data](modules/01-text-as-data.qmd){.path-title}
 
 Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against.
 :::
@@ -30,7 +30,7 @@ Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-b
 [2]{.path-num}
 
 ::: {.path-body}
-[Word vectors and neural networks](lectures/02-word-vectors.qmd){.path-title}
+[Word vectors and neural networks](modules/02-word-vectors.qmd){.path-title}
 
 From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model.
 :::
@@ -39,7 +39,7 @@ From one-hot vectors to learned embeddings, with a PyTorch refresher and the fir
 [3]{.path-num}
 
 ::: {.path-body}
-[Sequence models](lectures/03-sequence-models.qmd){.path-title}
+[Sequence models](modules/03-sequence-models.qmd){.path-title}
 
 RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences.
 :::
@@ -48,7 +48,7 @@ RNNs, LSTMs and neural language modeling, and why gradients vanish over long seq
 [4]{.path-num}
 
 ::: {.path-body}
-[Seq2seq and attention](lectures/04-seq2seq-attention.qmd){.path-title}
+[Seq2seq and attention](modules/04-seq2seq-attention.qmd){.path-title}
 
 Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.
 :::
@@ -61,7 +61,7 @@ Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.
 [5]{.path-num}
 
 ::: {.path-body}
-[The transformer](lectures/05-transformer-from-scratch.qmd){.path-title}
+[The transformer](modules/05-transformer-from-scratch.qmd){.path-title}
 
 Self-attention, multi-head attention and positional encodings, assembled into a small GPT.
 :::
@@ -70,7 +70,7 @@ Self-attention, multi-head attention and positional encodings, assembled into a 
 [6]{.path-num}
 
 ::: {.path-body}
-[Pretraining and the Hugging Face stack](lectures/06-pretraining-huggingface.qmd){.path-title}
+[Pretraining and the Hugging Face stack](modules/06-pretraining-huggingface.qmd){.path-title}
 
 Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face.
 :::
@@ -79,7 +79,7 @@ Subword tokenization, masked and causal pretraining, and using pretrained models
 [7]{.path-num}
 
 ::: {.path-body}
-[Fine-tuning and LoRA](lectures/07-finetuning-lora.qmd){.path-title}
+[Fine-tuning and LoRA](modules/07-finetuning-lora.qmd){.path-title}
 
 Turning a pretrained language model into an instruction follower, efficiently.
 :::
@@ -92,7 +92,7 @@ Turning a pretrained language model into an instruction follower, efficiently.
 [8]{.path-num}
 
 ::: {.path-body}
-[LLMs through APIs](lectures/08-llm-apis.qmd){.path-title}
+[LLMs through APIs](modules/08-llm-apis.qmd){.path-title}
 
 OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation.
 :::
@@ -101,7 +101,7 @@ OpenAI and Claude side by side: prompting, structured output, tool use, cost and
 [9]{.path-num}
 
 ::: {.path-body}
-[Reinforcement and preference learning](lectures/09-preference-learning.qmd){.path-title}
+[Reinforcement and preference learning](modules/09-preference-learning.qmd){.path-title}
 
 Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons.
 :::
@@ -110,7 +110,7 @@ Text generation as a reinforcement-learning problem, the policy gradient, and re
 [10]{.path-num}
 
 ::: {.path-body}
-[RLHF](lectures/10-rlhf.qmd){.path-title}
+[RLHF](modules/10-rlhf.qmd){.path-title}
 
 The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways it goes wrong.
 :::
@@ -123,7 +123,7 @@ The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways 
 [11]{.path-num}
 
 ::: {.path-body}
-[Calibration](lectures/11-calibration.qmd){.path-title}
+[Calibration](modules/11-calibration.qmd){.path-title}
 
 What a probability should mean, how to measure it, and how to use confidence to decide when to abstain.
 :::
@@ -132,7 +132,7 @@ What a probability should mean, how to measure it, and how to use confidence to 
 [12]{.path-num}
 
 ::: {.path-body}
-[Calibrated decisions: RLCD and Jev](lectures/12-rlcd-jev.qmd){.path-title}
+[Calibrated decisions: RLCD and Jev](modules/12-rlcd-jev.qmd){.path-title}
 
 Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public.
 :::
@@ -141,7 +141,7 @@ Training and using models for calibrated decisions: outcome rewards, thresholds 
 [13]{.path-num}
 
 ::: {.path-body}
-[Retrieval-augmented generation](lectures/13-rag.qmd){.path-title}
+[Retrieval-augmented generation](modules/13-rag.qmd){.path-title}
 
 Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately.
 :::
@@ -154,7 +154,7 @@ Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval 
 [14]{.path-num}
 
 ::: {.path-body}
-[Agents](lectures/14-agents.qmd){.path-title}
+[Agents](modules/14-agents.qmd){.path-title}
 
 Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop interrupts and confidence-gated control.
 :::
@@ -163,7 +163,7 @@ Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop
 [15]{.path-num}
 
 ::: {.path-body}
-[Capstone](lectures/15-capstone.qmd){.path-title}
+[Capstone](modules/15-capstone.qmd){.path-title}
 
 Combine retrieval, an agent graph and calibrated control into one system, evaluate it, and explain the design.
 :::

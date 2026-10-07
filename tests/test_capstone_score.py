@@ -2,7 +2,7 @@
 
 - the notebook's cell "Scoring: do not edit" restates the module's block verbatim, and the hash the
   notebook expects is the module's;
-- the scoring reproduces hand-computed numbers (lecture 15's equations) and the sign-test values;
+- the scoring reproduces hand-computed numbers (Module 15's equations) and the sign-test values;
 - the collector's four checks (scripts/collect_capstone.py);
 - the manifest builder (data/build_capstone_eval.py) is deterministic, stratified and refuses to
   build while its inputs are missing or the snapshot is provisional.

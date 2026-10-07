@@ -6,7 +6,7 @@ Static checks (standard library and PyYAML only, as the CI test job has):
   definition, and Lab 13's "reused by Labs 14 and 15" cell is restated whole; the manifest functions
   repeat data/build_capstone_eval.py;
 - Lab 14's decide() comes without its LocalDecider branch (brief 15, (b)): no decision set, no toy;
-- package pins repeat _variables.yml; thresholds, budgets and recursion_limit are the lecture's;
+- package pins repeat _variables.yml; thresholds, budgets and recursion_limit are the briefing's;
 - the honesty labels and banners are present, no TypeSafe client is built without a key, the
   typesafe_sdk logger is never set to DEBUG, and the notebook never loads an agent-written fixture.
 """
@@ -219,7 +219,7 @@ class Settings(unittest.TestCase):
         self.assertEqual(
             value("NEEDS_TWO"),
             "Does answering this question need evidence from two different modules or documents of "
-            "the workshop's lecture pages, rather than one passage?",
+            "the workshop's module pages, rather than one passage?",
         )
         self.assertEqual(
             value("SUPPORTED"),

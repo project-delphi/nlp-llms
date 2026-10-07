@@ -5,19 +5,19 @@ subtitle: "Entry check and exit check"
 
 <!--
 Instructor page, rendered by Quarto. Module titles come from _variables.yml through var
-shortcodes. Objective numbers refer to the objectives listed at the top of each lecture
+shortcodes. Objective numbers refer to the objectives listed at the top of each briefing
 page, which are generated from _variables.yml; they are not repeated here. Numbers in
-the answers are the build runs recorded in data/baselines.json and quoted in the lectures.
+the answers are the build runs recorded in data/baselines.json and quoted in the briefings.
 -->
 
-Two short checks. The **entry check** tells a participant, before Day 1, whether the prerequisites are in place. The **exit check** asks one or two questions per module objective, so a participant (or an instructor) can see which objectives landed. Neither is graded. Every question can be answered from the lectures and labs; none is a trick question.
+Two short checks. The **entry check** tells a participant, before Day 1, whether the prerequisites are in place. The **exit check** asks one or two questions per module objective, so a participant (or an instructor) can see which objectives landed. Neither is graded. Every question can be answered from the briefings and labs; none is a trick question.
 
 ## How to use them
 
 - **Entry check.** Participants take it on the [Before Day 1](prepare.qmd) page, the first step before Setup: about 15 minutes, on paper or in a notebook, with no web search. One rule applies: a participant who misses two or more of the three questions in an area does that area's remediation, listed on the same page, before Day 1; one miss in an area needs no action. Send the page a week ahead, so there is time for the remediation.
 - **Exit check.** On Days 2 to 5, the 15 minutes of retrieval practice that open the day use five of these questions: about three from the previous day and two from earlier days. The picks and the routine are on each day page ([Day 2](day-2.qmd#retrieval), [Day 3](day-3.qmd#retrieval), [Day 4](day-4.qmd#retrieval), [Day 5](day-5.qmd#retrieval)). Participants can also use the questions of the day's modules as a self-check that evening, or all of them after Day 5. Answers are folded under each question. Each answer names the lab and exercise that produced the evidence, so a participant who misses a question knows which cell to rerun.
-- **Numbers.** Where an answer quotes a measured number, it is the build run recorded in `data/baselines.json` and quoted in the lecture. If your room ran on another runtime and got a different number, accept the room's number with the same reasoning.
-- **Labs whose real path has not run.** The [readiness page](readiness.qmd) lists which labs have run on their real models, and where. A question on a lab that has not tests the reasoning of the lecture and the checkpoint, not a model result.
+- **Numbers.** Where an answer quotes a measured number, it is the build run recorded in `data/baselines.json` and quoted in the briefing. If your room ran on another runtime and got a different number, accept the room's number with the same reasoning.
+- **Labs whose real path has not run.** The [readiness page](readiness.qmd) lists which labs have run on their real models, and where. A question on a lab that has not tests the reasoning of the briefing and the checkpoint, not a model result.
 
 ## Entry check {#entry-check}
 
@@ -27,7 +27,7 @@ Participants take this check on the [Before Day 1](prepare.qmd#entry-check) page
 
 ## Exit check
 
-Questions are numbered *module.objective*, with a letter when an objective has two. Objective numbers refer to the list at the top of each lecture page. Each question has its own link, with the dot replaced by a hyphen: `#q10-2` for 10.2, `#q12-3a` for 12.3a. The day pages use these links. The outcome numbers refer to the workshop's learning outcomes:
+Questions are numbered *module.objective*, with a letter when an objective has two. Objective numbers refer to the list at the top of each module page. Each question has its own link, with the dot replaced by a hyphen: `#q10-2` for 10.2, `#q12-3a` for 12.3a. The day pages use these links. The outcome numbers refer to the workshop's learning outcomes:
 
 | Outcome | By the end of the workshop a participant can | Modules |
 |---|---|---|
@@ -43,7 +43,7 @@ Questions are numbered *module.objective*, with a letter when an objective has t
 
 ### Module 1 · {{< var modules.m01.title >}}
 
-Objectives: [lecture 1](lectures/01-text-as-data.qmd).
+Objectives: [Module 1](modules/01-text-as-data.qmd).
 
 [**1.1**]{#q1-1} (Objective 1 · Outcome 1) At `min_count = 2`, part of the validation split maps to `<unk>`. Name one change that lowers that share, and one cost of making it.
 
@@ -71,7 +71,7 @@ Naive Bayes sets its weights by counting words per class, under the assumption t
 
 ### Module 2 · {{< var modules.m02.title >}}
 
-Objectives: [lecture 2](lectures/02-word-vectors.qmd).
+Objectives: [Module 2](modules/02-word-vectors.qmd).
 
 [**2.1**]{#q2-1} (Objective 1 · Outcome 1) Why do *hot* and *cold* end up close together in a skip-gram embedding space?
 
@@ -88,10 +88,10 @@ $\mathcal{L} = -\log \sigma(u_o^\top e_w) - \sum_{k=1}^{K} \log \sigma(-u_{n_k}^
 [**2.2b**]{#q2-2b} (Objective 2 · Outcome 1) What does negative sampling buy over the full softmax, and what does it give up?
 
 ::: {.callout-tip collapse="true" title="Answer"}
-Cost: each pair costs $O(K)$ instead of $O(|V|)$. It gives up normalized probabilities: it is a different objective, so it cannot be used to compute a perplexity. **Evidence:** lecture 2, section 4; Lab 2, Exercise 1.
+Cost: each pair costs $O(K)$ instead of $O(|V|)$. It gives up normalized probabilities: it is a different objective, so it cannot be used to compute a perplexity. **Evidence:** Module 2, section 4; Lab 2, Exercise 1.
 :::
 
-[**2.3**]{#q2-3} (Objective 3 · Outcome 2) In Lab 2, averaged skip-gram embeddings with a feed-forward network scored 0.867 test accuracy, against 0.884 for TF-IDF with logistic regression on the same split. Give two reasons from the lecture why the dense model need not win.
+[**2.3**]{#q2-3} (Objective 3 · Outcome 2) In Lab 2, averaged skip-gram embeddings with a feed-forward network scored 0.867 test accuracy, against 0.884 for TF-IDF with logistic regression on the same split. Give two reasons from the briefing why the dense model need not win.
 
 ::: {.callout-tip collapse="true" title="Answer"}
 Averaging discards word order and blurs the few distinctive words that decide a topic. The embeddings were trained on about one million tokens. On topic classification with plenty of labels, word identity carries most of the signal, which TF-IDF keeps. Whether dense features win is an empirical question. **Evidence:** Lab 2, Exercises 3 and 4 and the results table.
@@ -99,7 +99,7 @@ Averaging discards word order and blurs the few distinctive words that decide a 
 
 ### Module 3 · {{< var modules.m03.title >}}
 
-Objectives: [lecture 3](lectures/03-sequence-models.qmd).
+Objectives: [Module 3](modules/03-sequence-models.qmd).
 
 [**3.1**]{#q3-1} (Objective 1 · Outcome 2) Write the RNN step, and the two LSTM lines that update the cell state and the hidden state.
 
@@ -127,7 +127,7 @@ Perplexities are comparable only at the same token unit, on the same test text, 
 
 ### Module 4 · {{< var modules.m04.title >}}
 
-Objectives: [lecture 4](lectures/04-seq2seq-attention.qmd).
+Objectives: [Module 4](modules/04-seq2seq-attention.qmd).
 
 [**4.1**]{#q4-1} (Objective 1 · Outcome 2) In the plain encoder-decoder, what is the decoder's first state, and how is the training loss computed?
 
@@ -155,7 +155,7 @@ It shows which encoder state the decoder read at that step: a soft alignment. It
 
 ### Module 5 · {{< var modules.m05.title >}}
 
-Objectives: [lecture 5](lectures/05-transformer-from-scratch.qmd).
+Objectives: [Module 5](modules/05-transformer-from-scratch.qmd).
 
 [**5.1**]{#q5-1} (Objective 1 · Outcome 2) Why are attention scores divided by $\sqrt{d_k}$? Use Lab 5's measurement.
 
@@ -166,7 +166,7 @@ With unit-variance entries, $q^\top k$ has variance $d_k$, so the score's standa
 [**5.2a**]{#q5-2a} (Objective 2 · Outcome 2) With $d_k = d / n_h$, does going from one head to four change the number of parameters?
 
 ::: {.callout-tip collapse="true" title="Answer"}
-No. Four heads are four narrower lookups with the same total projection size. **Evidence:** lecture 5, section 4; the stretch of Lab 5 asserts the count does not change with $n_h$.
+No. Four heads are four narrower lookups with the same total projection size. **Evidence:** Module 5, section 4; the stretch of Lab 5 asserts the count does not change with $n_h$.
 :::
 
 [**5.2b**]{#q5-2b} (Objective 2 · Outcome 2) List the parts of a pre-norm decoder-only transformer from token IDs to logits, and say what the causal mask guarantees.
@@ -183,7 +183,7 @@ A tie at this budget, not a ranking. The difference is within seed noise. The co
 
 ### Module 6 · {{< var modules.m06.title >}}
 
-Objectives: [lecture 6](lectures/06-pretraining-huggingface.qmd).
+Objectives: [Module 6](modules/06-pretraining-huggingface.qmd).
 
 [**6.1a**]{#q6-1a} (Objective 1 · Outcome 3) Byte-pair encoding on the corpus *low* ×5, *lower* ×2, *newest* ×6, *widest* ×3, with an end-of-word symbol: what is the count of the pair (e, s), and what is the first merge?
 
@@ -211,7 +211,7 @@ About $\ln 4 \approx 1.386$: a fresh head gives near-uniform predictions. Standa
 
 ### Module 7 · {{< var modules.m07.title >}}
 
-Objectives: [lecture 7](lectures/07-finetuning-lora.qmd).
+Objectives: [Module 7](modules/07-finetuning-lora.qmd).
 
 [**7.1**]{#q7-1} (Objective 1 · Outcome 3) Instruction tuning changes which of these: the architecture, the loss, or the data? Which token positions are scored?
 
@@ -239,7 +239,7 @@ Perplexity measures the probability of the reference responses, not the quality 
 
 ### Module 8 · {{< var modules.m08.title >}}
 
-Objectives: [lecture 8](lectures/08-llm-apis.qmd).
+Objectives: [Module 8](modules/08-llm-apis.qmd).
 
 [**8.1a**]{#q8-1a} (Objective 1 · Outcome 4) In a tool-calling loop, who runs the tool, and what goes back to the model?
 
@@ -267,12 +267,12 @@ $(400 \times 1 + 60 \times 5)/10^6 = \$0.0007$. The API is stateless, so every c
 
 ### Module 9 · {{< var modules.m09.title >}}
 
-Objectives: [lecture 9](lectures/09-preference-learning.qmd).
+Objectives: [Module 9](modules/09-preference-learning.qmd).
 
 [**9.1**]{#q9-1} (Objective 1 · Outcome 5) In the reinforcement-learning view of text generation, what are the state, the action and the policy?
 
 ::: {.callout-tip collapse="true" title="Answer"}
-The state is the prompt plus the response so far; the action is the next token; the policy is the language model's next-token distribution. The log-probability of a response is the sum of its tokens' log-probabilities. **Evidence:** Lab 9, Part A (the toy sequence task) and lecture 9, section 5.
+The state is the prompt plus the response so far; the action is the next token; the policy is the language model's next-token distribution. The log-probability of a response is the sum of its tokens' log-probabilities. **Evidence:** Lab 9, Part A (the toy sequence task) and Module 9, section 5.
 :::
 
 [**9.2a**]{#q9-2a} (Objective 2 · Outcome 5) Write the REINFORCE loss with a baseline, and say why the baseline does not bias the gradient.
@@ -295,7 +295,7 @@ $P(a \succ b) = \sigma\big((g_a - g_b)/\tau_{\text{label}}\big)$; loss $-\log \s
 
 ### Module 10 · {{< var modules.m10.title >}}
 
-Objectives: [lecture 10](lectures/10-rlhf.qmd).
+Objectives: [Module 10](modules/10-rlhf.qmd).
 
 [**10.1**]{#q10-1} (Objective 1 · Outcome 5) Name the three stages of the InstructGPT pipeline and what each produces.
 
@@ -318,12 +318,12 @@ $\log 2$: both implicit rewards are 0 and $-\log \sigma(0) = \log 2$. DPO remove
 [**10.4**]{#q10-4} (Objective 4 · Outcome 5) With $\beta = 0$, the reward model's score of the policy rises. What does the gold rule show, and why can the reward model not see it?
 
 ::: {.callout-tip collapse="true" title="Answer"}
-Reward hacking: the reward model's score holds up while the gold reward ends lower than with the penalty, and the policy drifts far from the reference and loses variety. The gold rule lets the two scores part in three ways: no credit past three distinct positive words (the cap), a penalty for crowding, and simply fewer distinct positive words, or more negative ones, in the samples. The reward model was trained on the reference's own samples. There the cap and the crowding term almost never fire, so it never learned them, and on text unlike those samples its score is extrapolation. Which route a run takes is not fixed: one exploratory run (seed 0, on an Apple M1 Pro laptop, not the T4 protocol) collapsed onto one positive word and filler, "good as as as …", which neither the cap nor the crowding term penalizes. Other failure modes named in the lecture: mode collapse, sycophancy, and optimizing for what raters can judge rather than what is true. **Evidence:** Lab 10, Exercise 4 (the asserted signature; not yet verified across seeds on a T4).
+Reward hacking: the reward model's score holds up while the gold reward ends lower than with the penalty, and the policy drifts far from the reference and loses variety. The gold rule lets the two scores part in three ways: no credit past three distinct positive words (the cap), a penalty for crowding, and simply fewer distinct positive words, or more negative ones, in the samples. The reward model was trained on the reference's own samples. There the cap and the crowding term almost never fire, so it never learned them, and on text unlike those samples its score is extrapolation. Which route a run takes is not fixed: one exploratory run (seed 0, on an Apple M1 Pro laptop, not the T4 protocol) collapsed onto one positive word and filler, "good as as as …", which neither the cap nor the crowding term penalizes. Other failure modes named in the briefing: mode collapse, sycophancy, and optimizing for what raters can judge rather than what is true. **Evidence:** Lab 10, Exercise 4 (the asserted signature; not yet verified across seeds on a T4).
 :::
 
 ### Module 11 · {{< var modules.m11.title >}}
 
-Objectives: [lecture 11](lectures/11-calibration.qmd).
+Objectives: [Module 11](modules/11-calibration.qmd).
 
 [**11.1**]{#q11-1} (Objective 1 · Outcome 6) A classifier gives confidence 0.8 on 1,000 cases. What must be true for it to be calibrated there? Can a calibrated model be useless?
 
@@ -351,9 +351,9 @@ Act when $\hat{p} > \lambda^* = 1 - 1/10 = 0.9$. The curve depends only on the o
 
 ### Module 12 · {{< var modules.m12.title >}}
 
-Objectives: [lecture 12](lectures/12-rlcd-jev.qmd). These questions follow the honesty rule: they test the difference between what TypeSafe has stated and what is our illustration. The key for 12.3a follows lecture 12, section 5, as corrected from TypeSafe's documentation on 2026-10-06; re-check it if the workshop lead's sign-off changes that section.
+Objectives: [Module 12](modules/12-rlcd-jev.qmd). These questions follow the honesty rule: they test the difference between what TypeSafe has stated and what is our illustration. The key for 12.3a follows Module 12, section 5, as corrected from TypeSafe's documentation on 2026-10-06; re-check it if the workshop lead's sign-off changes that section.
 
-[**12.1**]{#q12-1} (Objective 1 · Outcome 6) In the lecture's framing (ours, not TypeSafe's method), how does an outcome reward with a proper score differ from RLHF's preference reward? Name one thing Lab 12's toy experiment does not show.
+[**12.1**]{#q12-1} (Objective 1 · Outcome 6) In the briefing's framing (ours, not TypeSafe's method), how does an outcome reward with a proper score differ from RLHF's preference reward? Name one thing Lab 12's toy experiment does not show.
 
 ::: {.callout-tip collapse="true" title="Answer"}
 A preference reward is relative, comes from a model of raters, and never sees a probability. An outcome reward is computed from a verified label and can score the whole reported distribution; with a proper score such as the Brier score, only the true probabilities earn the most reward, whereas an accuracy reward is maximized by putting all probability on one answer. The toy does not show how Jev was trained (TypeSafe has not published RLCD), nor that training for calibration beats repairing it afterwards: on held-out wordings both toy models were overconfident, and temperature scaling closed most of the gap. **Evidence:** Lab 12, Exercise 1 (the table on `train`, `dev` and `test`).
@@ -374,7 +374,7 @@ $\tau_{\text{act}} = 1 - 0.5/(20 - 4) = 0.96875$ and $\tau_{\text{esc}} = 1 - (3
 5. A choice answer carries a probability for every option and a separate `confidence` that summarizes how concentrated the distribution is.
 
 ::: {.callout-tip collapse="true" title="Answer"}
-Stated by TypeSafe: 1 (`typesafe-ai/skills`, `SKILL.md`; the documentation's System One page states the same first clause), 2 in substance, and 5 (`typesafe-sdk`, `SKILL.md` and the documentation's Confidence page). For 2, TypeSafe's AI primer (read 2026-10-06) says that RLCD "trains TypeSafe to return decisions and calibrated probabilities instead of generated text", while RLHF "trains models to produce responses people prefer"; the words "instead of preference" are the third parties' summary, not TypeSafe's. Reported by third parties: 4. It is not in TypeSafe's documentation, which says instead that "Most queries complete in about 100 ms". Our illustration: 3, from Lab 12's toy model; it is evidence about our toy, not about how Jev was trained. TypeSafe names RLCD and states its aim, but has not published its reward, data or algorithm. **Evidence:** lecture 12, section 5; Lab 12, Exercise 1 and the closing cell.
+Stated by TypeSafe: 1 (`typesafe-ai/skills`, `SKILL.md`; the documentation's System One page states the same first clause), 2 in substance, and 5 (`typesafe-sdk`, `SKILL.md` and the documentation's Confidence page). For 2, TypeSafe's AI primer (read 2026-10-06) says that RLCD "trains TypeSafe to return decisions and calibrated probabilities instead of generated text", while RLHF "trains models to produce responses people prefer"; the words "instead of preference" are the third parties' summary, not TypeSafe's. Reported by third parties: 4. It is not in TypeSafe's documentation, which says instead that "Most queries complete in about 100 ms". Our illustration: 3, from Lab 12's toy model; it is evidence about our toy, not about how Jev was trained. TypeSafe names RLCD and states its aim, but has not published its reward, data or algorithm. **Evidence:** Module 12, section 5; Lab 12, Exercise 1 and the closing cell.
 :::
 
 [**12.3b**]{#q12-3b} (Objective 3 · Outcome 6) A yes/no answer returns `noul = 0.2`. What is the chosen answer and its probability? A choice answer returns probabilities $(0.6, 0.1, 0.1, 0.1, 0.1)$ and `confidence = 0.5`. Which number goes on the reliability diagram?
@@ -385,7 +385,7 @@ Stated by TypeSafe: 1 (`typesafe-ai/skills`, `SKILL.md`; the documentation's Sys
 
 ### Module 13 · {{< var modules.m13.title >}}
 
-Objectives: [lecture 13](lectures/13-rag.qmd).
+Objectives: [Module 13](modules/13-rag.qmd).
 
 [**13.1a**]{#q13-1a} (Objective 1 · Outcome 7) Name the seven stages of a RAG pipeline, in order.
 
@@ -408,7 +408,7 @@ Larger chunks contain more text, so they cover more evidence at the same $k$. Co
 [**13.2b**]{#q13-2b} (Objective 2 · Outcome 7) Three questions have their first relevant chunk at ranks 3, 1 and nowhere in the list. What is the MRR?
 
 ::: {.callout-tip collapse="true" title="Answer"}
-$(1/3 + 1 + 0)/3 \approx 0.444$. **Evidence:** Lab 13, Exercise 1 (the lecture's worked example is the checkpoint).
+$(1/3 + 1 + 0)/3 \approx 0.444$. **Evidence:** Lab 13, Exercise 1 (the briefing's worked example is the checkpoint).
 :::
 
 [**13.3**]{#q13-3} (Objective 3 · Outcome 7) An answer is fully faithful to its retrieved passages, and wrong. Where is it in the two-by-two table of evidence retrieved against correct, and what would you change first?
@@ -419,7 +419,7 @@ Evidence not retrieved, answer wrong: a retrieval failure. It is faithful to the
 
 ### Module 14 · {{< var modules.m14.title >}}
 
-Objectives: [lecture 14](lectures/14-agents.qmd).
+Objectives: [Module 14](modules/14-agents.qmd).
 
 [**14.1**]{#q14-1} (Objective 1 · Outcome 8) What does an explicit LangGraph graph make visible that Module 8's tool loop did not, and what stops a runaway loop?
 
@@ -447,7 +447,7 @@ Not that the guard is safe: 0 out of 45 is consistent with a true rate of severa
 
 ### Module 15 · {{< var modules.m15.title >}}
 
-Objectives: [lecture 15](lectures/15-capstone.qmd). These questions were written from lecture 15 before `15-capstone.ipynb` was built; check them against the notebook's starter system before you use them. The capstone's evaluation set does not exist yet, so no question here asks for a measured result.
+Objectives: [Module 15](modules/15-capstone.qmd). These questions were written from Module 15 before `15-capstone.ipynb` was built; check them against the notebook's starter system before you use them. The capstone's evaluation set does not exist yet, so no question here asks for a measured result.
 
 [**15.1**]{#q15-1} (Objective 1 · Outcome 9) In the capstone starter, which nodes ask the decision model a question, and what does each decide?
 
@@ -458,7 +458,7 @@ Objectives: [lecture 15](lectures/15-capstone.qmd). These questions were written
 [**15.2a**]{#q15-2a} (Objective 2 · Outcome 9) With $\ell_{\text{wrong}} = 5$ and $\ell_{\text{abs}} = 1$, and 40 answerable and 25 unanswerable questions, what is the cost per question of abstaining on everything? When does answering pay?
 
 ::: {.callout-tip collapse="true" title="Answer"}
-$40/65 \approx 0.62$: each answerable question costs 1 when abstained on, each unanswerable one 0. Answering pays only when the answer is right more than $1 - 1/5 = 80\%$ of the time (Chow's rule). **Evidence:** Lab 15, the scoring cell (lecture 15, section 3).
+$40/65 \approx 0.62$: each answerable question costs 1 when abstained on, each unanswerable one 0. Answering pays only when the answer is right more than $1 - 1/5 = 80\%$ of the time (Chow's rule). **Evidence:** Lab 15, the scoring cell (Module 15, section 3).
 :::
 
 [**15.2b**]{#q15-2b} (Objective 2 · Outcome 9) A change gains 7 questions and loses 2 against the baseline. Is the improvement shown? What else do you compare $g + l$ with?

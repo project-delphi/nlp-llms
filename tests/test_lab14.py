@@ -290,7 +290,7 @@ class Honesty(unittest.TestCase):
 
 class Stretch(unittest.TestCase):
     """The one stretch section comes after the core path and has four parts, each a TODO stub
-    followed by its folded solution (lecture 14, sections 3, 7 and 9)."""
+    followed by its folded solution (Module 14, sections 3, 7 and 9)."""
 
     def test_stretch_follows_the_core_path(self):
         self.assertLess(

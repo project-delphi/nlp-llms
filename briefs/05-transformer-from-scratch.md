@@ -1,6 +1,6 @@
 # Lab brief: `notebooks/05-transformer-from-scratch.ipynb`
 
-From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/05-transformer-from-scratch.qmd` (same symbols and equation names). Lab standards: `PLAN.md` section 5. Data contract: `data/README.md`. This file is not rendered by Quarto.
+From the Academic Director to the Neural Lab Engineer. Briefing: `modules/05-transformer-from-scratch.qmd` (same symbols and equation names). Lab standards: `PLAN.md` section 5. Data contract: `data/README.md`. This file is not rendered by Quarto.
 
 **Objectives exercised** (from `_variables.yml`, `m05`): implement scaled dot-product and multi-head self-attention; assemble a decoder-only transformer; train a small GPT and compare it with the LSTM.
 
@@ -18,7 +18,7 @@ From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/05-tra
 
 ## Model (provided)
 
-Pre-norm decoder-only transformer, lecture eq. `gpt`: token embedding plus learned position table, `n_l` blocks (eq. `block`), final layer norm, output layer. Starting point, to be tuned: `d = 128`, `n_h = 4` (`d_k = 32`), `n_l = 4`, `T_max = 128`, `d_ff = 4d`, dropout 0.1, AdamW, batch 64, a fixed step count. The provided `MultiHeadAttention` calls the participant's `scaled_dot_product_attention` with tensors of shape `(B, n_h, T, d_k)` and returns the weights `A` for plotting. The training loop, the block, sampling (Lab 3's temperature sampler restated) and the plotting helper are scaffolding.
+Pre-norm decoder-only transformer, briefing eq. `gpt`: token embedding plus learned position table, `n_l` blocks (eq. `block`), final layer norm, output layer. Starting point, to be tuned: `d = 128`, `n_h = 4` (`d_k = 32`), `n_l = 4`, `T_max = 128`, `d_ff = 4d`, dropout 0.1, AdamW, batch 64, a fixed step count. The provided `MultiHeadAttention` calls the participant's `scaled_dot_product_attention` with tensors of shape `(B, n_h, T, d_k)` and returns the weights `A` for plotting. The training loop, the block, sampling (Lab 3's temperature sampler restated) and the plotting helper are scaffolding.
 
 ## Core path (50 minutes)
 
@@ -37,7 +37,7 @@ Total 48 minutes, 2 of slack.
 
 ## Stretch (one section, last, optional; not needed by any later lab)
 
-Write `MultiHeadAttention.forward` with the split (`view`, `transpose`, concatenate, project; lecture eq. `mha`) and `Block.forward` in pre-norm form (eq. `block`). Checkpoints: with the provided reference's weights loaded, outputs match (`allclose`); `n_h = 1` reproduces Exercise 1 followed by the projection; the leak test of Exercise 2 passes on their block; parameter count equals the reference's and does not change with `n_h`.
+Write `MultiHeadAttention.forward` with the split (`view`, `transpose`, concatenate, project; briefing eq. `mha`) and `Block.forward` in pre-norm form (eq. `block`). Checkpoints: with the provided reference's weights loaded, outputs match (`allclose`); `n_h = 1` reproduces Exercise 1 followed by the projection; the leak test of Exercise 2 passes on their block; parameter count equals the reference's and does not change with `n_h`.
 
 ## Compute budget (free Colab T4; whole notebook under 10 minutes)
 
@@ -53,30 +53,30 @@ For orientation only, not our measurement: the nanoGPT README (read 2026-10-04) 
 
 ## Flags for the Lab Engineer
 
-1. **Do not promise that the GPT beats the LSTM.** A small transformer on 1 MB of text within a few minutes may or may not. The table prints the result with training time beside it; there is no assertion on the direction of GPT against LSTM. The lecture says the same. Set an assertion only for GPT test PPL below the character trigram's, with a margin from at least three seeds, and only if the measurements support it. All comparison thresholds are yours to set from measurements. If the GPT loses to the LSTM, report the numbers and the configuration; do not tune on `test` and do not weaken the LSTM.
+1. **Do not promise that the GPT beats the LSTM.** A small transformer on 1 MB of text within a few minutes may or may not. The table prints the result with training time beside it; there is no assertion on the direction of GPT against LSTM. The briefing says the same. Set an assertion only for GPT test PPL below the character trigram's, with a margin from at least three seeds, and only if the measurements support it. All comparison thresholds are yours to set from measurements. If the GPT loses to the LSTM, report the numbers and the configuration; do not tune on `test` and do not weaken the LSTM.
 2. State in the notebook each model's parameter count, training steps and time, because the comparison is only meaningful at a stated budget.
 3. The leak test must run in `eval()` mode (dropout off) and on a model with no batch-dependent layer. Use `float("-inf")` with `masked_fill`, not a large negative number, so the zeros are exact.
 4. Exercise 3's shuffle test holds exactly for a **single** attention layer only. In a causal stack, deeper layers can infer position from the mask. Do not run it on the full model.
 5. Reference for Exercise 1: an explicit loop or `einsum` written in the notebook is enough. `torch.nn.functional.scaled_dot_product_attention` is an option, but I could not read its documentation page today, so check its boolean-mask convention (I believe `True` means "may attend") and that it returns only the output, not the weights, against the pinned PyTorch version.
-6. Use the lecture's names in code and comments: `H`, `Q`, `K`, `V`, `A`, `V_bar`, `d_k`, `n_h`, `n_l`, `T_max`, `W_Q`, `W_K`, `W_V`, `proj`, `tau`. Do not name anything `c` or `h_bar` (taken by Labs 3 and 4).
-7. Exercise 5 makes no claim about what a head "means". The text should repeat the lecture's caution about reading attention maps. No threshold on the distances unless you measure a stable one.
+6. Use the briefing's names in code and comments: `H`, `Q`, `K`, `V`, `A`, `V_bar`, `d_k`, `n_h`, `n_l`, `T_max`, `W_Q`, `W_K`, `W_V`, `proj`, `tau`. Do not name anything `c` or `h_bar` (taken by Labs 3 and 4).
+7. Exercise 5 makes no claim about what a head "means". The text should repeat the briefing's caution about reading attention maps. No threshold on the distances unless you measure a stable one.
 8. Send me, measured: the results table (three seeds if time allows), run time per section on a T4, the score standard deviations of Exercise 1, and one attention map per head for a fixed passage, so that the illustrative figure `images/05-causal-mask.svg` can be replaced with real weights.
 9. Module 6 loads pretrained transformers through Hugging Face and does not reuse this model. Nothing here needs to be saved for a later lab.
 
 ## As built (Director review, 2026-10-05)
 
-The notebook departs from this brief in these ways. All are accepted; the lecture now matches the notebook. The numbers are from the run recorded in `data/baselines.json` (`lab05.mini_gpt`, `lab05.lstm`): the full (T4) configuration, seed 0, executed on a CPU.
+The notebook departs from this brief in these ways. All are accepted; the briefing now matches the notebook. The numbers are from the run recorded in `data/baselines.json` (`lab05.mini_gpt`, `lab05.lstm`): the full (T4) configuration, seed 0, executed on a CPU.
 
 - **Function names.** Exercise 3 is `embed_with_positions(idx, tok_emb, pos_emb)`, called from `GPT.forward`. The stretch subclasses the provided classes as `MyMultiHeadAttention` and `MyBlock`, so the reference weights load into them with `load_state_dict`.
 - **Leak tests.** Three, not two: on one attention step (Checkpoint 2), on the untrained model's logits at the end of Exercise 3 (Checkpoint 3b, `model_leak_test`), and on the trained model's logits (Checkpoint 4b). Measured change before $t_0$: exactly 0.0 in both whole-model tests.
 - **Exercise 1.** Measured score standard deviation, unscaled / scaled: $d_k = 16$: 4.006 / 1.001; 64: 7.997 / 1.000; 256: 15.873 / 0.992. The cell also prints the largest softmax weight in a row of 128. The checkpoint asserts agreement with `F.scaled_dot_product_attention` under a boolean mask, which settles flag 5 for the PyTorch used (2.14.1): `True` means "may attend".
 - **LSTM: both options.** Lab 3's run is quoted (`lab03.lstm_lm`, test 1.6114 nats), and the same architecture is retrained here with the GPT's loop (AdamW, warm-up, cosine decay), batch size and number of steps, with its own learning rate chosen on val. The retrained LSTM keeps PyTorch's default initialization; Lab 3 sets the forget-gate bias to 1. The notebook says so.
-- **Results, full settings.** Test nats per character: trigram 2.0859, 5-gram 1.8326, Lab 3 LSTM 1.6114, LSTM retrained here 1.5727 (350,593 parameters, 3,000 steps), mini-GPT 1.5481 (824,897 parameters, 3,000 steps, PPL 4.70). The GPT leads the retrained LSTM by 0.025 nats from one seed, within the seed-to-seed spread measured in `QUICK` mode (0.02 to 0.03 nats). In `QUICK` mode (batch 16, 1,500 steps, three seeds) the LSTM wins clearly: 1.562 to 1.582 against 1.770 to 1.794. The lecture reports this as a tie at full budget, not a ranking. Training time on the contended CPU: 3,921 s (GPT) and 348 s (LSTM).
+- **Results, full settings.** Test nats per character: trigram 2.0859, 5-gram 1.8326, Lab 3 LSTM 1.6114, LSTM retrained here 1.5727 (350,593 parameters, 3,000 steps), mini-GPT 1.5481 (824,897 parameters, 3,000 steps, PPL 4.70). The GPT leads the retrained LSTM by 0.025 nats from one seed, within the seed-to-seed spread measured in `QUICK` mode (0.02 to 0.03 nats). In `QUICK` mode (batch 16, 1,500 steps, three seeds) the LSTM wins clearly: 1.562 to 1.582 against 1.770 to 1.794. The briefing reports this as a tie at full budget, not a ranking. Training time on the contended CPU: 3,921 s (GPT) and 348 s (LSTM).
 - **Checkpoint thresholds.** GPT test nats at least 0.15 below the trigram's (`QUICK` margins at three seeds were 0.29 to 0.32). Untrained loss within 0.05 of $\ln 65$; measured 4.1909 against 4.1744. No assertion on GPT against LSTM.
 - **Context at evaluation.** As specified: GPT windows of 128 moved by 64, second half scored, 65 to 128 characters of context; LSTM state carried after a 1,000-character warm-up. Both score the same 60,394 test characters, asserted.
 - **Exercise 5.** The previous-token checkpoint includes row 0 (which can only read itself), so it expects $(T - 1)/T$, not 1; a uniform causal matrix ($\bar\delta = (T - 1)/4$) is checked too. Distances are averaged over 64 validation windows; the heads of the first and last layer are plotted on a test passage.
 - **Minutes.** The headings now sum to 50: 3 + 12 + 8 + 6 + 14 + 7. The brief's 2 minutes of slack went to Exercise 4, which now trains two models.
-- **Dropout** is on the embeddings and on each sublayer's output, not on the attention weights. The lecture's implementation-details box now says so.
+- **Dropout** is on the embeddings and on each sublayer's output, not on the attention weights. The briefing's implementation-details box now says so.
 - **Figure.** `images/05-causal-mask.svg` now draws measured weights: layer 3, head 3 of the trained model on `To be,`, read from `images/05-attention-heads.json` by `scripts/make_figures_05_08.py`. That head was chosen because it spreads its weight and fills the triangle; the layer-1 heads are near one-hot.
 
 ## Not verified by the Director

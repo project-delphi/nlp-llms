@@ -48,13 +48,13 @@ At least **13 of the 27 unanswerable items are memory bait**.
 
 ## Protocol
 
-1. **Write (author).** For a `reading` item: pick a paper on a lecture's reading list, find where the lecture and lab use it, and write the question in your own words; record the evidence quote(s), the answer and the key facts. For an `unanswerable` item: write the question, then search the snapshot for the fact and every way it could be phrased; record `would_be` and `absent_terms`. For memory bait, open the paper and record `outside_source`.
+1. **Write (author).** For a `reading` item: pick a paper on a briefing's reading list, find where the briefing and lab use it, and write the question in your own words; record the evidence quote(s), the answer and the key facts. For an `unanswerable` item: write the question, then search the snapshot for the fact and every way it could be phrased; record `would_be` and `absent_terms`. For memory bait, open the paper and record `outside_source`.
 
    ```bash
    python data/rag_questions_tools.py find "4.5 million sentence pairs"
    ```
 
-   Search for each absent term exactly as you will list it. A short term can match inside a longer one: "4.5 million" occurs in lecture 7's "134.5 million", so it could not be an absent term.
+   Search for each absent term exactly as you will list it. A short term can match inside a longer one: "4.5 million" occurs in Module 7's "134.5 million", so it could not be an absent term.
 
 2. **Check, blind (checker).** Make the checker's sheet, which holds IDs and questions only:
 
@@ -96,5 +96,5 @@ At least **13 of the 27 unanswerable items are memory bait**.
 | Kind | Shape |
 |---|---|
 | `reading` | "Which reading-list paper introduced the loss that Lab 9's reward model minimizes, and which exercise implements it?" |
-| `unanswerable`, memory bait | "How many sentence pairs was the original transformer trained on for English–German?" (only if no lecture page states it) |
-| `unanswerable`, not bait | "Which learning-rate schedule does Lab 12's toy decision model train with?" (only if no lecture page states it) |
+| `unanswerable`, memory bait | "How many sentence pairs was the original transformer trained on for English–German?" (only if no module page states it) |
+| `unanswerable`, not bait | "Which learning-rate schedule does Lab 12's toy decision model train with?" (only if no module page states it) |

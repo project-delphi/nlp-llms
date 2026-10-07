@@ -103,7 +103,7 @@ Lab 1 prints two numbers, an n-gram perplexity and a classifier accuracy. Every 
 
 - **The site:** [{{< var repo.site_url >}}]({{< var repo.site_url >}})
 - [Start here](prepare.qmd): the entry check and the setup, if you have not done them.
-- [Schedule](schedule.qmd) and the day pages: what runs when, with links to each lecture and lab.
+- [Schedule](schedule.qmd) and the day pages: what runs when, with links to each briefing and lab.
 - [Notebooks](notebooks.qmd): every lab, one click to Colab.
 - [FAQ](faq.qmd) and [Readiness](readiness.qmd): what to do when Colab misbehaves, and what has been tested where.
 

@@ -38,7 +38,7 @@ In pairs for 5 minutes, then the room for 10. The facilitator adds today's rows 
    | Lab 11, arXiv Topics v1 | the Lab 6 classifier (or Lab 1's, where the lab fell back to it), before and after temperature scaling | accuracy, ECE, Brier score, log loss |
    | Lab 11, decision set | the language model's stated confidence | accuracy, ECE, Brier score; the abstention threshold chosen and its coverage |
    | Lab 12, decision set | the toy model with an accuracy reward and with a Brier reward (our illustration, not TypeSafe's method); thresholds chosen on `dev`; Jev, where someone had a key | accuracy, ECE, Brier score; cost per case beside act-all, ask-all and escalate-all |
-   | Lab 13, workshop lectures | chunk size and top-$k$ at a fixed context budget; with and without reranking | recall@$k$, MRR; faithfulness and the two-by-two table |
+   | Lab 13, workshop briefings | chunk size and top-$k$ at a fixed context budget; with and without reranking | recall@$k$, MRR; faithfulness and the two-by-two table |
 
 3. **Ranking or values.** Which of today's numbers depend only on how the cases are ranked, and which on the probability values themselves? Which would temperature scaling change? And which rows of Lab 12 are evidence about our toy model, and which about Jev?
 

@@ -19,7 +19,7 @@ live:
 :::
 
 ::: {.callout-important appearance="simple"}
-**APIs change; the ideas do not.** Every code fragment on this page was checked against the providers' official documentation on **2026-10-04**, and against the SDK versions the lab pins (`openai==3.24.0`, `anthropic==1.11.0`). The Anthropic statements were checked again against the live documentation on 2026-10-05; OpenAI's documentation could not be reached that day, so the OpenAI fragments rest on the 2026-10-04 reading and the pinned SDK's signatures. Parameter names, model IDs and prices will drift. The five ideas of this lecture will not: the message list, the schema contract, the tool loop, token arithmetic, and evaluation on a fixed set. The model IDs used in the lab are set in one place: `{{< var models.openai >}}` (OpenAI), `{{< var models.anthropic >}}` (Anthropic) and `{{< var models.fallback >}}` (the open fallback).
+**APIs change; the ideas do not.** Every code fragment on this page was checked against the providers' official documentation on **2026-10-04**, and against the SDK versions the lab pins (`openai==3.24.0`, `anthropic==1.11.0`). The Anthropic statements were checked again against the live documentation on 2026-10-05; OpenAI's documentation could not be reached that day, so the OpenAI fragments rest on the 2026-10-04 reading and the pinned SDK's signatures. Parameter names, model IDs and prices will drift. The five ideas of this briefing will not: the message list, the schema contract, the tool loop, token arithmetic, and evaluation on a fixed set. The model IDs used in the lab are set in one place: `{{< var models.openai >}}` (OpenAI), `{{< var models.anthropic >}}` (Anthropic) and `{{< var models.fallback >}}` (the open fallback).
 
 **Before each delivery,** check both providers' deprecation pages for the pinned models. On 2026-10-05 Anthropic listed Claude Haiku 4.5 as active, with retirement "not sooner than October 15, 2026".
 :::
@@ -499,7 +499,7 @@ $$ {#eq-se}
 
 For $N = 40$ and $p = 0.9$ this is about $0.05$. A gap of three points between two providers on 40 examples is noise. Report $N$ with every score.
 
-**Model-graded evaluation.** Exact match works when the answer is a short, canonical value. For free text there may be many correct answers, and Module 7 introduced the alternative: ask a second model to grade. The grader is itself a language model, so everything in this lecture applies to it. It can be wrong, it can be swayed by length or fluency, and its verdicts can change when its prompt or model version changes. Use it with care:
+**Model-graded evaluation.** Exact match works when the answer is a short, canonical value. For free text there may be many correct answers, and Module 7 introduced the alternative: ask a second model to grade. The grader is itself a language model, so everything in this briefing applies to it. It can be wrong, it can be swayed by length or fluency, and its verdicts can change when its prompt or model version changes. Use it with care:
 
 - Prefer a programmatic check whenever one exists. Design the output so that one does: that is a reason to use a schema.
 - Give the grader a specific rubric and a structured verdict, not "is this good?".
@@ -569,7 +569,7 @@ For a system that acts on model output, this is the missing piece. To decide bet
 That sets up Modules 9 to 11. Where would such a signal come from? It depends on what the model was trained to optimize. So far that has been the likelihood of text. [Module 9](09-preference-learning.qmd) asks what to do when there is no label for "better", only a preference between two outputs, and [Module 10](10-rlhf.qmd) trains on that preference. [Module 11](11-calibration.qmd) then defines what a confidence should mean and measures it, including for the models you called today.
 
 ::: {.self-check}
-**Check yourself.** You add a field `confidence`, a number from 0 to 1, to the `Event` schema, and every record now comes back with a value such as 0.95. Using only tools from this lecture, what experiment would tell you whether that number means anything?
+**Check yourself.** You add a field `confidence`, a number from 0 to 1, to the `Event` schema, and every record now comes back with a value such as 0.95. Using only tools from this briefing, what experiment would tell you whether that number means anything?
 
 ::: {.callout-tip collapse="true" title="Answer"}
 Run the fixed evaluation set of section 7, where the correct record is known. Group the outputs by stated confidence and compute record exact match within each group. If the number behaves like a probability, the records marked near 0.95 are right about 95% of the time and those marked 0.6 about 60%. If accuracy is the same in every group, the field is decoration. Two cautions from section 7 apply: with $N = 40$ each group is tiny, so the standard error (@eq-se) is large, and a valid `confidence` field is guaranteed only in form. Module 11 builds this experiment properly.

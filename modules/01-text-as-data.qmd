@@ -21,7 +21,7 @@ live:
 
 ## Notation
 
-Notation used on every lecture page: a text is a sequence of tokens $w_1, \dots, w_T$ of length $T$; the vocabulary is $V$, with size $|V|$; $c(\cdot)$ is a count in the training data; $x$ is an input vector, $y$ a label, $C$ the number of classes; $\theta$ are parameters and $\mathcal{L}$ is a loss. All logarithms are natural.
+Notation used on every module page: a text is a sequence of tokens $w_1, \dots, w_T$ of length $T$; the vocabulary is $V$, with size $|V|$; $c(\cdot)$ is a count in the training data; $x$ is an input vector, $y$ a label, $C$ the number of classes; $\theta$ are parameters and $\mathcal{L}$ is a loss. All logarithms are natural.
 
 ## 1. What makes language hard
 
@@ -208,7 +208,7 @@ Two things to notice:
 - A context never seen in training has $c = 0$ everywhere, so @eq-addk returns $1 / |V|$: the uniform distribution. That is a sensible answer to "I know nothing".
 - $k$ is a **hyperparameter**: a setting chosen by us, not learned from the training data. Large $k$ flattens every distribution toward uniform; small $k$ trusts the counts. We choose it on a validation split, never on the test split. $k = 1$ is called Laplace smoothing and is usually too large for language models.
 
-In this lecture $k$ always means this smoothing constant. (From Module 4 on, $k_i$ with a subscript denotes an attention key; the two never appear together.)
+In this briefing $k$ always means this smoothing constant. (From Module 4 on, $k_i$ with a subscript denotes an attention key; the two never appear together.)
 
 **Lab 1, Exercise 2** implements @eq-addk as `prob(w, context, counts, k, vocab_size)`; its checkpoint is the sum-to-one identity above. A provided cell after Exercise 3 shows the zero problem directly: with $k = 0$, 20.2% of the validation tokens get probability zero under a word-level bigram model.
 

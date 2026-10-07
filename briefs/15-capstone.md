@@ -9,7 +9,7 @@
 
 The evaluation set has not been written: neither Lab 13's 80 questions nor the 45 new ones. Every run therefore scores plumbing probes. The "Inputs that do not exist yet" table and the "Not verified" section below record the state when this brief was written. For what has run since, see the [readiness page](../readiness.qmd).
 
-From the Academic Director to the **Agentic Systems Engineer**, owner of Lab 15 (`AGENTS.md`, "Who owns what"). Lecture: `lectures/15-capstone.qmd` (same symbols and equation names: `plan-rule`, `verify-rule`, `cap-acc`, `cap-abstain`, `cap-unsupported`, `cap-cost`, `sign-test`). Lab standards: `PLAN.md` section 5. Verified Jev surface: `briefs/jev-verification.md` (JV §n). Retriever, corpus and question set: `briefs/13-rag.md`. Graph, `decide()` and its backends: `briefs/14-agents.md`. Thresholds and the honesty rule: `briefs/12-rlcd-jev.md`, `briefs/11-calibration.md`. This file is not rendered by Quarto.
+From the Academic Director to the **Agentic Systems Engineer**, owner of Lab 15 (`AGENTS.md`, "Who owns what"). Briefing: `modules/15-capstone.qmd` (same symbols and equation names: `plan-rule`, `verify-rule`, `cap-acc`, `cap-abstain`, `cap-unsupported`, `cap-cost`, `sign-test`). Lab standards: `PLAN.md` section 5. Verified Jev surface: `briefs/jev-verification.md` (JV §n). Retriever, corpus and question set: `briefs/13-rag.md`. Graph, `decide()` and its backends: `briefs/14-agents.md`. Thresholds and the honesty rule: `briefs/12-rlcd-jev.md`, `briefs/11-calibration.md`. This file is not rendered by Quarto.
 
 **Objectives exercised** (from `_variables.yml`, `m15`): combine retrieval, an agent graph and calibrated control into one system; evaluate it for accuracy, abstention and cost; explain the design choices to others.
 
@@ -17,7 +17,7 @@ From the Academic Director to the **Agentic Systems Engineer**, owner of Lab 15 
 
 ## The lab in one paragraph
 
-The capstone is not a 50-minute lab. On the five-day schedule it fills Day 5 after Module 14: 240 minutes in pairs across two module slots, with the wrap-up running into the closing slot (lecture 15 has the timetable). This brief was written for the Day 4 afternoon of the four-day plan (85 minutes of building and 20 of final evaluation); the minute figures below are from that plan. The starter notebook gives every pair the same working research assistant over *Workshop Lectures v1*. A plan node asks a decision model whether the question needs two searches. A retrieve node uses Lab 13's retriever. An answer node uses Lab 13's cited-answer prompt through Lab 8's `PROVIDER` switch. A verify node asks the decision model whether every claim is supported, then delivers the answer, retrieves again with twice as many chunks, or abstains. The notebook also gives a fixed, human-written evaluation set and a fixed scoring cell. Pairs run a system self-test, write one function (`after_verify`), and run the baseline on `dev` and on `test`. They then fill in a hypothesis card and change one component from a menu, iterating on `dev`. At the end they run `test` once more on the frozen system and submit one JSON file with a printed share card. The scoring reports accuracy against key facts, abstention on answerable and on unanswerable questions, the unsupported-answer rate by a fixed reference judge, cost per question and latency. It also gives a capstone cost (@eq-cap-cost) and a paired sign test against the baseline. Checkpoints test code on scripted inputs, so they give the same verdict on every path. No model metric is asserted.
+The capstone is not a 50-minute lab. On the five-day schedule it fills Day 5 after Module 14: 240 minutes in pairs across two module slots, with the wrap-up running into the closing slot (Module 15 has the timetable). This brief was written for the Day 4 afternoon of the four-day plan (85 minutes of building and 20 of final evaluation); the minute figures below are from that plan. The starter notebook gives every pair the same working research assistant over *Workshop Lectures v1*. A plan node asks a decision model whether the question needs two searches. A retrieve node uses Lab 13's retriever. An answer node uses Lab 13's cited-answer prompt through Lab 8's `PROVIDER` switch. A verify node asks the decision model whether every claim is supported, then delivers the answer, retrieves again with twice as many chunks, or abstains. The notebook also gives a fixed, human-written evaluation set and a fixed scoring cell. Pairs run a system self-test, write one function (`after_verify`), and run the baseline on `dev` and on `test`. They then fill in a hypothesis card and change one component from a menu, iterating on `dev`. At the end they run `test` once more on the frozen system and submit one JSON file with a printed share card. The scoring reports accuracy against key facts, abstention on answerable and on unanswerable questions, the unsupported-answer rate by a fixed reference judge, cost per question and latency. It also gives a capstone cost (@eq-cap-cost) and a paired sign test against the baseline. Checkpoints test code on scripted inputs, so they give the same verdict on every path. No model metric is asserted.
 
 ## Decision: the fixed evaluation set
 
@@ -36,14 +36,14 @@ The resulting mix per split is about 30% unanswerable: `dev` about 13–14 of 45
 
 ### Why reuse and extend, rather than reuse alone or start again
 
-1. **Reuse alone cannot measure abstention.** Lab 13's 15% unanswerable share gives 7 or 8 unanswerable `test` items. At an abstention rate near 0.7, Module 8's standard error at $N = 8$ is about 0.16, so abstention would be unmeasurable. The new items bring $|\mathcal{U}_{\text{test}}|$ to about 25, with an SE of about 0.09. That is still wide, and the lecture says so, but it can be read.
-2. **The capstone's contract adds a failure Lab 13 barely tests: answering from memory.** Half of the 27 new unanswerable items (at least 13) must be **memory bait**: a fact that is stated in a reading-list paper and that a model may well know, but that is not stated anywhere in the snapshot. For example, a training detail of a reading-list paper that no lecture page quotes. These separate a grounded system from a knowledgeable one, which is the point of the verify node.
+1. **Reuse alone cannot measure abstention.** Lab 13's 15% unanswerable share gives 7 or 8 unanswerable `test` items. At an abstention rate near 0.7, Module 8's standard error at $N = 8$ is about 0.16, so abstention would be unmeasurable. The new items bring $|\mathcal{U}_{\text{test}}|$ to about 25, with an SE of about 0.09. That is still wide, and the briefing says so, but it can be read.
+2. **The capstone's contract adds a failure Lab 13 barely tests: answering from memory.** Half of the 27 new unanswerable items (at least 13) must be **memory bait**: a fact that is stated in a reading-list paper and that a model may well know, but that is not stated anywhere in the snapshot. For example, a training detail of a reading-list paper that no module page quotes. These separate a grounded system from a knowledgeable one, which is the point of the verify node.
 3. **The capstone's task is the reading list.** The `reading` kind joins a paper on the reading list to the module and lab that use it, which is the research-assistant use case. Lab 13's `multi` items cover some of this, but only about 7 of them are in `test`.
 4. **Reusing Lab 13's items keeps comparability and costs no new labels.** Lab 13's `test` numbers and Lab 15's are on the same questions, so a participant can see what the graph added over the plain pipeline.
 5. **Contamination is real but bounded.** Participants saw Lab 13's `test` metrics that morning, though not per-question answers unless they printed them. The scoring reports every metric on the `lab13` and `new` subsets separately as well as pooled, so a gain that appears only on the questions participants have seen is visible.
 6. **Starting again would cost more and lose the comparison.** A fresh set of 125 items would take two people about 10 hours. Extending takes about 5 (below).
 
-**Why not more.** A larger set costs annotator time, and it multiplies the keyed path's cost and the CPU path's run time, which is already the binding constraint (compute budget below). At this size, differences are read pairwise, which the lecture teaches.
+**Why not more.** A larger set costs annotator time, and it multiplies the keyed path's cost and the CPU path's run time, which is already the binding constraint (compute budget below). At this size, differences are read pairwise, which the briefing teaches.
 
 ### Item schema (new items)
 
@@ -94,7 +94,7 @@ The notebook checks every hash at load and refuses to score against a file that 
 
 ## The honesty rule, made concrete for this notebook
 
-1. **Jev is described only through its verified interface** (JV §2–3): typed questions about a state go in, probabilities come out. No cell describes how Jev was trained, and RLCD is not named except in a link to lecture 12.
+1. **Jev is described only through its verified interface** (JV §2–3): typed questions about a state go in, probabilities come out. No cell describes how Jev was trained, and RLCD is not named except in a link to Module 12.
 2. **Every record and every table row carries four backend labels:** `generator`, `decider`, `retriever`, `judge`. `Jev (<resp.model>)` appears only on rows whose decisions came from `TypeSafeClassifier`. The labels for stand-ins are `Qwen log-prob decider (not Jev)`, `stub (test double)` and `stand-in (not a neural model)`.
 3. **No-key banner** above the first results: "No TypeSafe key: the planner's and verifier's probabilities come from a small open language model scored by the probability of ' yes'. They measure that model, not Jev. Do not quote them as Jev's."
 4. **Offline banner** (Lab 8's): "These numbers measure the notebook's code, not any model. Do not quote them." The submission's `path_class` is `stub`, and the collector does not rank it.
@@ -113,7 +113,7 @@ The notebook checks every hash at load and refuses to score against a file that 
 | `data/baselines.json` `lab13.chosen` ($L$, $k$, $k_0$) | not recorded | retriever constants |
 | Labs 13 and 14 notebooks | not built | the cells this lab restates |
 
-**Ordering constraint:** the snapshot includes `references.qmd`, and `PLAN.md` Day 10 still lists "Complete `references.qmd`". The `reading` questions need the reading list in its final form at snapshot time. Either complete the Modules 1–12 entries of `references.qmd` before building the snapshot, or write the `reading` items only against the lectures' own "Readings" sections. I recommend the first. The snapshot is frozen once questions cite it.
+**Ordering constraint:** the snapshot includes `references.qmd`, and `PLAN.md` Day 10 still lists "Complete `references.qmd`". The `reading` questions need the reading list in its final form at snapshot time. Either complete the Modules 1–12 entries of `references.qmd` before building the snapshot, or write the `reading` items only against the briefings' own "Readings" sections. I recommend the first. The snapshot is frozen once questions cite it.
 
 Until the inputs land, build against the fixture and Lab 13's offline stand-ins, and quote no number.
 
@@ -135,7 +135,7 @@ Until the inputs land, build against the fixture and Lab 13's offline stand-ins,
 
 | Question | Name | Type | `instructions` (complete, since names are not sent, JV §2) | State |
 |---|---|---|---|---|
-| plan | `needs_two` | `Noul` | "Does answering this question need evidence from two different modules or documents of the workshop's lecture pages, rather than one passage?" | `{"question": q}` |
+| plan | `needs_two` | `Noul` | "Does answering this question need evidence from two different modules or documents of the workshop's module pages, rather than one passage?" | `{"question": q}` |
 | verify | `supported` | `Noul` | "Is every factual claim in the answer supported by the passages below? Background knowledge does not count as support." | `{"question": q, "answer": draft_without_citations, "passages": [{"id": chunk_id, "text": ...}, ...]}` |
 
 - **Keyed:** `langchain_typesafe.Noul` through `TypeSafeClassifier`, as Lab 14. On a final error, the plan falls back to one query and records the error; the verify **fails closed**: it abstains and records the error.
@@ -164,7 +164,7 @@ class CapState(TypedDict):
     trace: Annotated[list, operator.add]
 
 LOSS = dict(wrong=5, abstain=1)                  # scoring and the verifier's Chow threshold
-TAU_PLAN = 0.5                                   # equal costs (lecture eq-plan-rule); printed
+TAU_PLAN = 0.5                                   # equal costs (briefing eq-plan-rule); printed
 TAU_VERIFY = 1 - LOSS["abstain"] / LOSS["wrong"] # 0.8; printed, and checked against action_thresholds
 R_MAX, K_MAX_LLM, K_MAX_DEC = 1, 4, 4
 
@@ -228,9 +228,9 @@ The path class is chosen once in setup, printed, and written into every record a
 | 1 | `after_verify(state)`: `"deliver"` if the last $p_{\text{sup}} \ge \tau_{\text{verify}}$; else `"retrieve"` if `r < R_MAX` and both budgets allow another attempt; else `"abstain"` | `verify-rule` | with `FakeProvider` and a `ScriptedDecider`: (i) 0.85 → delivered, one verify call; (ii) 0.6 then 0.9 → retried once with `k_cur` doubled, then delivered; (iii) 0.6 then 0.6 → abstained, the draft kept in `draft_withheld`; (iv) exactly 0.8 → delivered (the tie acts, as in Modules 11 and 12); (v) a generator that returns `ABSTAIN` → abstained, and the decider is never called for `supported`; (vi) with `K_MAX_LLM = 1`, a 0.6 draft abstains without retrying |
 | 2 | The hypothesis card: `HYPOTHESIS = dict(component=..., change=..., metric=..., direction=..., size=...)` | – | non-empty fields; `component` one of the menu codes or `"other"`; `run_eval` refuses `tag != "baseline"` until it is filled |
 
-**The rest of the self-test** (provided; runs after every edit; must stay green): (vii) $p_{\text{multi}} = 0.7$ → two queries, two retrievals, merged without duplicate `chunk_id`s; 0.3 → one query, `q` itself; (viii) an invalid `Split` → falls back to `[q]`, recorded; (ix) a node that raises → `output == "error"`, and `score` counts it wrong; (x) every record has the four backend labels and no `None` among them; (xi) `score` on 10 hand-made records reproduces hand-computed `acc`, `abs_U`, `abs_A`, `uns` and `cost_bar`; (xii) `compare` on hand-made pairs gives the lecture's values: 8 gained and 1 lost → $p = 0.0391$, 7 and 2 → $0.1797$, 4 and 3 → 1; (xiii) the scoring hash equals the expected constant; (xiv) the manifest hashes match the loaded files.
+**The rest of the self-test** (provided; runs after every edit; must stay green): (vii) $p_{\text{multi}} = 0.7$ → two queries, two retrievals, merged without duplicate `chunk_id`s; 0.3 → one query, `q` itself; (viii) an invalid `Split` → falls back to `[q]`, recorded; (ix) a node that raises → `output == "error"`, and `score` counts it wrong; (x) every record has the four backend labels and no `None` among them; (xi) `score` on 10 hand-made records reproduces hand-computed `acc`, `abs_U`, `abs_A`, `uns` and `cost_bar`; (xii) `compare` on hand-made pairs gives the briefing's values: 8 gained and 1 lost → $p = 0.0391$, 7 and 2 → $0.1797$, 4 and 3 → 1; (xiii) the scoring hash equals the expected constant; (xiv) the manifest hashes match the loaded files.
 
-**Pairs change one component.** The menu is in the lecture, section 5. The table below repeats it with what each option touches. **The effect sizes are hypotheses, not facts**, and the notebook prints them as "our guess before any run".
+**Pairs change one component.** The menu is in the briefing, section 5. The table below repeats it with what each option touches. **The effect sizes are hypotheses, not facts**, and the notebook prints them as "our guess before any run".
 
 | Code | Touches | Reference sketch (folded) | Hypothesis printed in the notebook |
 |---|---|---|---|
@@ -269,7 +269,7 @@ The path class is chosen once in setup, printed, and written into every record a
 - With $g + l$ changed questions and the printed $p$, say whether the change was shown, and compare $g + l$ with the flip count.
 - Without a TypeSafe key, the planner's and verifier's probabilities were a 0.5B open model's, not Jev's.
 - The scored cost leaves out dollars and seconds; read them beside it.
-- Questions: (1) Your verifier abstained on a draft the key-fact check would have marked correct. Which of the two approximations in the verifier's rule (lecture section 2) does that illustrate? (2) Name one item on the checklist of lecture section 8 that this afternoon did not test.
+- Questions: (1) Your verifier abstained on a draft the key-fact check would have marked correct. Which of the two approximations in the verifier's rule (briefing section 2) does that illustrate? (2) Name one item on the checklist of briefing section 8 that this afternoon did not test.
 
 ## What a pair submits, and how instructors compare pairs fairly
 
@@ -307,7 +307,7 @@ All are estimates (the Qwen generation speed is assumed at 20–40 tokens per se
 
 ## Flags for the Lab Engineer
 
-1. **Names** as the lecture: `p_multi`, `p_sup`, `tau_plan`, `tau_verify`, `R_MAX`, `LOSS`, `cost_bar`, `abs_U`, `abs_A`, `uns`, `gained`, `lost`. Thresholds are compared with `noul`, never with `confidence` (neither question is a `Choice`, so there is none).
+1. **Names** as the briefing: `p_multi`, `p_sup`, `tau_plan`, `tau_verify`, `R_MAX`, `LOSS`, `cost_bar`, `abs_U`, `abs_A`, `uns`, `gained`, `lost`. Thresholds are compared with `noul`, never with `confidence` (neither question is a `Choice`, so there is none).
 2. **The verifier and the reference judge must be different code paths.** The scoring cell must not call `decide()`. A pair that edits `verify` must not change any scored number except through the system's outputs.
 3. **Abstention is detected only by exact match** with `ABSTAIN` after whitespace normalization (Lab 13's `is_abstention`). A paraphrased refusal counts as an answer, and almost always as a wrong one. Say so in the prompt and in the notebook.
 4. **The tie rule:** deliver at exactly $\tau_{\text{verify}}$ (checkpoint (iv)).
@@ -318,7 +318,7 @@ All are estimates (the Qwen generation speed is assumed at 20–40 tokens per se
 9. **Package names:** only the pins of Labs 8, 13 and 14 (`typesafe-sdk==0.7.2` for option R2's `JevRerank`, `langchain-typesafe==0.0.1a3`). `tests/test_package_names.py` must cover this notebook.
 10. **The CI path never touches the network** beyond the repository's data URLs.
 11. **Model IDs:** repeat `models.openai`, `models.anthropic`, `models.fallback`, `models.embedding`, `models.reranker`, `models.nli` and `models.jev` verbatim (a test checks; proposed below).
-12. **Report back:** which path classes ran; the measured baseline on each (all five metrics, $\bar{\ell}$, flips between two keyed runs); run time per section on CPU and T4; measured cost per question; whether the full `test` set fits 10 minutes on a T4; whether Lab 13's retriever and Lab 14's `decide()` fitted unchanged; the outcome of each menu option's reference sketch on `dev`, labeled with its path (useful to instructors, not quoted as results); anything in the lecture that the notebook contradicts.
+12. **Report back:** which path classes ran; the measured baseline on each (all five metrics, $\bar{\ell}$, flips between two keyed runs); run time per section on CPU and T4; measured cost per question; whether the full `test` set fits 10 minutes on a T4; whether Lab 13's retriever and Lab 14's `decide()` fitted unchanged; the outcome of each menu option's reference sketch on `dev`, labeled with its path (useful to instructors, not quoted as results); anything in the briefing that the notebook contradicts.
 
 ## Proposed changes (not made; for Romeo or the Architect)
 
@@ -333,19 +333,19 @@ All are estimates (the Qwen generation speed is assumed at 20–40 tokens per se
   - Item: "Snapshot ordering". Risk: "`references.qmd` is still incomplete, and the snapshot freezes it for Labs 13 and 15". Mitigation: "complete the Modules 1–12 entries of `references.qmd` before building `workshop_lectures_v1`".
   - Item: "Capstone on CPU". Risk: "the open path on CPU may not fit a `test` run in 10 minutes". Mitigation: "a stratified 24-item `cpu_subset` (cut to 16 if needed), compared only within its path class".
   - Item: "Shared keys in the capstone". Risk: "15 pairs on one TypeSafe key make about 14,000 Jev calls in one afternoon; limits unknown". Mitigation: "workshop keys from TypeSafe; R2 with Jev limited to `dev`".
-- **`PLAN.md` section 7, Day 9:** tick "Draft the Module 15 capstone brief and wrap-up" with the note "(lecture and `briefs/15-capstone.md`; not rendered: Quarto not installed)". Under "Code `15-capstone.ipynb`", add "(blocked on the corpus snapshot, Lab 13's questions and the 45 capstone questions; build against the fixture meanwhile)".
-- **Lecture 13, section 8:** "Seven gained and two lost is a finding; four and three is not." Under a two-sided sign test, 7–2 gives $p = 0.18$, so it is not a finding at the 0.05 level; 8–1 gives 0.039. Proposed: "Eight gained and one lost is a finding (a sign test gives $p = 0.04$); seven and two is suggestive ($p = 0.18$); four and three is nothing." Lecture 15 teaches the test.
+- **`PLAN.md` section 7, Day 9:** tick "Draft the Module 15 capstone brief and wrap-up" with the note "(briefing and `briefs/15-capstone.md`; not rendered: Quarto not installed)". Under "Code `15-capstone.ipynb`", add "(blocked on the corpus snapshot, Lab 13's questions and the 45 capstone questions; build against the fixture meanwhile)".
+- **Module 13, section 8:** "Seven gained and two lost is a finding; four and three is not." Under a two-sided sign test, 7–2 gives $p = 0.18$, so it is not a finding at the 0.05 level; 8–1 gives 0.039. Proposed: "Eight gained and one lost is a finding (a sign test gives $p = 0.04$); seven and two is suggestive ($p = 0.18$); four and three is nothing." Module 15 teaches the test.
 - **`references.qmd`:** a Module 15 / Day 4 entry for the five readings.
-- **Figure 15.1** (spec in the lecture): `images/15-capstone-graph.svg`, for the Architect.
-- **`teach.qmd` or the facilitator guide (Day 10):** the instructor's afternoon (the build timetable, the circulation notes of lecture 5, the collector, the order of shares).
+- **Figure 15.1** (spec in the briefing): `images/15-capstone-graph.svg`, for the Architect.
+- **`teach.qmd` or the facilitator guide (Day 10):** the instructor's afternoon (the build timetable, the circulation notes of Module 5, the collector, the order of shares).
 
 ## Not verified by the Director
 
 - **Nothing in this lab has been built or run.** No notebook, corpus snapshot, question file or baseline exists. Every metric behavior, run time and cost above is an estimate.
 - **No live Jev, OpenAI or Anthropic call; no Qwen, bge-small or NLI run** (no keys; the Hub is blocked from the build container). Whether the 0.5B open model carries any signal as a planner or verifier is unknown; option V1 is designed to reveal it.
 - **The interfaces of Labs 13 and 14** are taken from their briefs, not from built notebooks. If either notebook departs from its brief, adapt (b) to (d) here.
-- **The NLI model as the reference judge** on lecture pages with notation and LaTeX is unvalidated (brief 13, (e)). Until the judge audit exists, the unsupported-answer rate is printed as unvalidated.
+- **The NLI model as the reference judge** on module pages with notation and LaTeX is unvalidated (brief 13, (e)). Until the judge audit exists, the unsupported-answer rate is printed as unvalidated.
 - **The effect sizes in the menu** are my guesses, labeled as such in the notebook.
 - **Framework documentation sites** (LangChain, LlamaIndex, TypeSafe) were unreachable; this brief relies on the source checks recorded in briefs 13, 14 and JV.
-- **Citations** in the lecture: the five readings were checked by web search (titles, authors, venues, summaries) on 2026-10-05, not against the papers. The TMLR venue of Kapoor et al. is from a search summary only.
+- **Citations** in the briefing: the five readings were checked by web search (titles, authors, venues, summaries) on 2026-10-05, not against the papers. The TMLR venue of Kapoor et al. is from a search summary only.
 - `quarto render` was not run: Quarto is not installed in the build container.

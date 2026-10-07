@@ -28,9 +28,9 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 
 ## Closing synthesis (16:45–17:00) {#synthesis}
 
-The last 15 minutes of the capstone wrap-up ([lecture 15, Part IV](lectures/15-capstone.qmd#part-iv.-wrap-up)), and the close of the workshop. The whole room, with the boards from Days 2 to 4. The numbers are the room's own, from its runs.
+The last 15 minutes of the capstone wrap-up ([Module 15, Part IV](modules/15-capstone.qmd#part-iv.-wrap-up)), and the close of the workshop. The whole room, with the boards from Days 2 to 4. The numbers are the room's own, from its runs.
 
-1. **The whole line.** Complete the table in [Five days, one line of ideas](lectures/15-capstone.qmd#five-days-one-line-of-ideas): add what Modules 14 and 15 fixed and left open, and set the room's numbers from the boards beside the build's.
+1. **The whole line.** Complete the table in [Five days, one line of ideas](modules/15-capstone.qmd#five-days-one-line-of-ideas): add what Modules 14 and 15 fixed and left open, and set the room's numbers from the boards beside the build's.
 2. **Today's table.** Fill in the room's results:
 
    | Lab | Rows | Metric |
@@ -38,6 +38,6 @@ The last 15 minutes of the capstone wrap-up ([lecture 15, Part IV](lectures/15-c
    | Lab 14, decision set and the injection test | the router; the guard | route accuracy; unsafe-action rate and injection success rate, each with its denominator |
    | Lab 15, the capstone's `test` split | the baseline; each pair's final system | accuracy, both abstention rates, cost per question; questions gained and lost, with the sign test's $p$ |
 
-3. **What is still open.** Each pair names one problem the workshop left open (see [Open problems](lectures/15-capstone.qmd#open-problems)) and the measurement from the last five days it would start with.
+3. **What is still open.** Each pair names one problem the workshop left open (see [Open problems](modules/15-capstone.qmd#open-problems)) and the measurement from the last five days it would start with.
 
 Times are on the [schedule](schedule.qmd).

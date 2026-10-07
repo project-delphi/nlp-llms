@@ -1,4 +1,4 @@
--- Marks what a lecture teaches in the room (its `live` plan in the front matter,
+-- Marks what a briefing teaches in the room (its `live` plan in the front matter,
 -- scripts/live_plan.py) so the page shows it. It never changes the text of a page.
 --
 --   1. A block (`::: {#id .self-check}`, `.demo`, `.predict`, `.discuss`) named in the

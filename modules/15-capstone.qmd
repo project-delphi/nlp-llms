@@ -10,7 +10,7 @@ title: "{{< var modules.m15.title >}}"
 
 ## Timing
 
-The capstone takes Day 5 from 11:30 to the end of the day: the two module slots after Module 14, with lunch and a break inside them, and then the day's closing slot. Unlike Modules 1 to 14, it has no lecture. There are two short talks: the brief at the start and the wrap-up at the end. The time between is pair work.
+The capstone takes Day 5 from 11:30 to the end of the day: the two module slots after Module 14, with lunch and a break inside them, and then the day's closing slot. Unlike Modules 1 to 14, it has no briefing. There are two short talks: the brief at the start and the wrap-up at the end. The time between is pair work.
 
 | Time | Part | Minutes |
 |---|---|---|
@@ -70,7 +70,7 @@ New in this module:
 
 You will build a **research assistant over the workshop's own reading list**. A participant asks a question about the material of Modules 1 to 12, such as a concept, a measured number from a lab, a notation choice, or which paper introduced an idea and where the workshop used it. The assistant answers from the workshop's documents, with citations, or it says it cannot.
 
-The documents are *Workshop Lectures v1*, the frozen snapshot of lecture pages 1 to 12 and the reading list that Lab 13 indexed. They are the workshop's own annotated reading list: every page ends with its readings and says why each one matters. They also contain facts no model was trained on, such as Lab 2's 0.867 test accuracy or the 0.375 and 0.969 thresholds of Module 12. Questions about those facts separate an answer grounded in the documents from one recalled from a model's parameters.
+The documents are *Workshop Lectures v1*, the frozen snapshot of module pages 1 to 12 and the reading list that Lab 13 indexed. They are the workshop's own annotated reading list: every page ends with its readings and says why each one matters. They also contain facts no model was trained on, such as Lab 2's 0.867 test accuracy or the 0.375 and 0.969 thresholds of Module 12. Questions about those facts separate an answer grounded in the documents from one recalled from a model's parameters.
 
 **The contract.** For every question the system returns one of two things:
 

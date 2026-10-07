@@ -1,4 +1,4 @@
-"""Draw the data-driven figure of Lecture 2 from Lab 2's saved PCA coordinates.
+"""Draw the data-driven figure of Module 2 from Lab 2's saved PCA coordinates.
 
   images/02-embedding-pca.svg  2-D PCA of 60 SGNS word vectors in four groups
 
