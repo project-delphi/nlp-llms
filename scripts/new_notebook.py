@@ -80,7 +80,7 @@ WHY = """\
 <details>
 <summary>Why this solution works</summary>
 
-Explain the idea in two or three sentences, and name the lecture equation it
+Explain the idea in two or three sentences, and name the briefing equation it
 implements.
 
 </details>

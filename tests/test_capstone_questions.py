@@ -227,7 +227,7 @@ class Questions(unittest.TestCase):
 
     def test_the_briefs_example_absent_terms_are_absent(self):
         """Brief 15's schema example must itself pass the absence check. (An earlier
-        example, "4.5 million", matched inside "134.5 million" in lecture 7.)"""
+        example, "4.5 million", matched inside "134.5 million" in Module 7.)"""
         for term in ("4.5 million sentence pairs", "4.5M sentence pairs"):
             self.assertNotIn(term, SNAPSHOT_TEXT)
 

@@ -9,12 +9,12 @@
 ::: {.module-card-body}
 [Module 8]{.eyebrow}
 
-[LLMs through APIs](lectures/08-llm-apis.qmd){.module-card-title}
+[LLMs through APIs](modules/08-llm-apis.qmd){.module-card-title}
 
 OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/08-llm-apis.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/08-llm-apis.ipynb){.btn-colab} [OpenAI]{.chip} [Anthropic]{.chip} [Hugging Face]{.chip} [Pydantic]{.chip}
+[Open the briefing](modules/08-llm-apis.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/08-llm-apis.ipynb){.btn-colab} [OpenAI]{.chip} [Anthropic]{.chip} [Hugging Face]{.chip} [Pydantic]{.chip}
 :::
 :::
 :::
@@ -27,12 +27,12 @@ OpenAI and Claude side by side: prompting, structured output, tool use, cost and
 ::: {.module-card-body}
 [Module 9]{.eyebrow}
 
-[Reinforcement and preference learning](lectures/09-preference-learning.qmd){.module-card-title}
+[Reinforcement and preference learning](modules/09-preference-learning.qmd){.module-card-title}
 
 Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/09-preference-learning.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/09-preference-learning.ipynb){.btn-colab} [PyTorch]{.chip} [Hugging Face]{.chip}
+[Open the briefing](modules/09-preference-learning.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/09-preference-learning.ipynb){.btn-colab} [PyTorch]{.chip} [Hugging Face]{.chip}
 :::
 :::
 :::
@@ -44,12 +44,12 @@ Text generation as a reinforcement-learning problem, the policy gradient, and re
 ::: {.module-card-body}
 [Module 10]{.eyebrow}
 
-[RLHF](lectures/10-rlhf.qmd){.module-card-title}
+[RLHF](modules/10-rlhf.qmd){.module-card-title}
 
 The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways it goes wrong.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/10-rlhf.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/10-rlhf.ipynb){.btn-colab} [PyTorch]{.chip} [Hugging Face]{.chip}
+[Open the briefing](modules/10-rlhf.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/10-rlhf.ipynb){.btn-colab} [PyTorch]{.chip} [Hugging Face]{.chip}
 :::
 :::
 :::

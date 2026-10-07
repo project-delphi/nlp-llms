@@ -25,7 +25,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import harness  # noqa: E402
 import run_records  # noqa: E402
-from gen_tables import timing  # noqa: E402  (one source for "120 minutes (55 lecture, ...)")
+from gen_tables import timing  # noqa: E402  (one source for "120 minutes (55 briefing, ...)")
 
 ROOT = Path(__file__).resolve().parent.parent
 NOTEBOOKS = ROOT / "notebooks"

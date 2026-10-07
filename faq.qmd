@@ -18,7 +18,7 @@ Nothing, without keys. With keys, each API lab states its estimated cost for one
 
 ## What are RLCD and Jev?
 
-Jev is a decision model from TypeSafe AI: it takes typed questions and returns typed answers with probabilities, instead of generating text. TypeSafe's documentation (read 2026-10-06) says Jev "is trained with RLCD to return calibrated decisions", where RLCD is reinforcement learning for calibrated decisions, and that its models' "probabilities are optimized against outcomes to reflect uncertainty". [Lecture 12](lectures/12-rlcd-jev.qmd) lists TypeSafe's statements with their sources, separately from what third parties report.
+Jev is a decision model from TypeSafe AI: it takes typed questions and returns typed answers with probabilities, instead of generating text. TypeSafe's documentation (read 2026-10-06) says Jev "is trained with RLCD to return calibrated decisions", where RLCD is reinforcement learning for calibrated decisions, and that its models' "probabilities are optimized against outcomes to reflect uncertainty". [Module 12](modules/12-rlcd-jev.qmd) lists TypeSafe's statements with their sources, separately from what third parties report.
 
 TypeSafe has published RLCD's name and aim, but not the method: no reward function, no algorithm, no paper and no measured calibration for Jev. Day 4 teaches calibration from the published literature, separates what TypeSafe has stated from what third parties report, and includes a small training experiment that is our own illustration of the idea, not TypeSafe's method.
 

@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/05-transformer-from-scratch.html
 title: "{{< var modules.m05.title >}}"
 live:
   - {section: 1, minutes: 5}
@@ -17,13 +19,15 @@ live:
 **Where we are.** Day 1 ended with attention connecting any two positions in a single step, but attached to two recurrent networks that still read tokens one after another and still pass gradients along long chains. This module asks one question: if a sequence attends to itself and the recurrence is removed, what has to be added back (a mask, a sense of order, depth) to get a language model that trains in parallel?
 :::
 
-## Live plan
+{{< include /_includes/lab-05.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-05.md >}}
 
 ## 1. From attention over an encoder to self-attention
 
-**Objective for this section:** state what Module 4 left open and write self-attention as the query-key-value lookup with all three roles taken from one sequence.
+**In this section:** state what Module 4 left open and write self-attention as the query-key-value lookup with all three roles taken from one sequence.
 
 [Module 4](04-seq2seq-attention.qmd) ended with attention as a soft lookup. A query $q$ is scored against keys $k_1, \dots, k_S$, a softmax turns the scores into weights $\alpha_i$, and the result is the weighted average of the values, $\sum_i \alpha_i v_i$. There the query was the decoder state, $q = s_t$, and the encoder states were both keys and values, $k_i = v_i = h_i$.
 
@@ -74,7 +78,7 @@ The two scores are equal. With $W_K = W_Q = W$, the score is $q_t^\top k_i = h_t
 
 ## 2. Scaled dot-product attention
 
-**Objective for this section:** write the attention step in matrix form and derive the scaling factor $1/\sqrt{d_k}$.
+**In this section:** write the attention step in matrix form and derive the scaling factor $1/\sqrt{d_k}$.
 
 **The score.** Module 4 noted that multiplicative scores are cheap because they reduce to matrix products over all pairs at once. The transformer uses the dot product, divided by $\sqrt{d_k}$:
 
@@ -207,7 +211,7 @@ Dividing by $d_k$ divides the variance by $d_k^2$: $\mathrm{Var} = d_k / d_k^2 =
 
 ## 3. The causal mask
 
-**Objective for this section:** explain why a language model must not read ahead, and write the mask that prevents it.
+**In this section:** explain why a language model must not read ahead, and write the mask that prevents it.
 
 As written, @eq-sdpa lets position $t$ read every position, including those after it. For a language model that is fatal. The model is trained with teacher forcing (Module 3): one forward pass over $w_1, \dots, w_T$ produces all $T$ predictions, and the prediction at position $t$ is scored against $w_{t+1}$. If position $t$ can read position $t+1$, it can copy the answer. The training loss would fall toward zero, and the model would be useless at generation time, when the future does not exist yet.
 
@@ -247,7 +251,7 @@ Correct: the scores become $(1, 1, -\infty, -\infty)$ and the row is $(0.5, 0.5,
 
 ## 4. Multi-head attention
 
-**Objective for this section:** explain what one attention head cannot do, and write the multi-head layer and its split.
+**In this section:** explain what one attention head cannot do, and write the multi-head layer and its split.
 
 A softmax gives each position *one* distribution over the positions it reads, and one weighted average. But a position often needs several unrelated things at once. To predict the next character of a play, it helps to know the last few characters (to finish the word), and also who is speaking (to choose the vocabulary), which was settled far back. A single average of the two blurs them.
 
@@ -295,7 +299,7 @@ With $n_h = 4$: $d_k = 128/4 = 32$, and $3 \cdot n_h \cdot d \cdot d_k = 3 \time
 
 ## 5. Positional encodings
 
-**Objective for this section:** show that self-attention ignores order, and give two ways to restore it.
+**In this section:** show that self-attention ignores order, and give two ways to restore it.
 
 Look again at @eq-self-attn. Position $t$'s output is a sum over the positions it reads, and each term depends only on the *contents* $h_t$ and $h_i$. The index $i$ appears nowhere except as a label on the sum. Shuffle the earlier positions and the same terms are added in a different order: $\bar{v}_t$ is unchanged. A self-attention layer treats what it reads as a set, not a sequence. This is the blind spot of Module 2's averaged embeddings again: "dog bites man" and "man bites dog".
 
@@ -347,7 +351,7 @@ One layer: the same. In both orders position 3 holds *man* and reads the set {*d
 
 ## 6. The transformer block
 
-**Objective for this section:** assemble attention, a feed-forward layer, residual connections and layer normalization into one block, and say where the normalization goes.
+**In this section:** assemble attention, a feed-forward layer, residual connections and layer normalization into one block, and say where the normalization goes.
 
 Attention moves information *between* positions. It does little computation *at* a position: $\bar{v}_t$ is a linear function of the values. The block therefore pairs attention with an ordinary feed-forward network, and adds two devices that make a deep stack trainable.
 
@@ -415,7 +419,7 @@ The mean is 3 and the variance is $(4 + 1 + 0 + 9)/4 = 3.5$, with square root $1
 
 ## 7. A decoder-only language model, and the other two variants
 
-**Objective for this section:** write the whole model from tokens to loss, and place it among the three transformer variants.
+**In this section:** write the whole model from tokens to loss, and place it among the three transformer variants.
 
 Everything is now in place. A **decoder-only transformer**, the architecture of the GPT models, is:
 
@@ -508,7 +512,7 @@ How to read it:
 
 ## 8. Cost and parallelism
 
-**Objective for this section:** compare the cost of a self-attention layer with a recurrent layer, and say what the transformer gains and what it pays.
+**In this section:** compare the cost of a self-attention layer with a recurrent layer, and say what the transformer gains and what it pays.
 
 Count the multiplications for one layer over a sequence of length $T$.
 
@@ -573,7 +577,7 @@ At $T = d = 128$ the two are equal: $128^3 = 2{,}097{,}152$ multiplications each
 | Projections, feed-forward layer, layer normalization (@eq-qkv-proj, @eq-ffn, @eq-ln) | provided |
 | Sinusoidal encodings, post-norm (@eq-sinusoid, @eq-postnorm) | not implemented |
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"The transformer is attention and nothing else."** Each block also has a feed-forward layer, which holds about two thirds of the block's weights when $d_{\mathrm{ff}} = 4d$, plus residual connections and layer normalization. Without the residual connections a deep stack does not train.
 - **"The scaling by $\sqrt{d_k}$ is a detail."** Without it the standard deviation of the scores grows as $\sqrt{d_k}$ and the softmax starts saturated. It is also not a temperature you tune: it is fixed by the dimension. The sampling temperature $\tau$ is a different thing, applied to the logits at generation time.
@@ -585,15 +589,15 @@ At $T = d = 128$ the two are equal: $128^3 = 2{,}097{,}152$ multiplications each
 - **"A transformer has unlimited context."** It reads at most $T_{\max}$ tokens, and nothing before them.
 - **"An attention map explains the prediction."** Module 4's caution applies with more force: there are $n_h \times n_\ell$ maps, and the vectors being read at layer $\ell$ are already mixtures of many tokens.
 
-## What Module 6 picks up
+## Next steps
 
 We now have the architecture. The model in the lab is tiny, reads characters, and is trained from scratch on one megabyte of text. Module 6 changes each of those: tokens become subwords, the model is trained once on a very large corpus and then reused (**pretraining**), and the two masks of section 7 give two training objectives, causal language modeling for decoders and masked language modeling for encoders. From there on we load transformers from the Hugging Face libraries instead of writing them.
 
-## Readings
+## Further reading
 
 1. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L. and Polosukhin, I. (2017). [Attention Is All You Need](https://arxiv.org/abs/1706.03762). *NeurIPS*. The original paper. Read sections 3 and 4; the variance argument is a footnote in section 3.2.1 and the cost comparison is Table 1.
 2. Rush, A. (2018), revised by Huang, A., Subramanian, S., Sum, J., Almubarak, K. and Biderman, S. (2022). [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/). The paper, line by line, as working PyTorch code. It implements the post-norm encoder-decoder model, not the pre-norm decoder of the lab.
-3. Jurafsky, D. and Martin, J. H. [*Speech and Language Processing*](https://web.stanford.edu/~jurafsky/slp3/) (3rd edition draft), the chapter "Transformers and Pretraining". A textbook treatment at the level of this lecture. Chapter numbers and titles change between draft releases, so find it by topic.
+3. Jurafsky, D. and Martin, J. H. [*Speech and Language Processing*](https://web.stanford.edu/~jurafsky/slp3/) (3rd edition draft), the chapter "Transformers and Pretraining". A textbook treatment at the level of this briefing. Chapter numbers and titles change between draft releases, so find it by topic.
 4. Xiong, R., Yang, Y., He, D., Zheng, K., Zheng, S., Xing, C., Zhang, H., Lan, Y., Wang, L. and Liu, T.-Y. (2020). [On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745). *ICML*. The analysis of pre-norm against post-norm cited in section 6. Read the introduction and section 3.
 5. Karpathy, A. [nanoGPT](https://github.com/karpathy/nanoGPT). A compact pre-norm GPT in PyTorch with a character-level Shakespeare example; the closest published code to this lab. Its README marks the repository as deprecated in favor of a successor project; `model.py` remains a clear reference.
 

@@ -9,12 +9,12 @@
 ::: {.module-card-body}
 [Module 11]{.eyebrow}
 
-[Calibration](lectures/11-calibration.qmd){.module-card-title}
+[Calibration](modules/11-calibration.qmd){.module-card-title}
 
 What a probability should mean, how to measure it, and how to use confidence to decide when to abstain.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/11-calibration.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/11-calibration.ipynb){.btn-colab} [PyTorch]{.chip} [scikit-learn]{.chip} [OpenAI]{.chip} [Anthropic]{.chip}
+[Open the briefing](modules/11-calibration.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/11-calibration.ipynb){.btn-colab} [PyTorch]{.chip} [scikit-learn]{.chip} [OpenAI]{.chip} [Anthropic]{.chip}
 :::
 :::
 :::
@@ -27,12 +27,12 @@ What a probability should mean, how to measure it, and how to use confidence to 
 ::: {.module-card-body}
 [Module 12]{.eyebrow}
 
-[Calibrated decisions: RLCD and Jev](lectures/12-rlcd-jev.qmd){.module-card-title}
+[Calibrated decisions: RLCD and Jev](modules/12-rlcd-jev.qmd){.module-card-title}
 
 Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/12-rlcd-jev.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb){.btn-colab} [PyTorch]{.chip} [TypeSafe SDK]{.chip}
+[Open the briefing](modules/12-rlcd-jev.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb){.btn-colab} [PyTorch]{.chip} [TypeSafe SDK]{.chip}
 :::
 :::
 :::
@@ -44,12 +44,12 @@ Training and using models for calibrated decisions: outcome rewards, thresholds 
 ::: {.module-card-body}
 [Module 13]{.eyebrow}
 
-[Retrieval-augmented generation](lectures/13-rag.qmd){.module-card-title}
+[Retrieval-augmented generation](modules/13-rag.qmd){.module-card-title}
 
 Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/13-rag.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb){.btn-colab} [LlamaIndex]{.chip} [LangChain]{.chip} [Jev]{.chip}
+[Open the briefing](modules/13-rag.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb){.btn-colab} [LlamaIndex]{.chip} [LangChain]{.chip} [Jev]{.chip}
 :::
 :::
 :::

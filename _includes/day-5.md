@@ -9,12 +9,12 @@
 ::: {.module-card-body}
 [Module 14]{.eyebrow}
 
-[Agents](lectures/14-agents.qmd){.module-card-title}
+[Agents](modules/14-agents.qmd){.module-card-title}
 
 Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop interrupts and confidence-gated control.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/14-agents.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/14-agents.ipynb){.btn-colab} [LangChain]{.chip} [LangGraph]{.chip} [Jev]{.chip}
+[Open the briefing](modules/14-agents.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/14-agents.ipynb){.btn-colab} [LangChain]{.chip} [LangGraph]{.chip} [Jev]{.chip}
 :::
 :::
 :::
@@ -28,12 +28,12 @@ Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop
 ::: {.module-card-body}
 [Module 15]{.eyebrow}
 
-[Capstone](lectures/15-capstone.qmd){.module-card-title}
+[Capstone](modules/15-capstone.qmd){.module-card-title}
 
 Combine retrieval, an agent graph and calibrated control into one system, evaluate it, and explain the design.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/15-capstone.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/15-capstone.ipynb){.btn-colab} [LlamaIndex]{.chip} [LangGraph]{.chip} [Jev]{.chip} [OpenAI]{.chip} [Anthropic]{.chip}
+[Open the briefing](modules/15-capstone.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/15-capstone.ipynb){.btn-colab} [LlamaIndex]{.chip} [LangGraph]{.chip} [Jev]{.chip} [OpenAI]{.chip} [Anthropic]{.chip}
 :::
 :::
 :::

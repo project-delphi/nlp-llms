@@ -1,6 +1,6 @@
 # Lab brief: `notebooks/04-seq2seq-attention.ipynb`
 
-From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/04-seq2seq-attention.qmd` (same symbols and equation names). Lab standards: `PLAN.md` section 5. This file is not rendered by Quarto.
+From the Academic Director to the Neural Lab Engineer. Briefing: `modules/04-seq2seq-attention.qmd` (same symbols and equation names). Lab standards: `PLAN.md` section 5. This file is not rendered by Quarto.
 
 **Objectives exercised** (from `_variables.yml`, `m04`): build an encoder-decoder model; explain the fixed-vector bottleneck; implement additive and dot-product attention and read attention maps.
 
@@ -15,7 +15,7 @@ From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/04-seq
 
 ## Models (provided)
 
-GRU encoder (unidirectional) and GRU decoder with the same hidden size `d_h`, so that the dot-product score applies. Embedding layers, the combination layer (lecture eq. `attentional`), greedy decoding, the training loop and the plotting helper are scaffolding. Both models use the same `d_h`, the same number of steps and the same optimizer, and the notebook says so, because the comparison is only fair under an equal budget.
+GRU encoder (unidirectional) and GRU decoder with the same hidden size `d_h`, so that the dot-product score applies. Embedding layers, the combination layer (briefing eq. `attentional`), greedy decoding, the training loop and the plotting helper are scaffolding. Both models use the same `d_h`, the same number of steps and the same optimizer, and the notebook says so, because the comparison is only fair under an equal budget.
 
 ## Core path (50 minutes)
 
@@ -48,18 +48,18 @@ No third full training run. Train the additive model only if your measured total
 
 ## Flags for the Lab Engineer
 
-1. **The failure must be measured, not assumed.** The lab's argument needs the no-attention model to be good on K = 1 and poor on K = 4, and the attention model to be good on both, under the same budget. Working targets: no attention at least 0.90 on K = 1 and at most 0.50 on K = 4; attention at least 0.90 on K = 4. Report the measured table. If the baseline does not fail, change the task in this order: lower `d_h`, raise the maximum K, add more surface formats. Do not weaken the baseline in a way the attention model does not share. If the targets still cannot be met, stop and tell me; the lecture's "In the lab" notes will need to change.
+1. **The failure must be measured, not assumed.** The lab's argument needs the no-attention model to be good on K = 1 and poor on K = 4, and the attention model to be good on both, under the same budget. Working targets: no attention at least 0.90 on K = 1 and at most 0.50 on K = 4; attention at least 0.90 on K = 4. Report the measured table. If the baseline does not fail, change the task in this order: lower `d_h`, raise the maximum K, add more surface formats. Do not weaken the baseline in a way the attention model does not share. If the targets still cannot be met, stop and tell me; the briefing's "In the lab" notes will need to change.
 2. State in the notebook that the baseline could improve with more capacity or training, and that the claim is about equal budgets.
-3. Dot-product attention on raw GRU states sometimes trains slowly. If it does, report it; do not switch the main run to another score without telling me, because the lecture names the dot product for Exercise 3.
+3. Dot-product attention on raw GRU states sometimes trains slowly. If it does, report it; do not switch the main run to another score without telling me, because the briefing names the dot product for Exercise 3.
 4. The Exercise 5 threshold and whether the arg-max lands on or just after the expected characters (an encoder state summarizes the source up to its position) need to be measured. Allow a tolerance of one position if needed and say so in the text.
-5. Use the lecture's names in code and comments: `h` (encoder states), `s` (decoder state), `alpha`, `h_bar` (context; not `c`, which is the LSTM cell state in Lab 3), `W_q`, `W_k`, `u`.
+5. Use the briefing's names in code and comments: `h` (encoder states), `s` (decoder state), `alpha`, `h_bar` (context; not `c`, which is the LSTM cell state in Lab 3), `W_q`, `W_k`, `u`.
 6. Send me one measured heat-map for `3 March 2021` so the figure `images/04-attention-alignment.svg` can show real weights.
 
 ## As built (Director review, 2026-10-05)
 
-The notebook departs from this brief in these ways. All are accepted; the lecture now matches the notebook.
+The notebook departs from this brief in these ways. All are accepted; the briefing now matches the notebook.
 
-- Exercise 1: two functions, `forward_plain(model, src, src_len, tgt_in)` and `seq2seq_loss(logits, tgt_out)`. The training loop does the shift (`tgt_in = tgt[:, :-1]`, `tgt_out = tgt[:, 1:]`). The loss is the mean over non-padding target tokens, not the sum of lecture eq. `loss`; the lecture now says so.
+- Exercise 1: two functions, `forward_plain(model, src, src_len, tgt_in)` and `seq2seq_loss(logits, tgt_out)`. The training loop does the shift (`tgt_in = tgt[:, :-1]`, `tgt_out = tgt[:, 1:]`). The loss is the mean over non-padding target tokens, not the sum of briefing eq. `loss`; the briefing now says so.
 - Exercise 3: an extra function, `masked_attention(scores, keys, mask)`, holds the mask, the softmax and the average; `dot_product_attention(q, keys, mask)` is one line that calls it and returns `(alpha, h_bar)`. Exercise 4 reuses `masked_attention`.
 - Exercise 4: `additive_score(q, keys, W_q, W_k, u)`, with the parameters passed in (they live on the model), not `additive_score(q, keys)`. The additive model is trained only behind `TRAIN_ADDITIVE = False`, as the brief allowed.
 - Exercise 5: `alignment_hit_rate(alphas, examples, tol=1)` is scored on attention from a teacher-forced pass over the gold target, so each row lines up with a target character; the heat-maps use greedy decoding. The threshold is 0.95, set from the measured 0.996. The tolerance counts an arg-max up to `tol` positions after the end of the date's span.
@@ -76,7 +76,7 @@ The notebook departs from this brief in these ways. All are accepted; the lectur
 | 3 | 0.000 | 1.000 |
 | 4 | 0.000 | 1.000 |
 
-Without attention the first output date is right for 0.90 to 0.93 of the sources in every bucket and every later date for none. Alignment hit rate 0.996 at `tol = 1` (0.992 to 1.000 per bucket at `tol = 0`). Beam search on 200 test sources: $B = 1, 3, 5$ all give exact match 1.000 and mean log-probability $-0.0007$. The baseline targets of flag 1 are met except no-attention $K = 1$, which is 0.002 short of 0.90; the failure appears from $K = 2$, earlier than the brief anticipated. The measured heat-map for `3 March 2021` (flag 6) is in `data/lab04_attention_example.json` and is now the lecture figure, drawn by `scripts/make_figures_04.py`.
+Without attention the first output date is right for 0.90 to 0.93 of the sources in every bucket and every later date for none. Alignment hit rate 0.996 at `tol = 1` (0.992 to 1.000 per bucket at `tol = 0`). Beam search on 200 test sources: $B = 1, 3, 5$ all give exact match 1.000 and mean log-probability $-0.0007$. The baseline targets of flag 1 are met except no-attention $K = 1$, which is 0.002 short of 0.90; the failure appears from $K = 2$, earlier than the brief anticipated. The measured heat-map for `3 March 2021` (flag 6) is in `data/lab04_attention_example.json` and is now the briefing figure, drawn by `scripts/make_figures_04.py`.
 
 ## Not verified by the Director
 

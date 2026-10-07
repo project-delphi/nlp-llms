@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 1 · Foundations](/day-1.qmd){.module-day} [Module 4]{.module-num} [95 minutes (45 lecture, 50 lab)]{.module-time} [15:25 lecture · 16:10 lab]{.module-clock}
+[Day 1 · Foundations](/day-1.qmd){.module-day} [Module 4]{.module-num} [95 minutes (45 briefing, 50 lab)]{.module-time} [15:25 briefing · 16:10 lab]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -14,12 +14,37 @@ Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   95 minutes (45 briefing, 50 lab)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 10 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   the lab always runs its real models
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Assemble an encoder-decoder's teacher-forced forward pass and loss
 - Explain the fixed-vector bottleneck and measure it by input length
 - Implement dot-product and additive attention and read attention maps against the expected alignment
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 3 · Sequence models](/modules/03-sequence-models.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- No API keys: the lab runs its own models throughout.
 :::

@@ -14,7 +14,7 @@ LOOKALIKE = re.compile(
     r"pip install[^\n]*\b(typesafe-ai|typesafe-sdk-python|llama-index-jev|"
     r"llama-index-postprocessor-jev|typesafe-client|jev)\b"
 )
-SOURCES = ["*.qmd", "lectures/*.qmd", "notebooks/*.ipynb", "scripts/*.py", "README.md"]
+SOURCES = ["*.qmd", "modules/*.qmd", "notebooks/*.ipynb", "scripts/*.py", "README.md"]
 
 
 class PackageNames(unittest.TestCase):

@@ -33,7 +33,7 @@ For the author (proposed: Romeo) and the checker (proposed: one instructor). Spe
 | `would_be_in` | optional, `unanswerable` items only: the slug(s) of the page(s) where the fact would have been |
 | `author`, `checker` | initials, two different people |
 
-Coverage: every lecture 01–12 must appear in the evidence (or `would_be_in`) of at least four questions across both splits.
+Coverage: every Module 01–12 must appear in the evidence (or `would_be_in`) of at least four questions across both splits.
 
 ## Protocol
 
@@ -72,4 +72,4 @@ Coverage: every lecture 01–12 must appear in the evidence (or `would_be_in`) o
 | `lookup` | "Why do dot-product scores need scaling as the key dimension grows?" |
 | `specific` | "What test accuracy did the averaged-embedding classifier reach on arXiv Topics?" |
 | `multi` | "Which earlier loss does the contrastive retrieval loss generalize, and in which lab was that loss implemented?" |
-| `unanswerable` | "What learning rate did Lab 7 use for LoRA?" (only if the lecture does not state it) |
+| `unanswerable` | "What learning rate did Lab 7 use for LoRA?" (only if the briefing does not state it) |

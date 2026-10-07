@@ -83,7 +83,7 @@ class Snapshot(unittest.TestCase):
     def test_readme_loading_snippet(self):
         readme = (DATA / "README.md").read_text(encoding="utf-8")
         blocks = re.findall(r"```python\n(.*?)```", readme, flags=re.DOTALL)
-        # The loading contract (first block, defines fetch), then the lectures cell that uses it.
+        # The loading contract (first block, defines fetch), then the briefings cell that uses it.
         code = blocks[0] + "\n" + next(b for b in blocks if "def load_lectures" in b)
         namespace: dict = {}
 
@@ -101,7 +101,7 @@ class Snapshot(unittest.TestCase):
 
 
 class CleaningRules(unittest.TestCase):
-    """The builder's rules for what a lecture page contributes to the corpus."""
+    """The builder's rules for what a module page contributes to the corpus."""
 
     PAGE = (
         '---\ntitle: "A page"\n---\n\n'

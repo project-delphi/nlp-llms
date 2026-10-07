@@ -17,11 +17,11 @@
 
   DPO's held-out accuracy was 0.663. During the beta = 0 run the gold reward peaked at +1.92 (step 40) and then fell while r_phi kept rising. Two cautions for the seed protocol:
   - The gold gap of part (c) is only 0.152.
-  - The beta = 0 policy collapsed to "good as as as …", which the gold rule scores +1, since one list word in 23 never triggers crowding. So gold fell because the collapsed policy writes one positive word where the penalized policy sometimes writes two, **not through the cap or the crowding term** that lecture 10's Exercise 4 callout names.
+  - The beta = 0 policy collapsed to "good as as as …", which the gold rule scores +1, since one list word in 23 never triggers crowding. So gold fell because the collapsed policy writes one positive word where the penalized policy sometimes writes two, **not through the cap or the crowding term** that Module 10's Exercise 4 callout names.
 
-**Academic Director, 2026-10-06.** Lecture 10's Exercise 4 callout, the notebook's Step 0 and Exercise 4 "Explain" cells and exit question 10.4 now name all three ways the gold rule allows the gold reward to part from $r_\phi$: no credit past three distinct positive words, the crowding penalty, and fewer distinct positive words or more negative ones. They report the run above as one exploratory run on an Apple M1 Pro, not as a T4 or Colab result. For the seed protocol, please record for each seed which way the $\beta = 0$ policy went: on the evaluation samples of the `BETA` and $\beta = 0$ policies, the mean number of distinct positive words, the mean number of negative words, and the shares of responses with the cap active ($n_{\text{pos}} \ge 4$) and with crowding active ($f_{\text{list}} > 0.25$). If no seed triggers the cap or the crowding term, tell me: lecture 9's preview and the design notes in Lab 9's brief would then overstate them.
+**Academic Director, 2026-10-06.** Module 10's Exercise 4 callout, the notebook's Step 0 and Exercise 4 "Explain" cells and knowledge check 10.4 now name all three ways the gold rule allows the gold reward to part from $r_\phi$: no credit past three distinct positive words, the crowding penalty, and fewer distinct positive words or more negative ones. They report the run above as one exploratory run on an Apple M1 Pro, not as a T4 or Colab result. For the seed protocol, please record for each seed which way the $\beta = 0$ policy went: on the evaluation samples of the `BETA` and $\beta = 0$ policies, the mean number of distinct positive words, the mean number of negative words, and the shares of responses with the cap active ($n_{\text{pos}} \ge 4$) and with crowding active ($f_{\text{list}} > 0.25$). If no seed triggers the cap or the crowding term, tell me: Module 9's preview and the design notes in Lab 9's brief would then overstate them.
 
-From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/10-rlhf.qmd` (same symbols and equation names). Lab standards: `PLAN.md` section 5. Data contract: `data/README.md`. Lab 9's brief: `briefs/09-preference-learning.md`. This file is not rendered by Quarto.
+From the Academic Director to the Neural Lab Engineer. Briefing: `modules/10-rlhf.qmd` (same symbols and equation names). Lab standards: `PLAN.md` section 5. Data contract: `data/README.md`. Lab 9's brief: `briefs/09-preference-learning.md`. This file is not rendered by Quarto.
 
 **Revision 2 (2026-10-05).** Romeo decided to keep `PLAN.md`'s design: **Lab 10 fine-tunes a small GPT-2**, not the Lab 5 mini-GPT that revision 1 recommended. The exercises, equations and checkpoints are unchanged; the model, the data, the compute budget, the CPU path and the reliability protocol are rewritten. The "Lab 9 → Lab 10 interface" section is identical to the one in Lab 9's brief.
 
@@ -47,10 +47,10 @@ From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/10-rlh
 |---|---|---|
 | Which checkpoint | `models.causal_lm`, already in `_variables.yml`; add `models.causal_lm_revision` (the commit hash, pinned on the first run with Hub access; Lab 6 benefits too) | Reuses a pinned, Apache-2.0 model that participants met in Lab 6. With 6 blocks it costs roughly half as much per token as `openai-community/gpt2` (124M, 12 blocks), and Lab 10 runs three trainings and DPO in 10 minutes. If its samples prove unreadable on the first run, propose a new key for the 124M model and re-measure the budget; do not hard-code an ID |
 | Full fine-tuning or LoRA | **Full fine-tuning**, float32, AdamW | Memory does not bind: policy, gradients and AdamW states take about 1.3 GB, the frozen reference 0.33 GB, and one batch's logits (64 × 32 × 50,257 float32) about 0.4 GB per tensor, well inside the T4's 15 GB (estimates). Time does not favor LoRA: sampling dominates, and LoRA still backpropagates through all six blocks. Full fine-tuning keeps the reference a plain frozen `deepcopy`, avoids `peft`'s handling of GPT-2's fused `Conv1D` attention (`c_attn`), and does not cap how far the $\beta = 0$ policy can drift, which the demonstration needs |
-| Lengths | 8-token prompts, 24-token responses, end-of-text never sampled (interface) | No padding or attention masks anywhere; the reward-model score sits in the last column of `token_rewards`, as in lecture 10 |
+| Lengths | 8-token prompts, 24-token responses, end-of-text never sampled (interface) | No padding or attention masks anywhere; the reward-model score sits in the last column of `token_rewards`, as in Module 10 |
 | Sampler | Provided, hand-written: a loop over `model(..., past_key_values=..., use_cache=True)` with a `torch.Generator`; not `generate()` | Each seed's samples are reproducible on one machine and independent of other cells; `generate()` uses the global random state and has defaults (for example `top_k` 50 when unset, noted in Lab 7's brief) that would all have to be overridden |
 | KL | Penalty: the sampled log-ratio, detached (eq. `token-reward`). Drift: the exact per-position KL over 50,256 entries (eq. `kl-chain`), under `torch.no_grad()`, in chunks of 64 responses | As in revision 1. The exact sum over GPT-2's vocabulary is affordable on a T4 when chunked (one chunk's two logits tensors are about 0.6 GB) |
-| Baseline | Per-position batch mean, `reinforce_loss(logp, returns, batch_mean_baseline(returns))` | Lecture 10, eq. `pg-kl`; Lab 9's function unchanged |
+| Baseline | Per-position batch mean, `reinforce_loss(logp, returns, batch_mean_baseline(returns))` | Module 10, eq. `pg-kl`; Lab 9's function unchanged |
 | Batch | Starting point: 64 training prompts per step, drawn with replacement from the 160 train prompts, one response each; about 150 steps per run | To be set by the seed protocol below |
 | Evaluation | The 64 evaluation prompts × 8 samples = 512 responses per policy, with one fixed evaluation generator seed shared by all policies | Eight samples per prompt make the per-prompt diversity measure meaningful; 512 responses average out sampling noise |
 | CPU runtime | Supported only as `FAST`: unit checkpoints asserted, training runs as a short smoke test, trained-policy checkpoints skipped with a printed message | Estimated 3 to 5 s per training step at batch 8 on a 2-vCPU Colab CPU: the demonstration would take far longer than 10 minutes. The notebook's first markdown cell and setup cell say "Runtime → Change runtime type → T4 GPU" |
@@ -78,17 +78,17 @@ Format per exercise: Predict, Run, Explain, Check; `# TODO N` stub, folded solut
 
 Minutes: 3 + 8 + 8 + 11 + 8 + 12 = 50. Exercises 3 and 4 include waiting for training (about 1.5 minutes each on a T4, estimated); the Predict questions are meant to be answered during it.
 
-**Provided scaffolding:** the helpers above and checkpoint loading; `returns_to_go`, `reinforce_loss`, `batch_mean_baseline` restated from Lab 9; `rlhf_train` and `dpo_train`; `evaluate(policy)` returning mean $r_\phi$, mean gold, mean exact KL and distinct-2 on the 512 evaluation responses; plotting. `rlhf_train` logs, every few steps, the batch's mean $r_\phi$, mean gold and mean exact KL (chunked, no gradient), so Exercise 4 can plot proxy and gold against drift (lecture figure 10.2). `dpo_train` logs the means of `logp_w` and `logp_l` (lecture section 6, caution 3).
+**Provided scaffolding:** the helpers above and checkpoint loading; `returns_to_go`, `reinforce_loss`, `batch_mean_baseline` restated from Lab 9; `rlhf_train` and `dpo_train`; `evaluate(policy)` returning mean $r_\phi$, mean gold, mean exact KL and distinct-2 on the 512 evaluation responses; plotting. `rlhf_train` logs, every few steps, the batch's mean $r_\phi$, mean gold and mean exact KL (chunked, no gradient), so Exercise 4 can plot proxy and gold against drift (briefing figure 10.2). `dpo_train` logs the means of `logp_w` and `logp_l` (briefing section 6, caution 3).
 
 ### Final comparison table (end of Exercise 5)
 
-Rows: $\pi_{\text{ref}}$; RLHF with `BETA`; RLHF with `beta = 0`; DPO with `BETA`. Columns: mean $r_\phi$, mean gold reward, mean drift (exact KL, nats per response), distinct-2 (token bigrams), held-out preference accuracy (implicit reward for DPO, $r_\phi$ for the reference row), training time. No assertion on DPO against RLHF in either direction: the comparison depends on budget and data, and the lecture says so.
+Rows: $\pi_{\text{ref}}$; RLHF with `BETA`; RLHF with `beta = 0`; DPO with `BETA`. Columns: mean $r_\phi$, mean gold reward, mean drift (exact KL, nats per response), distinct-2 (token bigrams), held-out preference accuracy (implicit reward for DPO, $r_\phi$ for the reference row), training time. No assertion on DPO against RLHF in either direction: the comparison depends on budget and data, and the briefing says so.
 
 ## The reward-hacking demonstration: how it is made reliable, and what it asserts
 
 `PLAN.md` (Day 7 review) requires this to be reliable across seeds. Five design choices make it so; the first matters most.
 
-1. **The gold rule has structure the preference data barely show.** The pairs are two samples from $\pi_{\text{ref}}$. The gold rule's cap and crowding term are set so that the reference's own samples almost never trigger them (Lab 9's acceptance criteria: under 1% each), so the reward model cannot learn them. Its compact vocabulary adds a second blind spot: tokens absent from the training pairs all share one embedding row. An unpenalized policy that stuffs positive words is then overrated by $r_\phi$ and penalized by $g$. The gap exists by construction: the honest miniature of Goodhart's law the lecture describes. Say this in the notebook; lecture 10, section 7, now says it too.
+1. **The gold rule has structure the preference data barely show.** The pairs are two samples from $\pi_{\text{ref}}$. The gold rule's cap and crowding term are set so that the reference's own samples almost never trigger them (Lab 9's acceptance criteria: under 1% each), so the reward model cannot learn them. Its compact vocabulary adds a second blind spot: tokens absent from the training pairs all share one embedding row. An unpenalized policy that stuffs positive words is then overrated by $r_\phi$ and penalized by $g$. The gap exists by construction: the honest miniature of Goodhart's law the briefing describes. Say this in the notebook; Module 10, section 7, now says it too.
 2. **A controlled comparison.** The runs of Exercises 3 and 4 differ only in $\beta$: same seed, initialization, prompts, learning rate, steps and evaluation generator.
 3. **Large effects, measured without noise.** Drift uses the exact per-position KL (eq. `kl-chain`), not the sampled log-ratio; all metrics are averaged over the 512 evaluation responses.
 4. **Hyperparameters chosen across seeds.** Choose the learning rate, steps, batch size and `BETA` so that the signature holds for **every** seed in 0–4 on a T4, not for seed 0 alone.
@@ -101,9 +101,9 @@ Rows: $\pi_{\text{ref}}$; RLHF with `BETA`; RLHF with `beta = 0`; DPO with `BETA
 - (c) mean gold reward is lower by a margin;
 - (d) distinct-2 is lower by a margin (mode collapse).
 
-Also print, without asserting unless it holds on all seeds, the gold reward at its peak during the `beta = 0` run against its final value: the "rises, peaks, falls" shape of lecture section 7.
+Also print, without asserting unless it holds on all seeds, the gold reward at its peak during the `beta = 0` run against its final value: the "rises, peaks, falls" shape of briefing section 7.
 
-**If any of the five seeds fails (c) or (d)**, change the design (steps, learning rate, `BETA`, the gold rule's `crowd_threshold` or `crowd_weight`, the lists) and re-run all seeds; do not weaken a threshold until it passes by default. A change to the gold rule changes Lab 9's data file and reward model, so tell the Lab 9 author and me. If it still cannot be made reliable, keep (b) as the only hard assertion, print (a), (c), (d), and tell me: the lecture's Exercise 4 callout states all four.
+**If any of the five seeds fails (c) or (d)**, change the design (steps, learning rate, `BETA`, the gold rule's `crowd_threshold` or `crowd_weight`, the lists) and re-run all seeds; do not weaken a threshold until it passes by default. A change to the gold rule changes Lab 9's data file and reward model, so tell the Lab 9 author and me. If it still cannot be made reliable, keep (b) as the only hard assertion, print (a), (c), (d), and tell me: the briefing's Exercise 4 callout states all four.
 
 ## Reliability: how and where it is verified
 
@@ -144,7 +144,7 @@ EOS_ID = 50256      # == tokenizer.eos_token_id == len(tokenizer) - 1; asserted 
 
 Lab 10's evaluation prompts are `prompts["eval"]`; their frames occur in no preference pair.
 
-**Functions** (lecture 9, sections 5, 7 and 8):
+**Functions** (Module 9, sections 5, 7 and 8):
 
 ```python
 def returns_to_go(rewards):                       # (N, T) -> (N, T); G_t = r_t + ... + r_T
@@ -156,7 +156,7 @@ def bt_loss(reward_w, reward_l):                  # (n,), (n,) -> scalar: -F.log
 def bt_prob(g_a, g_b, tau_label):                 # sigmoid((g_a - g_b) / tau_label); floats or tensors
 ```
 
-Returns are not normalized in either lab. Lab 10 calls `reinforce_loss(logp, returns, batch_mean_baseline(returns))`; the batch-mean baseline is $(1 - 1/N)$ times the leave-one-out estimate (lecture 9, section 4). Lab 10's `dpo_loss` calls `bt_loss` with the implicit rewards $\beta(\log\pi_\theta - \log\pi_{\text{ref}})$.
+Returns are not normalized in either lab. Lab 10 calls `reinforce_loss(logp, returns, batch_mean_baseline(returns))`; the batch-mean baseline is $(1 - 1/N)$ times the leave-one-out estimate (Module 9, section 4). Lab 10's `dpo_loss` calls `bt_loss` with the implicit rewards $\beta(\log\pi_\theta - \log\pi_{\text{ref}})$.
 
 **Gold rule.** Provided in both labs, and called what it is: a rule we wrote, known only because the data are synthetic. The values in `GOLD` are starting values; the build script's measurements may change the lists, `crowd_threshold`, `crowd_weight` and `tau_label` (see Lab 9's brief), and the final values are recorded in both data files and in the reward-model checkpoint.
 
@@ -230,7 +230,7 @@ On load, Lab 10 asserts that `policy` agrees with its constants and its tokenize
 
 ## Stretch (one section, last, optional; not needed by any later lab)
 
-Sweep `beta` over five values from 0 to well above `BETA` (for example 0, `BETA/4`, `BETA`, `4·BETA`, `16·BETA`; set from measurement), same seed, starting from $\pi_{\text{ref}}$ each time. Reuse the runs of Exercises 3 and 4 for 0 and `BETA`, so three new runs; shorten them (for example 100 steps) if the budget requires, and say so on the plot. Plot mean $r_\phi$ and mean gold against drift, one point per `beta`, with DPO's point added. Assert only that drift falls as `beta` rises (monotone across the sweep, if it holds on all seeds). Skipped on a CPU runtime. Send me the measured points: lecture figure 10.2 is drawn as a schematic until they exist.
+Sweep `beta` over five values from 0 to well above `BETA` (for example 0, `BETA/4`, `BETA`, `4·BETA`, `16·BETA`; set from measurement), same seed, starting from $\pi_{\text{ref}}$ each time. Reuse the runs of Exercises 3 and 4 for 0 and `BETA`, so three new runs; shorten them (for example 100 steps) if the budget requires, and say so on the plot. Plot mean $r_\phi$ and mean gold against drift, one point per `beta`, with DPO's point added. Assert only that drift falls as `beta` rises (monotone across the sweep, if it holds on all seeds). Skipped on a CPU runtime. Send me the measured points: briefing figure 10.2 is drawn as a schematic until they exist.
 
 ## Compute budget (free Colab T4; whole notebook under 10 minutes; all estimates)
 
@@ -255,16 +255,16 @@ Nothing that a later lab needs. Lab 11 uses the Lab 6 classifier; Lab 12 trains 
 
 ## Flags for the Lab Engineer
 
-1. Use the lecture's names: `pi_ref` or `ref`, `policy`, `beta`/`BETA`, `logp`, `logp_ref`, `score` for $r_\phi(x, y)$, `rewards` for $r_t$, `returns` for $G_t$, `gold` for the hidden rule's score. Do not name anything `V` (the vocabulary) or `r` alone.
-2. The KL penalty in `token_rewards` uses the sampled log-ratio, detached; the drift metric uses `exact_kl`. Do not swap them, and do not add the exact KL as a differentiable loss term: the lecture derives the per-token reward form.
+1. Use the briefing's names: `pi_ref` or `ref`, `policy`, `beta`/`BETA`, `logp`, `logp_ref`, `score` for $r_\phi(x, y)$, `rewards` for $r_t$, `returns` for $G_t$, `gold` for the hidden rule's score. Do not name anything `V` (the vocabulary) or `r` alone.
+2. The KL penalty in `token_rewards` uses the sampled log-ratio, detached; the drift metric uses `exact_kl`. Do not swap them, and do not add the exact KL as a differentiable loss term: the briefing derives the per-token reward form.
 3. Sample at temperature 1 with no top-$k$ or nucleus truncation during training and evaluation, from the logits without the end-of-text column; state it in the notebook. Log-probabilities, the KL and sampling must all use `policy_logits`, so that they describe the same distribution.
 4. `reinforce_loss` sums over response positions and averages over the batch; returns are not normalized, as in Lab 9.
-5. Exercise 1's zero-log-ratio check needs both models in `eval()` mode, on the same device, in float32. If it is not exactly zero on CUDA, first try `torch.use_deterministic_algorithms(True)` with `CUBLAS_WORKSPACE_CONFIG=:4096:8`; if it is still not exact, use `atol=1e-6`, say why in the notebook, and tell me (the lecture says "exactly zero").
+5. Exercise 1's zero-log-ratio check needs both models in `eval()` mode, on the same device, in float32. If it is not exactly zero on CUDA, first try `torch.use_deterministic_algorithms(True)` with `CUBLAS_WORKSPACE_CONFIG=:4096:8`; if it is still not exact, use `atol=1e-6`, say why in the notebook, and tell me (the briefing says "exactly zero").
 6. DPO's reference log-probabilities can be computed once before training; do so, and say why it is allowed (the reference is frozen).
 7. Compute `exact_kl` and every evaluation under `torch.no_grad()`, in chunks of 64 responses; free the logits between chunks.
 8. The notebook text for Exercise 4 must call the gold reward what it is: a hidden rule we wrote, known only because the data are synthetic. Do not describe it as human preference.
 9. Pin `transformers` after checking what Colab preinstalls; Lab 7's brief found `transformers` 5.18.0 in use. Check the KV-cache interface of the pinned version against its documentation before writing the sampler.
-10. No TypeSafe or RLCD content belongs in this lab. The lecture's last paragraph points to Module 12 and nothing more.
+10. No TypeSafe or RLCD content belongs in this lab. The briefing's last paragraph points to Module 12 and nothing more.
 11. Send me, measured: per-seed values for Checkpoints 3, 4 and 5, the noise floor, the final table for seed 0, the DPO log-probability curves, the stretch points, run time per section on a T4 and on a CPU runtime, GPU memory, and four side-by-side samples from each policy for one prompt.
 
 ## Proposed changes (not made; for Romeo or the Architect)
@@ -277,7 +277,7 @@ Nothing that a later lab needs. Lab 11 uses the Lab 6 classifier; Lab 12 trains 
 
 ## Open questions
 
-1. **`BETA`, the learning rate, the batch size and the number of steps** are not set here; the lecture names no values.
+1. **`BETA`, the learning rate, the batch size and the number of steps** are not set here; the briefing names no values.
 2. **Readability of the 82M model's samples** at temperature 1 with no truncation is unknown; see the fallback in "Design choices".
 3. **The gold rule's final values** depend on Lab 9's reference-sample statistics.
 
@@ -288,5 +288,5 @@ Nothing that a later lab needs. Lab 11 uses the Lab 6 classifier; Lab 12 trains 
 - That the reward-hacking signature holds on all five seeds with the revised gold rule. This is the main risk of the lab.
 - That the exact zero log-ratio holds on CUDA without deterministic settings.
 - That the `models.causal_lm` configuration sets dropout to 0.1 and that its end-of-text id is 50256, the last vocabulary row (both from memory of GPT-2's configuration; the notebook asserts the second).
-- Citations in the lecture were written from memory: arxiv.org and other paper hosts were blocked from the build container on 2026-10-05.
+- Citations in the briefing were written from memory: arxiv.org and other paper hosts were blocked from the build container on 2026-10-05.
 - `quarto render` was not run (Quarto is not installed in the build environment).

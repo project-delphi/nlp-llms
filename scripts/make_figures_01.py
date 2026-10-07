@@ -1,4 +1,4 @@
-"""Draw the two data-driven figures of Lecture 1 from the committed corpus.
+"""Draw the two data-driven figures of Module 1 from the committed corpus.
 
   images/01-zipf.svg            word frequency against rank, log-log (Figure 1.1)
   images/01-ngram-sparsity.svg  share of test n-grams never seen in training (Figure 1.2)

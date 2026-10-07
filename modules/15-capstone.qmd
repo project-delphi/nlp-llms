@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/15-capstone.html
 title: "{{< var modules.m15.title >}}"
 ---
 
@@ -8,9 +10,11 @@ title: "{{< var modules.m15.title >}}"
 [Module 14](14-agents.qmd) built an agent as a graph and measured its parts one at a time: the router, the guard, the injection test. No module has yet measured a whole system on a fixed task, or tried to improve one and checked whether the improvement was real. The capstone answers one question: when you change one component of a system, how do you know that the system got better?
 :::
 
+{{< include /_includes/lab-15.md >}}
+
 ## Timing
 
-The capstone takes Day 5 from 11:30 to the end of the day: the two module slots after Module 14, with lunch and a break inside them, and then the day's closing slot. Unlike Modules 1 to 14, it has no lecture. There are two short talks: the brief at the start and the wrap-up at the end. The time between is pair work.
+The capstone takes Day 5 from 11:30 to the end of the day: the two module slots after Module 14, with lunch and a break inside them, and then the day's closing slot. Unlike Modules 1 to 14, it has no briefing. There are two short talks: the brief at the start and the wrap-up at the end. The time between is pair work.
 
 | Time | Part | Minutes |
 |---|---|---|
@@ -66,11 +70,11 @@ New in this module:
 
 ## 1. The task
 
-**Objective for this section:** state the capstone task and the contract a correct system must keep.
+**In this section:** state the capstone task and the contract a correct system must keep.
 
 You will build a **research assistant over the workshop's own reading list**. A participant asks a question about the material of Modules 1 to 12, such as a concept, a measured number from a lab, a notation choice, or which paper introduced an idea and where the workshop used it. The assistant answers from the workshop's documents, with citations, or it says it cannot.
 
-The documents are *Workshop Lectures v1*, the frozen snapshot of lecture pages 1 to 12 and the reading list that Lab 13 indexed. They are the workshop's own annotated reading list: every page ends with its readings and says why each one matters. They also contain facts no model was trained on, such as Lab 2's 0.867 test accuracy or the 0.375 and 0.969 thresholds of Module 12. Questions about those facts separate an answer grounded in the documents from one recalled from a model's parameters.
+The documents are *Workshop Lectures v1*, the frozen snapshot of module pages 1 to 12 and the reading list that Lab 13 indexed. They are the workshop's own annotated reading list: every page ends with its readings and says why each one matters. They also contain facts no model was trained on, such as Lab 2's 0.867 test accuracy or the 0.375 and 0.969 thresholds of Module 12. Questions about those facts separate an answer grounded in the documents from one recalled from a model's parameters.
 
 **The contract.** For every question the system returns one of two things:
 
@@ -89,7 +93,7 @@ Neither. (1) is an answer from memory. It happens to be right, but no source sup
 
 ## 2. The starter system
 
-**Objective for this section:** read the starter system from its state table and node table, and say where each threshold comes from.
+**In this section:** read the starter system from its state table and node table, and say where each threshold comes from.
 
 Every pair starts from the same working system, `notebooks/15-capstone.ipynb`. It joins the pieces of Modules 12 to 14 into one graph: plan, retrieve, answer, verify.
 
@@ -158,7 +162,7 @@ The open model is not a calibrated decision model. It is there so that the syste
 
 ## 3. The evaluation set and the scoring
 
-**Objective for this section:** define the five numbers every pair reports, each with its denominator, and the single cost that combines accuracy and abstention.
+**In this section:** define the five numbers every pair reports, each with its denominator, and the single cost that combines accuracy and abstention.
 
 **The evaluation set** is fixed for everyone: the same questions, scored by the same code.
 
@@ -240,7 +244,7 @@ With 8 gained and 1 lost, $p = 0.039$. With 7 and 2 it is $0.18$, and with 4 and
 
 ## 4. The rules of the capstone
 
-**Objective for this section:** know what may change, what may not, and what a pair hands in.
+**In this section:** know what may change, what may not, and what a pair hands in.
 
 **Change one component.** Choose one item from the menu in section 5, or propose your own of the same size. One change means the result can be attributed to it.
 
@@ -273,7 +277,7 @@ The reported score is the largest of five noisy measurements. Even if none of th
 
 ## 5. Build: one change, measured
 
-**Objective for this section:** improve one component of the system and measure the effect against the baseline.
+**In this section:** improve one component of the system and measure the effect against the baseline.
 
 **A plan for the 110 minutes.** Lunch falls at minute 45.
 
@@ -317,7 +321,7 @@ Two changes are **not** allowed in the scored run: adding documents to the corpu
 
 ## 6. Evaluate, then share
 
-**Objective for this section:** report one change against the baseline in two minutes, with its uncertainty.
+**In this section:** report one change against the baseline in two minutes, with its uncertainty.
 
 | Time | Do |
 |---|---|
@@ -347,7 +351,7 @@ Each test has a 5% chance of a false alarm, so the expected number is $15 \times
 
 ## 7. Five days, one line of ideas
 
-**Objective for this section:** say, for each module, which limitation of the previous one it removed.
+**In this section:** say, for each module, which limitation of the previous one it removed.
 
 Each module began where the last one stopped working. Where a lab measured the step on the running thread, the number is in the table: test-split results from `data/baselines.json`, run on CPU in the build environment.
 
@@ -377,7 +381,7 @@ Three threads run through the table.
 
 ## 8. An evaluation checklist for agentic systems
 
-**Objective for this section:** apply a checklist that makes an agentic system's evaluation trustworthy.
+**In this section:** apply a checklist that makes an agentic system's evaluation trustworthy.
 
 Each item names the module where you met it.
 
@@ -406,7 +410,7 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 
 ## 9. Open problems
 
-**Objective for this section:** name questions the workshop raised and could not close.
+**In this section:** name questions the workshop raised and could not close.
 
 - **Calibration under shift.** Module 14's bound on unsafe actions holds only on the distribution the guard was calibrated on. Making probabilities stay meaningful on new domains, and under attack, is open. Kamath et al. (2020) show the problem for question answering.
 - **Prompt injection.** There is no complete defense inside the model. Today's defenses are architectural, and they limit what injected text can cause rather than preventing it (Module 14).
@@ -443,7 +447,7 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 - Change one component, predict first, develop on `dev`, and report what happened, including nothing.
 - The five days form one line: each module removed a limitation of the last, and the evaluation grew from a perplexity to a system's cost per question.
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"Abstaining is a failure."** On an unanswerable question it is the right answer. The capstone cost charges abstention only where an answer existed, and charges a wrong answer five times as much.
 - **"Accuracy on answered questions is the headline number."** It rises when a system abstains more. Report it beside accuracy on all answerable questions and both abstention rates.
@@ -454,11 +458,11 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 - **"The Qwen decider's results tell us about Jev."** They describe a 0.5B open model scored on yes and no. Only the keyed path measures Jev, and only on these questions.
 - **"A bigger change always wins."** Swapping the generator may move accuracy most, at a cost the score does not include. Report dollars and seconds beside the score.
 
-## What comes next
+## Next steps
 
 There is no Module 16. The checklist of section 8 and the starter system are yours to take to your own documents. When you do, write your own questions, unanswerable ones included, before you build anything.
 
-## Readings
+## Further reading
 
 1. Kapoor, S., Stroebl, B., Siegel, Z. S., Nadgir, N. and Narayanan, A. (2024). [AI Agents That Matter](https://arxiv.org/abs/2407.01502). arXiv:2407.01502 (reported as published in *TMLR*, 2025). Why agent evaluations must report cost beside accuracy, use held-out tests and be reproducible. *Title, authors and summary checked by web search on 2026-10-05; the TMLR venue was seen only in a search summary.*
 2. Rajpurkar, P., Jia, R. and Liang, P. (2018). [Know What You Don't Know: Unanswerable Questions for SQuAD](https://aclanthology.org/P18-2124/). *ACL* (short papers). The case for putting unanswerable questions in an evaluation set, and how far a system that cannot abstain falls. *Checked by web search.*

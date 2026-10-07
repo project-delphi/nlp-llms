@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/11-calibration.html
 title: "{{< var modules.m11.title >}}"
 live:
   - {section: 1, minutes: 3}
@@ -16,7 +18,9 @@ live:
 [Module 10](10-rlhf.qmd) trained a model on what raters prefer, and [Module 8](08-llm-apis.qmd) showed that an answer from an API arrives with no sign of how likely it is to be right. Neither gives a program a number it can act on. This module answers one question: when a model attaches a probability to its answer, how do we check that the number means what it says, and how do we turn it into a decision to act or to hand the case to a person?
 :::
 
-## Live plan
+{{< include /_includes/lab-11.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-11.md >}}
 
@@ -59,7 +63,7 @@ New in this module:
 
 ## 1. What Day 3 has left open
 
-**Objective for this section:** say why the models of Days 2 and 3 need a separate check on their confidence.
+**In this section:** say why the models of Days 2 and 3 need a separate check on their confidence.
 
 Three earlier modules ended on the same gap.
 
@@ -78,7 +82,7 @@ This module does four things:
 
 ## 2. What a probability should mean
 
-**Objective for this section:** define calibration, and show that it is a different property from accuracy.
+**In this section:** define calibration, and show that it is a different property from accuracy.
 
 **Calibration.** A classifier is **calibrated** if, among all the predictions it makes with confidence $\hat{p}$, a fraction $\hat{p}$ are correct:
 
@@ -117,7 +121,7 @@ No. Mean confidence is $(0.6 + 1.0)/2 = 0.8$ and accuracy is $800/1000 = 0.8$, s
 
 ## 3. Measuring calibration: reliability diagrams and ECE
 
-**Objective for this section:** estimate the gap in @eq-calibration from a finite test set, and say what can make the estimate misleading.
+**In this section:** estimate the gap in @eq-calibration from a finite test set, and say what can make the estimate misleading.
 
 @eq-calibration conditions on an exact confidence value, and no two test examples share one. So we group examples whose confidences are close.
 
@@ -177,7 +181,7 @@ With one bin, $\mathrm{conf} = 6.4/10 = 0.64$ and $\mathrm{acc} = 6/10 = 0.60$, 
 
 ## 4. Proper scoring rules
 
-**Objective for this section:** define a proper scoring rule, prove that the Brier score is one, and say why accuracy is not.
+**In this section:** define a proper scoring rule, prove that the Brier score is one, and say why accuracy is not.
 
 ECE measures one property. We would also like a single score that a model can only improve by being both calibrated and sharp, and that cannot be gamed. That is what a proper scoring rule is.
 
@@ -261,7 +265,7 @@ The fixed term is $\sum_c p_c(1 - p_c) = 0.21 + 0.21 = 0.42$. The report-depende
 
 ## 5. Why models are miscalibrated {.reference}
 
-**Objective for this section:** give the known reasons that trained networks and preference-tuned language models are often miscalibrated, and say which claims are settled.
+**In this section:** give the known reasons that trained networks and preference-tuned language models are often miscalibrated, and say which claims are settled.
 
 **Classifiers.** Guo et al. (2017) compared older and newer networks for image and text classification and found the newer, deeper and wider ones markedly overconfident, where older, smaller networks such as LeNet had been close to calibrated. Depth, width, batch normalization and weaker weight decay all moved models toward overconfidence. Their explanation is **overfitting in the log loss**. Once a network classifies almost every training example correctly, it can still lower its training cross-entropy by making every correct prediction more confident, which it does by growing the logits. On held-out data the classification error stays put while the confidence keeps rising; held-out log loss gets worse before held-out accuracy does.
 
@@ -292,7 +296,7 @@ The predictions did not change, so the probabilities did: the logits grew and ev
 
 ## 6. Temperature scaling
 
-**Objective for this section:** fit one number that recalibrates a classifier without changing its predictions, and say what it cannot fix.
+**In this section:** fit one number that recalibrates a classifier without changing its predictions, and say what it cannot fix.
 
 **Why a fix is needed.** Section 5, for reading after class, collects the evidence on why trained models are miscalibrated. In short: a network that already gets its training examples right can keep lowering its training log loss by growing its logits, which makes it overconfident on new data (Guo et al., 2017). The three classifiers of section 2 show the same lever: a weaker penalty on the weights let the logits grow and turned underconfidence into overconfidence. Not every architecture goes that way, calibration does not survive a change of data, and preference-tuned language models have lost the calibration of their token probabilities in reported cases. Never assume a model is calibrated: measure it.
 
@@ -438,7 +442,7 @@ At $\tau = 1$: $\hat{p} = e^2 / (e^2 + e^1 + e^0) = 0.665$. At $\tau = 2$ the lo
 
 ## 7. Confidence from a language model behind an API
 
-**Objective for this section:** obtain a confidence from a model you cannot inspect, and measure it with the tools of sections 3 and 4.
+**In this section:** obtain a confidence from a model you cannot inspect, and measure it with the tools of sections 3 and 4.
 
 A language model reached through an API returns text. Three sources of confidence are available, depending on access.
 
@@ -482,7 +486,7 @@ Two bins: 0.9 falls in $(13/15, 14/15]$ and 0.95 in $(14/15, 1]$. Their accuraci
 
 ## 8. Selective prediction and the cost of a wrong action
 
-**Objective for this section:** turn a confidence into a decision to act or defer, and choose the threshold from a stated cost.
+**In this section:** turn a confidence into a decision to act or defer, and choose the threshold from a stated cost.
 
 **Selective prediction.** A system may **abstain**: decline to act on a prediction and pass the case to a person. With a threshold $\lambda$, it acts when $\hat{p} \ge \lambda$ and defers otherwise. Two numbers describe the result on a set of $N$ examples:
 
@@ -591,7 +595,7 @@ $\lambda^* = 1 - 2/50 = 0.96$. The rule assumes that a prediction above the thre
 - A language model's stated confidence is an output to be measured like any other, with the same metrics, on labelled data. It is often coarse and overconfident, and sometimes better than the model's token probabilities.
 - The risk–coverage curve depends only on the ranking of confidences (@eq-risk-coverage). The threshold comes from the cost of a wrong action: $\lambda^* = 1 - \ell_{\text{defer}} / \ell_{\text{wrong}}$ for a calibrated model (@eq-threshold), or the minimizer of the validation cost otherwise (@eq-selective-cost).
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"A softmax output is a probability."** It is a vector of non-negative numbers that sum to 1. Whether it behaves like a probability is an empirical question about the model and the data, answered by measuring calibration.
 - **"A more accurate model is better calibrated."** The two move independently (section 2). The Lab 1 classifiers with the best and worst accuracy are the two worst calibrated.
@@ -603,11 +607,11 @@ $\lambda^* = 1 - 2/50 = 0.96$. The rule assumes that a prediction above the thre
 - **"Abstain when confidence is below 0.5."** The threshold follows from the costs (@eq-threshold). When a wrong action costs ten times a review, the threshold is 0.9.
 - **"A model calibrated on our test set is calibrated in production."** Only if production data look like the test set. Recheck after any change of data.
 
-## What Module 12 picks up
+## Next steps
 
 You can now measure whether a confidence means what it says, repair a classifier's confidence with one parameter, and turn a calibrated confidence into an act-or-defer decision with a stated cost. All of it is applied after training. [Module 12](12-rlcd-jev.qmd) asks what changes if calibration is part of the training objective itself, and introduces RLCD, an approach from TypeSafe whose method is unpublished. That module separates what TypeSafe has stated publicly from our own illustration of the idea, which trains a toy model with a reward built from the proper scoring rules of section 4; nothing on this page describes TypeSafe's method. It then calls TypeSafe's decision model, Jev, on this lab's decision set, compares its reliability diagram with the language model's from this lab, and sets act, ask and escalate thresholds from the costs of section 8.
 
-## Readings
+## Further reading
 
 1. Guo, C., Pleiss, G., Sun, Y. and Weinberger, K. Q. (2017). [On Calibration of Modern Neural Networks](https://proceedings.mlr.press/v70/guo17a). *ICML*. Reliability diagrams, ECE with 15 bins, the overconfidence of modern networks, and temperature scaling. Sections 2 to 4 cover this module.
 2. Gneiting, T. and Raftery, A. E. (2007). Strictly Proper Scoring Rules, Prediction, and Estimation. *Journal of the American Statistical Association*, 102(477), 359–378. The theory of section 4. Read sections 1 and 2; the rest generalizes beyond what we need.

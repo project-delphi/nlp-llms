@@ -4,6 +4,7 @@
 [**5** days]{.fact}
 [**15** modules]{.fact}
 [**16** Colab notebooks]{.fact}
-[**45–55** min lectures, **50–55** min labs]{.fact}
+[**79** hands-on exercises]{.fact}
+[**45–55** min briefings, **50–55** min labs]{.fact}
 [**10** min lab debriefs]{.fact}
 :::

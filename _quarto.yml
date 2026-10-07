@@ -14,13 +14,13 @@ project:
     - day-3.qmd
     - day-4.qmd
     - day-5.qmd
-    - lectures/*.qmd
+    - modules/*.qmd
     - notebooks.qmd
     - references.qmd
     - teach.qmd
     - facilitator-guide.md
     - instructor-pace.md
-    - assessments.md
+    - knowledge-checks.md
     - faq.qmd
     - readiness.qmd
   # Copied to the site as files. Globs are anchored with a leading `/` so they
@@ -40,7 +40,7 @@ website:
   site-url: https://project-delphi.github.io/nlp-llms
   repo-url: https://github.com/project-delphi/nlp-llms
   open-graph: true
-  # Previous/next module links at the foot of each lecture, in sidebar order.
+  # Previous/next module links at the foot of each briefing, in sidebar order.
   page-navigation: true
   # The module header already names the day; no breadcrumb line above the title.
   bread-crumbs: false
@@ -61,7 +61,7 @@ website:
         menu:
           # Module 0 is pre-work; Day 1 opens at 08:00 with an optional drop-in clinic for it.
           # The day texts are "Day N · " + days.dN.short (tests/test_variables.py).
-          - href: lectures/00-coding-agents.qmd
+          - href: modules/00-coding-agents.qmd
             text: "Before Day 1 · Module 0 (pre-work)"
           - href: day-1.qmd
             text: "Day 1 · Foundations"
@@ -116,7 +116,7 @@ format:
           }
         } catch (e) {}
         </script>
-    # The text column stays 800 px wide, as before the sidebar: lecture demos
+    # The text column stays 800 px wide, as before the sidebar: briefing demos
     # place two 360 px plots side by side, and the longest equations need it.
     grid:
       sidebar-width: 240px
@@ -133,7 +133,7 @@ format:
     highlight-style: a11y
     html-math-method: katex
     link-external-newwindow: true
-    # Adds classes to lecture markup (section objectives, optional callouts, the
+    # Adds classes to briefing markup (section objectives, optional callouts, the
     # live plan), then writes collapsed callouts as native <details> disclosures.
     filters:
       - at: pre-ast

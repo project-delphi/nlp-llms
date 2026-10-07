@@ -21,7 +21,7 @@ ENVS = set(R["envs"])
 NOTEBOOKS = {p.stem for p in (ROOT / "notebooks").glob("*.ipynb")}
 LECTURE_STATES = {"drafted", "reviewed", "piloted", "final"}
 LAB_STATES = {"none", "written", "reviewed", "piloted", "final"}
-MODULE_FIELDS = {"lecture", "lab", "runtime", "estimate_minutes", "accounts", "cost", "fallback"}
+MODULE_FIELDS = {"briefing", "lab", "runtime", "estimate_minutes", "accounts", "cost", "fallback"}
 OPTIONAL_FIELDS = {"optional_accounts", "gaps"}
 
 
@@ -66,7 +66,7 @@ class Metadata(unittest.TestCase):
             self.assertIsNotNone(r, key)
             self.assertEqual(MODULE_FIELDS - set(r), set(), key)
             self.assertEqual(set(r) - MODULE_FIELDS - OPTIONAL_FIELDS, set(), key)
-            self.assertIn(r["lecture"], LECTURE_STATES, key)
+            self.assertIn(r["briefing"], LECTURE_STATES, key)
             self.assertIn(r["lab"], LAB_STATES, key)
             self.assertEqual(r["lab"] == "none", not m.get("notebook", True), key)
             self.assertIn(r["runtime"], ENVS, key)

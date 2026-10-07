@@ -1,6 +1,6 @@
 # Lab brief: `notebooks/01-text-as-data.ipynb`
 
-From the Academic Director to the Neural Lab Engineer. Lecture: `lectures/01-text-as-data.qmd`. Standards: `PLAN.md` section 5. Stack: NumPy, scikit-learn (no PyTorch, no GPU).
+From the Academic Director to the Neural Lab Engineer. Briefing: `modules/01-text-as-data.qmd`. Standards: `PLAN.md` section 5. Stack: NumPy, scikit-learn (no PyTorch, no GPU).
 
 ## Objectives exercised
 
@@ -24,7 +24,7 @@ Splits are contiguous for the LM corpus (no shuffling) and are computed on chara
 
 Each exercise follows Predict → Run → Explain → Check: a `# TODO N` stub, a folded solution, a "why this works" note, and the checkpoint below. Participants write only the functions named; everything else is scaffold.
 
-| # | Min | Participant writes | Lecture equation | Checkpoint (what it tests) |
+| # | Min | Participant writes | Briefing equation | Checkpoint (what it tests) |
 |---|---|---|---|---|
 | 1 | 8 | `tokenize(text)` (word level, lowercased, punctuation as separate tokens) and `build_vocab(tokens, min_count)` with `<unk>` and `<s>` | Section 2 | Assert exact token list for two fixed strings; assert `<unk>` and `<s>` are in the vocabulary and IDs are contiguous. Printed metric: vocabulary size and **token coverage of the validation split** (fraction of tokens not mapped to `<unk>`) at `min_count` 1 and 2. Scaffold plots rank against frequency on log–log axes (Zipf). |
 | 2 | 12 | `ngram_counts(ids, n)` and `prob(w, context, counts, k, vocab_size)` | MLE and add-k (@eq-mle, @eq-addk) | On a five-token toy corpus, assert two hand-computed probabilities (one seen, one unseen n-gram). Assert that for three sampled contexts, including one never seen, the probabilities **sum to 1 over the vocabulary** within 1e-9. |
@@ -39,7 +39,7 @@ Design notes:
 - Pad with `n - 1` start tokens; treat each split as one stream. Perplexity is averaged over the `T` tokens of the split (start tokens are context only, never predicted). Natural log throughout.
 - Unknown contexts must return the uniform distribution through the add-k formula, not through a special case.
 - If the room is behind, Exercise 4 becomes a demonstration (run the solution). Nothing else may be cut: Exercises 3, 5 and 6 produce the baselines.
-- The lab does not ask participants to implement the logistic-regression gradient; the lecture says that happens in Lab 2.
+- The lab does not ask participants to implement the logistic-regression gradient; the briefing says that happens in Lab 2.
 
 ## Baselines this lab reports (the contract with Labs 2, 3, 5 and 6)
 
@@ -64,7 +64,7 @@ Because a Colab runtime does not persist, later labs cannot read these numbers f
 
 ## Stretch (optional, last, not required by any later lab): BM25
 
-Participant writes `bm25_scores(query_tokens, doc_term_counts, doc_lengths, k1=1.5, b=0.75)` using the formula in the lecture's optional box (non-negative idf). Treat the training documents of the classification set as the collection. Checkpoints: assert scores are non-negative; assert that doubling a document's count of a query term raises its score by less than a factor of two (saturation); assert that with `b = 0` the score does not depend on document length. Printed comparison: top-5 documents for three fixed queries under TF-IDF cosine and under BM25. Module 13 re-teaches BM25 through a library, so nothing downstream depends on this code.
+Participant writes `bm25_scores(query_tokens, doc_term_counts, doc_lengths, k1=1.5, b=0.75)` using the formula in the briefing's optional box (non-negative idf). Treat the training documents of the classification set as the collection. Checkpoints: assert scores are non-negative; assert that doubling a document's count of a query term raises its score by less than a factor of two (saturation); assert that with `b = 0` the score does not depend on document length. Printed comparison: top-5 documents for three fixed queries under TF-IDF cosine and under BM25. Module 13 re-teaches BM25 through a library, so nothing downstream depends on this code.
 
 ## Run time and environment
 
@@ -75,12 +75,12 @@ Participant writes `bm25_scores(query_tokens, doc_term_counts, doc_lengths, k1=1
 
 ## As built (Director review, 2026-10-04)
 
-The notebook departs from this brief in these ways. All are accepted; the lecture now matches the notebook.
+The notebook departs from this brief in these ways. All are accepted; the briefing now matches the notebook.
 
 - Exercise 2: `ngram_counts(ids, n, bos)` returns two `Counter`s, `(grams, contexts)`, not a single table.
 - Exercise 3: `perplexity(ids, history, n, counts, k, vocab_size)`. The splits are consecutive, so the `n - 1` tokens of context before a split come from the end of the preceding split (provided helper `history_for`); only the start of train is padded with the start token. This replaces "treat each split as one stream, padded with start tokens".
 - Exercise 5: two functions, `idf_weights(counts)` and `tfidf(counts, idf)`, instead of one `tfidf(counts)`.
-- Naive Bayes is fitted on the raw count matrix, not on TF-IDF features, matching the lecture's derivation.
+- Naive Bayes is fitted on the raw count matrix, not on TF-IDF features, matching the briefing's derivation.
 - The `k` grid is 0.001, 0.01, 0.1, 0.5, 1.0. The character vocabulary is the 65 characters of train, which equals the full-corpus set.
 
 ## Not verified by the Director

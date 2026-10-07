@@ -1,4 +1,6 @@
 ---
+aliases:
+  - /lectures/02-word-vectors.html
 title: "{{< var modules.m02.title >}}"
 live:
   - {section: 1, minutes: 3}
@@ -16,7 +18,9 @@ live:
 **Where we are.** Module 1 ended with strong count-based baselines and one thing they cannot do: a model that saw *the cat sat* gives *the dog sat* no credit, because every word is its own unrelated symbol and smoothing hands every unseen n-gram the same share. This module asks one question: can a model *learn* a representation in which similar words are close, and what does that buy a classifier and a language model?
 :::
 
-## Live plan
+{{< include /_includes/lab-02.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-02.md >}}
 
@@ -487,7 +491,7 @@ Embeddings $|V| d = 1{,}000{,}000$; hidden layer $d_h (n-1) d = 200 \times 300 =
 :::
 :::
 
-## Equation-to-lab map
+## Equations and where you implement them
 
 Function names and signatures are those of the notebook as built.
 
@@ -521,7 +525,7 @@ Function names and signatures are those of the notebook as built.
 - Bengio's neural language model applies the same pieces to next-word prediction and generalizes to unseen n-grams through embedding similarity.
 - Open problem for Module 3: order and long-range dependence.
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 1. **"Negative sampling is a fast approximation of the softmax."** It is a different objective. It does not yield normalized probabilities $P_\theta(o \mid w)$ and cannot be used to compute perplexity.
 2. **"Similar vectors mean synonyms."** Cosine similarity reflects shared contexts. Antonyms (*hot*, *cold*) and co-hyponyms (*Tuesday*, *Friday*) share contexts and end up close.
@@ -530,7 +534,7 @@ Function names and signatures are those of the notebook as built.
 5. **"Dense embeddings must beat TF-IDF."** Averaging discards word order and blurs distinctive words. On topic classification with plenty of labeled data, TF-IDF with a linear model is a strong baseline. Measure before claiming: Lab 2 does, and its result is in the box after the lab in section 7.
 6. **"Each word has one meaning, so one vector is enough."** Static embeddings merge all senses of a word into one point. That limitation motivates the contextual models of Day 2.
 
-## Readings
+## Further reading
 
 1. Mikolov, T., Sutskever, I., Chen, K., Corrado, G. and Dean, J. (2013). [Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546). *Advances in Neural Information Processing Systems 26*. The negative-sampling paper: sections 2.2 and 2.3.
 2. Goldberg, Y. and Levy, O. (2014). [word2vec Explained: deriving Mikolov et al.'s negative-sampling word-embedding method](https://arxiv.org/abs/1402.3722). arXiv:1402.3722. A slower version of the derivation in section 4.

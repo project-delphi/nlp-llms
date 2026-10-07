@@ -9,8 +9,8 @@ subtitle: "Materials for instructors"
 
 - **[Intro slides](welcome.qmd):** the deck for the opening slot of Day 1, the welcome and the setup check. Days, modules, datasets and times come from `_variables.yml` through the generated includes, so it follows the schedule. Press `?` in the deck for its keyboard shortcuts.
 - **[Facilitator guide](facilitator-guide.md):** day by day, what to set up, what to say first, where groups get stuck, what to say in each debrief, what to cut when the clock slips and what to do when Colab, an API or the Hub fails. It opens with what has not yet been verified; read that first, with the [readiness page](readiness.qmd), which lists what has run, where, and the blocking work that remains.
-- **[Pace sheet](instructor-pace.md):** a minute-by-minute plan for every day: each lecture's live plan, each lab with the checkpoint participants should have passed by each point, the debriefs, and the retrieval practice and synthesis of Days 2 to 5.
-- **[Assessments](assessments.md):** an entry check on the prerequisites and an exit check with one or two questions per module objective, with answers.
+- **[Pace sheet](instructor-pace.md):** a minute-by-minute plan for every day: each briefing's live plan, each lab with the checkpoint participants should have passed by each point, the debriefs, and the warm-up and wrap-up of Days 2 to 5.
+- **[Knowledge checks](knowledge-checks.md):** an entry check on the prerequisites and a knowledge check with one or two questions per module objective, with answers.
 
 ## The shape of a module
 
@@ -25,16 +25,16 @@ Every lab follows **Predict → Run → Explain → Check**:
 
 Each lab has a core path planned for the lab slot and one optional stretch section. The plans are estimates until the lab has been timed on your runtime; the [readiness page](readiness.qmd) shows which have. If a group runs slow, skip the stretch; nothing later depends on it.
 
-Module 0 is the exception: optional pre-work, with no lecture and no notebook. Participants work through its page on their own laptops before Day 1. On Day 1 you open the room from 08:00 to 09:00 for an optional drop-in clinic and help with installs. See its section in the [facilitator guide](facilitator-guide.md#module-0).
+Module 0 is the exception: optional pre-work, with no briefing and no notebook. Participants work through its page on their own laptops before Day 1. On Day 1 you open the room from 08:00 to 09:00 for an optional drop-in clinic and help with installs. See its section in the [facilitator guide](facilitator-guide.md#module-0).
 
-## Retrieval practice and synthesis
+## Warm-up and wrap-up
 
-Days 2 to 5 open with 15 minutes of retrieval practice (09:00–09:15) and close with 15 minutes of synthesis (16:45–17:00); each day page has both ([Day 2](day-2.qmd#retrieval), [Day 3](day-3.qmd#retrieval), [Day 4](day-4.qmd#retrieval), [Day 5](day-5.qmd#retrieval)). Retrieval practice uses five exit-check questions from [assessments](assessments.md), about three from the previous day and two from earlier days: participants answer alone on paper for 6 minutes with notes closed, compare with a neighbor for 4, and you take the two most-missed for 5. Nothing is collected or graded. Synthesis asks what each of the day's modules fixed and what it left open, and fills a running table of the day's lab results with the room's own numbers; write it on the board and keep it, because Day 5's synthesis, which closes the workshop, completes the same line of ideas in the capstone wrap-up.
+Days 2 to 5 open with 15 minutes of warm-up (09:00–09:15) and close with 15 minutes of wrap-up (16:45–17:00); each day page has both ([Day 2](day-2.qmd#warm-up), [Day 3](day-3.qmd#warm-up), [Day 4](day-4.qmd#warm-up), [Day 5](day-5.qmd#warm-up)). Warm-up uses five knowledge check questions from [knowledge checks](knowledge-checks.md), about three from the previous day and two from earlier days: participants answer alone on paper for 6 minutes with notes closed, compare with a neighbor for 4, and you take the two most-missed for 5. Nothing is collected or graded. Wrap-up asks what each of the day's modules fixed and what it left open, and fills a running table of the day's lab results with the room's own numbers; write it on the board and keep it, because Day 5's wrap-up, which closes the workshop, completes the same line of ideas in the capstone wrap-up.
 
 ## Before the workshop
 
 - Send participants the [Before Day 1](prepare.qmd) page a week ahead: the entry check, the reading for any area where they miss two or more of its three questions, and setup, in that order.
-- Ask participants to complete [Setup](setup.qmd) the day before, to try [Module 0](lectures/00-coding-agents.qmd) as pre-work if they want it, and tell them whether the room opens at 08:00 on Day 1 for the drop-in clinic.
+- Ask participants to complete [Setup](setup.qmd) the day before, to try [Module 0](modules/00-coding-agents.qmd) as pre-work if they want it, and tell them whether the room opens at 08:00 on Day 1 for the drop-in clinic.
 - Decide whether you will provide API keys or rely on the open-model path. Both work.
 - Run every notebook on a fresh Colab runtime the week before. Colab's preinstalled packages change. Record each run (see [`runs/`]({{< var repo.url >}}/tree/main/runs)) so the readiness page reflects it.
 

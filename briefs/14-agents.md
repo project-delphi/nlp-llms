@@ -1,6 +1,6 @@
 # Lab brief: `notebooks/14-agents.ipynb`
 
-From the Academic Director to the **Agentic Systems Engineer**, owner of Lab 14 (`AGENTS.md`, "Who owns what"). Lecture: `lectures/14-agents.qmd` (same symbols and equation names: `react`, `graph-step`, `route-rule`, `guard-rule`, `unsafe-bound`, `route-acc`, `uar`, `isr`, `shift`). Lab standards: `PLAN.md` section 5. Verified Jev surface: `briefs/jev-verification.md` (JV §n). Decision set: `briefs/11-calibration.md`, "Shared decision set". Toy decider, thresholds and the honesty rule: `briefs/12-rlcd-jev.md`. Provider wrapper and tool loop: `briefs/08-llm-apis.md`, "As built". This file is not rendered by Quarto.
+From the Academic Director to the **Agentic Systems Engineer**, owner of Lab 14 (`AGENTS.md`, "Who owns what"). Briefing: `modules/14-agents.qmd` (same symbols and equation names: `react`, `graph-step`, `route-rule`, `guard-rule`, `unsafe-bound`, `route-acc`, `uar`, `isr`, `shift`). Lab standards: `PLAN.md` section 5. Verified Jev surface: `briefs/jev-verification.md` (JV §n). Decision set: `briefs/11-calibration.md`, "Shared decision set". Toy decider, thresholds and the honesty rule: `briefs/12-rlcd-jev.md`. Provider wrapper and tool loop: `briefs/08-llm-apis.md`, "As built". This file is not rendered by Quarto.
 
 **Objectives exercised** (from `_variables.yml`, `m14`): build a tool-using agent as an explicit graph; add state, memory and human-in-the-loop interrupts; use a calibrated decision model for routing and tool-call approval.
 
@@ -12,7 +12,7 @@ Participants build the front-desk agent of Modules 11 and 12 as an explicit Lang
 
 ## The honesty rule, made concrete for this notebook
 
-1. **Jev is described only through its verified interface** (JV §2–3): typed questions about a state in, probabilities out. No cell says anything about how Jev was trained, and RLCD is not named except in a link to lecture 12.
+1. **Jev is described only through its verified interface** (JV §2–3): typed questions about a state in, probabilities out. No cell says anything about how Jev was trained, and RLCD is not named except in a link to Module 12.
 2. **Every decision is labelled with its backend**, in the record, in every table row and in every plot title: `Jev (<resp.model>)`, `local toy decider (not Jev)`, `Qwen log-prob decider (not Jev)` or `stub (test double)`. The string `Jev` appears in a result label only when the row came from `TypeSafeClassifier`.
 3. **On the no-key path**, a banner above the first decision results: "No TypeSafe key: the router's answers come from the workshop's toy model (Lab 12) and the guard's from a small open language model scored by the probability of ' yes'. They measure those models, not Jev. Do not quote them as Jev's."
 4. **On the stub path** (no key and no model download), Lab 8's banner: "These numbers measure the notebook's code, not any model. Do not quote them."
@@ -43,9 +43,9 @@ The spec (brief 11) says Lab 14 uses "`policy` P5 and P6 items for the `send_ema
 
 **One amendment to Lab 12 is needed first** (proposed below): brief 12's `LocalDecider` answers *every* `Noul` with the policy head. The guard question is not one of the five policy question types, so `featurize`'s question-type block would be all zero and the head would return a number it was never trained to give. `LocalDecider` must raise `UnsupportedQuestion` for a `Noul` whose instructions match none of the five policy question types. Lab 14 relies on that to send the guard question to the Qwen decider. The P5 guard subset *is* a trained question type and stays on the toy model.
 
-### (c) The Module 13 retriever (interface to be reconciled with lecture 13)
+### (c) The Module 13 retriever (interface to be reconciled with Module 13)
 
-Lecture 13 is being drafted in parallel. Lab 14 needs, and should restate verbatim from Lab 13:
+Module 13 is being drafted in parallel. Lab 14 needs, and should restate verbatim from Lab 13:
 
 ```python
 build_retriever(docs: list[dict]) -> Retriever      # docs: {"doc_id", "title", "text"}
@@ -85,7 +85,7 @@ def decide(state: dict, questions: dict) -> tuple[ClassifierResponse, str]:
 
 Run all on Colab and the CI run must finish with nobody at the keyboard (lab standards: no manual steps). So:
 
-- `HUMAN_MODE = "simulated"` by default. `SimulatedHuman(gold)` answers each `human_review` interrupt with `"approve"` if the case's verified label says the email is allowed and `"reject"` otherwise. For an end-to-end run of a request whose route label is not `send_email` (for example a `retrieve` request), gold is "no email should be sent", so every email is rejected. This is lecture 12's assumption ("the person catches a wrong proposal") as code. Say in the notebook that it is optimistic, and count every interrupt.
+- `HUMAN_MODE = "simulated"` by default. `SimulatedHuman(gold)` answers each `human_review` interrupt with `"approve"` if the case's verified label says the email is allowed and `"reject"` otherwise. For an end-to-end run of a request whose route label is not `send_email` (for example a `retrieve` request), gold is "no email should be sent", so every email is rejected. This is Module 12's assumption ("the person catches a wrong proposal") as code. Say in the notebook that it is optimistic, and count every interrupt.
 - One cell, `HUMAN_MODE = "interactive"`, off by default and skipped in CI, answers interrupts with `input()` for a single demonstration case.
 - `ask_user` does not interrupt in the core path: it composes a question and ends the run (outcome `asked_user`). Interrupts are demonstrated once, at `human_review`, which keeps the driver loop simple.
 
@@ -117,7 +117,7 @@ openai==3.24.0  anthropic==1.11.0   # Lab 8's pins
 
 ## The graph
 
-The state table and the node table are in lecture 14, section 4, and the notebook copies both into a markdown cell **before** the code, with Figure 14.1 (spec in the lecture) once the Architect has drawn it. The code skeleton (provided except where marked):
+The state table and the node table are in Module 14, section 4, and the notebook copies both into a markdown cell **before** the code, with Figure 14.1 (spec in the briefing) once the Architect has drawn it. The code skeleton (provided except where marked):
 
 ```python
 class DeskState(TypedDict):
@@ -134,7 +134,7 @@ class DeskState(TypedDict):
     trace: Annotated[list, operator.add]          # one dict per step: node, numbers, backend
 
 ROUTER_COSTS = dict(wrong=4, ask=2.5, miss=2, esc=1)     # collapses to Chow: tau_route = 0.75
-GUARD_COSTS  = dict(wrong=20, ask=0.5, miss=4, esc=3)    # lecture 12's worked example: (0.375, 0.969)
+GUARD_COSTS  = dict(wrong=20, ask=0.5, miss=4, esc=3)    # Module 12's worked example: (0.375, 0.969)
 TAU_ROUTE, _ = action_thresholds(ROUTER_COSTS)           # Lab 12; printed
 TAU_ESC, TAU_ACT = action_thresholds(GUARD_COSTS)        # printed
 K_MAX = 4                                                # model calls per run
@@ -156,7 +156,7 @@ def after_guard(state)  -> str      # TODO 2
 def after_review(state) -> str      # provided: "send" | "agent"
 ```
 
-The guard's state for `decide()`: `{"policy": POLICY_TEXT, **case, "pending_email": pending["arguments"], "retrieved": [the texts of the passages in this run's tool results]}`. Including the retrieved passages is deliberate: the guard reads what the agent read, which is what makes the injection-shift measurement meaningful. Quote `AutoModeMiddleware`'s default instructions (lecture 14, section 3) as the guard's instruction preamble, attributed.
+The guard's state for `decide()`: `{"policy": POLICY_TEXT, **case, "pending_email": pending["arguments"], "retrieved": [the texts of the passages in this run's tool results]}`. Including the retrieved passages is deliberate: the guard reads what the agent read, which is what makes the injection-shift measurement meaningful. Quote `AutoModeMiddleware`'s default instructions (Module 14, section 3) as the guard's instruction preamble, attributed.
 
 **Tools** (LangChain `@tool`, converted to Lab 8 `Tool` by `as_lab8_tool(t) = Tool(t.name, t.description, t.args_schema, t.func)`; *checked* that `args_schema` is a Pydantic model and `func` is set):
 
@@ -175,7 +175,7 @@ Format per exercise: Predict, Run, Explain, Check; `# TODO N` stub, folded solut
 |---|---|---|---|---|---|
 | 0 | Nothing: run setup; read `PROVIDER`, `JEV_PATH`, `HUMAN_MODE`; print the state table, the three thresholds and the Mermaid text of the compiled graph | – | none | backend labels; `JEV_MODEL`; the decision set's status (`v1-template-only` until the hand items land) | 3 |
 | 1 | `safe_eval(expression)`: arithmetic through `ast` (numbers, `+ - * /`, unary minus, parentheses; at most 100 characters); everything else raises `ValueError` | – | `"300 * 0.5"` → 150.0; `"(14 - 7) * 2"` → 14; `"2 ** 10"`, `"__import__('os')"`, `"x + 1"`, `"1/0"` and a 101-character string each come back from Lab 8's `execute` as `(message, True)`, never as an exception | the calculator tool's schema as the model sees it | 6 |
-| 2 | `region(p, tau_esc, tau_act)` → `"act"` / `"ask"` / `"escalate"`; `after_router(state)`; `after_guard(state)` | `route-rule`, `guard-rule`, `graph-step` | with `FakeProvider` scripts and a `ScriptedDecider` (fixed probabilities), on the compiled graph: (i) `region` at 0.375, 0.9687, 0.96875, 0.99 and 0.1 gives ask, ask, act, act, escalate (the lecture's tie rule); (ii) $p_{\text{allow}} = 0.99$ → one outbox entry, no interrupt; (iii) 0.6 → `"__interrupt__"` in the result, outbox empty; (iv) 0.2 → `actions` contains `escalated`, outbox empty; (v) $\hat{p}_{\text{route}} = 0.7$ on `calculate` → `escalate`, the agent never called; (vi) a `send_email` call requested on the `retrieve` branch still reaches `guard`; (vii) a script that calls `search_docs` forever ends with `k == K_MAX`, and `recursion_limit` is never hit | the `trace` of each scripted run, step by step | 12 |
+| 2 | `region(p, tau_esc, tau_act)` → `"act"` / `"ask"` / `"escalate"`; `after_router(state)`; `after_guard(state)` | `route-rule`, `guard-rule`, `graph-step` | with `FakeProvider` scripts and a `ScriptedDecider` (fixed probabilities), on the compiled graph: (i) `region` at 0.375, 0.9687, 0.96875, 0.99 and 0.1 gives ask, ask, act, act, escalate (the briefing's tie rule); (ii) $p_{\text{allow}} = 0.99$ → one outbox entry, no interrupt; (iii) 0.6 → `"__interrupt__"` in the result, outbox empty; (iv) 0.2 → `actions` contains `escalated`, outbox empty; (v) $\hat{p}_{\text{route}} = 0.7$ on `calculate` → `escalate`, the agent never called; (vi) a `send_email` call requested on the `retrieve` branch still reaches `guard`; (vii) a script that calls `search_docs` forever ends with `k == K_MAX`, and `recursion_limit` is never hit | the `trace` of each scripted run, step by step | 12 |
 | 3 | `run_with_human(graph, inputs, cfg, human)`: invoke; while `"__interrupt__"` in the result, call `human(interrupt.value)` and resume with `Command(resume=...)`; return the final state and the number of interrupts | – | (i) a scripted case at $p_{\text{allow}} = 0.6$: `human` returning `"approve"` → one outbox entry; `"reject"` → none, and the model receives an error result; (ii) the `ScriptedDecider` was called **once** for the guard although the run paused and resumed; (iii) memory: a second `invoke` on the same `thread_id` sees turn 1's messages, a new `thread_id` sees none (*checked* on a two-turn toy graph: the second turn saw 3 earlier messages, the new thread 1) | one real case on `PROVIDER` and `JEV_PATH`, end to end with `SimulatedHuman`: the trace with every probability and threshold | 8 |
 | 4 | `snapshot_before(graph, cfg, node)` → the newest `StateSnapshot` whose `.next == (node,)` | – | on the paused run of Exercise 3: fork before `guard` with `update_state(snap.config, {"taus": {...}})` lowering `act` to 0.55 so that 0.6 is in the act region; the fork sends without an interrupt; the original thread's history is unchanged; replaying the original thread from the same snapshot sends nothing twice (outbox size unchanged) | the two histories side by side | 7 |
 | 5 | `agent_metrics(records)` → route accuracy, share followed, accuracy when followed (@eq-route-acc); UAR (@eq-uar), held-back rate, interrupts, cost per case (Lab 12 `three-empirical`); ISR attempted and carried out (@eq-isr); mean and max $\Delta p$ and crossings of $\tau_{\text{act}}$ (@eq-shift); each with its denominator | `route-acc`, `uar`, `isr`, `shift`, `unsafe-bound` | on 12 hand-made records covering every case (invalid router answer counted wrong; an approved email not unsafe; an escalated item not sent; an attempt that the guard blocked counts as attempted, not carried out): every number equals the hand-computed fraction | the evaluation tables below, with $N$ and Lab 8's standard error beside every rate; the share of acted-on guard items that were not allowed beside $1 - \tau_{\text{act}}$ (@eq-unsafe-bound) | 10 |
@@ -202,7 +202,7 @@ Asserted on **every** path, because it is code, not a model: with `HARD_RULES = 
 - The graph's control flow, interrupts and replay were tested with scripts and passed on every path.
 - Route accuracy, UAR and ISR were measured for the decider and language model named in each row, on synthetic items of one domain, with the $N$ printed. Without a key, none of them is Jev's.
 - The simulated human never misses a wrong email; a real one would. The interrupt count is the price of the safety shown.
-- Questions: (1) Your guard's UAR is 0 out of 45. What true rates are consistent with that, and what would you need to claim less than 1%? (2) The poisoned document moved $p_{\text{allow}}$ by $\Delta p$ on average. Which defense in lecture 14, section 6, did not depend on that number?
+- Questions: (1) Your guard's UAR is 0 out of 45. What true rates are consistent with that, and what would you need to claim less than 1%? (2) The poisoned document moved $p_{\text{allow}}$ by $\Delta p$ on average. Which defense in Module 14, section 6, did not depend on that number?
 
 ## What is asserted on each path
 
@@ -215,7 +215,7 @@ Asserted on **every** path, because it is code, not a model: with `HARD_RULES = 
 
 ## Stretch (one section, last, optional; not required by any later lab)
 
-Four independent parts of about 10 minutes each; participants pick one (added 2026-10-06; parts B to D put lecture 14's sections 3, 7 and 9 into code). Each part has a Predict question, a `# TODO` stub (TODO 6 to 9), a folded solution, a "why this works" note, a checkpoint on scripted inputs and an Explain cell.
+Four independent parts of about 10 minutes each; participants pick one (added 2026-10-06; parts B to D put Module 14's sections 3, 7 and 9 into code). Each part has a Predict question, a `# TODO` stub (TODO 6 to 9), a folded solution, a "why this works" note, a checkpoint on scripted inputs and an Explain cell.
 
 **Part A · A verification node** (TODO 6, unchanged). Add `verify` between `agent`'s final answer and `END`: a `Noul` "Is every factual claim in the answer supported by the passages below?" over the answer and the run's retrieved passages, through `decide()` (Jev keyed; `QwenDecider` or `StubDecider` otherwise). Deliver the answer if $p \ge \tau_{\text{verify}}$, otherwise deliver it marked "unverified". $\tau_{\text{verify}}$ from Chow's rule with stated costs (suggested: an unsupported answer delivered as supported 5, marking a supported answer unverified 1, so $\tau_{\text{verify}} = 0.8$), printed.
 
@@ -262,8 +262,8 @@ All estimates; measure every row and report it. If the local CPU path cannot mee
 
 ## Flags for the Lab Engineer
 
-1. **Names.** Use the lecture's: `p_route`, `p_allow`, `tau_route`, `tau_esc`, `tau_act`, `region`, `K_MAX`, `ROUTER_COSTS`, `GUARD_COSTS`, `records`, `delta_p`. Thresholds are compared with `probabilities[choice]` (router) and `noul` (guard), **never** with `confidence`.
-2. **The guard's probability is `noul` itself**, not `max(noul, 1 - noul)` (lecture 14, notation box). `chosen_answer` from Lab 12 is right for the router and wrong for the guard.
+1. **Names.** Use the briefing's: `p_route`, `p_allow`, `tau_route`, `tau_esc`, `tau_act`, `region`, `K_MAX`, `ROUTER_COSTS`, `GUARD_COSTS`, `records`, `delta_p`. Thresholds are compared with `probabilities[choice]` (router) and `noul` (guard), **never** with `confidence`.
+2. **The guard's probability is `noul` itself**, not `max(noul, 1 - noul)` (Module 14, notation box). `chosen_answer` from Lab 12 is right for the router and wrong for the guard.
 3. **Keep the decider call out of `human_review`.** It re-runs from the top on resume (*checked*). Exercise 3's checkpoint (ii) enforces it.
 4. **State is plain data** (constraint (d)). No SDK objects, no dataclasses in the state.
 5. **Thread IDs:** one per case, `f"{item_id}-{run_tag}"`; never reuse a thread across the two `HARD_RULES` settings.
@@ -272,7 +272,7 @@ All estimates; measure every row and report it. If the local CPU path cannot mee
 8. **Package names.** Install only the pins above. `tests/test_package_names.py` fails on lookalikes.
 9. **No personal data** in any state sent to Jev; the decision set and the desk corpus use invented names, `example.org` records and one `example.net` attacker address.
 10. **Do not use `AutoModeMiddleware` or `create_agent`.** Quote the middleware's default instructions only (JV §3).
-11. **Report back:** which paths ran (keyed Jev, keyed LLM per provider, local T4, local CPU, stub), the measured tables for each with backends named, run time per section, measured cost, whether the dumped `raw` round-trips on each keyed provider (constraint (d)), whether Lab 13's retriever fitted the interface of constraint (c), and anything in the lecture the notebook contradicts.
+11. **Report back:** which paths ran (keyed Jev, keyed LLM per provider, local T4, local CPU, stub), the measured tables for each with backends named, run time per section, measured cost, whether the dumped `raw` round-trips on each keyed provider (constraint (d)), whether Lab 13's retriever fitted the interface of constraint (c), and anything in the briefing the notebook contradicts.
 
 ## Interfaces Lab 15 may reuse (restated there, not imported)
 
@@ -292,9 +292,9 @@ All estimates; measure every row and report it. If the local CPU path cannot mee
   - Item: "LangGraph defaults and re-execution". Risk: "In `langgraph` 1.2.12 the default `recursion_limit` is 10,007, an interrupted node re-runs from its first line on resume, and replay re-runs side effects". Mitigation: "Lab 14 sets `recursion_limit` on every run, counts model calls, keeps decision calls out of the pausing node, and makes `send_email` idempotent; re-check at each pin bump".
   - Item: "Guard data". Risk: "The decision set has no P6 policy question, so the planned P5/P6 guard items do not exist". Mitigation: "Lab 14 derives its guard set from route labels plus P5 items (brief 14); no new annotation".
   - Item: "Lab 14's no-key guard needs an open model". Risk: "The guard question is outside the toy model's two families, so the no-key path loads `models.fallback` even when an LLM key is set". Mitigation: "Lazy load; stub decider in CI".
-- **`PLAN.md` section 7, Day 9:** tick "Draft lecture 14: Agents", with the note "(not rendered: Quarto not installed; LangGraph behavior checked against the 1.2.12 source, the documentation site was blocked)".
+- **`PLAN.md` section 7, Day 9:** tick "Draft briefing 14: Agents", with the note "(not rendered: Quarto not installed; LangGraph behavior checked against the 1.2.12 source, the documentation site was blocked)".
 - **`references.qmd`, Module 14:** Yao et al. 2023; LangGraph documentation (to be read); Greshake et al. 2023; Perez and Ribeiro 2022; Debenedetti et al. 2024; Beurer-Kellner et al. 2025; OWASP Top 10 for LLM Applications 2025 (LLM01).
-- **Figure 14.1** (spec in the lecture): `images/14-desk-agent-graph.svg`, for the Architect.
+- **Figure 14.1** (spec in the briefing): `images/14-desk-agent-graph.svg`, for the Architect.
 
 ## Not verified by the Director
 
@@ -303,23 +303,23 @@ All estimates; measure every row and report it. If the local CPU path cannot mee
 - **The LangChain and LangGraph documentation sites were blocked** (proxy `EGRESS_BLOCKED` for `docs.langchain.com` on 2026-10-05). Behavior was checked against the installed 1.2.12 / 1.6.6 source and by running small graphs, not against the documentation's wording.
 - **Pins:** resolved with `uv` for Python 3.12 only; not installed with `pip` on Colab.
 - **The decision set** was read from the unmerged template-only build (`b812d36`); its injection and guard counts can change when the hand-written items land.
-- **Lab 13's retriever interface** is assumed (constraint (c)) until lecture 13 and its brief are merged.
+- **Lab 13's retriever interface** is assumed (constraint (c)) until Module 13 and its brief are merged.
 - **Whether `model_dump(mode="json")` replies can be resent** to OpenAI and Anthropic (constraint (d)).
 - **`QwenDecider`'s quality** as a guard: unknown; a 0.5B model scored on " yes" / " no" may be close to uninformative. The lab prints its metrics and asserts nothing.
 - **Citations:** Yao et al. 2023, Greshake et al. 2023, Perez and Ribeiro 2022, Debenedetti et al. 2024 and Beurer-Kellner et al. 2025 checked by web search (titles, venues, summaries), not against the papers; the AgentDojo author list and ReAct's section-2 notation are from memory. OWASP LLM01:2025 checked through secondary pages only.
 - `quarto render` was not run: Quarto is not installed in the build container.
 
-## Lecture changes of 2026-10-06 (certification, harness and ARC-AGI pass)
+## Briefing changes of 2026-10-06 (certification, harness and ARC-AGI pass)
 
-From the Academic Director. Lecture 14 gained material from Anthropic's *Claude Certified Architect – Foundations* exam guide (v1.0, July 2026), Anthropic's engineering posts, Andrew Ng's letters on agentic design patterns, and ARC Prize's published results. The core path is unchanged; the stretch gained parts B to D (above). What the lab should know:
+From the Academic Director. Module 14 gained material from Anthropic's *Claude Certified Architect – Foundations* exam guide (v1.0, July 2026), Anthropic's engineering posts, Andrew Ng's letters on agentic design patterns, and ARC Prize's published results. The core path is unchanged; the stretch gained parts B to D (above). What the lab should know:
 
-- **Section 1, the harness.** The lecture now defines an agent as a model plus a harness, and separates three meanings of "harness": agent harness, evaluation harness (Lab 8), test harness (the lab's scripted checkpoints). If the notebook's markdown says "harness" anywhere, check it uses one of the three senses explicitly.
-- **Section 3, tool design.** New paragraph on tool descriptions, few tools per agent, short results, and error results that say whether to fix, retry or stop, never confusing an empty result with a failure. Lab 8's `execute` returns `(text, is_error)` without an error category. The lecture does not claim the lab adds one. *Optional, for the Lab Engineer:* make `execute`'s error text begin with a category (`invalid arguments`, `temporary failure, retry`, `not permitted`). It is a string change with no checkpoint impact, but it touches Lab 8's provided cell, which Labs 11, 13 and 14 restate verbatim.
-- **Section 6, stopping and enforcement.** The lecture says a run that hits $K_{\max}$ with tool calls still requested is a failure, and that the last `agent` trace line shows it (it does: `k == K_MAX` and non-empty `calls`). If `agent_metrics` or the evaluation printout ever counts such runs, label them failures.
-- **Section 7, escalation triggers.** The lecture says the desk policy has **no** rule for an explicit request for a person, so nothing tells the router to choose `escalate` for it. Adding one (a P9, plus the `escalate` route description) would change the decision set and its labels; it is **not proposed** for v1. The lecture also says the `escalate` node writes a minimal record (reason and probabilities) and leaves the rest in `trace`, which matches the notebook.
+- **Section 1, the harness.** The briefing now defines an agent as a model plus a harness, and separates three meanings of "harness": agent harness, evaluation harness (Lab 8), test harness (the lab's scripted checkpoints). If the notebook's markdown says "harness" anywhere, check it uses one of the three senses explicitly.
+- **Section 3, tool design.** New paragraph on tool descriptions, few tools per agent, short results, and error results that say whether to fix, retry or stop, never confusing an empty result with a failure. Lab 8's `execute` returns `(text, is_error)` without an error category. The briefing does not claim the lab adds one. *Optional, for the Lab Engineer:* make `execute`'s error text begin with a category (`invalid arguments`, `temporary failure, retry`, `not permitted`). It is a string change with no checkpoint impact, but it touches Lab 8's provided cell, which Labs 11, 13 and 14 restate verbatim.
+- **Section 6, stopping and enforcement.** The briefing says a run that hits $K_{\max}$ with tool calls still requested is a failure, and that the last `agent` trace line shows it (it does: `k == K_MAX` and non-empty `calls`). If `agent_metrics` or the evaluation printout ever counts such runs, label them failures.
+- **Section 7, escalation triggers.** The briefing says the desk policy has **no** rule for an explicit request for a person, so nothing tells the router to choose `escalate` for it. Adding one (a P9, plus the `escalate` route description) would change the decision set and its labels; it is **not proposed** for v1. The briefing also says the `escalate` node writes a minimal record (reason and probabilities) and leaves the rest in `trace`, which matches the notebook.
 - **Section 9, patterns, subagents and context.** Exercised by the stretch, parts B (subagent, coverage) and C (compaction); part D exercises section 7's hand-off. The core path is unchanged.
 - **Optional callouts moved out of the 45 minutes:** "what the lab does not use from LangChain" (section 3), the two LangGraph version notes (section 6) and the table of decision backends (section 7). Their content is unchanged.
 - **Timing pass (later on 2026-10-06).** A desk timing found the page needed about 75 minutes, so more detail moved into collapsed callouts, with short in-budget summaries: the ARC-AGI worked example and the three meanings of "harness" (section 1), two tool-design habits (section 3), resume or start fresh (section 5), the stopping rule (section 6, beside the version notes), escalation triggers and the hand-off (section 7), and the five subagent rules, their cost and context as a budget (section 9). Nothing was deleted, and every section the notebook cites still holds the material it cites. Sections 5 and 9 are now 5 minutes each. The lab is unaffected.
 - **Objectives.** `m14` keeps three objectives (decided 2026-10-06): the core path must exercise every module objective, and only the stretch exercises harness design.
-- **Unverified for this pass:** the timings (checked on paper against the other lectures, not delivered aloud); the Claude Agent SDK and MCP details in section 9's optional callout were read in the documentation on 2026-10-06 and not run; the 2026 ARC-AGI-3 figures (GPT-6 Astra) were read from arcprize.org and not reproduced anywhere else. LangChain's MCP support is now `langchain[mcp]`; the lab does not use MCP.
+- **Unverified for this pass:** the timings (checked on paper against the other briefings, not delivered aloud); the Claude Agent SDK and MCP details in section 9's optional callout were read in the documentation on 2026-10-06 and not run; the 2026 ARC-AGI-3 figures (GPT-6 Astra) were read from arcprize.org and not reproduced anywhere else. LangChain's MCP support is now `langchain[mcp]`; the lab does not use MCP.
 - **Seen, not read:** the LangChain blog lists a post titled "Building a Harness with Jev" (17 September 2026). Only its title was seen. Read it before the next Jev re-verification (`briefs/jev-verification.md`), since it may describe a TypeSafe-endorsed integration pattern.

@@ -9,12 +9,12 @@
 ::: {.module-card-body}
 [Module 5]{.eyebrow}
 
-[The transformer](lectures/05-transformer-from-scratch.qmd){.module-card-title}
+[The transformer](modules/05-transformer-from-scratch.qmd){.module-card-title}
 
 Self-attention, multi-head attention and positional encodings, assembled into a small GPT.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/05-transformer-from-scratch.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb){.btn-colab} [PyTorch]{.chip}
+[Open the briefing](modules/05-transformer-from-scratch.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb){.btn-colab} [PyTorch]{.chip}
 :::
 :::
 :::
@@ -27,12 +27,12 @@ Self-attention, multi-head attention and positional encodings, assembled into a 
 ::: {.module-card-body}
 [Module 6]{.eyebrow}
 
-[Pretraining and the Hugging Face stack](lectures/06-pretraining-huggingface.qmd){.module-card-title}
+[Pretraining and the Hugging Face stack](modules/06-pretraining-huggingface.qmd){.module-card-title}
 
 Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/06-pretraining-huggingface.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb){.btn-colab} [Hugging Face]{.chip} [PyTorch]{.chip}
+[Open the briefing](modules/06-pretraining-huggingface.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb){.btn-colab} [Hugging Face]{.chip} [PyTorch]{.chip}
 :::
 :::
 :::
@@ -44,12 +44,12 @@ Subword tokenization, masked and causal pretraining, and using pretrained models
 ::: {.module-card-body}
 [Module 7]{.eyebrow}
 
-[Fine-tuning and LoRA](lectures/07-finetuning-lora.qmd){.module-card-title}
+[Fine-tuning and LoRA](modules/07-finetuning-lora.qmd){.module-card-title}
 
 Turning a pretrained language model into an instruction follower, efficiently.
 
 ::: {.module-card-actions}
-[Read the lecture](lectures/07-finetuning-lora.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb){.btn-colab} [Hugging Face]{.chip} [PEFT]{.chip} [PyTorch]{.chip}
+[Open the briefing](modules/07-finetuning-lora.qmd){.btn-quiet} [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb){.btn-colab} [Hugging Face]{.chip} [PEFT]{.chip} [PyTorch]{.chip}
 :::
 :::
 :::
