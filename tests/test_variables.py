@@ -13,8 +13,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import gen_tables as g  # noqa: E402  (units, placements, minutes_of)
 
 V = yaml.safe_load((ROOT / "_variables.yml").read_text(encoding="utf-8"))
-MODULE_FIELDS = {"n", "slug", "day", "level", "minutes", "title", "summary", "objectives",
-                 "stack"}
+MODULE_FIELDS = {"n", "slug", "day", "level", "minutes", "title", "summary", "objectives", "stack"}
 
 
 def slot_key(slot) -> str:

@@ -29,6 +29,7 @@ STRETCH = re.compile(r"^##\s+Stretch\s*\(optional\)(?:\s*·\s*(.+?))?\s*$")
 # `### Stretch A · A verification node`: one of several challenges under the stretch.
 SUBSTRETCH = re.compile(r"^###\s+Stretch\s+([A-Z])\s+·\s+(.+?)\s*$")
 
+
 def headings(slug: str) -> list[str]:
     """Every markdown heading of the notebook, in document order."""
     path = NOTEBOOKS / f"{slug}.ipynb"

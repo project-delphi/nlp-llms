@@ -133,7 +133,9 @@ class Clock(unittest.TestCase):
         self.assertEqual(g.minutes_of(V, "m01"), 95)
         self.assertEqual(g.minutes_of(V, "m06"), 120)
         self.assertEqual(g.minutes_of(V, "m15"), 240)
-        self.assertEqual(g.timing(V, "m04", V["modules"]["m04"]), "95 minutes (45 briefing, 50 lab)")
+        self.assertEqual(
+            g.timing(V, "m04", V["modules"]["m04"]), "95 minutes (45 briefing, 50 lab)"
+        )
         self.assertEqual(
             g.timing(V, "m08", V["modules"]["m08"]), "120 minutes (55 briefing, 55 lab, 10 debrief)"
         )

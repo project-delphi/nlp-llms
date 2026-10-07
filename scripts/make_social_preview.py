@@ -64,8 +64,9 @@ def main() -> None:
     d.rectangle([0, 0, 10, H], fill=ACCENT)
 
     x = 86
-    d.text((x, 108), f"{w['org'].upper()}   ·   FIVE-DAY WORKSHOP", font=font("bold", 23),
-           fill=ACCENT)
+    d.text(
+        (x, 108), f"{w['org'].upper()}   ·   FIVE-DAY WORKSHOP", font=font("bold", 23), fill=ACCENT
+    )
 
     # The title wraps by hand: two lines, broken where the sense breaks.
     d.text((x, 170), "From Traditional NLP", font=font("bold", 76), fill=INK)
@@ -75,8 +76,12 @@ def main() -> None:
 
     d.line([(x, 466), (W - 86, 466)], fill=RULE, width=2)
     d.text((x, 500), facts(v), font=font("bold", 25), fill=INK)
-    d.text((x, 548), v["repo"]["site_url"].replace("https://", ""), font=font("regular", 22),
-           fill=MUTED)
+    d.text(
+        (x, 548),
+        v["repo"]["site_url"].replace("https://", ""),
+        font=font("regular", 22),
+        fill=MUTED,
+    )
 
     OUT.parent.mkdir(exist_ok=True)
     img.save(OUT, "PNG", optimize=True)

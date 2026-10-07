@@ -723,9 +723,7 @@ def module_details(v: dict, key: str, m: dict) -> list[str]:
     ]
     if has_notebook(m):
         env = v["readiness"]["envs"][r["runtime"]]["name"]
-        rows.append(
-            ("Lab runtime", f"{env} · about {r['estimate_minutes']} minutes of compute")
-        )
+        rows.append(("Lab runtime", f"{env} · about {r['estimate_minutes']} minutes of compute"))
     rows.append(("Accounts and cost", _accounts(r)))
     if has_notebook(m):
         rows.append(("Without API keys", FALLBACK_SHORT[r["fallback"]["kind"]]))
