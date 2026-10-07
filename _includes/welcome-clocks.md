@@ -21,7 +21,7 @@
 
 | Time | |
 |---|---|
-| 09:00–09:15 | Retrieval practice |
+| 09:00–09:15 | Warm-up |
 | 09:15–11:15 | Briefing 55 · Lab 55 · Debrief 10 |
 | 11:15–11:30 | Break |
 | 11:30–12:25 | Briefing 55 (Day 5: hands-on) |
@@ -29,6 +29,6 @@
 | 13:25–14:30 | Lab 55 · Debrief 10 (Day 5: hands-on) |
 | 14:30–14:45 | Break |
 | 14:45–16:45 | Briefing 55 · Lab 55 · Debrief 10 (Day 5: hands-on) |
-| 16:45–17:00 | Synthesis (Day 5: Synthesis and wrap-up) |
+| 16:45–17:00 | Wrap-up (Day 5: Wrap-up and close) |
 :::
 :::

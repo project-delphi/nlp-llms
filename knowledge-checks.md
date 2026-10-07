@@ -1,6 +1,6 @@
 ---
-title: "Assessments"
-subtitle: "Entry check and exit check"
+title: "Knowledge checks"
+subtitle: "Entry check and knowledge checks"
 ---
 
 <!--
@@ -10,12 +10,12 @@ page, which are generated from _variables.yml; they are not repeated here. Numbe
 the answers are the build runs recorded in data/baselines.json and quoted in the briefings.
 -->
 
-Two short checks. The **entry check** tells a participant, before Day 1, whether the prerequisites are in place. The **exit check** asks one or two questions per module objective, so a participant (or an instructor) can see which objectives landed. Neither is graded. Every question can be answered from the briefings and labs; none is a trick question.
+Two short checks. The **entry check** tells a participant, before Day 1, whether the prerequisites are in place. The **knowledge checks** ask one or two questions per module objective, so a participant (or a facilitator) can see which objectives landed. Neither is graded. Every question can be answered from the briefings and labs; none is a trick question.
 
 ## How to use them
 
 - **Entry check.** Participants take it on the [Before Day 1](prepare.qmd) page, the first step before Setup: about 15 minutes, on paper or in a notebook, with no web search. One rule applies: a participant who misses two or more of the three questions in an area does that area's remediation, listed on the same page, before Day 1; one miss in an area needs no action. Send the page a week ahead, so there is time for the remediation.
-- **Exit check.** On Days 2 to 5, the 15 minutes of retrieval practice that open the day use five of these questions: about three from the previous day and two from earlier days. The picks and the routine are on each day page ([Day 2](day-2.qmd#retrieval), [Day 3](day-3.qmd#retrieval), [Day 4](day-4.qmd#retrieval), [Day 5](day-5.qmd#retrieval)). Participants can also use the questions of the day's modules as a self-check that evening, or all of them after Day 5. Answers are folded under each question. Each answer names the lab and exercise that produced the evidence, so a participant who misses a question knows which cell to rerun.
+- **Knowledge check.** On Days 2 to 5, the 15 minutes of warm-up that open the day use five of these questions: about three from the previous day and two from earlier days. The picks and the routine are on each day page ([Day 2](day-2.qmd#warm-up), [Day 3](day-3.qmd#warm-up), [Day 4](day-4.qmd#warm-up), [Day 5](day-5.qmd#warm-up)). Participants can also use the questions of the day's modules as a self-check that evening, or all of them after Day 5. Answers are folded under each question. Each answer names the lab and exercise that produced the evidence, so a participant who misses a question knows which cell to rerun.
 - **Numbers.** Where an answer quotes a measured number, it is the build run recorded in `data/baselines.json` and quoted in the briefing. If your room ran on another runtime and got a different number, accept the room's number with the same reasoning.
 - **Labs whose real path has not run.** The [readiness page](readiness.qmd) lists which labs have run on their real models, and where. A question on a lab that has not tests the reasoning of the briefing and the checkpoint, not a model result.
 
@@ -25,7 +25,7 @@ Participants take this check on the [Before Day 1](prepare.qmd#entry-check) page
 
 {{< include /prepare/entry-check.md >}}
 
-## Exit check
+## Knowledge check
 
 Questions are numbered *module.objective*, with a letter when an objective has two. Objective numbers refer to the list at the top of each module page. Each question has its own link, with the dot replaced by a hyphen: `#q10-2` for 10.2, `#q12-3a` for 12.3a. The day pages use these links. The outcome numbers refer to the workshop's learning outcomes:
 

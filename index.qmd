@@ -92,6 +92,6 @@ The labs follow one rhythm:
 
 Each exercise has a solution folded directly beneath it, and each lab ends with an optional stretch section for those who finish early.
 
-## Sources and inspiration
+## Where the material comes from
 
 The approach draws on Stanford [CS224N](https://web.stanford.edu/class/cs224n/), CMU [CS 11-747](https://phontron.com/class/nn4nlp2021/) and MIT [6.S191](https://introtodeeplearning.com/). The full reading list is on the [References](references.qmd) page.

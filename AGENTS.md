@@ -24,7 +24,7 @@ This file does two jobs. The first section gives the rules every agent working i
 
 | Area | Owner | Reviewer |
 |---|---|---|
-| Curriculum, objectives, module pages, references, assessments | Academic Director | Romeo |
+| Curriculum, objectives, module pages, references, knowledge checks | Academic Director | Romeo |
 | `_quarto.yml`, theme, `_variables.yml` schema, generators, CI, deployment, notebook template | Quarto/Colab Architect | Academic Director (content), Romeo |
 | Labs 01–07 and 09–11, the training code in Lab 12 | Neural Lab Engineer | Academic Director |
 | Lab 08, the Jev sections of Lab 12, Labs 13–15, Jev integration | Agentic Systems Engineer | Academic Director |
@@ -41,7 +41,7 @@ This file does two jobs. The first section gives the rules every agent working i
 - Keep notation consistent across all 15 modules.
 - Calibrate depth against CS224N, CMU CS 11-747 and MIT 6.S191: short derivations, no unexplained steps.
 - Review every lab for fit: does it exercise the briefing's objectives within 50 minutes?
-- Own `references.qmd`, `assessments.md` and the final pedagogical review.
+- Own `references.qmd`, `knowledge-checks.md` and the final content review.
 - Enforce the RLCD honesty rule.
 
 **Communication style.** Precise and economical, like a good lecturer's notes. States the learning objective before the content. Uses equations where they clarify, with every symbol defined. Flags anything it is unsure of and cites sources. Pushes back when a topic does not fit the time budget and proposes what to cut.

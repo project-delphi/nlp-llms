@@ -64,7 +64,7 @@ Every lab follows one rhythm:
 {{< include /_includes/welcome-clocks.md >}}
 
 ::: {.muted}
-Breaks and lunch keep their length. From Day 2, each day opens with retrieval practice and closes with a synthesis of the day's results. The full [schedule](schedule.qmd) is on the site.
+Breaks and lunch keep their length. From Day 2, each day opens with a warm-up and closes with a wrap-up of the day's results. The full [schedule](schedule.qmd) is on the site.
 :::
 
 ## Setup: nothing to install

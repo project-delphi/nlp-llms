@@ -8,7 +8,7 @@ Instructor page, rendered by Quarto. The briefing rows are generated: scripts/ge
 _includes/pace-NN.md from the live plan in each briefing's front matter (scripts/live_plan.py), so
 change a briefing's minutes there, never here. Lab rows come from the minutes in each notebook's
 exercise headings, which follow the "As built" sections of briefs/*.md. Debrief, retrieval-practice
-and synthesis rows follow the day pages (day-2.qmd to day-5.qmd) and the facilitator guide. The
+and wrap-up rows follow the day pages (day-2.qmd to day-5.qmd) and the facilitator guide. The
 capstone rows follow Module 15's timing. Module titles and slot lengths come from _variables.yml.
 -->
 
@@ -18,7 +18,7 @@ capstone rows follow Module 15's timing. Module titles and slot lengths come fro
 
 Each module has two tables. The first is the briefing's **live plan**, generated from the module page: minutes count from the start of the briefing, and "In the room" lists the checks, predictions and demos whose minutes the row includes. The second is the **lab**: minutes count from the start of the lab. "CP" is a checkpoint; Checkpoint *N* belongs to Exercise *N*. The last column says what participants should have passed by the end of that row. If more than a third of the room has not, apply the module's "behind" rule. A behind rule's minute is a lab minute unless it says briefing minute or build minute. Clock times are on the [schedule](schedule.qmd).
 
-**Day 1:** the lab is the {{< var schedule.clocks.standard.shape.lab >}}-minute core path and ends the module. **Days 2 to 5:** the lab is {{< var schedule.clocks.long.shape.lab >}} minutes: the same core path, with 5 minutes of slack for setup and downloads in its first row, so every later row starts 5 minutes later than the notebook's own minutes suggest. If setup goes quickly, the room runs ahead and keeps the minutes. The lab table ends with the {{< var schedule.clocks.long.shape.debrief >}}-minute **debrief**: the Explain step, taken with the whole room. Each day also opens with retrieval practice and closes with a synthesis, both on the day pages. What to say in each debrief, and what to cut when a day's clock slips, are in the [facilitator guide](facilitator-guide.md#shape).
+**Day 1:** the lab is the {{< var schedule.clocks.standard.shape.lab >}}-minute core path and ends the module. **Days 2 to 5:** the lab is {{< var schedule.clocks.long.shape.lab >}} minutes: the same core path, with 5 minutes of slack for setup and downloads in its first row, so every later row starts 5 minutes later than the notebook's own minutes suggest. If setup goes quickly, the room runs ahead and keeps the minutes. The lab table ends with the {{< var schedule.clocks.long.shape.debrief >}}-minute **debrief**: the Explain step, taken with the whole room. Each day also opens with a warm-up and closes with a wrap-up, both on the day pages. What to say in each debrief, and what to cut when a day's clock slips, are in the [facilitator guide](facilitator-guide.md#shape).
 
 **These minutes are planning estimates.** **No lab has been timed on Colab or on a T4.** Labs 1 to 5 were timed on a shared CPU only, and Labs 2 to 5 took far longer there than these minutes allow (see the [facilitator guide](facilitator-guide.md)). The briefing plans were set on paper; no briefing has yet been given aloud against its clock (see the [readiness page](readiness.qmd#open-work)). Treat every row as a target until you have run the notebook on the room's runtime and given the briefing once.
 
@@ -129,11 +129,11 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no b
 
 ## Day 2
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 2 page](day-2.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 2 page](day-2.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-2) | |
 
@@ -200,20 +200,20 @@ The briefing stops at lunch, wherever it has reached. On slow Wi-Fi, participant
 
 **Behind at minute 37:** run Exercise 6's `SAMPLING` cell as a demonstration and keep `rouge_n`. The stretch is the first thing dropped on any day.
 
-### Closing synthesis
+### Day wrap-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–5 | In pairs: the three prompts on the [Day 2 page](day-2.qmd#synthesis) | |
+| 0–5 | In pairs: the three prompts on the [Day 2 page](day-2.qmd#wrap-up) | |
 | 5–15 | With the room: fixed and left open for Modules 5 to 7; the running table, from the debriefs' numbers; one claim | the table on the board, kept for Day 5 |
 
 ## Day 3
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 3 page](day-3.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 3 page](day-3.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-3) | |
 
@@ -280,20 +280,20 @@ The briefing stops at lunch, wherever it has reached.
 
 **Behind at minute 24:** do not cut a training run; ask the Predict questions while training runs (estimated 1.5 minutes per run on a T4, unmeasured).
 
-### Closing synthesis
+### Day wrap-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–5 | In pairs: the three prompts on the [Day 3 page](day-3.qmd#synthesis) | |
+| 0–5 | In pairs: the three prompts on the [Day 3 page](day-3.qmd#wrap-up) | |
 | 5–15 | With the room: fixed and left open for Modules 8 to 10; today's rows of the running table; what the numbers do not say | today's rows on the board, kept for Day 5 |
 
 ## Day 4
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 4 page](day-4.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 4 page](day-4.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-4), including the honesty rule | |
 
@@ -360,21 +360,21 @@ The briefing stops at lunch, wherever it has reached.
 
 **Behind at minute 34:** on the keyed Jev path, rerank `test` only.
 
-### Closing synthesis
+### Day wrap-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–5 | In pairs: the three prompts on the [Day 4 page](day-4.qmd#synthesis) | |
+| 0–5 | In pairs: the three prompts on the [Day 4 page](day-4.qmd#wrap-up) | |
 | 5–13 | With the room: fixed and left open for Modules 11 to 13; today's rows of the running table; ranking or values | today's rows on the board, kept for Day 5 |
 | 13–15 | Announce the capstone pairs; each pair decides tonight which keys it will use | every participant knows their pair |
 
 ## Day 5
 
-### Retrieval practice
+### Warm-up
 
 | Minutes | Segment | By the end |
 |---|---|---|
-| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 5 page](day-5.qmd#retrieval) | an answer to each question |
+| 0–6 | Alone, on paper, notes closed: the five questions on the [Day 5 page](day-5.qmd#warm-up) | an answer to each question |
 | 6–10 | Compare with a neighbor | |
 | 10–15 | The two most-missed questions with the room; then the [opening lines](facilitator-guide.md#day-5) | pairs and their path classes confirmed |
 
@@ -438,6 +438,6 @@ Module 14 was the densest briefing in the desk timing of 2026-10-06, and its pla
 | 18–25 | Section 9, open problems | each pair has named one open problem and the measurement it would start with |
 | 25–30 | Section 10, further study; close | |
 
-### Closing synthesis
+### Day wrap-up
 
-On Day 5 the closing synthesis is not a separate slot: it is the wrap-up's last 15 minutes, and the prompts on the [Day 5 page](day-5.qmd#synthesis) run through the whole wrap-up. Item 1 (the whole line) is section 7's table. Item 2 (today's table) takes Lab 14's numbers from its debrief and the capstone's from Part III's combined table. Item 3 (what is still open) is section 9.
+On Day 5 the day wrap-up is not a separate slot: it is the wrap-up's last 15 minutes, and the prompts on the [Day 5 page](day-5.qmd#wrap-up) run through the whole wrap-up. Item 1 (the whole line) is section 7's table. Item 2 (today's table) takes Lab 14's numbers from its debrief and the capstone's from Part III's combined table. Item 3 (what is still open) is section 9.

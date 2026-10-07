@@ -5,7 +5,7 @@ subtitle: "Check the prerequisites, set up Colab, then start with Module 1"
 
 <!--
 The first-visit journey, in order. The entry-check questions live in
-prepare/entry-check.md (hand-written, also included by assessments.md); edit them
+prepare/entry-check.md (hand-written, also included by knowledge-checks.md); edit them
 there. Every remediation link below was checked with curl on 2026-10-06 (HTTP 200);
 re-check them before each delivery. The time estimates are ours, not the sources'.
 -->

@@ -12,7 +12,7 @@ A 5-day intensive workshop by Genial Labs. This file is the master plan: curricu
 |---|---|
 | **Title** | From Traditional NLP to Modern LLMs: n-grams, attention, RLHF, RLCD and agents |
 | **Length** | 5 days, 09:00–17:00, 15 modules (the capstone fills two module slots on Day 5), plus Module 0 as optional pre-work, with an optional drop-in clinic on Day 1, 08:00–09:00 |
-| **Module shape** | Two clocks (`schedule.clocks` in `_variables.yml`). **Day 1:** four 95-minute modules, each 45 min briefing then 50 min Colab lab. **Days 2–5:** three 120-minute modules a day, each 55 min briefing (about 45 of exposition and 10 of scheduled predictions, checks and the demo), a 55 min lab (the 50-minute core path plus 5 minutes of slack for setup and downloads) and a 10 min debrief; the middle module's briefing is before lunch and its lab and debrief after. Days 2–5 open with 15 minutes of retrieval practice and close with 15 of synthesis. Module 0 is pre-work, planned at 60 minutes, with no briefing and no notebook |
+| **Module shape** | Two clocks (`schedule.clocks` in `_variables.yml`). **Day 1:** four 95-minute modules, each 45 min briefing then 50 min Colab lab. **Days 2–5:** three 120-minute modules a day, each 55 min briefing (about 45 of exposition and 10 of scheduled predictions, checks and the demo), a 55 min lab (the 50-minute core path plus 5 minutes of slack for setup and downloads) and a 10 min debrief; the middle module's briefing is before lunch and its lab and debrief after. Days 2–5 open with 15 minutes of warm-up and close with 15 of wrap-up. Module 0 is pre-work, planned at 60 minutes, with no briefing and no notebook |
 | **Audience** | ML practitioners: comfortable with Python, NumPy and basic ML, some PyTorch |
 | **Site** | Quarto website, deployed to GitHub Pages |
 | **Labs** | Google Colab notebooks, free-tier T4 runtime |
@@ -78,7 +78,7 @@ nlp-llms/
 ├── _includes/               GENERATED tables (schedule, notebook index, dependencies)
 ├── index.qmd                landing page: hero, prerequisites, resource cards
 ├── prepare.qmd              Before Day 1: entry check and remediation, setup, Module 0, then Module 1
-├── prepare/                 entry-check.md: hand-written include shared by prepare.qmd and assessments.md
+├── prepare/                 entry-check.md: hand-written include shared by prepare.qmd and knowledge-checks.md
 ├── setup.qmd                Colab, API keys via Colab Secrets, open-model fallback
 ├── welcome.qmd              intro slides (revealjs) for the Day 1 opening slot: setup check and the week ahead; slides.scss is its theme
 ├── schedule.qmd             five-day timetable (generated: one grid per clock)
@@ -92,7 +92,7 @@ nlp-llms/
 ├── runs/                    run records: one JSON file per batch of timed notebook runs
 ├── faq.qmd
 ├── teach.qmd                instructor hub
-├── facilitator-guide.md  instructor-pace.md  assessments.md
+├── facilitator-guide.md  instructor-pace.md  knowledge-checks.md
 ├── custom.scss              cosmo override; Inter body, Source Serif 4 headings (custom-dark.scss: dark theme tokens)
 ├── fonts/  images/  data/   vendored fonts, figures, fallback dataset copies
 ├── scripts/                 gen_tables.py, gen_notebooks.py, new_notebook.py, test_notebooks.py, check_links.py
@@ -142,7 +142,7 @@ The generated grids on the schedule page are authoritative; these tables restate
 
 | Time | Day 2: Transformers and pretraining | Day 3: Using and aligning LLMs | Day 4: Calibration, decisions, RAG | Day 5: Agents and capstone |
 |---|---|---|---|---|
-| 09:00–09:15 | Retrieval practice | Retrieval practice | Retrieval practice | Retrieval practice |
+| 09:00–09:15 | Warm-up | Warm-up | Warm-up | Warm-up |
 | 09:15–11:15 | 5 · The transformer | 8 · LLMs through APIs | 11 · Calibration | 14 · Agents |
 | 11:15–11:30 | Break | Break | Break | Break |
 | 11:30–12:25 | 6 · Pretraining and the Hugging Face stack: briefing | 9 · Reinforcement and preference learning: briefing | 12 · Calibrated decisions: RLCD and Jev: briefing | 15 · Capstone: build |
@@ -150,7 +150,7 @@ The generated grids on the schedule page are authoritative; these tables restate
 | 13:25–14:30 | 6 · lab and debrief | 9 · lab and debrief | 12 · lab and debrief | 15 · Capstone: build |
 | 14:30–14:45 | Break | Break | Break | Break |
 | 14:45–16:45 | 7 · Fine-tuning and LoRA | 10 · RLHF | 13 · Retrieval-augmented generation | 15 · Capstone: evaluate and share |
-| 16:45–17:00 | Synthesis | Synthesis | Synthesis | Synthesis and wrap-up |
+| 16:45–17:00 | Wrap-up | Wrap-up | Wrap-up | Wrap-up and close |
 
 ---
 
@@ -440,7 +440,7 @@ Ten working days to a first complete version, then continued review. Briefings a
 - [ ] Code `09-preference-learning.ipynb` (written; Part A run on CPU with seed-based thresholds; Part B run on the committed data on the build Mac's CPU, with Exercise 4's thresholds set from seeds 0 to 2 (2026-10-06); not yet run on Colab)
 - [ ] Code `10-rlhf.ipynb`, including the pre-trained reward model checkpoint (written, with `scripts/lab10_seed_protocol.py`; the checkpoint `data/lab09_reward_model.pt` is committed; the real GPT-2 path ran on the build Mac's CPU in `FAST` mode only, where every unit checkpoint passes and the trained-policy checkpoints are skipped (2026-10-06); Checkpoint 1's tolerance was corrected to measured float32 noise; the T4 path has not run)
 - [x] Build the Lab 9 data files (`data/build_lab09_preferences.py`) on a machine with Hub access and record their statistics (built 2026-10-06 on the build Mac's CPU after the frames were changed to pass the acceptance criteria; statistics in `data/README.md` and the brief's "As built" note; the three files added 5.99 MB, so the cap in `tests/test_data.py` is now 12 MB)
-- [ ] Review: the reward-hacking demonstration is reliable across seeds (protocol in `briefs/10-rlhf.md`; needs a Colab T4). Not done. One exploratory full-settings run on Apple M1 Pro (MPS), seed 0, 2026-10-06, passed the provisional signature checks. Its gold gap was narrow (0.152 against 0.1), and the beta = 0 policy collapsed to "good as as as …" rather than stuffing list words. That is one seed, not the protocol. Module 10, Lab 10's Step 0 and Exercise 4 notes and exit question 10.4 now name the three ways the gold reward can fall and describe this run as exploratory (Academic Director, 2026-10-06)
+- [ ] Review: the reward-hacking demonstration is reliable across seeds (protocol in `briefs/10-rlhf.md`; needs a Colab T4). Not done. One exploratory full-settings run on Apple M1 Pro (MPS), seed 0, 2026-10-06, passed the provisional signature checks. Its gold gap was narrow (0.152 against 0.1), and the beta = 0 policy collapsed to "good as as as …" rather than stuffing list words. That is one seed, not the protocol. Module 10, Lab 10's Step 0 and Exercise 4 notes and knowledge check 10.4 now name the three ways the gold reward can fall and describe this run as exploratory (Academic Director, 2026-10-06)
 
 ### Day 8 — Modules 11–12
 
@@ -466,8 +466,8 @@ Ten working days to a first complete version, then continued review. Briefings a
 
 - [ ] Run all 16 notebooks on a fresh free-tier Colab runtime; record run time and API cost per lab
 - [ ] Timing dry-run of each module against its budget (45 briefing + 50 lab on Day 1; 55 + 55 + a 10-minute debrief on Days 2–5); move overflow into stretch sections
-- [ ] Pedagogical review of all 15 briefings: objectives met, notation consistent, prerequisites honoured
-- [x] Write `facilitator-guide.md`, `instructor-pace.md` and `assessments.md` (entry and exit checks)
+- [ ] Content review of all 15 briefings: objectives met, notation consistent, prerequisites honoured
+- [x] Write `facilitator-guide.md`, `instructor-pace.md` and `knowledge-checks.md` (entry and knowledge checks)
 - [ ] Complete `references.qmd` and check every citation (complete for all 15 modules, 135 entries; 45 checked against primary records, 85 against search summaries only because the proxy blocks arXiv, ACL Anthology and most publishers; recheck those from a networked machine)
 - [ ] Link check, spelling pass, accessibility pass (alt text, heading order, contrast)
 - [ ] Licence and attribution check for datasets, figures and borrowed code
@@ -511,7 +511,7 @@ Romeo approved a revision from four to five days after a review brief and a crit
 
 **Decisions:**
 
-- **The days.** Day 1 keeps four 95-minute modules (M1–M4). Days 2–5 run three 120-minute modules each: 55 minutes of briefing with the activities inside, a 55-minute lab and a 10-minute debrief, with 15 minutes of retrieval practice each morning and 15 of synthesis at the end of the day. Day 2 is M5–M7, Day 3 M8–M10, Day 4 M11–M13, and Day 5 M14 and the capstone.
+- **The days.** Day 1 keeps four 95-minute modules (M1–M4). Days 2–5 run three 120-minute modules each: 55 minutes of briefing with the activities inside, a 55-minute lab and a 10-minute debrief, with 15 minutes of warm-up each morning and 15 of wrap-up at the end of the day. Day 2 is M5–M7, Day 3 M8–M10, Day 4 M11–M13, and Day 5 M14 and the capstone.
 - **Notebooks.** One notebook per lab, with an explicit worked-example switch.
 - **Measurement.** On the build Mac only for now. Colab and T4 stay "not verified" and block the release check.
 - **Delivery.** One pull request per phase.
@@ -528,7 +528,7 @@ Romeo approved a revision from four to five days after a review brief and a crit
   - the setup page links straight to the setup notebook in Colab.
 - [x] Entry-check threshold made consistent: two or more of the three questions in an area missed
 - [x] Dated status notes on briefs 09, 10, 11 and 15
-- [ ] TypeSafe's documentation read on 2026-10-06, and Module 12, references, assessments and Lab 12 corrected: TypeSafe now names RLCD and publishes its confidence formulas. The quotations await Romeo's sign-off (the `typesafe-unverified` notice)
+- [ ] TypeSafe's documentation read on 2026-10-06, and Module 12, references, knowledge checks and Lab 12 corrected: TypeSafe now names RLCD and publishes its confidence formulas. The quotations await Romeo's sign-off (the `typesafe-unverified` notice)
 
 ### Phase 2 — Exercise harness and run records
 
@@ -563,22 +563,22 @@ Romeo approved a revision from four to five days after a review brief and a crit
 - [x] Clock profiles (`schedule.clocks.standard` and `.long`, each with a briefing/lab/debrief `shape`; `part: briefing`/`part: lab` slots let module B span lunch), `days.dN.clock`, `days.d5`, new day titles and questions, Module 8 moved to Day 3, Module 0 as pre-work (`day: 0`) with `days.d1.clinic`, `m15.minutes: 240`; `workshop.lecture_minutes`/`lab_minutes` dropped
 - [x] Generators: `units()`, `placements()`, `minutes_of()`, `shape()`, split `module_clock()`, `timing()`; one timetable per clock with inline `flex-grow` bars; `_includes/module-shape.md`; a pre-work sidebar section; a generated README day table; notebook headers with the split (`gen_notebooks.py` imports `timing`)
 - [x] Tests: per-clock slot arithmetic and back-to-back slots, units against day slots, every module placed once or pre-work, the clinic module is pre-work, `minutes == minutes_of()`, `day-5.qmd`, the `_quarto.yml` render list and Days menu
-- [x] Pages: `day-5.qmd`; day 2–4 intros; `_quarto.yml`; `custom.scss` (five-column day grid, per-clock timetables, debrief, closing and clinic styles); schedule, landing, setup, teach, FAQ, references, README, `pyproject.toml`; Modules 0, 1, 8, 10, 12 and 15 (the capstone retimed to Day 5: brief 10, build 110 across lunch, evaluate and share 105, wrap-up 30 into the closing slot; awaiting the Academic Director's review); assessments; this file's sections 1–6
-- [x] Restructure the day-by-day sections of `instructor-pace.md` and `facilitator-guide.md` for 55/55/10 and Day 5 (done in Phase 4, on the live plans). Pace sheet: Days 1–5 in order; each module's briefing rows are the generated `_includes/pace-NN.md`, followed by its lab rows counted from the start of the lab (on Days 2–5 the 5 minutes of slack sit in the first row and a debrief row closes the table); module B split across lunch; retrieval-practice and synthesis rows pointing to the day pages; Day 5 is Module 14 then Module 15's retimed capstone plan. Every "behind" rule kept, restated in lab minutes (Module 14's briefing rule now at briefing minute 38). Facilitator guide: "The shape of each day" (retrieval practice, live briefing, lab, debrief, lunch split, synthesis) and ordered "When the clock slips" rules for 55/55/10; per-day opening lines (Days 2–5 at the end of retrieval practice; the honesty rule moved to the Day 4 opening); a debrief per module of Days 2–5 (numbers, one misconception, the bridge); per-day synthesis notes; the capstone at 10 + 110 + 105 + 30; stale items fixed (the Day 3 opening, the TODO box, now the `typesafe-unverified` sign-off, an obsolete Lab 3 checkpoint note, Jev's rate limits). The four-day notices are removed from both pages and from `teach.qmd`. Minutes remain planning estimates
+- [x] Pages: `day-5.qmd`; day 2–4 intros; `_quarto.yml`; `custom.scss` (five-column day grid, per-clock timetables, debrief, closing and clinic styles); schedule, landing, setup, teach, FAQ, references, README, `pyproject.toml`; Modules 0, 1, 8, 10, 12 and 15 (the capstone retimed to Day 5: brief 10, build 110 across lunch, evaluate and share 105, wrap-up 30 into the closing slot; awaiting the Academic Director's review); knowledge checks; this file's sections 1–6
+- [x] Restructure the day-by-day sections of `instructor-pace.md` and `facilitator-guide.md` for 55/55/10 and Day 5 (done in Phase 4, on the live plans). Pace sheet: Days 1–5 in order; each module's briefing rows are the generated `_includes/pace-NN.md`, followed by its lab rows counted from the start of the lab (on Days 2–5 the 5 minutes of slack sit in the first row and a debrief row closes the table); module B split across lunch; warm-up and wrap-up rows pointing to the day pages; Day 5 is Module 14 then Module 15's retimed capstone plan. Every "behind" rule kept, restated in lab minutes (Module 14's briefing rule now at briefing minute 38). Facilitator guide: "The shape of each day" (warm-up, live briefing, lab, debrief, lunch split, wrap-up) and ordered "When the clock slips" rules for 55/55/10; per-day opening lines (Days 2–5 at the end of warm-up; the honesty rule moved to the Day 4 opening); a debrief per module of Days 2–5 (numbers, one misconception, the bridge); per-day wrap-up notes; the capstone at 10 + 110 + 105 + 30; stale items fixed (the Day 3 opening, the TODO box, now the `typesafe-unverified` sign-off, an obsolete Lab 3 checkpoint note, Jev's rate limits). The four-day notices are removed from both pages and from `teach.qmd`. Minutes remain planning estimates
 - [x] The Academic Director prompt in `AGENTS.md` now targets the module's briefing minutes (45 on Day 1, 55 on Days 2–5), activities included, from the live plan (`scripts/live_plan.py`). `.claude/agents/academic-director.md` has no activation prompt (it defers to `AGENTS.md`), so it needed no change
 - [x] Notebook 08's closing markdown names Modules 9 and 10, later on Day 3, and Module 11 on Day 4. Both the Phase 3 and Phase 4 branches edited it; the merge keeps the Phase 3 sentence
 
-### Phase 4 — Live teaching sequence, objectives and assessment
+### Phase 4 — Live teaching sequence, objectives and knowledge check
 
-- [ ] Live plans, objective verbs, Module 12 as calibrated decisions, `prepare.qmd`, retrieval and synthesis, Module 0 as pre-work
-  - [x] `prepare.qmd` (Before Day 1): the entry check, the two-or-more rule with named sections of free resources per area (links checked with curl on 2026-10-06), the setup notebook and what its output looks like, Module 0 as optional pre-work, then Module 1. The entry check moved to `prepare/entry-check.md` (hand-written, outside the generated `_includes/`), included by `prepare.qmd` and `assessments.md`. Linked from the landing hero ("Start here"), setup and teach
-  - [x] Retrieval practice (five exit-check questions, about three from the previous day and two from earlier days, linked by id) and closing synthesis (fixed and left open, the running table of the day's labs) on `day-2.qmd` to `day-5.qmd`; a pointer in `teach.qmd`; `assessments.md` "How to use them" matches
+- [ ] Live plans, objective verbs, Module 12 as calibrated decisions, `prepare.qmd`, warm-up and wrap-up, Module 0 as pre-work
+  - [x] `prepare.qmd` (Before Day 1): the entry check, the two-or-more rule with named sections of free resources per area (links checked with curl on 2026-10-06), the setup notebook and what its output looks like, Module 0 as optional pre-work, then Module 1. The entry check moved to `prepare/entry-check.md` (hand-written, outside the generated `_includes/`), included by `prepare.qmd` and `knowledge-checks.md`. Linked from the landing hero ("Start here"), setup and teach
+  - [x] Warm-up (five knowledge check questions, about three from the previous day and two from earlier days, linked by id) and day wrap-up (fixed and left open, the running table of the day's labs) on `day-2.qmd` to `day-5.qmd`; a pointer in `teach.qmd`; `knowledge-checks.md` "How to use them" matches
   - [x] Leftovers of the live plans: Module 3's equation-to-lab map no longer gives away Lab 3's answers (Exercise 3A's decay and `spectral_W`, the LSTM/RNN comparison); Lab 12's restated-cell comment points to Module 12, section 8 (was 6, before the reorder); `gen_notebooks.py` rerun, which also refreshed the generated cells left stale by the reworded objectives and titles: the headers of Labs 2–6, 8, 13 and 14 and Lab 11's footer
   - [x] Leftovers fixed at the merge with Phase 3: the facts strip names the 10-minute lab debriefs; Lab 15 and Module 15 say "capstone" where they said "afternoon", and brief 15 says it was written for the four-day plan; the facilitator guide gives Jev's price from TypeSafe's Models page (the documentation has no pricing page); Module 0 gives an honest estimate (about 90 minutes with one-time setup; App 2 is the part to postpone), and `m00.readiness.estimate_minutes` is 90; section 7's timing dry-run names both budgets; the CHANGELOG gains a Phase 4 entry
-  - [x] Exit questions of Modules 5, 12 and 13 renumbered to the reworded objectives (5.1a→5.1, 5.1b→5.2a, 5.2→5.2b; 12.1b→12.1, 12.3→12.2, 12.1a→12.3a, 12.2→12.3b; 13.1→13.1a, 13.2b→13.1b, 13.3a→13.2b, 13.3b→13.3); every exit question has an anchor, `#q<module>-<objective>`
+  - [x] Knowledge checks of Modules 5, 12 and 13 renumbered to the reworded objectives (5.1a→5.1, 5.1b→5.2a, 5.2→5.2b; 12.1b→12.1, 12.3→12.2, 12.1a→12.3a, 12.2→12.3b; 13.1→13.1a, 13.2b→13.1b, 13.3a→13.2b, 13.3b→13.3); every knowledge check has an anchor, `#q<module>-<objective>`
 
 - [ ] Watch in the pilot: Module 1, section 6 (precision, recall and F1) and Module 3, section 7 (sampling) are marked Reference, but Lab 1 and Lab 3 use them in core exercises. Neither section is in its live plan, so participants meet them in the lab with the page open. If they stall on those exercises, move the section back into the live plan
-- [ ] Follow-ups from the Phase 3 review (latent; none affects the current five-day schedule): `days_label` assumes consecutive days; some prose times are typed rather than generated (the retrieval-practice and synthesis headings of `day-2.qmd` to `day-5.qmd`, and `teach.qmd`), so a change to `schedule.clocks.long` must be copied to them by hand; `module_clock` does not name the days when a module spans more than one; `clinic_of` raises a bare `StopIteration` when no day has a clinic; one `units()` error message names the wrong cause; `ORDINALS` stops at six; `module_placements` is recomputed per call; module `minutes` are stored by hand beside `minutes_of()` (a test keeps them equal)
+- [ ] Follow-ups from the Phase 3 review (latent; none affects the current five-day schedule): `days_label` assumes consecutive days; some prose times are typed rather than generated (the warm-up and wrap-up headings of `day-2.qmd` to `day-5.qmd`, and `teach.qmd`), so a change to `schedule.clocks.long` must be copied to them by hand; `module_clock` does not name the days when a module spans more than one; `clinic_of` raises a bare `StopIteration` when no day has a clinic; one `units()` error message names the wrong cause; `ORDINALS` stops at six; `module_placements` is recomputed per call; module `minutes` are stored by hand beside `minutes_of()` (a test keeps them equal)
 
 ### Phase 5 — Desktop UX and accessibility
 
@@ -594,7 +594,7 @@ Romeo approved a revision from four to five days after a review brief and a crit
 - [x] Committed lockfile: `uv.lock` (206 packages) is tracked; CI's notebook runs and every `health.yml` leg use `uv run --locked`, and `--locked` fails the notebooks job if the lock no longer matches `pyproject.toml` (the render job stays outside the project, so a docs-only change never waits on a package index). Colab does not read it: notebooks keep their own pins, and a delivery picks a dated Colab runtime
 - [x] Drift leg: `health.yml` leg `drift` runs the offline leg after `uv lock --upgrade` and lists what moved in the job summary; non-blocking
 - [x] Release check: `scripts/release_check.py [--as-of DATE]` lists every blocker (no passing teaching run of the current code on its own runtime, dated no later than the release date and within `max_run_age_days`, for the setup notebook or any lab; or an open readiness item) and exits 1 if any; `tests/test_release_check.py`. `.github/workflows/release.yml` runs it on a `v*` tag and creates the GitHub Release only if it passes; a manual run is a dry run by default. As of 2026-10-06 it lists 27 blockers: neither the setup notebook nor any lab has a teaching run on its Colab runtime (16), and 11 items are open
-- [x] Lab 9 data and Lab 10 reward model, built on real GPT-2 samples on the build Mac (tie share 0.50, Acc* 0.70 at the chosen threshold; files pinned by hash in both labs); Modules 9 and 10, Lab 10 and exit question 10.4 corrected after an exploratory MPS run (backfill record)
+- [x] Lab 9 data and Lab 10 reward model, built on real GPT-2 samples on the build Mac (tie share 0.50, Acc* 0.70 at the chosen threshold; files pinned by hash in both labs); Modules 9 and 10, Lab 10 and knowledge check 10.4 corrected after an exploratory MPS run (backfill record)
 - [x] Lab 6 logits for Lab 11: Lab 6's GPU settings run on the build Mac's GPU (MPS) from a copy changed only to use it; DistilBERT, test accuracy 0.8975; registered as `datasets.lab06_logits`. Lab 11 now analyzes the encoder (ECE 0.039 before temperature scaling, 0.036 after, tau* 1.097). Not a T4 run
 - [x] Real-path runs on the build Mac with `--record --env mac-m1pro`, no API keys, `--expect-hub`: every lab passed (`runs/`). Labs 1–5, 8, 9 and 11–15 ran end to end (Lab 5 also with QUICK forced off: 770 s); Labs 6, 7 and 10 took their smaller CPU paths and are recorded as partial; Labs 13 and 15 scored plumbing probes until the question sets exist. Other jobs (tests, renders, reviews) shared the machine during some runs, so times are upper estimates; one Lab 15 run spanned an idle sleep and was discarded and rerun under `caffeinate` (776 s), and every kept record's total agrees with its cell times. Never labeled T4
 - [x] Lab 9 runs on its committed data in the blocking CI job and the offline and drift legs (checked hermetically: empty Hub cache, `HF_HUB_OFFLINE=1`, worked, `--verify-checkpoints` and `--learner`); Lab 10 keeps its stand-in there because it needs GPT-2 from the Hub. Labs 9, 10 and 15 join the Hub leg of `health.yml`, whose limits rise to 360 minutes and 3,600 s per cell

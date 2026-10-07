@@ -337,6 +337,15 @@ def minute_range(values: list[int]) -> str:
     return str(lo) if lo == hi else f"{lo}–{hi}"
 
 
+def exercise_count(v: dict) -> int:
+    """Every numbered exercise in every lab, counted from the notebooks themselves."""
+    return sum(
+        len([r for r in lab_steps.rows(m["slug"]) if r["label"].startswith("Exercise")])
+        for _, m in modules_in_order(v)
+        if has_notebook(m)
+    )
+
+
 def facts_strip(v: dict) -> str:
     w = v["workshop"]
     taught = [m for m in v["modules"].values() if not is_prework(m)]
@@ -346,6 +355,7 @@ def facts_strip(v: dict) -> str:
         f"**{w['days']}** days",
         f"**{len(taught)}** modules",
         f"**{labs}** Colab notebooks",
+        f"**{exercise_count(v)}** hands-on exercises",
         f"**{minute_range([s['briefing'] for s in shapes])}** min briefings,"
         f" **{minute_range([s['lab'] for s in shapes])}** min labs",
     ]

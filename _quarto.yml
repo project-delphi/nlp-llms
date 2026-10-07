@@ -20,7 +20,7 @@ project:
     - teach.qmd
     - facilitator-guide.md
     - instructor-pace.md
-    - assessments.md
+    - knowledge-checks.md
     - faq.qmd
     - readiness.qmd
   # Copied to the site as files. Globs are anchored with a leading `/` so they

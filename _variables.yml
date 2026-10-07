@@ -335,8 +335,8 @@ days:
     title: "Transformers and pretrained models"
     short: "Transformers and pretraining"
     question: "How does one architecture, pretrained at scale, become a general tool?"
-    opening: "Retrieval practice"
-    closing: "Synthesis"
+    opening: "Warm-up"
+    closing: "Wrap-up"
     slots: [m05, m06, m07]
   d3:
     n: 3
@@ -344,8 +344,8 @@ days:
     title: "Using and aligning LLMs"
     short: "Using and aligning LLMs"
     question: "How do we use these models, and what are they trained to want?"
-    opening: "Retrieval practice"
-    closing: "Synthesis"
+    opening: "Warm-up"
+    closing: "Wrap-up"
     slots: [m08, m09, m10]
   d4:
     n: 4
@@ -353,8 +353,8 @@ days:
     title: "Calibration, decisions and retrieval"
     short: "Calibration, decisions, RAG"
     question: "When should a model's answer be trusted, and how do we ground it in sources?"
-    opening: "Retrieval practice"
-    closing: "Synthesis"
+    opening: "Warm-up"
+    closing: "Wrap-up"
     slots: [m11, m12, m13]
   d5:
     n: 5
@@ -362,8 +362,8 @@ days:
     title: "Agents and the capstone"
     short: "Agents and capstone"
     question: "How do we build reliable systems out of these models?"
-    opening: "Retrieval practice"
-    closing: "Synthesis and wrap-up"
+    opening: "Warm-up"
+    closing: "Wrap-up and close"
     slots:
       - m14
       - {module: m15, label: "Capstone: build"}

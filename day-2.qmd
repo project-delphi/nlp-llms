@@ -6,19 +6,19 @@ toc: false
 
 **{{< var days.d2.question >}}**
 
-Day 2 builds the transformer, then follows it through pretraining to fine-tuning with LoRA. Like Days 3 to 5, it opens with retrieval practice on earlier days and closes with a synthesis of the day's results. Each module ends with a short debrief of its lab, and the middle module's lab comes after lunch.
+Day 2 builds the transformer, then follows it through pretraining to fine-tuning with LoRA. Like Days 3 to 5, it opens with a warm-up on earlier days and closes with a wrap-up of the day's results. Each module ends with a short debrief of its lab, and the middle module's lab comes after lunch.
 
-## Morning retrieval practice (09:00–09:15) {#retrieval}
+## Warm-up: what carried over (09:00–09:15) {#warm-up}
 
 Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4; the facilitator takes the two most-missed questions for 5. Each link opens the question with its folded answer. Day 1 is the only earlier day, so three questions come from its afternoon and two from its morning.
 
 | Question | Topic | From | Why today |
 |---|---|---|---|
-| [4.3a](assessments.md#q4-3a) | Dot-product attention with a mask | Day 1 · Module 4 | Module 5's self-attention is this lookup, with queries, keys and values from one sequence |
-| [4.2](assessments.md#q4-2) | Two dates through one vector | Day 1 · Module 4 | Attention removed the bottleneck; Module 5 removes the recurrence too |
-| [3.3](assessments.md#q3-3) | When two perplexities compare | Day 1 · Module 3 | Lab 5 scores the mini-GPT beside the LSTM and the n-gram model |
-| [1.2a](assessments.md#q1-2a) | Perplexity of a uniform model | Day 1 · Module 1 | The trivial baseline every model in Lab 5 must beat |
-| [2.3](assessments.md#q2-3) | Why the dense model need not win | Day 1 · Module 2 | Lab 6 fine-tunes an encoder on the same task and compares it with Labs 1 and 2 |
+| [4.3a](knowledge-checks.md#q4-3a) | Dot-product attention with a mask | Day 1 · Module 4 | Module 5's self-attention is this lookup, with queries, keys and values from one sequence |
+| [4.2](knowledge-checks.md#q4-2) | Two dates through one vector | Day 1 · Module 4 | Attention removed the bottleneck; Module 5 removes the recurrence too |
+| [3.3](knowledge-checks.md#q3-3) | When two perplexities compare | Day 1 · Module 3 | Lab 5 scores the mini-GPT beside the LSTM and the n-gram model |
+| [1.2a](knowledge-checks.md#q1-2a) | Perplexity of a uniform model | Day 1 · Module 1 | The trivial baseline every model in Lab 5 must beat |
+| [2.3](knowledge-checks.md#q2-3) | Why the dense model need not win | Day 1 · Module 2 | Lab 6 fine-tunes an encoder on the same task and compares it with Labs 1 and 2 |
 
 {{< include /_includes/day-2.md >}}
 
@@ -26,7 +26,7 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 
 {{< include /_includes/run-2.md >}}
 
-## Closing synthesis (16:45–17:00) {#synthesis}
+## Day wrap-up (16:45–17:00) {#wrap-up}
 
 In pairs for 5 minutes, then the room for 10. The facilitator writes the table on the board and keeps it for Day 5. The numbers are the room's own, from its runs.
 
