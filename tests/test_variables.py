@@ -13,7 +13,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import gen_tables as g  # noqa: E402  (units, placements, minutes_of)
 
 V = yaml.safe_load((ROOT / "_variables.yml").read_text(encoding="utf-8"))
-MODULE_FIELDS = {"n", "slug", "day", "minutes", "title", "summary", "objectives", "stack"}
+MODULE_FIELDS = {"n", "slug", "day", "level", "minutes", "title", "summary", "objectives",
+                 "stack"}
 
 
 def slot_key(slot) -> str:
@@ -34,6 +35,10 @@ class Modules(unittest.TestCase):
             self.assertEqual(MODULE_FIELDS - set(m), set(), key)
             self.assertTrue(m["objectives"], key)
 
+    def test_level_is_on_the_published_scale(self):
+        for key, m in V["modules"].items():
+            self.assertIn(m["level"], V["levels"], key)
+
     def test_keys_numbers_and_slugs_agree(self):
         for key, m in V["modules"].items():
             self.assertEqual(key, f"m{m['n']:02d}")
@@ -44,7 +49,7 @@ class Modules(unittest.TestCase):
         numbers = sorted(m["n"] for m in V["modules"].values())
         self.assertEqual(numbers, list(range(0, len(numbers))))
 
-    def test_every_module_has_a_lecture_page(self):
+    def test_every_module_has_a_module_page(self):
         for m in V["modules"].values():
             self.assertTrue((ROOT / "modules" / f"{m['slug']}.qmd").exists(), m["slug"])
 

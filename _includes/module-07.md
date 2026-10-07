@@ -14,12 +14,37 @@ Turning a pretrained language model into an instruction follower, efficiently.
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 7 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Turn a pretrained causal LM into an instruction follower
 - Apply LoRA and explain why it works
 - Choose decoding settings and evaluate generated text
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 6 · Pretraining and the Hugging Face stack](/modules/06-pretraining-huggingface.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

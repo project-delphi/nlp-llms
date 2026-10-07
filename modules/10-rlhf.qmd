@@ -15,7 +15,9 @@ live:
 **Where we are.** [Module 9](09-preference-learning.qmd) built two tools and kept them apart: a policy gradient that can optimize any reward, and a reward model learned from comparisons. It also warned that a reward model can be trusted only on text like its training data. This module answers one question: how do we optimize a language model against a learned reward without letting the optimizer exploit the reward's errors?
 :::
 
-## Live plan
+{{< include /_includes/lab-10.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-10.md >}}
 
@@ -57,7 +59,7 @@ The value function in section 5 is written $v_\psi$ in lowercase, because $V$ is
 
 ## 1. What Module 9 left open
 
-**Objective for this section:** say why plugging a learned reward into the policy gradient is not enough.
+**In this section:** say why plugging a learned reward into the policy gradient is not enough.
 
 Recall the two tools of [Module 9](09-preference-learning.qmd) in one line each. The **policy gradient** (REINFORCE) raises the probability of sampled responses in proportion to how much better than the baseline they scored. The **reward model** $r_\phi$, trained on pairwise preferences with the Bradley–Terry model
 
@@ -83,7 +85,7 @@ This module covers four things:
 
 ## 2. The InstructGPT pipeline
 
-**Objective for this section:** name the three stages of RLHF, what each one produces, and why each one is there.
+**In this section:** name the three stages of RLHF, what each one produces, and why each one is there.
 
 **Reinforcement learning from human feedback (RLHF)** is the name for training a language model against a reward learned from human judgments. The recipe most systems follow was set out for summarization by Stiennon et al. (2020) and for general instructions by Ouyang et al. (2022), whose models are called **InstructGPT**. It has three stages.
 
@@ -134,7 +136,7 @@ They call this variant PPO-ptx. The extra term targets a specific cost they meas
 
 ## 3. The KL-regularized objective
 
-**Objective for this section:** write the objective that RLHF optimizes, and explain what the KL term does and does not prevent.
+**In this section:** write the objective that RLHF optimizes, and explain what the KL term does and does not prevent.
 
 **The KL divergence.** For two distributions $p$ and $q$ over the same set, the **Kullback–Leibler divergence** of $p$ from $q$ is
 
@@ -192,7 +194,7 @@ A policy with all its probability on one response $y$ has a single term in @eq-k
 
 ## 4. Optimizing it: a per-token penalty and the policy gradient
 
-**Objective for this section:** turn @eq-rlhf-objective into per-token rewards that the policy gradient of Module 9 can use.
+**In this section:** turn @eq-rlhf-objective into per-token rewards that the policy gradient of Module 9 can use.
 
 The policy gradient of Module 9 needs a reward for each sampled response. Write the inner part of @eq-rlhf-objective for one prompt as a single expectation over $y \sim \pi_\theta$, using the second form of @eq-kl:
 
@@ -246,7 +248,7 @@ The log-ratios are $(0.5,\ 0,\ 2.0)$, so the penalties are $(-0.05,\ 0,\ -0.2)$,
 
 ## 5. PPO in outline {.reference}
 
-**Objective for this section:** say what PPO adds to the policy gradient, and why the lab can do without it.
+**In this section:** say what PPO adds to the policy gradient, and why the lab can do without it.
 
 RLHF systems in the literature usually optimize @eq-rlhf-objective with **proximal policy optimization (PPO)** (Schulman et al., 2017). We give its outline only; the lab does not implement it.
 
@@ -279,7 +281,7 @@ For $\hat{A}_t = +2$: the unclipped term is $1.5 \times 2 = 3.0$ and the clipped
 
 ## 6. DPO: from the optimal policy to a classification loss
 
-**Objective for this section:** derive the DPO loss from @eq-rlhf-objective, and say what it changes and what it keeps.
+**In this section:** derive the DPO loss from @eq-rlhf-objective, and say what it changes and what it keeps.
 
 **Step 1: the objective has a closed-form optimum.** Fix a prompt $x$ and drop it from the notation. Let $r(y)$ be any reward function. Suppose for now that we may choose the policy $\pi$ freely among all distributions over responses, not only among those a network with parameters $\theta$ can express. Expand the KL with @eq-kl and collect the terms:
 
@@ -406,7 +408,7 @@ Whether offline methods match online RL with a reward model is an empirical ques
 
 ## 7. Failure modes
 
-**Objective for this section:** name four ways RLHF goes wrong, the mechanism behind each, and how you would detect it.
+**In this section:** name four ways RLHF goes wrong, the mechanism behind each, and how you would detect it.
 
 Every failure below follows from one fact: the policy optimizes a learned stand-in for what people want, measured on what people could judge.
 
@@ -539,7 +541,7 @@ They establish large drift and, through the bigram share, a loss of variety: mod
 | Reward–drift trade-off (section 3) | Stretch: sweep $\beta$ |
 | Sycophancy, rater preference over truth (section 7) | not implemented in this lab; Module 11 measures calibration |
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"The reward model is what people want."** It is a model fitted to a finite set of comparisons, made on responses from one model. Away from those responses its scores are guesses.
 - **"A higher reward-model score means a better policy."** Only near the reference. Past some drift, the reward-model score and the true quality move apart.
@@ -551,11 +553,11 @@ They establish large drift and, through the bigram share, a loss of variety: mod
 - **"DPO raises the probability of the preferred response."** It raises the gap between the two implicit rewards. Both log-probabilities can fall.
 - **"A preference-tuned model knows when it is wrong."** Nothing in a preference comparison rewards matching confidence to accuracy. Module 11 measures it.
 
-## What Module 11 picks up
+## Next steps
 
 You can now train a model to produce what a reward model, and behind it a set of raters, prefers. Section 7 argued that this optimizes what raters can judge, and that a model's confidence is not among the things they judge well. [Module 11](11-calibration.qmd) asks what it would mean for a confidence to be right: it defines calibration, measures it with reliability diagrams, the expected calibration error and the Brier score, and shows why some scoring rules reward honest probabilities and others do not.
 
-## Readings
+## Further reading
 
 1. Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C. L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J. and Lowe, R. (2022). [Training Language Models to Follow Instructions with Human Feedback](https://arxiv.org/abs/2203.02155). *NeurIPS*. The three-stage pipeline. Read section 3 for the method.
 2. Schulman, J., Wolski, F., Dhariwal, P., Radford, A. and Klimov, O. (2017). [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347). *arXiv:1707.06347*. The clipped objective; sections 3 and 5 are enough for this module.

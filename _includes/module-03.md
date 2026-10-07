@@ -14,12 +14,37 @@ RNNs, LSTMs and neural language modeling, and why gradients vanish over long seq
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   95 minutes (45 briefing, 50 lab)
 
-By the end of this module you can:
+Level
+:   200 · Intermediate
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 10 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   the lab always runs its real models
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Implement the RNN and LSTM cell updates and the language-model loss
 - Explain vanishing gradients and how gating addresses them, from measured gradient decay
 - Evaluate the LSTM against the n-gram baseline in a like-for-like perplexity comparison
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 2 · Word vectors and neural networks](/modules/02-word-vectors.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- No API keys: the lab runs its own models throughout.
 :::

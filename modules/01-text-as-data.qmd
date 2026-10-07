@@ -15,7 +15,9 @@ live:
 **Where we start.** You can already fit a logistic regression to a table of numbers and read its loss. What you have not done yet is turn a string into those numbers. The five days run from counting words (today) to learned vectors and attention, then to transformers and pretrained models (Day 2), to using those models through APIs and what they are trained to prefer (Day 3), to how far their confidence can be trusted and how to ground their answers in sources (Day 4), and to agents and systems built out of them (Day 5). This module asks one question: how far does counting alone get us, and where exactly does it stop?
 :::
 
-## Live plan
+{{< include /_includes/lab-01.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-01.md >}}
 
@@ -627,7 +629,7 @@ Open this after the lab, so that it does not answer the lab's predictions for yo
 The order $n$ and each $k$ were chosen on the validation split; `C` was chosen on validation by macro-F1. Word-level perplexities (304 for the bigram, 1,437 for the trigram) are printed in the lab for the sparsity discussion and are not comparable with any later number. On the lab's 4,800 training abstracts naive Bayes and logistic regression tie: 0.884 test accuracy each.
 :::
 
-## Equation-to-lab map
+## Equations and where you implement them
 
 | Equation | What it is | In Lab 1 |
 |---|---|---|
@@ -659,7 +661,7 @@ The order $n$ and each $k$ were chosen on the validation split; `C` was chosen o
 - Report precision, recall and F1 per class, then read the errors.
 - Count-based methods treat words as unrelated symbols and see only a short window. That is what Module 2 starts to fix.
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"Lower perplexity always means a better model."** Only when the vocabulary, tokenization and test text are identical. Mapping more words to `<unk>` or switching from words to characters changes the number without changing the quality.
 - **"A higher-order n-gram model is always better."** More context helps only while the counts can support it. Past that point the model memorizes: training perplexity keeps falling, held-out perplexity rises, and samples are copied from the training text.
@@ -669,7 +671,7 @@ The order $n$ and each $k$ were chosen on the validation split; `C` was chosen o
 - **"High accuracy means the classifier is good."** Not with imbalanced classes, and not before you have read the errors.
 - **"These methods are obsolete."** A TF-IDF linear model trains in seconds, is easy to inspect, and is the baseline any neural model must beat to justify its cost. BM25 is still a standard retrieval component (Module 13).
 
-## Readings
+## Further reading
 
 1. Jurafsky, D. and Martin, J. H. [*Speech and Language Processing*](https://web.stanford.edu/~jurafsky/slp3/) (3rd edition draft). Chapters "Words and Tokens", "N-gram Language Models" and "Logistic Regression and Text Classification" (chapters 2 to 4 in the August 2026 draft; chapter numbers change between drafts, so go by title).
 2. Manning, C. D., Raghavan, P. and Schütze, H. (2008). [*Introduction to Information Retrieval*](https://nlp.stanford.edu/IR-book/). Cambridge University Press. Chapter 6 (term weighting and TF-IDF) and chapter 13 (text classification and naive Bayes); the section "Okapi BM25: a non-binary model" in chapter 11 for BM25.

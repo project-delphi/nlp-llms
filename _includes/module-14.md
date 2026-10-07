@@ -14,12 +14,37 @@ Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   400 · Expert
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 6 minutes of compute
+
+Accounts and cost
+:   Google; optional: OpenAI, Anthropic, TypeSafe. Free without keys. Keyed run: under 30 cents on Claude, under 5 cents on OpenAI, under 5 cents on Jev (estimates)
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Assemble a tool-using agent as an explicit graph by writing its routing edges
 - Drive human-in-the-loop interrupts, and replay and fork a checkpointed run
 - Use a calibrated decision model for routing and tool-call approval, with thresholds from costs
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 13 · Retrieval-augmented generation](/modules/13-rag.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

@@ -14,12 +14,37 @@ OpenAI and Claude side by side: prompting, structured output, tool use, cost and
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   200 · Intermediate
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 3 minutes of compute
+
+Accounts and cost
+:   Google; optional: OpenAI, Anthropic. Free without keys. Keyed run: under 25 cents on Claude, under 5 cents on OpenAI (estimates)
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Use one provider-agnostic wrapper for chat, structured output and tool use, on OpenAI, Claude or an open model
 - Implement an evaluation harness and score a provider with it; compare OpenAI and Claude when both keys are set
 - Reason about cost, latency and failure modes
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 7 · Fine-tuning and LoRA](/modules/07-finetuning-lora.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

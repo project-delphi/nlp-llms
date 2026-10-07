@@ -16,7 +16,9 @@ live:
 **Where we are.** Day 2 trained models to make a given text more likely: pretraining, fine-tuning, instruction tuning. [Module 8](08-llm-apis.qmd) ended on what that leaves out: nothing in a response says how good it is. This module answers one question: how do we train a model toward "better" when all we have is a score for a finished response, or only a person's choice between two responses?
 :::
 
-## Live plan
+{{< include /_includes/lab-09.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-09.md >}}
 
@@ -50,7 +52,7 @@ $\beta$ is left free on purpose: Module 10 uses it for the KL coefficient. A val
 
 ## 1. No label for "better"
 
-**Objective for this section:** say what supervised fine-tuning cannot express, and what we need in its place.
+**In this section:** say what supervised fine-tuning cannot express, and what we need in its place.
 
 [Module 7](07-finetuning-lora.qmd) turned a pretrained language model into an instruction follower with **supervised fine-tuning** (SFT): maximize the likelihood of a reference response $y$ given an instruction $x$, the masked loss of Module 7. [Module 8](08-llm-apis.qmd) then evaluated such models, and ended on a gap: a response carries no signal of its own quality.
 
@@ -69,7 +71,7 @@ What we would like instead is a number $R(x, y)$, a **reward**, for *any* respon
 
 ## 2. The minimum reinforcement learning
 
-**Objective for this section:** define policy, reward, episode and return, and map each onto text generation.
+**In this section:** define policy, reward, episode and return, and map each onto text generation.
 
 **Reinforcement learning** (RL) studies an **agent** that acts in an **environment** to collect reward. At each step $t$:
 
@@ -135,7 +137,7 @@ By @eq-seq-logprob, $\log \pi_\theta(y \mid x) = 6 \log \tfrac{1}{8} \approx -12
 
 ## 3. The policy gradient and REINFORCE
 
-**Objective for this section:** derive the gradient of the expected reward, and turn it into a loss that autograd can use.
+**In this section:** derive the gradient of the expected reward, and turn it into a loss that autograd can use.
 
 Let $R(x, y)$ be the reward of a complete response (section 5 returns to per-step rewards). The objective is the expected reward of the model's own samples, averaged over prompts:
 
@@ -216,7 +218,7 @@ The true gradient does not change. $J = 101p + 100(1 - p) = 100 + p$, so $dJ/d\t
 
 ## 4. Baselines and variance
 
-**Objective for this section:** show that the score function has mean zero, that a baseline therefore leaves the gradient unbiased, and why a baseline reduces variance.
+**In this section:** show that the score function has mean zero, that a baseline therefore leaves the gradient unbiased, and why a baseline reduces variance.
 
 $\hat{g}$ is unbiased, but it can be very noisy. A small example shows why.
 
@@ -349,7 +351,7 @@ By @eq-loo the baselines are the means of the other three rewards: $(1/3,\ 1,\ 4
 
 ## 5. Generation as sequential decisions {.reference}
 
-**Objective for this section:** distinguish a sequence-level reward from token-level rewards, and say what each implies for credit assignment.
+**In this section:** distinguish a sequence-level reward from token-level rewards, and say what each implies for credit assignment.
 
 Section 3 treated the whole response as one action with one reward. Section 2 described it as $T$ actions with a reward $r_t$ after each. Both views are correct; they differ in where the reward comes from.
 
@@ -407,7 +409,7 @@ With $r_t = \mathbf{1}[y_t = y^\star_t] / 6$, the rewards are $(\tfrac16, 0, \tf
 
 ## 6. Why comparisons instead of scores
 
-**Objective for this section:** say why preference data is usually collected as comparisons.
+**In this section:** say why preference data is usually collected as comparisons.
 
 ::: {#predict-comparisons .predict}
 You need a reward that only people can give, such as how helpful a response is. Would you ask raters to score each response from 1 to 10, or to say which of two responses is better? Commit to one, and name one way it could go wrong.
@@ -425,7 +427,7 @@ A comparison is a **relative** label. To use it in the policy gradient we need a
 
 ## 7. The Bradley–Terry model
 
-**Objective for this section:** write the probability that one response is preferred to another, and state what that model can and cannot identify.
+**In this section:** write the probability that one response is preferred to another, and state what that model can and cannot identify.
 
 **The model.** Bradley and Terry (1952) proposed that each item has a latent quality $u$, and that item $a$ is preferred to item $b$ with probability
 
@@ -473,7 +475,7 @@ By @eq-bt-rater the label probabilities are $\sigma(0) = 0.5$, $\sigma(2) \appro
 
 ## 8. Training a reward model
 
-**Objective for this section:** write the reward-model loss, connect it to logistic regression, and say what held-out accuracy does and does not tell you.
+**In this section:** write the reward-model loss, connect it to logistic regression, and say what held-out accuracy does and does not tell you.
 
 **The reward model.** A **reward model** $r_\phi(x, y)$ is a network with parameters $\phi$ that maps a prompt and a response to one number. In RLHF it is usually a pretrained language model (often the SFT model) whose output layer is replaced by a linear map from the final hidden state to a scalar. InstructGPT's reward model, for example, was a 6-billion-parameter GPT-3 model with its output layer replaced in this way.
 
@@ -572,7 +574,7 @@ A and B have the same gap, 2, so the same loss: $-\log \sigma(2) \approx 0.127$.
 | Accuracy against rater noise (section 7) | Stretch |
 | Actor-critic baselines, discounting, Plackett–Luce (optional callouts) | not implemented in this lab |
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"The reward has to be differentiable."** It never is differentiated. @eq-pg needs only its value.
 - **"The policy-gradient loss tells you how training is going."** @eq-pg-loss is a device for producing the right gradient. Its value depends on the baseline and moves for reasons unrelated to progress. Monitor the mean reward.
@@ -584,11 +586,11 @@ A and B have the same gap, 2, so the same loss: $-\log \sigma(2) \approx 0.127$.
 - **"An accurate reward model is a safe objective."** Its accuracy is measured on the data it was trained on. An optimizer leaves that data, and Module 10 shows what happens then.
 - **"Preferences measure truth."** They measure what raters prefer. Whether that is what we want is a question for Modules 10 and 12.
 
-## What Module 10 picks up
+## Next steps
 
 You can now optimize a policy against any reward with the policy gradient, and you can learn a reward from comparisons. [Module 10](10-rlhf.qmd) joins them into reinforcement learning from human feedback: the pretrained GPT-2 whose samples made up this lab's pairs is fine-tuned against the reward model you saved, with a penalty that keeps it close to where it started. It then removes the penalty to watch the reward model's blind spots get exploited, and introduces DPO, which learns from the same comparisons without a separate reward model or a sampling loop.
 
-## Readings
+## Further reading
 
 1. Sutton, R. S. and Barto, A. G. (2018). [*Reinforcement Learning: An Introduction*](http://incompleteideas.net/book/the-book-2nd.html), 2nd edition, MIT Press. Chapter 13, sections 13.1 to 13.4: the policy-gradient theorem, REINFORCE, and REINFORCE with a baseline.
 2. Williams, R. J. (1992). [Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://doi.org/10.1007/BF00992696). *Machine Learning* 8, 229–256. The original REINFORCE paper, including baselines.

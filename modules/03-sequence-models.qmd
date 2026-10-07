@@ -15,7 +15,9 @@ live:
 **Where we are.** Module 2 gave words vectors, and with them a language model that generalizes across similar words. But that model reads a fixed window of $n - 1$ tokens with separate weights for each position, and the averaged-embedding classifier ignores order altogether. This module asks one question: can a single set of weights read a sequence of any length, in order, and still learn what happened many steps back?
 :::
 
-## Live plan
+{{< include /_includes/lab-03.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-03.md >}}
 
@@ -136,7 +138,7 @@ Nothing in the architecture forbids it: $h_t$ is a function of the whole prefix,
 
 ## 4. Backpropagation through time
 
-**Objective for this section:** explain why a plain RNN struggles to learn long-range dependencies.
+**In this section:** explain why a plain RNN struggles to learn long-range dependencies.
 
 Unroll the RNN over $T$ steps and it is a deep feed-forward network with one layer per time step and the same weights in every layer. Backpropagation on this unrolled graph is called **backpropagation through time** (BPTT). Nothing new is needed beyond the chain rule from Module 2, but weight sharing gives the result a particular shape.
 
@@ -285,7 +287,7 @@ $\lVert g \rVert = \sqrt{9 + 16} = 5$. With $\kappa = 1$ the factor is $\min(1, 
 
 ## 5. The LSTM
 
-**Objective for this section:** explain how gating addresses vanishing gradients.
+**In this section:** explain how gating addresses vanishing gradients.
 
 The trouble in @eq-jac is that every step forces the state through a multiplication by $W$ and a $\tanh$. The **long short-term memory** network (LSTM; Hochreiter and Schmidhuber, 1997) adds a second state vector, the **cell state** $c_t \in \mathbb{R}^{d_h}$, which is updated *additively*, and **gates** that decide what to keep, write and reveal. A gate is a vector with entries in $(0, 1)$, produced by a sigmoid, that multiplies another vector elementwise: 0 blocks, 1 passes.
 
@@ -381,7 +383,7 @@ The last line is the counterpart of the LSTM cell update: where $u_t \approx 1$ 
 
 ## 6. Measuring the improvement fairly
 
-**Objective for this section:** compare perplexity against the n-gram baseline, and know when such a comparison means something.
+**In this section:** compare perplexity against the n-gram baseline, and know when such a comparison means something.
 
 Perplexity (@eq-ppl) is a *per-token* quantity, so its value depends on what a token is. A character-level model chooses among fewer than 100 symbols at each step; a word-level model chooses among tens of thousands. Their perplexities are on different scales and **must not be compared**. A character-level perplexity of 5 and a word-level perplexity of 150 say nothing about which model is better.
 
@@ -500,7 +502,7 @@ First step. Top-2 keeps $(0.50, 0.30)$ and renormalizes to $(0.625, 0.375)$. Nuc
 - Perplexities are comparable only at the same token unit, on the same data, vocabulary and scored positions. Lab 3 compares the RNN and the LSTM with Lab 1's character n-grams on those terms (the box after the lab in section 6).
 - Greedy, temperature, top-$k$ and nucleus sampling trade off repetition against incoherence (@eq-temp).
 
-### Equation-to-lab map
+### Equations and where you implement them
 
 | Equation | What it is | In Lab 3 |
 |---|---|---|
@@ -517,7 +519,7 @@ First step. Top-2 keeps $(0.50, 0.30)$ and renormalizes to $(0.625, 0.375)$. Nuc
 | Top-$k$ and nucleus sampling | Tail filters | Stretch: `top_k_filter` and `nucleus_filter` |
 | GRU (optional) and the character-to-word conversion (optional) | – | Not in the lab |
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"An RNN can use unlimited context."** In principle $h_t$ depends on the whole prefix. In practice the usable context is limited by vanishing gradients, by the truncation length used in training, and by the fixed size of $h_t$.
 - **"If $\lVert W \rVert > 1$, the gradient explodes."** $\lVert W \rVert > 1$ only removes the guarantee of vanishing. Saturated $\tanh$ units pass almost no gradient back, so the gradient can vanish all the same (the worked example and the demo in section 4).
@@ -528,11 +530,11 @@ First step. Top-2 keeps $(0.50, 0.30)$ and renormalizes to $(0.625, 0.375)$. Nuc
 - **"Temperature changes what the model knows."** It reshapes one distribution at sampling time. The model, its ranking of tokens and its perplexity are unchanged.
 - **"Teacher forcing is cheating."** It is ordinary maximum-likelihood training. Its cost is the train/generate mismatch (exposure bias), not an inflated score: held-out perplexity is also computed with the true prefix.
 
-## What Module 4 picks up
+## Next steps
 
 An RNN language model emits one output per input, in step with it. Many tasks instead map one sequence to *another sequence of a different length*: a sentence to its translation, "March 5, 2024" to "2024-03-05". The natural move is to read the input with one RNN and take its **final hidden state** $h_T$ as a summary from which a second RNN generates the output. That single fixed-size vector must then hold everything about the input, however long it is. Module 4 builds this encoder-decoder model, shows where the summary fails, and introduces attention to fix it.
 
-## Readings
+## Further reading
 
 1. Hochreiter, S. and Schmidhuber, J. (1997). [Long Short-Term Memory](https://doi.org/10.1162/neco.1997.9.8.1735). *Neural Computation* 9(8), 1735–1780. The original paper; read sections 1 to 4 for the argument.
 2. Pascanu, R., Mikolov, T. and Bengio, Y. (2013). [On the difficulty of training recurrent neural networks](https://proceedings.mlr.press/v28/pascanu13.html). *Proceedings of the 30th International Conference on Machine Learning*, PMLR 28(3), 1310–1318. The source of the Jacobian analysis and of gradient norm clipping.

@@ -17,13 +17,15 @@ live:
 **Where we are.** [Module 6](06-pretraining-huggingface.qmd) ended with a pretrained causal language model that continues text, and with a fine-tuning recipe that updates every parameter. Neither is enough for an assistant: the model cannot tell a request from a reply, and updating every weight does not scale. This module answers one question: how do we teach a pretrained model to follow instructions while training well under 1% of its parameters?
 :::
 
-## Live plan
+{{< include /_includes/lab-07.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-07.md >}}
 
 ## 1. A language model continues; it does not answer
 
-**Objective for this section:** state what a pretrained causal language model lacks as an assistant, and what fine-tuning must add.
+**In this section:** state what a pretrained causal language model lacks as an assistant, and what fine-tuning must add.
 
 [Module 6](06-pretraining-huggingface.qmd) left us with a pretrained **causal language model**: a decoder-only transformer trained to predict the next token of ordinary text. Give it a prefix and it writes a plausible continuation.
 
@@ -47,7 +49,7 @@ Sections 7 and 8 then deal with the output: how to generate from the tuned model
 
 ## 2. Chat templates
 
-**Objective for this section:** write a conversation as the single string the model sees.
+**In this section:** write a conversation as the single string the model sees.
 
 A causal language model takes one sequence of tokens. A conversation is a list of **messages**, each with a **role** (`system`, `user` or `assistant`) and a **content** string. A **chat template** is the function that turns the list into one string. It is plain string formatting, with **special tokens** marking where each message starts and ends. A special token is a vocabulary entry reserved for structure: the tokenizer never produces it from ordinary text, so the model can tell markup from content.
 
@@ -110,7 +112,7 @@ The string ends with the user's message and its closing token: `Name the capital
 
 ## 3. The instruction-tuning loss
 
-**Objective for this section:** write the loss that turns a language model into an instruction follower.
+**In this section:** write the loss that turns a language model into an instruction follower.
 
 **Instruction tuning** is fine-tuning on pairs of an instruction and a good response, each formatted with the chat template. The model, the objective and the optimizer are those of Modules 3, 5 and 6. One thing changes: which positions are scored.
 
@@ -171,7 +173,7 @@ $\mathcal{L}_{\text{resp}} = \tfrac{1}{3}(\log 2 + \log 4 + \log 2) = \tfrac{4}{
 
 ## 4. What full fine-tuning costs
 
-**Objective for this section:** say where the cost of updating every weight comes from.
+**In this section:** say where the cost of updating every weight comes from.
 
 ::: {#predict-ft-memory .predict}
 A model with 7 billion parameters, stored at 4 bytes each, takes 28 GB. How much memory does full fine-tuning with Adam need before a single activation is stored: about 28 GB, about 56 GB, or more? What else has to be kept for every weight?
@@ -197,7 +199,7 @@ Full fine-tuning: $4 \times 4 \times 134.5 \times 10^6$ bytes $\approx 2.15$ GB.
 
 ## 5. LoRA: a low-rank update
 
-**Objective for this section:** derive the LoRA layer: its form, its initialization, its parameter count and its merge.
+**In this section:** derive the LoRA layer: its form, its initialization, its parameter count and its merge.
 
 **Setup.** Take one linear layer of the pretrained model, with weight matrix $W_0 \in \mathbb{R}^{d_{\text{out}} \times d_{\text{in}}}$. It maps an input $x \in \mathbb{R}^{d_{\text{in}}}$ to an output $h = W_0 x \in \mathbb{R}^{d_{\text{out}}}$ (plus a bias, which stays frozen and is omitted below). Fine-tuning replaces $W_0$ by $W_0 + \Delta W$, where $\Delta W$ is the **update**: everything training changed. In full fine-tuning $\Delta W$ is an arbitrary $d_{\text{out}} \times d_{\text{in}}$ matrix.
 
@@ -379,7 +381,7 @@ The scale $\alpha / r$ fell from $16 / 8 = 2$ to $16 / 16 = 1$. By @eq-lora-grad
 
 ## 6. LoRA in practice: where, how large, and the `peft` library
 
-**Objective for this section:** choose target modules and a rank, and read a `LoraConfig`.
+**In this section:** choose target modules and a rank, and read a `LoraConfig`.
 
 **Which layers.** @eq-lora applies to any linear layer. A transformer block (Module 5) has several: the query, key, value and output projections of attention, and the two layers of the feed-forward network. Hu et al. adapted only the query and value projections and found that, for a fixed parameter budget, spreading a small rank over both worked better than a large rank on one. Adapting every linear layer costs more parameters and often helps on harder tasks. The lab starts with query and value, named `q_proj` and `v_proj` in its model.
 
@@ -447,7 +449,7 @@ All of them share the principle of section 4: freeze the pretrained weights, tra
 
 ## 7. Decoding settings
 
-**Objective for this section:** choose generation settings for a task and name the `generate` arguments that set them.
+**In this section:** choose generation settings for a task and name the `generate` arguments that set them.
 
 The fine-tuned model is still a language model: it outputs a distribution over the next token, and something must pick. [Module 3](03-sequence-models.qmd) defined greedy decoding, the temperature $\tau$, top-$k$ and nucleus (top-$p$) sampling; [Module 4](04-seq2seq-attention.qmd) defined beam search with beam size $B$. Nothing new is needed here, only the mapping to the `generate` method:
 
@@ -499,7 +501,7 @@ Either the model improved, or the dice fell differently: with sampling, two runs
 
 ## 8. Evaluating generated text
 
-**Objective for this section:** define three kinds of metric for generated text and state what each one misses.
+**In this section:** define three kinds of metric for generated text and state what each one misses.
 
 A classifier's output is right or wrong. A generated answer can be right in many different wordings, which makes scoring hard. Three families of metric are in use, from strictest to loosest.
 
@@ -573,7 +575,7 @@ The reference has 6 unigrams, so the denominator is 6. (a) shares one: $1/6 \app
 | Rank sweep; all-linear targets (section 6) | Stretch |
 | BLEU, model-graded evaluation | not implemented in this lab |
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"Instruction tuning needs a new architecture or a new loss."** It is the same model and the same cross-entropy. What changes is the data format and which positions are scored.
 - **"A chat template is a feature of the model's architecture."** It is a string format. The model sees one token sequence, and the roles exist only as special tokens in it.
@@ -586,11 +588,11 @@ The reference has 6 unigrams, so the denominator is 6. (a) shares one: $1/6 \app
 - **"A high ROUGE or BLEU score means the answer is correct."** These count shared words with one reference. A wrong answer can share most of its words with a right one.
 - **"A model-graded score is objective."** The judge is a model with biases of its own. Its grades need validation against human labels.
 
-## What Module 8 picks up
+## Next steps
 
 You now have an instruction follower that you tuned yourself, running on one GPU. The largest models are reached differently: through a commercial API that takes the list of messages directly and applies the template on the server. [Module 8](08-llm-apis.qmd) uses those APIs for chat, structured output and tool use, and compares providers with one evaluation harness. Its stretch section adds the model from this lab as one more provider.
 
-## Readings
+## Further reading
 
 1. Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L. and Chen, W. (2022). [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). *ICLR*. The method. Read section 4 for the layer and section 7 for the analysis of rank.
 2. Aghajanyan, A., Gupta, S. and Zettlemoyer, L. (2021). [Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning](https://arxiv.org/abs/2012.13255). *ACL*. The evidence that fine-tuning needs few degrees of freedom, on which LoRA's hypothesis builds.

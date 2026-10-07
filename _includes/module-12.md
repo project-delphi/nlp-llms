@@ -14,12 +14,37 @@ Training and using models for calibrated decisions: outcome rewards, thresholds 
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   400 · Expert
+
+Lab runtime
+:   Google Colab, CPU runtime · about 3 minutes of compute
+
+Accounts and cost
+:   Google; optional: TypeSafe, OpenAI, Anthropic. Free without keys. Keyed run: under 5 cents on Jev; the stretch adds under 25 cents on Claude (estimates)
+
+Without API keys
+:   a toy model stands in for the real system; its numbers only illustrate
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Implement an accuracy reward and a proper-score reward, and explain from a toy model why only the second pays for honest probabilities
 - Implement act, ask and escalate thresholds from stated costs, and choose them on development data
 - State what is and is not public about RLCD, and evaluate a decision model's answers by their probabilities, not their confidence field
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 11 · Calibration](/modules/11-calibration.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account. Colab's default CPU runtime is enough.
+- API keys are optional. Without them a toy model stands in, and its numbers only illustrate.
 :::

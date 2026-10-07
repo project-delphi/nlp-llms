@@ -20,7 +20,9 @@ live:
 [Module 12](12-rlcd-jev.qmd) ended with a decision model that answers typed questions about a state, and with thresholds that turn its probabilities into actions. A decision, like a generated answer, is only as good as the text in front of the model, and nothing so far chooses that text. This module answers two questions: how do we put the right passages in front of a model, and when an answer is wrong, how do we tell whether the passages or the model failed?
 :::
 
-## Live plan
+{{< include /_includes/lab-13.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-13.md >}}
 
@@ -56,7 +58,7 @@ The workshop notation applies: vectors in bold, natural logarithms, $\mathbf{1}[
 
 ## 1. What Module 12 left open: why retrieve
 
-**Objective for this section:** say what retrieval adds to a language model, in terms of freshness, grounding and cost.
+**In this section:** say what retrieval adds to a language model, in terms of freshness, grounding and cost.
 
 Module 8 showed that a fluent answer carries no confidence signal. It also carries no source, and the model that wrote it can draw only on its weights and its prompt.
 
@@ -93,7 +95,7 @@ Sending the snapshot costs $186{,}495 \times 1{,}000 / 10^6 \approx \$186$. Send
 
 ## 2. The pipeline
 
-**Objective for this section:** name the seven stages of a RAG pipeline and say which happen once and which happen per query.
+**In this section:** name the seven stages of a RAG pipeline and say which happen once and which happen per query.
 
 <!-- FIGURE 13.1
 Spec: two horizontal lanes. Top lane, "once, offline (indexing)": load (documents) → chunk (chunks c_1..c_M) → embed (vectors h_c) → index (vector store + BM25 index). Bottom lane, "per query": question q → retrieve (top-k0 candidates from the index; arrow up into the index) → rerank (top-k) → generate (LLM with numbered sources) → answer with citations. Under "retrieve" and "rerank" a small label "measured by recall@k, MRR (section 8)"; under "generate" a label "measured by faithfulness, relevance, correctness (section 9)". Use the workshop palette; retrieval stages one color, generation another.
@@ -123,7 +125,7 @@ Chunk, embed and index must run again: the chunks are different texts, so their 
 
 ## 3. Chunking
 
-**Objective for this section:** say what chunk size and overlap trade off, and name three ways chunking fails silently.
+**In this section:** say what chunk size and overlap trade off, and name three ways chunking fails silently.
 
 A retriever ranks chunks, not documents, and the generator reads only the chunks it is given. The chunk is the unit of evidence.
 
@@ -157,7 +159,7 @@ By @eq-budget, five chunks of 512 tokens put $n_{\text{ctx}} = 2{,}560$ tokens i
 
 ## 4. Dense retrieval
 
-**Objective for this section:** say how a bi-encoder scores a chunk, why its vectors can be computed ahead of time, and how it is trained.
+**In this section:** say how a bi-encoder scores a chunk, why its vectors can be computed ahead of time, and how it is trained.
 
 A **dense retriever** encodes the query and each chunk separately into unit vectors in $\mathbb{R}^{d}$ and scores them by their dot product, which for unit vectors is Module 2's cosine:
 
@@ -211,7 +213,7 @@ Exhaustive search over $M$ vectors costs $O(Md)$ per query. Above about a millio
 
 ## 5. Sparse and hybrid retrieval
 
-**Objective for this section:** say when BM25 beats a dense retriever, and combine the two rankings.
+**In this section:** say when BM25 beats a dense retriever, and combine the two rankings.
 
 **Sparse retrieval** scores a chunk by the query words it contains. [Module 1](01-text-as-data.qmd)'s optional section derived BM25. With $\mathrm{tf}(w, c)$ the count of word $w$ in chunk $c$, $|c|$ the chunk's length in tokens, $\mathrm{avgdl}$ the mean length and $\mathrm{df}(w)$ the number of chunks that contain $w$:
 
@@ -248,7 +250,7 @@ A scores $1/61 = 0.0164$, with nothing from BM25. B scores $2/65 = 0.0308$, near
 
 ## 6. Reranking: cross-encoders and a decision model
 
-**Objective for this section:** say why a reranker scores better than the first-stage retriever, what it costs, and how a decision model can serve as one.
+**In this section:** say why a reranker scores better than the first-stage retriever, what it costs, and how a decision model can serve as one.
 
 A bi-encoder compresses each chunk into one vector before it has seen the query. A **cross-encoder** reads the query and the chunk together, as one input, so every layer of attention can compare them word by word:
 
@@ -295,7 +297,7 @@ We do not know how Jev was trained or how it represents a passage. TypeSafe stat
 
 ## 7. Generation: sources, citations, abstention
 
-**Objective for this section:** write a generation prompt whose output can be checked.
+**In this section:** write a generation prompt whose output can be checked.
 
 The generator is Module 8's provider wrapper, with a prompt that does three things:
 
@@ -315,7 +317,7 @@ As an answer, not an abstention: it is not the fixed sentence. It is then an ans
 
 ## 8. Evaluating retrieval
 
-**Objective for this section:** define recall@$k$ and MRR against labelled evidence, and use them to choose settings.
+**In this section:** define recall@$k$ and MRR against labelled evidence, and use them to choose settings.
 
 Retrieval and generation fail in different ways, so the module's third objective is to measure them **separately**. Retrieval is measured against **gold evidence**: for each answerable question $q$, people have marked the text that answers it. Two complications shape the definition.
 
@@ -398,7 +400,7 @@ At $k = 3$ only $g_1$ is covered, so D's recall@3 is $1/2$. The spans $e_1$ and 
 
 ## 9. Evaluating answers
 
-**Objective for this section:** define faithfulness, answer relevance and correctness, and say what each misses.
+**In this section:** define faithfulness, answer relevance and correctness, and say what each misses.
 
 Once the passages are fixed, the answer can still go wrong in two independent ways: it can say things the passages do not support, and it can fail to answer the question. Three measures, all per answered question.
 
@@ -445,7 +447,7 @@ The table tells you which half of the pipeline to work on. It is the reason the 
 
 ## 10. Common failures
 
-**Objective for this section:** name the usual failures and the measurement that reveals each.
+**In this section:** name the usual failures and the measurement that reveals each.
 
 | Failure | Symptom | Revealed by |
 |---|---|---|
@@ -471,7 +473,7 @@ The failure is "evidence ranked just below $k$": the first stage finds the evide
 
 ## 11. LlamaIndex and LangChain
 
-**Objective for this section:** say what each framework abstracts, where they overlap, and which interfaces the lab uses.
+**In this section:** say what each framework abstracts, where they overlap, and which interfaces the lab uses.
 
 Both frameworks wrap the same stages; they start from different ends.
 
@@ -525,7 +527,7 @@ The interfaces the lab subclasses or calls are few: `BaseEmbedding` (three metho
 - Retrieval is measured with recall@$k$ (@eq-recall) and MRR (@eq-mrr) against human-labelled evidence spans; answers with faithfulness (@eq-faith), relevance, correctness and abstention. The two-by-two table says which half of the pipeline failed.
 - A judge is a model and must be checked against people; prefer a programmatic check of correctness wherever the answer allows one.
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"A long context window makes retrieval unnecessary."** It costs every token on every call, and models use information in the middle of a long context less well (Liu et al., 2024).
 - **"The best chunk size is the one with the highest recall@5."** Larger chunks reach higher recall at a fixed $k$ because they contain more text. Compare at a fixed context budget.
@@ -537,11 +539,11 @@ The interfaces the lab subclasses or calls are few: `BaseEmbedding` (three metho
 - **"Jev's `confidence` is the right number to rank passages by."** It measures how concentrated the distribution is. Rank by the expected level of the probabilities.
 - **"Questions generated from the documents are a fine evaluation set."** They copy the documents' wording and inflate recall, especially for BM25.
 
-## What Module 14 picks up
+## Next steps
 
 You can now build a retriever, measure it and choose its settings, and evaluate answers separately from retrieval. [Module 14](14-agents.qmd) gives an agent this retriever as one of its tools, beside a calculator and a mock email action, and puts Module 12's router and guard into the graph. The retrieved text becomes part of the state the guard reads, which is where indirect prompt injection meets a tool that can act. [Module 15](15-capstone.qmd) evaluates the whole system on this module's held-out questions.
 
-## Readings
+## Further reading
 
 1. Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S. and Kiela, D. (2020). [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401). *NeurIPS*. Sections 1–2: parametric and non-parametric memory, and the model in the optional callout. *Authors and venue checked by web search on 2026-10-05, not against the paper.*
 2. Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., Chen, D. and Yih, W. (2020). [Dense Passage Retrieval for Open-Domain Question Answering](https://arxiv.org/abs/2004.04906). *EMNLP*. Section 3: the bi-encoder and in-batch negatives (@eq-contrastive). *Checked against the ACL Anthology record on 2026-10-05.*

@@ -14,12 +14,29 @@ Install a terminal coding agent and use it to build, check and publish two small
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   60 minutes, pre-work; optional clinic on Day 1, 08:00–09:00
 
-By the end of this module you can:
+Level
+:   100 · Foundational
+
+Accounts and cost
+:   GitHub; optional: Claude Code, Codex, Gemini CLI. Claude Code and Codex need a paid plan; Gemini CLI has a free tier with a personal Google account
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Install and drive a terminal coding agent
 - Build and check two small data apps with it
 - Publish them with GitHub and GitHub Pages
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- Your own laptop, set up as on the [Before Day 1](/prepare.qmd) page.
 :::

@@ -269,6 +269,14 @@ datasets:
     invoices: 18432
     lines: 48953
 
+# The audience level shown in each module's details panel, on the 100 to 400 scale
+# that technical workshops use. Each module names its own `level`.
+levels:
+  100: "Foundational"
+  200: "Intermediate"
+  300: "Advanced"
+  400: "Expert"
+
 # The daily clocks. Each day names its clock (days.dN.clock). A clock's `shape`
 # splits one module unit into briefing, lab and (optionally) debrief minutes, in
 # that order; its `slots` run back to back. Slot kinds:
@@ -472,6 +480,7 @@ modules:
     n: 0
     slug: 00-coding-agents
     day: 0
+    level: 100
     minutes: 60
     notebook: false
     title: "Coding agents in the terminal"
@@ -495,6 +504,7 @@ modules:
     n: 1
     slug: 01-text-as-data
     day: 1
+    level: 200
     minutes: 95
     title: "Text as data"
     summary: "Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against."
@@ -515,6 +525,7 @@ modules:
     n: 2
     slug: 02-word-vectors
     day: 1
+    level: 200
     minutes: 95
     title: "Word vectors and neural networks"
     summary: "From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model."
@@ -535,6 +546,7 @@ modules:
     n: 3
     slug: 03-sequence-models
     day: 1
+    level: 200
     minutes: 95
     title: "Sequence models"
     summary: "RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences."
@@ -555,6 +567,7 @@ modules:
     n: 4
     slug: 04-seq2seq-attention
     day: 1
+    level: 300
     minutes: 95
     title: "Seq2seq and attention"
     summary: "Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix."
@@ -575,6 +588,7 @@ modules:
     n: 5
     slug: 05-transformer-from-scratch
     day: 2
+    level: 300
     minutes: 120
     title: "The transformer"
     summary: "Self-attention, multi-head attention and positional encodings, assembled into a small GPT."
@@ -595,6 +609,7 @@ modules:
     n: 6
     slug: 06-pretraining-huggingface
     day: 2
+    level: 300
     minutes: 120
     title: "Pretraining and the Hugging Face stack"
     summary: "Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face."
@@ -616,6 +631,7 @@ modules:
     n: 7
     slug: 07-finetuning-lora
     day: 2
+    level: 300
     minutes: 120
     title: "Fine-tuning and LoRA"
     summary: "Turning a pretrained language model into an instruction follower, efficiently."
@@ -636,6 +652,7 @@ modules:
     n: 8
     slug: 08-llm-apis
     day: 3
+    level: 200
     minutes: 120
     title: "LLMs through APIs"
     summary: "OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation."
@@ -657,6 +674,7 @@ modules:
     n: 9
     slug: 09-preference-learning
     day: 3
+    level: 300
     minutes: 120
     title: "Reinforcement and preference learning"
     summary: "Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons."
@@ -678,6 +696,7 @@ modules:
     n: 10
     slug: 10-rlhf
     day: 3
+    level: 400
     minutes: 120
     title: "RLHF"
     summary: "The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways it goes wrong."
@@ -700,6 +719,7 @@ modules:
     n: 11
     slug: 11-calibration
     day: 4
+    level: 300
     minutes: 120
     title: "Calibration"
     summary: "What a probability should mean, how to measure it, and how to use confidence to decide when to abstain."
@@ -723,6 +743,7 @@ modules:
     n: 12
     slug: 12-rlcd-jev
     day: 4
+    level: 400
     minutes: 120
     title: "Calibrated decisions: RLCD and Jev"
     summary: "Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public."
@@ -745,6 +766,7 @@ modules:
     n: 13
     slug: 13-rag
     day: 4
+    level: 300
     minutes: 120
     title: "Retrieval-augmented generation"
     summary: "Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately."
@@ -767,6 +789,7 @@ modules:
     n: 14
     slug: 14-agents
     day: 5
+    level: 400
     minutes: 120
     title: "Agents"
     summary: "Tool-using agents as explicit graphs in LangGraph, with state, human-in-the-loop interrupts and confidence-gated control."
@@ -788,6 +811,7 @@ modules:
     n: 15
     slug: 15-capstone
     day: 5
+    level: 400
     minutes: 240
     title: "Capstone"
     summary: "Combine retrieval, an agent graph and calibrated control into one system, evaluate it, and explain the design."

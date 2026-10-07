@@ -14,12 +14,37 @@ Self-attention, multi-head attention and positional encodings, assembled into a 
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 10 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   the lab always runs its real models
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Implement scaled dot-product attention with a causal mask
 - Inspect how heads, blocks and positions assemble into a decoder-only transformer
 - Train a small GPT with the provided loop and evaluate it against the LSTM
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 4 · Seq2seq and attention](/modules/04-seq2seq-attention.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- No API keys: the lab runs its own models throughout.
 :::

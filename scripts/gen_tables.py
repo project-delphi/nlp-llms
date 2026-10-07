@@ -47,6 +47,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import lab_steps  # noqa: E402
 import live_plan  # noqa: E402
 import readiness  # noqa: E402
 import run_records  # noqa: E402
@@ -683,6 +684,75 @@ def run_sheet(v: dict, day: dict) -> str:
     return "\n".join(out)
 
 
+# ---- the module page's details panel, prerequisites and lab task list ----
+
+# What a participant needs in place before the module, per readiness runtime.
+RUNTIME_PREREQ = {
+    "colab-t4": "A Google account, and the Colab runtime set to **T4 GPU**"
+    " (Runtime → Change runtime type).",
+    "colab-cpu": "A Google account. Colab's default CPU runtime is enough.",
+    "own-laptop": "Your own laptop, set up as on the [Before Day 1](/prepare.qmd) page.",
+}
+# What the lab does for a participant with no API keys, per readiness fallback.
+KEYS_PREREQ = {
+    "none": "No API keys: the lab runs its own models throughout.",
+    "open-model": "API keys are optional. Without them an open model runs in place of the"
+    " commercial one.",
+    "toy": "API keys are optional. Without them a toy model stands in, and its numbers only"
+    " illustrate.",
+}
+
+
+def module_details(v: dict, key: str, m: dict) -> list[str]:
+    """The details panel: duration, level, runtime, cost, accounts. A definition list, so
+    each term stays beside its value at any width."""
+    r = m.get("readiness", {})
+    rows = [
+        ("Duration", timing(v, key, m)),
+        ("Level", f"{m['level']} · {v['levels'][m['level']]}"),
+    ]
+    if has_notebook(m):
+        env = v["readiness"]["envs"][r["runtime"]]["name"]
+        rows.append(
+            ("Lab runtime", f"{env} · about {r['estimate_minutes']} minutes of compute")
+        )
+    rows.append(("Accounts and cost", _accounts(r)))
+    if has_notebook(m):
+        rows.append(("Without API keys", FALLBACK_SHORT[r["fallback"]["kind"]]))
+    out = ["::: {.module-details}"]
+    for term, value in rows:
+        out += [term, f":   {value}", ""]
+    out[-1] = ":::"
+    return out
+
+
+def prerequisites(v: dict, m: dict) -> list[str]:
+    """'Before you start': the module before this one, the runtime, and the keys."""
+    r = m.get("readiness", {})
+    items = []
+    if not is_prework(m):
+        earlier = [x for _, x in modules_in_order(v) if 0 < x["n"] < m["n"]]
+        if not earlier:
+            items.append(
+                "[Setup and environment check](/setup.qmd): the 10-minute notebook that"
+                " checks your Colab runtime and loads any keys."
+            )
+        else:
+            last = earlier[-1]
+            link = f"[Module {last['n']} · {last['title']}](/modules/{last['slug']}.qmd)"
+            tail = (
+                " and its lab."
+                if len(earlier) == 1
+                else " and its lab, and the modules before it: this module measures its"
+                " results against theirs."
+            )
+            items.append(link + tail)
+    items.append(RUNTIME_PREREQ[r["runtime"]])
+    if has_notebook(m):
+        items.append(KEYS_PREREQ[r["fallback"]["kind"]])
+    return ["::: {.prerequisites}", "## Before you start", ""] + [f"- {i}" for i in items] + [":::"]
+
+
 def module_block(v: dict, key: str, m: dict) -> str:
     """The header of a module page. Links are project-absolute: the including page
     sits in modules/."""
@@ -709,15 +779,60 @@ def module_block(v: dict, key: str, m: dict) -> str:
         ":::",
         ":::",
         "",
-        "::: {.objectives}",
-        "## Learning objectives",
+    ]
+    lines += module_details(v, key, m)
+    lines += [
         "",
-        "By the end of this module you can:",
+        "::: {.module-outcomes}",
+        "## What you will build",
+        "",
+        "In this module you will:",
         "",
     ]
     lines += [f"- {o}" for o in m["objectives"]]
-    lines.append(":::")
+    lines += [":::", ""]
+    lines += prerequisites(v, m)
     return "\n".join(lines)
+
+
+def lab_block(v: dict, key: str, m: dict) -> str:
+    """'In the lab': the notebook's own parts and exercises, with the link that opens it."""
+    found = lab_steps.rows(m["slug"])
+    _, parts, minutes = lab_steps.totals(found)
+    exercises = len([r for r in found if r["label"].startswith("Exercise")])
+    s = shape(v, key)
+    # A module with no briefing/lab split (the capstone) is hands-on throughout, so its
+    # exercises account for a small part of the time.
+    budget = (
+        f"the lab slot is {s['lab']} minutes"
+        if s
+        else f"the rest of the {minutes_of(v, key)} minutes is your own pair work"
+    )
+    lead = (
+        f"{exercises} exercises in {parts} parts. The notebook budgets {minutes} minutes for"
+        f" them; {budget}. Every exercise is a `# TODO` stub with a folded solution beneath"
+        " it, and ends in a checkpoint that passes or fails."
+    )
+    if any(r["kind"] == "challenge" for r in found):
+        lead += " The challenge at the end is for anyone who finishes early."
+    out = [
+        "## In the lab {#in-the-lab}",
+        "",
+        colab_button(v, m, "Open the lab in Colab"),
+        "",
+        lead,
+        "",
+        "::: {.lab-steps}",
+        lab_steps.table(found),
+        ":::",
+    ]
+    if m.get("readiness", {}).get("runtime", "").startswith("colab"):
+        out += [
+            "",
+            "**When you are done.** Runtime \u2192 Disconnect and delete runtime releases the"
+            " machine; your keys stay in Colab Secrets for the next lab.",
+        ]
+    return "\n".join(out)
 
 
 def notebooks_index(v: dict) -> str:
@@ -994,6 +1109,11 @@ def main() -> None:
         write(INCLUDES / f"run-{d['n']}.md", run_sheet(v, d))
     for key, m in modules_in_order(v):
         write(INCLUDES / f"module-{m['n']:02d}.md", module_block(v, key, m))
+        lab = INCLUDES / f"lab-{m['n']:02d}.md"
+        if has_notebook(m) and notebook_exists(m["slug"]) and lab_steps.rows(m["slug"]):
+            write(lab, lab_block(v, key, m))
+        else:
+            lab.unlink(missing_ok=True)
         briefing = live_plan.read(m["slug"])
         live, pace = INCLUDES / f"live-{m['n']:02d}.md", INCLUDES / f"pace-{m['n']:02d}.md"
         if briefing["front"].get("live"):

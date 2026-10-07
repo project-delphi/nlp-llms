@@ -14,12 +14,37 @@ Text generation as a reinforcement-learning problem, the policy gradient, and re
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, CPU runtime · about 10 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   the lab always runs its real models
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Frame text generation as a reinforcement-learning problem
 - Derive and implement the policy gradient
 - Train a reward model from pairwise preferences
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 8 · LLMs through APIs](/modules/08-llm-apis.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account. Colab's default CPU runtime is enough.
+- No API keys: the lab runs its own models throughout.
 :::

@@ -14,12 +14,37 @@ Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval 
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 8 minutes of compute
+
+Accounts and cost
+:   Google; optional: OpenAI, Anthropic, TypeSafe. Free without keys. Keyed run: under 50 cents on Claude, under 5 cents on OpenAI, under 5 cents on Jev (estimates)
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Assemble a RAG pipeline in LlamaIndex and LangChain
 - Implement recall@k and MRR, and choose chunk size and top-k from a measured sweep
 - Evaluate retrieval and answer quality separately
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 12 · Calibrated decisions: RLCD and Jev](/modules/12-rlcd-jev.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

@@ -15,7 +15,9 @@ live:
 **Where we are.** Module 3's recurrent language model reads a prefix of any length and emits one prediction per input token, in step with it. It has no way to map one sequence to *another*, of a different length and in a different order: a sentence to its translation, a written date to ISO format. This module asks one question: how should the source reach the model that writes the target, and what breaks when it has to pass through a single vector?
 :::
 
-## Live plan
+{{< include /_includes/lab-04.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-04.md >}}
 
@@ -23,7 +25,7 @@ Section 8 is not taught here because Module 5 opens Day 2 with the same material
 
 ## 1. From next-token prediction to transduction
 
-**Objective for this section:** state what Module 3's language model cannot do as it stands.
+**In this section:** state what Module 3's language model cannot do as it stands.
 
 [Module 3](03-sequence-models.qmd) built a recurrent language model. It reads a prefix $w_1, \dots, w_{t-1}$, keeps a hidden state $h_{t-1}$, and outputs a distribution over the next token $w_t$. Input and output are the same sequence, shifted by one position.
 
@@ -44,7 +46,7 @@ Here $\theta$ denotes all model parameters. Each factor is a next-token predicti
 
 ## 2. The encoder-decoder model
 
-**Objective for this section:** write down the encoder, the decoder, and the training loss.
+**In this section:** write down the encoder, the decoder, and the training loss.
 
 The answer of Sutskever et al. (2014) and Cho et al. (2014) uses two recurrent networks.
 
@@ -113,7 +115,7 @@ Eleven factors: ten characters and `<eos>`, which the model must also predict so
 
 ## 3. The fixed-vector bottleneck
 
-**Objective for this section:** explain why this model degrades as the source gets longer.
+**In this section:** explain why this model degrades as the source gets longer.
 
 Look at where the source enters @eq-decoder: only through $s_0 = h_S$. Everything the decoder will ever know about the source is contained in that one vector. Formally, the model's prediction depends on $x$ only through $h_S$:
 
@@ -152,7 +154,7 @@ The vector does not change: $h_S$ has $d_h$ values whatever $S$ is, so twice the
 
 ## 4. Attention
 
-**Objective for this section:** derive the attention step, from scores to weights to the context vector.
+**In this section:** derive the attention step, from scores to weights to the context vector.
 
 **The idea.** Keep *all* encoder states $h_1, \dots, h_S$, not just the last. At each decoder step, let the decoder choose which of them to read.
 
@@ -307,7 +309,7 @@ We use the Luong ordering because the query is then simply the current decoder s
 
 ## 5. Three score functions
 
-**Objective for this section:** write the dot-product, general and additive scores and say when each applies.
+**In this section:** write the dot-product, general and additive scores and say when each applies.
 
 The score function is the only part of attention that has design freedom. Three choices are standard.
 
@@ -368,7 +370,7 @@ Dot product: none. General: $W_a$ is $128 \times 128 = 16{,}384$. Additive: $W_q
 
 ## 6. Attention as soft alignment
 
-**Objective for this section:** read an attention heat-map and state what it does and does not show.
+**In this section:** read an attention heat-map and state what it does and does not show.
 
 Collect the weights into a matrix with one row per target position and one column per source position, so that entry $(t, i)$ is $\alpha_{t,i}$. Each row sums to one. Plotted as a heat-map, this matrix shows where the decoder was reading when it produced each output token.
 
@@ -407,7 +409,7 @@ Position 6, the `y`. The characters are `1`, `2`, space, `M`, `a`, `y`. After `M
 
 ## 7. Decoding {.reference}
 
-**Objective for this section:** distinguish greedy decoding from beam search.
+**In this section:** distinguish greedy decoding from beam search.
 
 At test time we want a target sequence with high probability under @eq-factorization. Searching all sequences is infeasible: there are $|V|^T$ of them.
 
@@ -457,7 +459,7 @@ Open this after the lab's stretch section, so that it does not answer its predic
 
 ## 8. Attention as a query-key-value lookup {.reference}
 
-**Objective for this section:** restate attention in the general form that Module 5 builds on.
+**In this section:** restate attention in the general form that Module 5 builds on.
 
 Nothing in section 4 depends on the vectors coming from an RNN. Rename the parts:
 
@@ -522,7 +524,7 @@ Position $t$ itself. The score is $h_t^\top h_i = \lVert h_t \rVert\, \lVert h_i
 | Encoder, combination layer, greedy decoding (@eq-encoder, @eq-attentional, section 7) | provided: `Seq2Seq.encode`, `readout`, `greedy_decode` |
 | General score (@eq-general) | not implemented |
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"Attention replaces the RNN."** Not in this module. Here attention is added to a recurrent encoder and decoder. Removing the recurrence is Module 5's step.
 - **"The bottleneck is the vanishing-gradient problem again."** They are different. Vanishing gradients are an optimization problem on long paths. The bottleneck is a capacity problem: a fixed-size vector cannot hold an unbounded amount of information, however well it is trained.
@@ -532,7 +534,7 @@ Position $t$ itself. The score is $h_t^\top h_i = \lVert h_t \rVert\, \lVert h_i
 - **"Attention is trained with alignment labels."** There are none. The weights are learned from the same cross-entropy loss as everything else.
 - **"Beam search finds the most probable output."** It finds a good one. It is a heuristic search, and a wider beam is not guaranteed to do better on the task metric.
 
-## Readings
+## Further reading
 
 1. Sutskever, I., Vinyals, O. and Le, Q. V. (2014). [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215). *NeurIPS*. The encoder-decoder with LSTMs, and the source-reversal trick.
 2. Bahdanau, D., Cho, K. and Bengio, Y. (2015). [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473). *ICLR*. Names the bottleneck and introduces additive attention. Read sections 3 and 5.

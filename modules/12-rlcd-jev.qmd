@@ -16,7 +16,9 @@ live:
 [Module 11](11-calibration.qmd) measured calibration, repaired it with one temperature and turned a calibrated probability into a choice between acting and deferring. All of that happens after training, and it allows only two actions. This module asks two questions. What changes when calibration is part of the training objective, not a repair afterwards? And how does a program turn a model's probabilities into three actions: act, ask or escalate? It then takes one product sold as a calibrated decision model, TypeSafe's Jev, as a case study, including what is and is not known about how it was trained.
 :::
 
-## Live plan
+{{< include /_includes/lab-12.md >}}
+
+## Agenda {#live-plan}
 
 {{< include /_includes/live-12.md >}}
 
@@ -70,7 +72,7 @@ New in this module:
 
 ## 1. What Module 11 left open
 
-**Objective for this section:** say what Module 11 left open about training, about actions and about systems, and how this module takes each up.
+**In this section:** say what Module 11 left open about training, about actions and about systems, and how this module takes each up.
 
 Module 11's three tools were measurement (the reliability diagram, ECE, the Brier score), repair (temperature scaling) and decision (Chow's rule). Each is applied to a model that has already been trained, and the decision has only two actions.
 
@@ -84,7 +86,7 @@ Sections 5 to 8 are a case study. TypeSafe, a company that sells a decision mode
 
 ## 2. Two training signals: preference and outcome
 
-**Objective for this section:** state how a reward built from outcomes and a proper scoring rule differs from RLHF's preference reward, and show why an accuracy-only reward is not enough. *This section is our framing, not TypeSafe's method.*
+**In this section:** state how a reward built from outcomes and a proper scoring rule differs from RLHF's preference reward, and show why an accuracy-only reward is not enough. *This section is our framing, not TypeSafe's method.*
 
 ::: {#predict-rewards .predict}
 A yes/no item has the answer "yes" 60% of the time. A model may report $(0.6, 0.4)$, $(0.8, 0.2)$ or $(1, 0)$ for (yes, no). Training pays it 1 whenever an answer sampled from its report is right. Which report earns the most on average? Which report would a reward that scores the whole report against the label, such as Module 11's Brier score, pay the most? The worked example in this section answers both.
@@ -201,7 +203,7 @@ The last row. After one temperature per head is fitted on `dev`, the accuracy-re
 
 ## 3. Act, ask, escalate: thresholds from costs
 
-**Objective for this section:** turn a probability into one of three actions, with both thresholds derived from stated costs.
+**In this section:** turn a probability into one of three actions, with both thresholds derived from stated costs.
 
 Module 11's Chow rule had two actions: act on the model's answer, or defer to a person. A front-desk assistant has a cheaper middle option: **ask** the participant to confirm the proposed answer before acting. Let $\hat{p}$ be the probability, calibrated, that the decision model's answer is right. The three actions and their costs:
 
@@ -341,7 +343,7 @@ What it teaches:
 
 ## 4. Where a decision model fits: route, guard, verify
 
-**Objective for this section:** name the three places a decision model sits in an LLM system, and what each one costs when it is wrong.
+**In this section:** name the three places a decision model sits in an LLM system, and what each one costs when it is wrong.
 
 <!-- FIGURE 12.1
 Spec: a left-to-right system diagram. A user request enters a "router" box (decision model, Choice over next steps); arrows to "retrieve", "calculate", "LLM answer", "ask user", "escalate to a person". Before a "send email" tool box sits a "guard" box (decision model, Noul "is this action allowed and safe?"). After the "LLM answer" box sits a "verify" box (decision model, Noul "is this answer supported by the sources?"). Each decision-model box carries a small gauge labelled "p" and two tick marks labelled tau_esc and tau_act. Use the workshop palette; decision-model boxes share one color, generative boxes another.
@@ -375,7 +377,7 @@ Right: the injected sentence cannot make the guard emit a tool call or any other
 
 ## 5. Case study: what is public, what is reported, what is ours
 
-**Objective for this section:** state what TypeSafe has published about RLCD and Jev, what others say about it, and what in this module is our own.
+**In this section:** state what TypeSafe has published about RLCD and Jev, what others say about it, and what in this module is our own.
 
 From here on the module is a case study of one product. Sections 2 to 4 hold for any model that reports probabilities; sections 5 to 8 look at one model sold as a calibrated decision model, TypeSafe's Jev, and keep apart what TypeSafe states, what others report and what is ours.
 
@@ -429,7 +431,7 @@ Everything in section 2 and in Exercise 1 of the lab is ours: a framing of the d
 
 ## 6. Case study: System 1 and System 2 {.reference}
 
-**Objective for this section:** say what the System 1 / System 2 analogy captures about a decision model, and where it stops.
+**In this section:** say what the System 1 / System 2 analogy captures about a decision model, and where it stops.
 
 Kahneman (2011), popularizing a distinction named by Stanovich and West (2000), describes two modes of thinking: **System 1**, fast, automatic and effortless, and **System 2**, slow, deliberate and effortful. Kahneman calls them useful fictions, a way of talking about two kinds of process rather than two parts of the brain, and the dual-process view has critics in psychology (for example Melnikoff and Bargh, 2018).
 
@@ -454,7 +456,7 @@ The analogy ends there. We do not know Jev's architecture, and "fast" is TypeSaf
 
 ## 7. Case study: Jev's interface
 
-**Objective for this section:** call Jev for typed decisions, and read its answers.
+**In this section:** call Jev for typed decisions, and read its answers.
 
 Everything in this section was checked against `typesafe-sdk` 0.7.2, the version the lab pins (`pip install typesafe-sdk==0.7.2`, import `typesafe_sdk`).
 
@@ -512,7 +514,7 @@ First, "if so" refers to the first question's answer, but questions in one call 
 
 ## 8. Case study: probabilities, not `confidence`, on a reliability diagram
 
-**Objective for this section:** say which number from a Jev answer belongs on a reliability diagram, and why the `confidence` field does not.
+**In this section:** say which number from a Jev answer belongs on a reliability diagram, and why the `confidence` field does not.
 
 A reliability diagram (Module 11, section 3) plots, bin by bin, how often the chosen answer was right against the probability given to it. Its horizontal axis must be the **probability of the chosen answer**:
 
@@ -585,7 +587,7 @@ $\hat{p} = 0.7$, and $\kappa = (0.7 - 0.25)/(1 - 0.25) = 0.6$. With $\hat{p}$ on
 - Jev answers typed questions about a state: `Noul` (a probability of yes), `Choice` and `Score` (a probability per option and a `confidence`). Question names are not sent to the model; every question must be complete.
 - `confidence` measures how concentrated the distribution is. Reliability diagrams, ECE, Brier scores and cost thresholds use the probability of the chosen answer (@eq-chosen-prob). TypeSafe's published choice formula (@eq-adapter-conf) shows how far apart the two can be.
 
-## Common misconceptions
+## Gotchas and troubleshooting
 
 - **"Rewarding correct answers teaches a model when it is right."** An accuracy reward is the improper linear score: it is maximized by putting all probability on one answer, whatever the true odds (@eq-acc-optimum).
 - **"A three-action rule always has three regions."** If asking is not cheaper than escalating where acting and escalating break even, the middle region disappears and Chow's rule remains.
@@ -597,11 +599,11 @@ $\hat{p} = 0.7$, and $\kappa = (0.7 - 0.25)/(1 - 0.25) = 0.6$. With $\hat{p}$ on
 - **"Jev's `confidence` is the probability that its answer is right."** It measures how concentrated the probabilities are. A five-way answer with top probability 0.6 has, under TypeSafe's published formula, a confidence of 0.5.
 - **"System 1 means the model reasons like human intuition."** It is an analogy for a fast, typed, single-pass decision, not a claim about cognition or about Jev's architecture.
 
-## What Module 13 picks up
+## Next steps
 
 You can now call a decision model for typed answers, measure its probabilities, and set act, ask and escalate thresholds from costs. The rest of the workshop builds systems around such decisions. [Module 13](13-rag.qmd) adds retrieval, so that the state a model decides on, or an LLM answers from, contains the right documents; there a decision model reappears as a reranker that scores how relevant each passage is. [Module 14](14-agents.qmd) puts the router and the guard of section 4 into an agent graph, with the thresholds from this lab.
 
-## Readings
+## Further reading
 
 1. TypeSafe AI (2026). `docs.typesafe.ai`: the [AI primer](https://docs.typesafe.ai/introduction/machine-learning-primer), [System One](https://docs.typesafe.ai/concepts/system-one), [Models](https://docs.typesafe.ai/models) and [Confidence](https://docs.typesafe.ai/confidence) pages. TypeSafe's own statements about RLCD, Jev's training and the `confidence` formulas. Read for this module on 2026-10-06. TypeSafe's announcement blog post has not been read.
 2. TypeSafe AI (2026). [`typesafe-ai/skills`, `SKILL.md`](https://github.com/typesafe-ai/skills) and [`typesafe-sdk`](https://pypi.org/project/typesafe-sdk/) 0.7.2. Read for the interface and for TypeSafe's own guidance on questions, confidence and validation. Read for this module on 2026-10-05.

@@ -14,12 +14,37 @@ From one-hot vectors to learned embeddings, with a PyTorch refresher and the fir
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   95 minutes (45 briefing, 50 lab)
 
-By the end of this module you can:
+Level
+:   200 · Intermediate
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 10 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   the lab always runs its real models
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Explain the distributional hypothesis and find nearest neighbors by cosine similarity
 - Derive the skip-gram negative-sampling loss, implement it, and check its gradients against autograd
 - Assemble a feed-forward classifier over averaged embeddings and evaluate it against TF-IDF
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 1 · Text as data](/modules/01-text-as-data.qmd) and its lab.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- No API keys: the lab runs its own models throughout.
 :::

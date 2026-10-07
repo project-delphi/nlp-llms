@@ -14,13 +14,38 @@ The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways 
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   400 · Expert
+
+Lab runtime
+:   Google Colab, free T4 GPU · about 7 minutes of compute
+
+Accounts and cost
+:   Google. Free
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Describe the three-stage RLHF pipeline
 - Optimize a small LM against a reward model with a KL constraint
 - Apply DPO and compare
 - Name RLHF's failure modes and observe one
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 9 · Reinforcement and preference learning](/modules/09-preference-learning.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::

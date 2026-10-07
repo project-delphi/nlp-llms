@@ -14,13 +14,38 @@ What a probability should mean, how to measure it, and how to use confidence to 
 :::
 :::
 
-::: {.objectives}
-## Learning objectives
+::: {.module-details}
+Duration
+:   120 minutes (55 briefing, 55 lab, 10 debrief)
 
-By the end of this module you can:
+Level
+:   300 · Advanced
+
+Lab runtime
+:   Google Colab, CPU runtime · about 7 minutes of compute
+
+Accounts and cost
+:   Google; optional: OpenAI, Anthropic. Free without keys. Keyed run: under 1 USD on Claude, under 25 cents on OpenAI (estimates)
+
+Without API keys
+:   an open model runs in place of the commercial one
+:::
+
+::: {.module-outcomes}
+## What you will build
+
+In this module you will:
 
 - Say what a probability should mean
 - Measure calibration with reliability diagrams, ECE and the Brier score
 - Explain proper scoring rules
 - Use confidence to decide when to abstain
+:::
+
+::: {.prerequisites}
+## Before you start
+
+- [Module 10 · RLHF](/modules/10-rlhf.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- A Google account. Colab's default CPU runtime is enough.
+- API keys are optional. Without them an open model runs in place of the commercial one.
 :::
