@@ -1948,3 +1948,35 @@ section.reference > h2::after {
 .discuss::before {
   content: "Discuss";
 }
+
+// The lab's optional challenge (generated: _includes/lab-NN.md), named from the
+// notebook's stretch section. Quieter than a callout: it is work, not a warning.
+.challenge {
+  margin: 1.1rem 0 1.4rem;
+  padding: 0.9rem 1.25rem 1rem;
+  border: 1px dashed $nl-border-strong;
+  border-radius: 9px;
+  background: $nl-surface;
+
+  h3 {
+    margin: 0 0 0.4rem;
+    padding: 0;
+    border: 0;
+    font-size: 1.02rem;
+    color: $nl-accent;
+  }
+
+  p {
+    margin: 0;
+    color: $nl-muted;
+  }
+
+  ul {
+    margin: 0.55rem 0 0;
+    padding-left: 1.1rem;
+  }
+
+  li {
+    color: $nl-heading;
+  }
+}

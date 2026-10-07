@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb){.btn-colab}
 
-5 exercises in 4 parts. The notebook budgets 45 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+5 exercises in 4 parts. The notebook budgets 45 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -18,7 +18,12 @@
 | Exercise 3 · Calibration arrays from the records | 8 min |
 | **Part D · From probabilities to actions** | |
 | Exercise 4 · Act, ask, escalate | 10 min |
-| **Challenge (optional) · Jev against an LLM on the same decisions** | |
+:::
+
+::: {.challenge}
+### Challenge · Jev against an LLM on the same decisions {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

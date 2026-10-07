@@ -26,6 +26,8 @@ TASK = re.compile(r"^#+\s+(Exercise|Step)\s+(\d+)\s+·\s+(.+?)(?:\s*\((\d+)\s*mi
 # `## Stretch (optional) · BM25`, and the bare `## Stretch (optional)`
 STRETCH = re.compile(r"^##\s+Stretch\s*\(optional\)(?:\s*·\s*(.+?))?\s*$")
 
+# `### Stretch A · A verification node`: one of several challenges under the stretch.
+SUBSTRETCH = re.compile(r"^###\s+Stretch\s+([A-Z])\s+·\s+(.+?)\s*$")
 
 def headings(slug: str) -> list[str]:
     """Every markdown heading of the notebook, in document order."""
@@ -45,8 +47,8 @@ def headings(slug: str) -> list[str]:
 def rows(slug: str) -> list[dict]:
     """The lab's parts, tasks and challenge, in the notebook's order.
 
-    Each row is {kind: part|task|challenge, label, title, minutes}. `minutes` is None
-    when the heading does not state one.
+    Each row is {kind: part|task|challenge|challenge-item, label, title, minutes}.
+    `minutes` is None when the heading does not state one.
     """
     out: list[dict] = []
     for line in headings(slug):
@@ -66,6 +68,15 @@ def rows(slug: str) -> list[dict]:
                     "label": f"{found[1]} {found[2]}",
                     "title": found[3],
                     "minutes": int(found[4]) if found[4] else None,
+                }
+            )
+        elif found := SUBSTRETCH.match(line):
+            out.append(
+                {
+                    "kind": "challenge-item",
+                    "label": f"Stretch {found[1]}",
+                    "title": found[2],
+                    "minutes": None,
                 }
             )
         elif found := STRETCH.match(line):
@@ -93,13 +104,37 @@ def totals(found: list[dict]) -> tuple[int, int, int]:
 
 
 def table(found: list[dict]) -> str:
-    """The task list as a two-column table: a part is a bold row spanning its tasks."""
+    """The core path as a two-column table: a part is a bold row spanning its tasks.
+    The challenge is not in it; challenge() states it on its own."""
     lines = ["| Task | Time |", "|---|---|"]
     for r in found:
+        if r["kind"].startswith("challenge"):
+            continue
         if r["kind"] == "task":
             time = f"{r['minutes']} min" if r["minutes"] else "—"
             lines.append(f"| {r['label']} · {r['title']} | {time} |")
         else:
             title = f" · {r['title']}" if r["title"] else ""
             lines.append(f"| **{r['label']}{title}** | |")
+    return "\n".join(lines)
+
+
+def challenge(found: list[dict]) -> str | None:
+    """The lab's optional challenge, and the pieces it breaks into when it has them.
+    None when the notebook has no stretch section."""
+    head = next((r for r in found if r["kind"] == "challenge"), None)
+    if head is None:
+        return None
+    title = f" \u00b7 {head['title']}" if head["title"] else ""
+    lines = [
+        "::: {.challenge}",
+        f"### Challenge{title} {{#challenge}}",
+        "",
+        "Optional, for anyone who finishes the core path early: the notebook's stretch"
+        " section, after the last checkpoint.",
+    ]
+    items = [r for r in found if r["kind"] == "challenge-item"]
+    if items:
+        lines += [""] + [f"- **{r['label']}** \u00b7 {r['title']}" for r in items]
+    lines.append(":::")
     return "\n".join(lines)

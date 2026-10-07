@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/01-text-as-data.ipynb){.btn-colab}
 
-6 exercises in 2 parts. The notebook budgets 50 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+6 exercises in 2 parts. The notebook budgets 50 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -17,7 +17,12 @@
 | **Part B · Text classification by counting** | |
 | Exercise 5 · TF-IDF and two linear classifiers | 10 min |
 | Exercise 6 · Precision, recall, F1 and reading the errors | 7 min |
-| **Challenge (optional) · BM25** | |
+:::
+
+::: {.challenge}
+### Challenge · BM25 {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

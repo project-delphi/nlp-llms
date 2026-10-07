@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/11-calibration.ipynb){.btn-colab}
 
-6 exercises in 3 parts. The notebook budgets 50 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+6 exercises in 3 parts. The notebook budgets 50 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -18,7 +18,12 @@
 | Exercise 4 · Parse a stated confidence, then measure it | 12 min |
 | **Part C · From confidence to a decision** | |
 | Exercise 5 · Risk–coverage and the threshold | 8 min |
-| **Challenge (optional) · The Brier score is proper; accuracy is not** | |
+:::
+
+::: {.challenge}
+### Challenge · The Brier score is proper; accuracy is not {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

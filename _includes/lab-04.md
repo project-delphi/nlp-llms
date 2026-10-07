@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/04-seq2seq-attention.ipynb){.btn-colab}
 
-5 exercises in 3 parts. The notebook budgets 47 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+5 exercises in 3 parts. The notebook budgets 47 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -17,7 +17,12 @@
 | Exercise 4 · The additive score | 10 min |
 | **Part C · Reading attention** | |
 | Exercise 5 · Attention heat-maps and the alignment hit rate | 7 min |
-| **Challenge (optional) · Beam search** | |
+:::
+
+::: {.challenge}
+### Challenge · Beam search {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

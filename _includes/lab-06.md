@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb){.btn-colab}
 
-5 exercises in 3 parts. The notebook budgets 47 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+5 exercises in 3 parts. The notebook budgets 47 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -17,7 +17,12 @@
 | Exercise 4 · Masked language modeling: select and corrupt | 10 min |
 | **Part C · Fine-tuning for classification** | |
 | Exercise 5 · Fine-tune an encoder | 12 min |
-| **Challenge (optional) · Attention and hidden states of a pretrained encoder** | |
+:::
+
+::: {.challenge}
+### Challenge · Attention and hidden states of a pretrained encoder {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

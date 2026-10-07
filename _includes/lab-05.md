@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb){.btn-colab}
 
-6 exercises in 2 parts. The notebook budgets 50 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+6 exercises in 2 parts. The notebook budgets 50 minutes for them; the lab slot is 55 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -17,7 +17,12 @@
 | **Part B · Training and comparing** | |
 | Exercise 4 · Train the mini-GPT and compare it with the LSTM | 14 min |
 | Exercise 5 · Looking at the heads | 7 min |
-| **Challenge (optional) · Write the multi-head layer and the block yourself** | |
+:::
+
+::: {.challenge}
+### Challenge · Write the multi-head layer and the block yourself {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.

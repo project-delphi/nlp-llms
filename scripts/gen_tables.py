@@ -823,8 +823,6 @@ def lab_block(v: dict, key: str, m: dict) -> str:
         f" them; {budget}. Every exercise is a `# TODO` stub with a folded solution beneath"
         " it, and ends in a checkpoint that passes or fails."
     )
-    if any(r["kind"] == "challenge" for r in found):
-        lead += " The challenge at the end is for anyone who finishes early."
     out = [
         "## In the lab {#in-the-lab}",
         "",
@@ -836,6 +834,9 @@ def lab_block(v: dict, key: str, m: dict) -> str:
         lab_steps.table(found),
         ":::",
     ]
+    found_challenge = lab_steps.challenge(found)
+    if found_challenge:
+        out += ["", found_challenge]
     if m.get("readiness", {}).get("runtime", "").startswith("colab"):
         out += [
             "",

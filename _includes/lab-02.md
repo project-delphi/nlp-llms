@@ -4,7 +4,7 @@
 
 [Open the lab in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/02-word-vectors.ipynb){.btn-colab}
 
-4 exercises in 2 parts. The notebook budgets 33 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails. The challenge at the end is for anyone who finishes early.
+4 exercises in 2 parts. The notebook budgets 33 minutes for them; the lab slot is 50 minutes. Every exercise is a `# TODO` stub with a folded solution beneath it, and ends in a checkpoint that passes or fails.
 
 ::: {.lab-steps}
 | Task | Time |
@@ -15,7 +15,12 @@
 | **Part B · Embeddings as features for classification** | |
 | Exercise 3 · Averaging embeddings | 6 min |
 | Exercise 4 · A feed-forward classifier | 8 min |
-| **Challenge (optional) · Pretrained GloVe vectors** | |
+:::
+
+::: {.challenge}
+### Challenge · Pretrained GloVe vectors {#challenge}
+
+Optional, for anyone who finishes the core path early: the notebook's stretch section, after the last checkpoint.
 :::
 
 **When you are done.** Runtime → Disconnect and delete runtime releases the machine; your keys stay in Colab Secrets for the next lab.
