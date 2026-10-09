@@ -482,7 +482,7 @@ symbols:
   - symbol: '$C$'
     meaning: 'The number of classes, a scalar (4 for arXiv Topics v1).'
     module: m01
-    note: 'scikit-learn''s regularization constant `C` (code font, about $1/\lambda$) is a different number; Module 1 says so. Module 8 writes $C$ for the context window, a number of tokens ($n_{\text{in}} + n_{\text{out}} \le C$), and does not flag the reuse. Module 13 writes $\mathcal{C}$ for the collection of chunks. Module 12 counts a question''s options with $K$.'
+    note: 'scikit-learn''s regularization constant `C` (code font, about $1/\lambda$) is a different number; Module 1 says so. Module 8 writes $C$ for the context window, a number of tokens ($n_{\text{in}} + n_{\text{out}} \le C$), and says so. Module 13 writes $\mathcal{C}$ for the collection of chunks. Module 12 counts a question''s options with $K$.'
 
   - symbol: '$r$'
     meaning: 'The rank of a word when the vocabulary is sorted by frequency (1 for the most frequent), in Zipf''s law $f(r) \approx A / r^s$.'
@@ -562,7 +562,7 @@ symbols:
   - symbol: '$\kappa$'
     meaning: 'The gradient-clipping threshold, a scalar $\kappa > 0$: a gradient longer than $\kappa$ is rescaled to length $\kappa$.'
     module: m03
-    note: 'In Module 12, $\kappa$ is Jev''s `confidence` field, which is not $\hat{p}$; Module 13 keeps it. Module 12''s notation box does not mention the earlier use.'
+    note: 'In Module 12, $\kappa$ is Jev''s `confidence` field, which is not $\hat{p}$; Module 13 keeps it. Module 12''s notation box says so.'
 
   - symbol: '$B$'
     meaning: 'The batch size in Module 3''s code shapes, for example $(B, d_h)$.'
@@ -615,7 +615,7 @@ symbols:
     note: 'In Module 10, $J(\theta)$ is the RLHF objective, expected reward minus $\beta$ times the KL divergence. Module 12 writes $J_R(\theta)$ for the expected reward over items. In Module 13, $J(a, R)$ is a judge: the probability that sentence $a$ is supported by passages $R$.'
 
   - symbol: '$\hat{p}$'
-    meaning: 'The probability of the chosen answer, a scalar in $[0, 1]$: the number a reliability diagram puts on its horizontal axis and a threshold is compared with. Module 11''s notation table calls it the confidence.'
+    meaning: 'The probability of the chosen answer, a scalar in $[0, 1]$: the number a reliability diagram puts on its horizontal axis and a threshold is compared with. Module 11 calls it the confidence, as the calibration literature does; from Module 12 on it is the probability of the chosen answer, because Jev''s `confidence` field is a different number.'
     module: m11
     note: 'A language model''s stated confidence is measured as $\hat{p}$ (Module 11, section 7). Jev''s `confidence` field is $\kappa$, not $\hat{p}$ (Module 12, section 8). Module 14 compares the guard''s $p_{\text{allow}}$ with the thresholds directly, even below 0.5.'
 

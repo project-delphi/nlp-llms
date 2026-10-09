@@ -61,9 +61,15 @@ The workshop notation applies. Tokens are $w_1,\dots,w_T$, with $T$ the sequence
 | $\tau$ | sampling temperature (not $T$, which is sequence length) |
 
 ::: {.callout-important appearance="simple"}
-## A Notation Clash, Resolved
+## Notation Clashes, Resolved
 
 Module 1 uses $c(\cdot)$ for a count, as in $c(w_{t-1}, w_t)$. The LSTM literature uses $c_t$ for the cell state. In this module **$c_t$ with a time subscript is always the LSTM cell state, a vector in $\mathbb{R}^{d_h}$**. The count function is always written with an argument in parentheses, $c(\cdot)$, and appears only where we describe the n-gram baseline.
+
+Three letters from Module 2 also change meaning here.
+
+- **$U$** is the input-to-hidden matrix, $(d_h, d)$, not Module 2's matrix of context vectors.
+- **$\tau$** is the sampling temperature (section 7), not Module 2's subsampling threshold. From here on, plain $\tau$ is always a temperature.
+- **$o_t$** is the LSTM's output gate (section 5), not Module 2's context word $o$.
 :::
 
 ## 2. The Recurrent Neural Network

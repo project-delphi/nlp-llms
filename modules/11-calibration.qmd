@@ -61,11 +61,14 @@ New in this module:
 | $\ell_{\text{wrong}}$, $\ell_{\text{defer}}$ | the **cost** of acting on a wrong prediction, and of deferring to a person |
 
 ::: {.callout-important appearance="simple"}
-**Notation.** Three clashes, resolved for this module.
+**Notation.** Six clashes, resolved for this module.
 
 - **$x$ and $y$** mean an input and its class label again, as in Modules 1 and 6, not the prompt and response of Modules 9 and 10.
 - **$\tau$** is the temperature of Module 3. Section 6 uses the same division of the logits; what is new is that $\tau$ is fitted, not chosen. It is not Module 9's label temperature $\tau_{\text{label}}$.
 - **$\lambda$** is a threshold here, not the Lagrange multiplier or interpolation weight of Module 1. **$p$** is a true distribution, not a perplexity.
+- **$o$** is the outcome, not Module 2's context word or Module 3's output gate $o_t$.
+- **$M$** is the number of bins, not Module 5's causal mask or Module 6's number of merges.
+- **Confidence** on this page always means $\hat{p}$, a probability, as in the calibration literature. [Module 12](12-rlcd-jev.qmd) meets a field that Jev names `confidence`, written $\kappa$, which is not $\hat{p}$; from there on $\hat{p}$ is called the probability of the chosen answer.
 :::
 
 ## 1. What Day 3 Has Left Open

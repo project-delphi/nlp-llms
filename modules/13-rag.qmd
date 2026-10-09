@@ -58,11 +58,13 @@ The workshop notation applies: vectors in bold, natural logarithms, $\mathbf{1}[
 | $J(a, R)$ | a **judge**: the probability, according to some model, that sentence $a$ is supported by the passages $R$ (section 9) |
 
 ::: {.callout-important appearance="simple"}
-**Notation.** Three clashes, resolved for this module.
+**Notation.** Five clashes, resolved for this module.
 
 - **$c$** is a chunk. Module 1 wrote $c(w, D)$ for the count of word $w$ in document $D$; in section 5 we write that count $\mathrm{tf}(w, c)$.
 - **$k$** is the number of chunks passed to the generator, as in "top-$k$" and "recall@$k$". BM25's $k_1$ keeps its subscript; Module 2's number of negatives is not used here.
 - **$\pi$** is Jev's distribution over the levels of a `Score` question (section 6), as in Module 12. Jev's `confidence` field, Module 12's $\kappa$, plays no part in ranking.
+- **$G$, $J$ and $R$** belong to evaluation here, not to reinforcement learning. $G(q)$ is gold evidence, not Module 9's return $G_t$. $J(a, R)$ is a judge, not the objective $J(\theta)$ of Modules 9 and 10, and its $a$ is a sentence of the answer, not an action. $R$ is a set of retrieved passages and $R_k(q)$ the top-$k$ list, not Module 8's retry limit or the reward $R(x, y)$ of Module 9.
+- **$M$** is the number of chunks, not Module 5's causal mask, Module 6's number of merges or Module 11's number of bins.
 :::
 
 ## 1. What Module 12 Left Open: Why Retrieve
@@ -85,7 +87,7 @@ A language model has two memories (Lewis et al., 2020):
 Long context windows do not remove the third reason, and they weaken the second: Liu et al. (2024) found that models use information at the start and end of a long context better than information in the middle. Retrieval keeps the context short and puts the best passages first.
 
 ::: {.callout-tip collapse="true" title="Optional: The Original RAG Model"}
-Lewis et al. (2020) trained the retriever and the generator together. For an input $x$ and an output $y$, with a retriever $p_\eta(z \mid x)$ over passages $z$ and a generator $p_\theta(y \mid x, z)$, their RAG-Sequence model marginalizes over the top-$k$ passages:
+Lewis et al. (2020) trained the retriever and the generator together. For an input $x$ and an output $y$, with a retriever $p_\eta(z \mid x)$ over passages $z$ and a generator $p_\theta(y \mid x, z)$ (the paper's letters: in this box $z$ is a passage, not a logit, and $\eta$ the retriever's parameters, not a learning rate), their RAG-Sequence model marginalizes over the top-$k$ passages:
 
 $$
 p(y \mid x) \approx \sum_{z \in R_k(x)} p_\eta(z \mid x)\, p_\theta(y \mid x, z) .

@@ -38,7 +38,7 @@ Notation carried over from earlier modules: tokens $w_1, \dots, w_T$; vocabulary
 
 | Symbol | Meaning |
 |---|---|
-| $M$ | number of merges learned by byte-pair encoding |
+| $M$ | number of merges learned by byte-pair encoding (not Module 5's causal mask, which this page names only in words) |
 | `_` | end-of-word symbol used in the BPE examples |
 | $h_t \in \mathbb{R}^d$ | the transformer's output vector at position $t$ (its last layer), a *contextual embedding* |
 | $\theta_{\text{pre}}$ | parameters after pretraining |

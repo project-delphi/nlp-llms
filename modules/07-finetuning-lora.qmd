@@ -258,7 +258,7 @@ The product $BA$ has the shape of $W_0$, and its rank is at most $r$, because ev
 **Notation.** Three clashes, resolved for this module.
 
 - **$\alpha$.** In Modules 4 and 5, $\alpha$ with position subscripts, as in $\alpha_{t,i}$, is an attention weight. In this module **$\alpha$ with no subscript is LoRA's scaling constant**, a single number. In code it is `lora_alpha`.
-- **$A$ and $B$.** We keep the letters of the LoRA paper because the `peft` library names its tensors `lora_A` and `lora_B`. In this module $B$ is always the LoRA matrix. It is not the beam size of Module 4, and batch size is written out in words.
+- **$A$ and $B$.** We keep the letters of the LoRA paper because the `peft` library names its tensors `lora_A` and `lora_B`. In this module $A$ and $B$ are always the LoRA matrices. $A$ is not Module 5's matrix of attention weights. $B$ is not the batch size of Module 3's code shapes or the beam size of Module 4; batch size is written out in words here.
 - **$r$** is the LoRA rank, a different quantity from the frequency rank in Module 1's Zipf plot.
 :::
 
@@ -481,7 +481,7 @@ All of them share the principle of section 4: freeze the pretrained weights, tra
 
 **In this section:** choose generation settings for a task and name the `generate` arguments that set them.
 
-The fine-tuned model is still a language model: it outputs a distribution over the next token, and something must pick. [Module 3](03-sequence-models.qmd) defined greedy decoding, the temperature $\tau$, top-$k$ and nucleus (top-$p$) sampling; [Module 4](04-seq2seq-attention.qmd) defined beam search with beam size $B$. Nothing new is needed here, only the mapping to the `generate` method:
+The fine-tuned model is still a language model: it outputs a distribution over the next token, and something must pick. [Module 3](03-sequence-models.qmd) defined greedy decoding, the temperature $\tau$, top-$k$ and nucleus (top-$p$) sampling; [Module 4](04-seq2seq-attention.qmd) defined beam search, whose beam size it wrote $B$ (here it is `num_beams`). Nothing new is needed here, only the mapping to the `generate` method:
 
 | Strategy | `generate` arguments |
 |---|---|

@@ -45,7 +45,7 @@ Section 9 and the harness material of section 1 were added on 2026-10-06. To kee
 
 ## Notation for This Module
 
-The workshop notation applies. From [Module 8](08-llm-apis.qmd) we keep the message list, the tool loop, $K_{\max}$ (the limit on model calls) and the functions `execute(call, tools)` and `run_tools`. From [Module 12](12-rlcd-jev.qmd) we keep the costs $\ell_{\text{wrong}}, \ell_{\text{ask}}, \ell_{\text{miss}}, \ell_{\text{esc}}$, the thresholds $\tau_{\text{esc}} \le \tau_{\text{act}}$, Chow's threshold $\lambda^*$, the outcome $o$, and the rule that thresholds are compared with probabilities, never with Jev's `confidence` field.
+The workshop notation applies. From [Module 8](08-llm-apis.qmd) we keep the message list, the tool loop, $K_{\max}$ (the limit on model calls) and the functions `execute(call, tools)` and `run_tools`. From [Module 12](12-rlcd-jev.qmd) we keep the costs $\ell_{\text{wrong}}, \ell_{\text{ask}}, \ell_{\text{miss}}, \ell_{\text{esc}}$, the thresholds $\tau_{\text{esc}} \le \tau_{\text{act}}$, Chow's threshold $\lambda^*$, and the rule that thresholds are compared with probabilities, never with Jev's `confidence` field.
 
 New in this module:
 
@@ -65,9 +65,10 @@ New in this module:
 | $\Delta p$ | the shift in $p_{\text{allow}}$ caused by adding an injected document to the guard's state |
 
 ::: {.callout-important appearance="simple"}
-**Notation.** Two clashes, resolved here.
+**Notation.** Three clashes, resolved here.
 
 - **$\pi$** in Modules 9, 10 and 12 was a trained policy or a decision model. Here $\pi_{\text{LM}}$ is a language model we only prompt; we do not train it.
+- **$o_t$, $a_t$ and $c_t$** are ReAct's observation, action and context. They are not Module 3's output gate, pre-activation and cell state, and $o_t$ is not the outcome $o$ of Modules 11 and 12, which this page does not use.
 - **The guard's probability is $p_{\text{allow}}$ itself.** Module 12 put $\hat{p} = \max(\pi_{\text{yes}}, 1 - \pi_{\text{yes}})$ on its reliability diagrams, the probability of whichever answer was chosen. A guard always proposes the same action ("send"), so the probability that the proposal is right is $p_{\text{allow}}$, even when it is below 0.5. Module 12's thresholds apply to it unchanged.
 :::
 

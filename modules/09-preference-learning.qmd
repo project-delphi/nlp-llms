@@ -42,7 +42,7 @@ lab:
 | $y_{<t}$ | $y_1, \dots, y_{t-1}$ |
 | $s_t$, $a_t$ | state and action at step $t$. For text, $s_t = (x, y_{<t})$ and $a_t = y_t$. This $a_t$ is not the RNN pre-activation of Module 3 |
 | $\pi_\theta(a \mid s)$ | the **policy**: a distribution over actions given the state, with parameters $\theta$. For text it is the language model, $\pi_\theta = P_\theta$ |
-| $r_t$, $R(x, y)$ | reward at step $t$; reward of a complete response. $r$ is not the LoRA rank of Module 7 |
+| $r_t$, $R(x, y)$ | reward at step $t$; reward of a complete response. $r$ is not the LoRA rank of Module 7, and $R$ is not Module 8's limit on retries |
 | $G_t$ | the return from step $t$ onward (the reward-to-go); $G = G_1$ is the return of the whole episode |
 | $J(\theta)$ | expected return, the quantity we maximize |
 | $b_t$ | a **baseline** subtracted from $G_t$ (section 4). Not a bias: no bias vector appears in this module |
