@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "source": "test_notebooks",
+  "env": "mac-m1pro",
+  "env_detail": "macOS-26.6.2-arm64-arm-64bit, Python 3.12.13",
+  "path": "open",
+  "mode": "worked",
+  "settings": {},
+  "evidence": "scripts/test_notebooks.py --record",
+  "runs": [
+    {
+      "notebook": "00-setup",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 2.7,
+      "content_sha": "de4e4e8de2035fc0",
+      "phases": {
+        "generated": 0.0,
+        "setup": 1.6,
+        "checkpoint": 0.0
+      }
+    },
+    {
+      "notebook": "01-text-as-data",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 13.0,
+      "content_sha": "a30bcc4ed6cea7fe",
+      "phases": {
+        "generated": 1.8,
+        "setup": 3.3,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.5,
+        "other": 6.0
+      }
+    },
+    {
+      "notebook": "02-word-vectors",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 31.3,
+      "content_sha": "1a263cb476488a94",
+      "phases": {
+        "generated": 0.0,
+        "setup": 4.9,
+        "other": 24.7,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.0
+      }
+    },
+    {
+      "notebook": "03-sequence-models",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 264.1,
+      "content_sha": "ca6f60cc032b95da",
+      "phases": {
+        "generated": 0.1,
+        "setup": 2.4,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.0,
+        "other": 260.2
+      }
+    },
+    {
+      "notebook": "04-seq2seq-attention",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 757.9,
+      "content_sha": "d2b3206e03025d38",
+      "phases": {
+        "generated": 0.1,
+        "setup": 2.9,
+        "other": 749.8,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 4.0
+      }
+    },
+    {
+      "notebook": "05-transformer-from-scratch",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 154.6,
+      "content_sha": "3bf87e65364e4c73",
+      "phases": {
+        "generated": 0.1,
+        "setup": 2.6,
+        "other": 150.3,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.0
+      }
+    },
+    {
+      "notebook": "06-pretraining-huggingface",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 52.6,
+      "content_sha": "21e94fdaf73a7b84",
+      "phases": {
+        "generated": 0.1,
+        "setup": 20.5,
+        "other": 27.7,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.9
+      }
+    },
+    {
+      "notebook": "07-finetuning-lora",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 590.3,
+      "content_sha": "181d81ee8b921c5c",
+      "phases": {
+        "generated": 0.1,
+        "setup": 301.6,
+        "other": 279.6,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 5.3
+      }
+    },
+    {
+      "notebook": "08-llm-apis",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 140.1,
+      "content_sha": "1650e91afee5f8f7",
+      "phases": {
+        "generated": 0.0,
+        "setup": 16.2,
+        "other": 120.2,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.0
+      }
+    },
+    {
+      "notebook": "09-preference-learning",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 90.1,
+      "content_sha": "5d88a5e70d08d562",
+      "phases": {
+        "generated": 0.1,
+        "setup": 2.8,
+        "other": 84.5,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 1.1
+      }
+    },
+    {
+      "notebook": "10-rlhf",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 33.7,
+      "content_sha": "7d5d537fe8ed1d83",
+      "phases": {
+        "generated": 0.1,
+        "setup": 10.8,
+        "other": 18.2,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 2.5
+      }
+    },
+    {
+      "notebook": "11-calibration",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 338.1,
+      "content_sha": "be5082ca2a7281c9",
+      "phases": {
+        "generated": 0.1,
+        "setup": 6.2,
+        "other": 327.7,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.3
+      }
+    },
+    {
+      "notebook": "12-rlcd-jev",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 16.4,
+      "content_sha": "758ffe3cf1d59612",
+      "phases": {
+        "generated": 0.1,
+        "setup": 6.4,
+        "other": 7.9,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.4
+      }
+    },
+    {
+      "notebook": "13-rag",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 111.3,
+      "content_sha": "bfad41b46b81f4ea",
+      "phases": {
+        "generated": 0.1,
+        "setup": 15.6,
+        "other": 90.6,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 1.4
+      }
+    },
+    {
+      "notebook": "14-agents",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 222.6,
+      "content_sha": "23546b551a43c6e5",
+      "phases": {
+        "generated": 0.1,
+        "setup": 16.0,
+        "other": 195.6,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 7.2
+      }
+    },
+    {
+      "notebook": "15-capstone",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 832.0,
+      "content_sha": "1efaf7608d1b9a7d",
+      "phases": {
+        "generated": 0.1,
+        "other": 828.2,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.1
+      }
+    }
+  ]
+}
