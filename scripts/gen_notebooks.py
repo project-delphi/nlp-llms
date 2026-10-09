@@ -107,6 +107,24 @@ def generated_code_cell(cell_id: str, source: str, form: bool = False):
     return cell
 
 
+def harness_cell_source(v: dict, e: dict, body: list) -> str:
+    """The harness cell for a notebook whose own cells are `body`."""
+    fallback = e.get("readiness", {}).get("fallback", {})
+    kind = fallback.get("kind", "none")
+    # What each path can show, and what runs without keys: one source, _variables.yml. The
+    # open path says what this lab runs without keys, which is a Hub model only for some.
+    paths = {**v["readiness"]["paths"], "open": v["readiness"]["open_ran"][kind]}
+    return harness.harness_source(
+        e["slug"],
+        run_records.sha_of_cells(body),
+        harness.exercises_of(body),
+        hints=harness.hints_of(body),
+        paths={k: text[0].lower() + text[1:] for k, text in paths.items()},
+        fallback_note=fallback.get("note") if kind != "none" else None,
+        cpu_only=fallback.get("cpu_only", False),
+    )
+
+
 def normalize(nb, v: dict, e: dict, nxt: dict | None):
     owned = (HEADER_ID, FOOTER_ID, *harness.GENERATED_CODE_IDS)
     body = [c for c in nb.cells if c.get("id") not in owned]
@@ -118,8 +136,7 @@ def normalize(nb, v: dict, e: dict, nxt: dict | None):
         if cell.cell_type == "code":
             cell["outputs"] = []
             cell["execution_count"] = None
-    sha = run_records.sha_of_cells(body)
-    harness_cell = harness.harness_source(e["slug"], sha, harness.exercises_of(body))
+    harness_cell = harness_cell_source(v, e, body)
     nb.cells = [
         generated_cell(HEADER_ID, header_source(v, e)),
         generated_code_cell(harness.HARNESS_ID, harness_cell, form=True),

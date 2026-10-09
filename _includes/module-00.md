@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Before Day 1 · Pre-work](/setup.qmd#module-0){.module-day} [Module 0]{.module-num} [60 minutes, pre-work; optional clinic on Day 1, 08:00–09:00]{.module-time}
+[Before Day 1 · Pre-Work](/setup.qmd#module-0){.module-day} [Module 0]{.module-num} [60 minutes, pre-work; optional clinic on Day 1, 08:00–09:00]{.module-time}
 :::
 
 ::: {.module-summary}
@@ -26,7 +26,7 @@ Accounts and cost
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
@@ -36,7 +36,7 @@ In this module you will:
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
 - Your own laptop, set up as on the [Before Day 1](/prepare.qmd) page.
 :::

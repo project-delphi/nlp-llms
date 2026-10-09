@@ -3,7 +3,7 @@
 Two jobs in the decision set must be done by people, not by a language model or an agent (specification: `briefs/11-calibration.md`, "How the labels are made"):
 
 1. **Write and label 80 hand-written items** (20 in `dev`, 60 in `test`) that cover phrasing the templates cannot.
-2. **Audit 60 template items** by labelling them blind and comparing with the rule engine.
+2. **Audit 60 template items** by labeling them blind and comparing with the rule engine.
 
 Until both are done the set's status is `v1-template-only` (`data/decisions_v1_stats.json`), and the 80 slots hold extra template items. Estimated effort: 2 to 3 hours per person.
 
@@ -16,10 +16,10 @@ Until both are done the set's status is `v1-template-only` (`data/decisions_v1_s
 
 ## Who labels what
 
-The specification asks for each hand item to be labelled by **two people who did not write it and do not see the author's intended answer**. With three people that is easy: the author writes, the other two label. **If only two people are available** (the proposal is Romeo and one instructor), the specification cannot be met as written; choose one of these and record the choice in `data/README.md`:
+The specification asks for each hand item to be labeled by **two people who did not write it and do not see the author's intended answer**. With three people that is easy: the author writes, the other two label. **If only two people are available** (the proposal is Romeo and one instructor), the specification cannot be met as written; choose one of these and record the choice in `data/README.md`:
 
 - (a) Each person writes 40 items; the other labels them blind; the author labels their own items only after at least a week, from the blind sheet, without their drafts open. Report agreement as "author (delayed) vs. second annotator".
-- (b) Bring in a third person for labelling only.
+- (b) Bring in a third person for labeling only.
 
 ## Job 1: the 80 hand-written items
 
@@ -51,7 +51,7 @@ What the templates cannot do, for example: indirect requests ("my manager says I
 
 ### Step 1: the authors' drafts
 
-Each author writes one JSON object per line in a file of their own (for example `drafts_romeo.jsonl`; concatenate them into `drafts.jsonl` for the next steps). Do not commit drafts with intended labels until both annotators have labelled. The shape of one line, shown with placeholders (this is a format illustration, not an item):
+Each author writes one JSON object per line in a file of their own (for example `drafts_romeo.jsonl`; concatenate them into `drafts.jsonl` for the next steps). Do not commit drafts with intended labels until both annotators have labeled. The shape of one line, shown with placeholders (this is a format illustration, not an item):
 
 ```json
 {"hand_id": "h-romeo-001", "author": "<your name>", "split": "dev", "family": "policy",
@@ -73,7 +73,7 @@ Each author writes one JSON object per line in a file of their own (for example 
 - `options` is `["yes", "no"]` for `policy` and `["retrieve", "calculate", "send_email", "ask_user", "escalate"]` for `route`, in that order.
 - `rule` and `rationale` never reach a model; they are for error analysis.
 
-### Step 2: blind labelling
+### Step 2: blind labeling
 
 ```bash
 python data/decisions_annotation.py hand-sheet drafts.jsonl --out hand_sheet.jsonl

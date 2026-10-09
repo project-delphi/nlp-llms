@@ -1,9 +1,9 @@
 ---
 title: "Setup"
-subtitle: "Ten minutes, before Day 1"
+subtitle: "Ten Minutes, Before Day 1"
 ---
 
-## 1. Open the setup notebook
+## 1. Open the Setup Notebook
 
 All labs run in [Google Colab](https://colab.research.google.com/), so there is nothing to install. You need a Google account.
 
@@ -11,7 +11,7 @@ All labs run in [Google Colab](https://colab.research.google.com/), so there is 
 
 For the labs that need a GPU, switch one on: **Runtime → Change runtime type → T4 GPU**. Labs 1, 9, 11 and 12 run on a CPU. Every lab is designed for the free tier; the [readiness page](readiness.qmd) says which ones have been timed on it.
 
-## 2. Add API keys (optional)
+## 2. Add API Keys (optional)
 
 Some labs call commercial APIs. Keys are optional: with none set, those labs run on a small open model from Hugging Face, and you can still complete every exercise.
 
@@ -33,16 +33,16 @@ Each API lab states its approximate cost for one full run.
 Install TypeSafe's SDK only under its official name, `typesafe-sdk`; the labs install it for you. Several lookalike packages on PyPI, such as `typesafe-ai` and `jev`, are not published by TypeSafe.
 :::
 
-## 3. Check the prerequisites
+## 3. Check the Prerequisites
 
 Take the 15-minute [entry check](prepare.qmd#entry-check) on the Before Day 1 page: it tells you, area by area, whether to review anything before Day 1 and which sections of which free resources to read.
 
-## 4. Module 0: optional pre-work {#module-0}
+## 4. Module 0: Optional Pre-Work {#module-0}
 
 [Module 0 · {{< var modules.m00.title >}}](modules/00-coding-agents.qmd) is optional pre-work: do it at home, before Day 1. If you get stuck, bring your laptop to the drop-in clinic from 08:00 to 09:00 on Day 1, before the welcome; it is optional too. Unlike the labs, Module 0 runs on your own laptop, not in Colab: you install a terminal coding agent, git and the GitHub CLI, so you need permission to install software and a GitHub account. Its page walks you through the installs. Nothing later in the workshop depends on it.
 
 
-## Running locally (optional)
+## Running Locally (optional)
 
 Colab is the supported environment. To run the notebooks on your own machine, install [uv](https://docs.astral.sh/uv/) and run:
 

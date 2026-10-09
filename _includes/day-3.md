@@ -9,7 +9,7 @@
 ::: {.module-card-body}
 [Module 8]{.eyebrow}
 
-[LLMs through APIs](modules/08-llm-apis.qmd){.module-card-title}
+[LLMs Through APIs](modules/08-llm-apis.qmd){.module-card-title}
 
 OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation.
 
@@ -27,7 +27,7 @@ OpenAI and Claude side by side: prompting, structured output, tool use, cost and
 ::: {.module-card-body}
 [Module 9]{.eyebrow}
 
-[Reinforcement and preference learning](modules/09-preference-learning.qmd){.module-card-title}
+[Reinforcement and Preference Learning](modules/09-preference-learning.qmd){.module-card-title}
 
 Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons.
 

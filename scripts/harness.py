@@ -14,6 +14,7 @@ checked the participant's code or the reference. See CONTRIBUTING.md.
 from __future__ import annotations
 
 import ast
+import re
 
 # Environment variables that put a lab on its offline test path (publish.yml's notebooks
 # job), and the other settings a run record may carry. Nothing else from the environment
@@ -59,7 +60,12 @@ from IPython import get_ipython as _get_ipython
 _NOTEBOOK = "__NOTEBOOK__"
 _CONTENT_SHA = "__CONTENT_SHA__"
 _EXERCISES = __EXERCISES__
+_HINTS = __HINTS__  # exercises with a folded Hint cell above their TODO cell
+_PATHS = __PATHS__
+_FALLBACK_NOTE = __FALLBACK_NOTE__
+_FALLBACK_CPU_ONLY = __CPU_ONLY__  # the note describes the run a CPU runtime switches to
 _RECORDED_SETTINGS = __SETTINGS__
+_OFFLINE_FLAGS = __OFFLINE__
 _FALLBACK_MARKERS = __MARKERS__
 _RECORD_PACKAGES = (
     "torch", "transformers", "numpy", "scikit-learn", "peft", "datasets", "openai",
@@ -211,6 +217,8 @@ class _Workshop:
                 " its cell, then rerun this one. To go on without it:"
                 f" workshop.use_reference({n!r})"
             )
+            if n in _HINTS:
+                print(f"[workshop] Stuck? Open the folded Hint above TODO {n} first.")
         elif whose == "the REFERENCE solution":
             print(
                 f"[workshop] Checkpoint {label} failed on the reference solution: a problem"
@@ -218,9 +226,11 @@ class _Workshop:
             )
         else:
             print(
-                f"[workshop] Checkpoint {label} failed on {whose}. Fix TODO {n}, or go on"
-                f" with workshop.use_reference({n!r})."
+                f"[workshop] Checkpoint {label} failed on {whose}. Read the assertion above,"
+                f" fix TODO {n}, or go on with workshop.use_reference({n!r})."
             )
+            if n in _HINTS:
+                print(f"[workshop] The folded Hint above TODO {n} says what to check.")
 
     def _verify_begin(self, n):
         """Test-only (scripts/test_notebooks.py --verify-checkpoints): bind exercise n's
@@ -259,6 +269,16 @@ class _Workshop:
                 groups["the reference"].append(label)
         mode = "WORKED EXAMPLE: reference solutions" if self.worked else "your code"
         print(f"{_NOTEBOOK}, run with {mode}.")
+        path = self.path()
+        # _PATHS comes from readiness.paths in _variables.yml; the offline entry says that
+        # such numbers check the code, not a model.
+        print(f"  What ran: {_PATHS[path]}.")
+        # The labs choose their shorter CPU run from DEVICE, and Labs 7 and 10 let a participant
+        # force the full run with FAST = False: a CPU-only note describes only the shorter run.
+        ns = _get_ipython().user_ns
+        short = ns["FAST"] if "FAST" in ns else not str(ns.get("DEVICE", "")).startswith("cuda")
+        if path == "open" and _FALLBACK_NOTE and (short or not _FALLBACK_CPU_ONLY):
+            print(f"  Read the numbers with this in mind: {_FALLBACK_NOTE}.")
         lines = {
             "your code": "Checkpoints passed on your code",
             "the reference": "Checkpoints passed on a reference solution",
@@ -269,6 +289,15 @@ class _Workshop:
             print(f"  {lines[group]}: {', '.join(labels) or 'none'}")
         if self.worked:
             print("  A worked-example run shows how the lab goes, not that you did it.")
+
+    def path(self):
+        """offline, keyed or open: the same rule as scripts/add_run_record.py's path_of."""
+        ns = _get_ipython().user_ns
+        if self.fallbacks or any(_os.environ.get(flag) for flag in _OFFLINE_FLAGS):
+            return "offline"
+        if ns.get("PROVIDER") in ("openai", "anthropic") or ns.get("JEV_PATH") == "keyed":
+            return "keyed"
+        return "open"
 
     def run_record(self):
         """A run record for runs/ (see runs/README.md): paste it into
@@ -404,11 +433,43 @@ def exercises_of(cells: list) -> dict:
     return {n: tuple(names) for n, names in out.items()}
 
 
-def harness_source(slug: str, content_sha: str, exercises: dict) -> str:
+# The summary line of a hint cell: `<summary>Hint for TODO 3</summary>`.
+HINT_SUMMARY = re.compile(r"<summary>\s*Hint for TODO (\d+)\s*</summary>")
+
+
+def hints_of(cells: list) -> list:
+    """The exercise numbers that have a hint: a markdown cell tagged `hint`, folded in a
+    <details> block whose summary reads "Hint for TODO N"."""
+    out = set()
+    for cell in cells:
+        if cell.get("cell_type") != "markdown" or "hint" not in cell.get("metadata", {}).get(
+            "tags", []
+        ):
+            continue
+        source = "".join(cell["source"]) if isinstance(cell["source"], list) else cell["source"]
+        if found := HINT_SUMMARY.search(source):
+            out.add(int(found.group(1)))
+    return sorted(out)
+
+
+def harness_source(
+    slug: str,
+    content_sha: str,
+    exercises: dict,
+    hints: list | None = None,
+    paths: dict | None = None,
+    fallback_note: str | None = None,
+    cpu_only: bool = False,
+) -> str:
     return (
         HARNESS.replace("__NOTEBOOK__", slug)
         .replace("__CONTENT_SHA__", content_sha)
         .replace("__EXERCISES__", repr(dict(sorted(exercises.items(), key=lambda kv: str(kv[0])))))
+        .replace("__HINTS__", repr(set(hints)) if hints else "set()")
+        .replace("__PATHS__", repr(paths or {p: p for p in ("offline", "open", "keyed")}))
+        .replace("__FALLBACK_NOTE__", repr(fallback_note))
+        .replace("__CPU_ONLY__", repr(bool(cpu_only)))
         .replace("__SETTINGS__", repr(RECORDED_SETTINGS))
+        .replace("__OFFLINE__", repr(OFFLINE_FLAGS))
         .replace("__MARKERS__", repr(FALLBACK_MARKERS))
     )

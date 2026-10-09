@@ -182,8 +182,8 @@ class Clock(unittest.TestCase):
     def test_one_grid_per_run_of_days_on_a_clock(self):
         groups = [(name, [d["n"] for d in days]) for name, days in g.clock_groups(V)]
         self.assertEqual(groups, [("standard", [1]), ("long", [2, 3, 4, 5])])
-        self.assertIn("## Day 1 · 95-minute modules", g.schedule(V))
-        self.assertIn("## Days 2–5 · 120-minute modules", g.schedule(V))
+        self.assertIn("## Day 1 · 95-Minute Modules", g.schedule(V))
+        self.assertIn("## Days 2–5 · 120-Minute Modules", g.schedule(V))
 
     def test_facts_take_their_ranges_from_the_clocks(self):
         facts = g.facts_strip(V)

@@ -8,14 +8,14 @@
 - **Lab:** [open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/11-calibration.ipynb), a checkpoint after each exercise; about 7 minutes of compute (Google Colab, CPU runtime, planned).
 - **When something goes wrong:** stuck on exercise N, run its folded Solution cell, then `workshop.use_reference(N)`, and go on. Without keys, an open model runs in place of the commercial one.
 
-**11:30–12:25 · 13:25–14:30 · Module 12 · [Calibrated decisions: RLCD and Jev](modules/12-rlcd-jev.qmd)**\
+**11:30–12:25 · 13:25–14:30 · Module 12 · [Calibrated Decisions: RLCD and Jev](modules/12-rlcd-jev.qmd)**\
 11:30 briefing · 13:25 lab · 14:20 debrief
 
 - **In the room:** the [live plan](modules/12-rlcd-jev.qmd#live-plan), 45 minutes of exposition and 10 of checks, demos and predictions.
 - **Lab:** [open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb), a checkpoint after each exercise; about 3 minutes of compute (Google Colab, CPU runtime, planned).
 - **When something goes wrong:** stuck on exercise N, run its folded Solution cell, then `workshop.use_reference(N)`, and go on. Without keys, a toy model stands in for the real system; its numbers only illustrate.
 
-**14:45–16:45 · Module 13 · [Retrieval-augmented generation](modules/13-rag.qmd)**\
+**14:45–16:45 · Module 13 · [Retrieval-Augmented Generation](modules/13-rag.qmd)**\
 14:45 briefing · 15:40 lab · 16:35 debrief
 
 - **In the room:** the [live plan](modules/13-rag.qmd#live-plan), 45 minutes of exposition and 10 of checks, demos and predictions.

@@ -2,12 +2,12 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–3 | 1. From your own model to someone else's | — |
-| 3–12 | 2. The message list | Check yourself (2 min) |
-| 12–16 | 3. Prompting patterns | — |
-| 16–24 | 4. Structured output: the schema as a contract | — |
-| 24–34 | 5. Tool calling: a loop you write | Check yourself (3 min) |
-| 34–43 | 6. Cost and latency | Demo (4 min) |
-| 43–49 | 7. Evaluating outputs | Check yourself (2 min) |
-| 49–53 | 8. Failure modes and security | — |
-| 53–55 | 9. A fluent answer carries no confidence signal | — |
+| 0–3 | 1. From Your Own Model to Someone Else's | — |
+| 3–12 | 2. The Message List | Check yourself (2 min) |
+| 12–16 | 3. Prompting Patterns | — |
+| 16–24 | 4. Structured Output: The Schema as a Contract | — |
+| 24–34 | 5. Tool Calling: A Loop You Write | Check yourself (3 min) |
+| 34–43 | 6. Cost and Latency | Demo (4 min) |
+| 43–49 | 7. Evaluating Outputs | Check yourself (2 min) |
+| 49–53 | 8. Failure Modes and Security | — |
+| 53–55 | 9. A Fluent Answer Carries No Confidence Signal | — |

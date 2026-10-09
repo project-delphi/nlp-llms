@@ -3,15 +3,21 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–3 | 1. What Module 9 left open | — |
-| 3–9 | 2. The InstructGPT pipeline | — |
-| 9–19 | 3. The KL-regularized objective | [Check yourself](#chk-kl-collapse) (2 min) |
-| 19–26 | 4. Optimizing it: a per-token penalty and the policy gradient | — |
-| 26–40 | 6. DPO: from the optimal policy to a classification loss | [Check yourself](#chk-dpo-both-fall) (2 min) |
-| 40–55 | 7. Failure modes | [Demo](#demo-kl-dial) (4 min); [Discuss](#discuss-beta) (2 min) |
+| 0–3 | 1. What Module 9 Left Open | — |
+| 3–9 | 2. The InstructGPT Pipeline | — |
+| 9–19 | 3. The KL-Regularized Objective | [Check yourself](#chk-kl-collapse) (2 min) |
+| 19–26 | 4. Optimizing It: A Per-Token Penalty and the Policy Gradient | — |
+| 26–40 | 6. DPO: From the Optimal Policy to a Classification Loss | [Check yourself](#chk-dpo-both-fall) (2 min) |
+| 40–55 | 7. Failure Modes | [Demo](#demo-kl-dial) (4 min); [Discuss](#discuss-beta) (2 min) |
 | **55** | **Total** | **45 minutes of exposition, 10 of activities** |
 :::
 
-Not taught in the room: *5. PPO in outline*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–4, 6 and 7, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 3; Exercise 2: section 4; Exercise 3: sections 3 and 4; Exercise 4: sections 1 and 7; Exercise 5: section 6.
+
+**Read later** · Section 5, *PPO in Outline* (**Reference**); the collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

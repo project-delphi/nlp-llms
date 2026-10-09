@@ -195,7 +195,7 @@ class Site(unittest.TestCase):
             ],
         )
         footer = [item["href"] for item in self.quarto["website"]["page-footer"]["center"]]
-        self.assertEqual(footer, ["setup.qmd", "faq.qmd", "readiness.qmd"])
+        self.assertEqual(footer, ["setup.qmd", "faq.qmd", "glossary.qmd", "readiness.qmd"])
 
     def test_days_menu(self):
         left = self.quarto["website"]["navbar"]["left"]

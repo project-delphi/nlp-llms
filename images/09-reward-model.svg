@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 486" width="760" height="486" role="img" aria-labelledby="t d">
+  <title id="t">The reward model and its pairwise loss</title>
+  <desc id="d">Left: a prompt box x, with the preferred response y_w above it (accent outline and a check mark) and the rejected response y_l below it (gray). The prompt joins each response, and each pair, (x, y_w) and (x, y_l), enters its own copy of one box r_phi; a dashed line between the two copies is labeled shared parameters phi. The two outputs, r_w = r_phi(x, y_w) and r_l = r_phi(x, y_l), meet at a circled minus sign, r_w with a plus and r_l with a minus. The difference Delta = r_w - r_l passes through a box sigma, giving P(y_w preferred) = sigma(r_w - r_l), and then the loss box: loss = -log sigma(r_w - r_l). An inset at the bottom right plots -log sigma(Delta) against Delta from -4 to 4: it falls toward 0 for large Delta, and the point at Delta = 0 is marked log 2.</desc>
+  <style>
+    text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; fill: #1f2933; }
+    .m { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+    .s { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .i { font-style: italic; }
+    .b { font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .note { font-size: 13.5px; fill: #52606d; }
+    .acc { fill: #b3541e; }
+    .box { fill: #eef2f6; stroke: #16324f; stroke-width: 1.5; }
+    .abox { fill: #f8e9de; stroke: #b3541e; stroke-width: 1.5; }
+    .dim { fill: #f4f6f9; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .ln { fill: none; stroke: #16324f; stroke-width: 1.5; }
+    .aln { fill: none; stroke: #b3541e; stroke-width: 2.5; }
+    .dln { fill: none; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .rule { fill: none; stroke: #c5ced8; stroke-width: 1.5; }
+    .op { fill: #ffffff; stroke: #16324f; stroke-width: 1.5; }
+    .panel { fill: #fafbfc; stroke: #c5ced8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+  </defs>
+  <rect width="760" height="486" rx="8" fill="#ffffff"/>
+  <rect class="abox" x="28" y="64" width="66" height="40" rx="6"/>
+  <text x="61" y="90" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">y</tspan><tspan dy="4.6" font-size="12.9" class="i">w</tspan></text>
+  <text x="61" y="56" text-anchor="middle" class="note acc">preferred</text>
+  <circle cx="94" cy="64" r="9" fill="#ffffff" stroke="#b3541e" stroke-width="1.5"/>
+  <path class="aln" d="M89,64 l3.5,4 l6,-7.5" style="stroke-width:2"/>
+  <rect class="box" x="28" y="148" width="66" height="40" rx="6"/>
+  <text x="61" y="174" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">x</tspan></text>
+  <text x="61" y="206" text-anchor="middle" class="note">prompt</text>
+  <rect x="28" y="232" width="66" height="40" rx="6" fill="#f4f6f9" stroke="#9aa5b1" stroke-width="1.5"/>
+  <text x="61" y="258" text-anchor="middle" class="m note" style="font-size:19px"><tspan class="i">y</tspan><tspan dy="4.6" font-size="12.9" class="i">l</tspan></text>
+  <text x="61" y="290" text-anchor="middle" class="note">rejected</text>
+  <line class="ln" x1="94" y1="168" x2="160" y2="168"/>
+  <line class="ln" x1="160" y1="94" x2="160" y2="242"/>
+  <line class="aln" x1="94" y1="84" x2="160" y2="84" style="stroke-width:1.5"/>
+  <line class="ln" x1="94" y1="252" x2="160" y2="252" style="stroke:#9aa5b1"/>
+  <circle cx="160" cy="84" r="4" fill="#16324f"/>
+  <path class="ln" d="M160,84 V94"/>
+  <circle cx="160" cy="252" r="4" fill="#16324f"/>
+  <path class="ln" d="M160,252 V242"/>
+  <line class="ln" x1="160" y1="84" x2="260" y2="84" marker-end="url(#a)"/>
+  <line class="ln" x1="160" y1="252" x2="260" y2="252" marker-end="url(#a)"/>
+  <text x="211" y="75" text-anchor="middle" class="m" style="font-size:15px"><tspan>(</tspan><tspan class="i">x</tspan><tspan>, </tspan><tspan class="i">y</tspan><tspan dy="3.6" font-size="10.2" class="i">w</tspan><tspan dy="-3.6">)</tspan></text>
+  <text x="211" y="243" text-anchor="middle" class="m" style="font-size:15px"><tspan>(</tspan><tspan class="i">x</tspan><tspan>, </tspan><tspan class="i">y</tspan><tspan dy="3.6" font-size="10.2" class="i">l</tspan><tspan dy="-3.6">)</tspan></text>
+  <rect class="box" x="262" y="62" width="86" height="44" rx="6"/>
+  <text x="305" y="91" text-anchor="middle" class="m" style="font-size:21px"><tspan class="i">r</tspan><tspan dy="5.0" font-size="14.3" class="i">φ</tspan></text>
+  <rect class="box" x="262" y="230" width="86" height="44" rx="6"/>
+  <text x="305" y="259" text-anchor="middle" class="m" style="font-size:21px"><tspan class="i">r</tspan><tspan dy="5.0" font-size="14.3" class="i">φ</tspan></text>
+  <line class="dln" x1="305" y1="106" x2="305" y2="230"/>
+  <text x="315" y="165" text-anchor="start" class="note">shared</text>
+  <text x="315" y="183" text-anchor="start" class="m note" style="font-size:14px"><tspan class="s">parameters </tspan><tspan class="i">φ</tspan></text>
+  <path class="ln" d="M348,84 H498 V152" marker-end="url(#a)"/>
+  <path class="ln" d="M348,252 H498 V184" marker-end="url(#a)"/>
+  <text x="358" y="75" text-anchor="start" class="m" style="font-size:15px"><tspan class="i">r</tspan><tspan dy="3.6" font-size="10.2" class="i">w</tspan><tspan dy="-3.6"> = </tspan><tspan class="i">r</tspan><tspan dy="3.6" font-size="10.2" class="i">φ</tspan><tspan dy="-3.6">(</tspan><tspan class="i">x</tspan><tspan>, </tspan><tspan class="i">y</tspan><tspan dy="3.6" font-size="10.2" class="i">w</tspan><tspan dy="-3.6">)</tspan></text>
+  <text x="358" y="274" text-anchor="start" class="m" style="font-size:15px"><tspan class="i">r</tspan><tspan dy="3.6" font-size="10.2" class="i">l</tspan><tspan dy="-3.6"> = </tspan><tspan class="i">r</tspan><tspan dy="3.6" font-size="10.2" class="i">φ</tspan><tspan dy="-3.6">(</tspan><tspan class="i">x</tspan><tspan>, </tspan><tspan class="i">y</tspan><tspan dy="3.6" font-size="10.2" class="i">l</tspan><tspan dy="-3.6">)</tspan></text>
+  <text x="508" y="146" text-anchor="start" class="b" style="font-size:15px">+</text>
+  <text x="508" y="202" text-anchor="start" class="b" style="font-size:15px">−</text>
+  <circle class="op" cx="498" cy="168" r="14"/>
+  <line class="ln" x1="492" y1="168" x2="504" y2="168"/>
+  <line class="ln" x1="512" y1="168" x2="586" y2="168" marker-end="url(#a)"/>
+  <text x="550" y="159" text-anchor="middle" class="m" style="font-size:16px"><tspan>Δ</tspan></text>
+  <rect class="op" x="588" y="150" width="44" height="36" rx="6"/>
+  <text x="610" y="174" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">σ</tspan></text>
+  <line class="ln" x1="610" y1="186" x2="610" y2="222" marker-end="url(#a)"/>
+  <text x="610" y="244" text-anchor="middle" class="m" style="font-size:16px"><tspan class="i">P</tspan><tspan>(</tspan><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9" class="i">w</tspan><tspan dy="-3.8" class="s"> preferred</tspan><tspan>)</tspan></text>
+  <text x="610" y="266" text-anchor="middle" class="m" style="font-size:16px"><tspan>= </tspan><tspan class="i">σ</tspan><tspan>(</tspan><tspan class="i">r</tspan><tspan dy="3.8" font-size="10.9" class="i">w</tspan><tspan dy="-3.8"> − </tspan><tspan class="i">r</tspan><tspan dy="3.8" font-size="10.9" class="i">l</tspan><tspan dy="-3.8">)</tspan></text>
+  <line class="ln" x1="610" y1="274" x2="610" y2="296" marker-end="url(#a)"/>
+  <rect class="abox" x="512" y="298" width="196" height="36" rx="6"/>
+  <text x="610" y="322" text-anchor="middle" class="m" style="font-size:16px"><tspan class="s">loss</tspan><tspan> = −log </tspan><tspan class="i">σ</tspan><tspan>(</tspan><tspan class="i">r</tspan><tspan dy="3.8" font-size="10.9" class="i">w</tspan><tspan dy="-3.8"> − </tspan><tspan class="i">r</tspan><tspan dy="3.8" font-size="10.9" class="i">l</tspan><tspan dy="-3.8">)</tspan></text>
+  <rect class="panel" x="514" y="358" width="236" height="124" rx="6"/>
+  <text x="522" y="378" text-anchor="start" class="m" style="font-size:14px"><tspan>−log </tspan><tspan class="i">σ</tspan><tspan>(Δ)</tspan></text>
+  <line class="ln" x1="566" y1="446" x2="736" y2="446" style="stroke:#52606d;stroke-width:1"/>
+  <line class="rule" x1="651" y1="386" x2="651" y2="446" style="stroke-width:1"/>
+  <path class="aln" d="M566.0,388.6 L568.1,390.0 L570.2,391.4 L572.4,392.8 L574.5,394.2 L576.6,395.6 L578.8,397.0 L580.9,398.3 L583.0,399.7 L585.1,401.1 L587.2,402.4 L589.4,403.8 L591.5,405.2 L593.6,406.5 L595.8,407.8 L597.9,409.2 L600.0,410.5 L602.1,411.8 L604.2,413.1 L606.4,414.3 L608.5,415.6 L610.6,416.9 L612.8,418.1 L614.9,419.3 L617.0,420.5 L619.1,421.7 L621.2,422.9 L623.4,424.0 L625.5,425.1 L627.6,426.2 L629.8,427.2 L631.9,428.3 L634.0,429.3 L636.1,430.2 L638.2,431.2 L640.4,432.1 L642.5,433.0 L644.6,433.8 L646.8,434.6 L648.9,435.4 L651.0,436.1 L653.1,436.8 L655.2,437.5 L657.4,438.1 L659.5,438.7 L661.6,439.2 L663.8,439.8 L665.9,440.2 L668.0,440.7 L670.1,441.1 L672.2,441.5 L674.4,441.9 L676.5,442.2 L678.6,442.6 L680.8,442.9 L682.9,443.1 L685.0,443.4 L687.1,443.6 L689.2,443.8 L691.4,444.0 L693.5,444.2 L695.6,444.3 L697.8,444.5 L699.9,444.6 L702.0,444.8 L704.1,444.9 L706.2,445.0 L708.4,445.1 L710.5,445.2 L712.6,445.2 L714.8,445.3 L716.9,445.4 L719.0,445.4 L721.1,445.5 L723.2,445.5 L725.4,445.6 L727.5,445.6 L729.6,445.7 L731.8,445.7 L733.9,445.7 L736.0,445.7" style="stroke-width:2"/>
+  <circle cx="651" cy="436.1" r="3.6" fill="#16324f"/>
+  <text x="659" y="429.1" text-anchor="start" class="note" style="font-size:12px">log 2 at Δ = 0</text>
+  <text x="566" y="461" text-anchor="middle" class="note" style="font-size:11.5px">−4</text>
+  <text x="651" y="461" text-anchor="middle" class="note" style="font-size:11.5px">0</text>
+  <text x="736" y="461" text-anchor="middle" class="note" style="font-size:11.5px">4</text>
+  <text x="651" y="474" text-anchor="middle" class="note i" style="font-size:12px">Δ</text>
+  <text x="28" y="352" text-anchor="start" class="m" style="font-size:15px"><tspan>Δ = </tspan><tspan class="i">r</tspan><tspan dy="3.6" font-size="10.2" class="i">w</tspan><tspan dy="-3.6"> − </tspan><tspan class="i">r</tspan><tspan dy="3.6" font-size="10.2" class="i">l</tspan><tspan dy="-3.6" class="s">: the gap between the two scores.</tspan></text>
+  <text x="28" y="380" text-anchor="start" class="note">Training lowers the loss by widening the gap:</text>
+  <text x="28" y="400" text-anchor="start" class="note">the winner's score goes up, the loser's goes down.</text>
+  <text x="28" y="428" text-anchor="start" class="note">Adding a constant to both scores changes nothing:</text>
+  <text x="28" y="448" text-anchor="start" class="note">only their difference enters the loss.</text>
+</svg>

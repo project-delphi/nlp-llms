@@ -2,9 +2,9 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–5 | 1. From next-token prediction to transduction | — |
-| 5–13 | 2. The encoder-decoder model | — |
-| 13–19 | 3. The fixed-vector bottleneck | Check yourself (2 min) |
+| 0–5 | 1. From Next-Token Prediction to Transduction | — |
+| 5–13 | 2. The Encoder-Decoder Model | — |
+| 13–19 | 3. The Fixed-Vector Bottleneck | Check yourself (2 min) |
 | 19–35 | 4. Attention | Demo (4 min) |
-| 35–40 | 5. Three score functions | — |
-| 40–45 | 6. Attention as soft alignment | Check yourself (2 min) |
+| 35–40 | 5. Three Score Functions | — |
+| 40–45 | 6. Attention as Soft Alignment | Check yourself (2 min) |

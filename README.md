@@ -10,32 +10,32 @@ A five-day workshop by Genial Labs on the path from traditional NLP to modern LL
 **Workshop site: <https://project-delphi.github.io/nlp-llms/>** · [Intro slides](https://project-delphi.github.io/nlp-llms/welcome.html) · [Schedule](https://project-delphi.github.io/nlp-llms/schedule.html) · [Notebooks](https://project-delphi.github.io/nlp-llms/notebooks.html) · [References](https://project-delphi.github.io/nlp-llms/references.html)
 
 <!-- BEGIN status -->
-> **As of 2026-10-06: not yet ready to teach.** 0 of 15 labs have run end to end, with their current code, on the Colab runtime they are designed for. 7 have run end to end on their real path elsewhere, on another machine or on the CI runner (3 of them only with QUICK settings), and 2 more in part. On the GitHub CPU runner (newest run of each notebook, 2026-10-06), 16 of 16 notebooks passed; 9 of the passing runs used test doubles, which check that the code runs, not what the models do. 8 of 11 pieces of blocking work are open. See the [readiness page](https://project-delphi.github.io/nlp-llms/readiness.html).
+> **As of 2026-10-09: not yet ready to teach.** 0 of 15 labs have run end to end, with their current code, on the Colab runtime they are designed for. 15 have run end to end on their real path elsewhere, on another machine or on the CI runner, and 0 more in part. On the GitHub CPU runner (newest run of each notebook, 2026-10-06), 16 of 16 notebooks passed; 9 of the passing runs used test doubles, which check that the code runs, not what the models do. 8 of 11 pieces of blocking work are open. See the [readiness page](https://project-delphi.github.io/nlp-llms/readiness.html).
 <!-- END status -->
 
-## Who it is for
+## Who It Is For
 
 Machine learning practitioners who are comfortable with Python, NumPy and basic ML, and have some PyTorch. API keys are optional: every lab that uses a commercial API also runs on a free open model.
 
-## The modules
+## The Modules
 
 <!-- BEGIN modules -->
 | # | Day | Module | Lab |
 |---|---|---|---|
-| 0 | Pre-work | [Coding agents in the terminal](https://project-delphi.github.io/nlp-llms/modules/00-coding-agents.html) | No notebook: runs in your terminal |
-| 1 | 1 | [Text as data](https://project-delphi.github.io/nlp-llms/modules/01-text-as-data.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/01-text-as-data.ipynb) |
-| 2 | 1 | [Word vectors and neural networks](https://project-delphi.github.io/nlp-llms/modules/02-word-vectors.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/02-word-vectors.ipynb) |
-| 3 | 1 | [Sequence models](https://project-delphi.github.io/nlp-llms/modules/03-sequence-models.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/03-sequence-models.ipynb) |
-| 4 | 1 | [Seq2seq and attention](https://project-delphi.github.io/nlp-llms/modules/04-seq2seq-attention.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/04-seq2seq-attention.ipynb) |
-| 5 | 2 | [The transformer](https://project-delphi.github.io/nlp-llms/modules/05-transformer-from-scratch.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb) |
-| 6 | 2 | [Pretraining and the Hugging Face stack](https://project-delphi.github.io/nlp-llms/modules/06-pretraining-huggingface.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb) |
-| 7 | 2 | [Fine-tuning and LoRA](https://project-delphi.github.io/nlp-llms/modules/07-finetuning-lora.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb) |
-| 8 | 3 | [LLMs through APIs](https://project-delphi.github.io/nlp-llms/modules/08-llm-apis.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/08-llm-apis.ipynb) |
-| 9 | 3 | [Reinforcement and preference learning](https://project-delphi.github.io/nlp-llms/modules/09-preference-learning.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/09-preference-learning.ipynb) |
+| 0 | Pre-work | [Coding Agents in the Terminal](https://project-delphi.github.io/nlp-llms/modules/00-coding-agents.html) | No notebook: runs in your terminal |
+| 1 | 1 | [Text as Data](https://project-delphi.github.io/nlp-llms/modules/01-text-as-data.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/01-text-as-data.ipynb) |
+| 2 | 1 | [Word Vectors and Neural Networks](https://project-delphi.github.io/nlp-llms/modules/02-word-vectors.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/02-word-vectors.ipynb) |
+| 3 | 1 | [Sequence Models](https://project-delphi.github.io/nlp-llms/modules/03-sequence-models.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/03-sequence-models.ipynb) |
+| 4 | 1 | [Seq2seq and Attention](https://project-delphi.github.io/nlp-llms/modules/04-seq2seq-attention.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/04-seq2seq-attention.ipynb) |
+| 5 | 2 | [The Transformer](https://project-delphi.github.io/nlp-llms/modules/05-transformer-from-scratch.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb) |
+| 6 | 2 | [Pretraining and the Hugging Face Stack](https://project-delphi.github.io/nlp-llms/modules/06-pretraining-huggingface.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb) |
+| 7 | 2 | [Fine-Tuning and LoRA](https://project-delphi.github.io/nlp-llms/modules/07-finetuning-lora.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb) |
+| 8 | 3 | [LLMs Through APIs](https://project-delphi.github.io/nlp-llms/modules/08-llm-apis.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/08-llm-apis.ipynb) |
+| 9 | 3 | [Reinforcement and Preference Learning](https://project-delphi.github.io/nlp-llms/modules/09-preference-learning.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/09-preference-learning.ipynb) |
 | 10 | 3 | [RLHF](https://project-delphi.github.io/nlp-llms/modules/10-rlhf.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/10-rlhf.ipynb) |
 | 11 | 4 | [Calibration](https://project-delphi.github.io/nlp-llms/modules/11-calibration.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/11-calibration.ipynb) |
-| 12 | 4 | [Calibrated decisions: RLCD and Jev](https://project-delphi.github.io/nlp-llms/modules/12-rlcd-jev.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb) |
-| 13 | 4 | [Retrieval-augmented generation](https://project-delphi.github.io/nlp-llms/modules/13-rag.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb) |
+| 12 | 4 | [Calibrated Decisions: RLCD and Jev](https://project-delphi.github.io/nlp-llms/modules/12-rlcd-jev.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb) |
+| 13 | 4 | [Retrieval-Augmented Generation](https://project-delphi.github.io/nlp-llms/modules/13-rag.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb) |
 | 14 | 5 | [Agents](https://project-delphi.github.io/nlp-llms/modules/14-agents.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/14-agents.ipynb) |
 | 15 | 5 | [Capstone](https://project-delphi.github.io/nlp-llms/modules/15-capstone.html) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/15-capstone.ipynb) |
 <!-- END modules -->
@@ -44,16 +44,16 @@ Machine learning practitioners who are comfortable with Python, NumPy and basic 
 | Day | Theme | Modules |
 |---|---|---|
 | Before Day 1 | Pre-work (optional) | 0 |
-| 1 | Foundations: from counts to attention | 1–4 |
-| 2 | Transformers and pretrained models | 5–7 |
-| 3 | Using and aligning LLMs | 8–10 |
-| 4 | Calibration, decisions and retrieval | 11–13 |
-| 5 | Agents and the capstone | 14–15 |
+| 1 | Foundations: From Counts to Attention | 1–4 |
+| 2 | Transformers and Pretrained Models | 5–7 |
+| 3 | Using and Aligning LLMs | 8–10 |
+| 4 | Calibration, Decisions and Retrieval | 11–13 |
+| 5 | Agents and the Capstone | 14–15 |
 
 On Day 1, each module is 95 minutes: 45 minutes of briefing, then 50 of lab. On Days 2 to 5, each module is 120 minutes: 55 minutes of briefing, 55 of lab, then a 10-minute debrief. On Days 2 to 4 the second module breaks for lunch between its briefing and its lab. On Day 5, the capstone build runs on across lunch. The capstone (Module 15) has no briefing: it takes 11:30–12:25, 13:25–14:30 and 14:45–16:45 on Day 5. The [schedule](https://project-delphi.github.io/nlp-llms/schedule.html) has the times.
 <!-- END days -->
 
-## Run it locally
+## Run It Locally
 
 You need [Quarto](https://quarto.org/docs/get-started/) 1.6 or later and [uv](https://docs.astral.sh/uv/).
 
@@ -63,7 +63,7 @@ quarto render                                   # build the site into docs/
 uv run --group notebooks jupyter lab            # work on the labs
 ```
 
-## Regenerating the derived files
+## Regenerating the Derived Files
 
 `_variables.yml` is the single source of truth for module titles, durations, objectives and URLs. After changing it, or after adding a notebook, run:
 
@@ -87,13 +87,13 @@ To start a new lab from the template:
 uv run --group site python scripts/new_notebook.py m03        # add --api for API labs
 ```
 
-## How it deploys
+## How It Deploys
 
 `.github/workflows/publish.yml` regenerates the derived files, fails if they differ from what is committed, lints, tests, renders the site and checks its links. On a push to `main`, or a manual run on `main`, it deploys the site to GitHub Pages at <https://project-delphi.github.io/nlp-llms/>. Pages must be set to deploy from GitHub Actions (Settings → Pages → Source). Forks skip the deploy job.
 
 The same site is mirrored at <https://genial-labs-ai.github.io/nlp-llms/>. The repository `genial-labs-ai/nlp-llms` is a plain copy of this one, not a fork: its `.github/workflows/mirror.yml` fast-forwards `main` from here every four hours, or on a manual run, and then dispatches `publish.yml`, which renders with the `genial-labs` Quarto profile (`_quarto-genial-labs.yml`: the mirror's own `site-url`) and deploys. The mirror skips the notebook, browser and health jobs. Issues and pull requests go here, never to the mirror.
 
-## Repository layout
+## Repository Layout
 
 | Path | What it holds |
 |---|---|

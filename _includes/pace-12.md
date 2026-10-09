@@ -2,10 +2,10 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–3 | 1. What Module 11 left open | — |
-| 3–16 | 2. Two training signals: preference and outcome | Predict (2 min) |
-| 16–31 | 3. Act, ask, escalate: thresholds from costs | Demo (4 min); Check yourself (2 min) |
-| 31–35 | 4. Where a decision model fits: route, guard, verify | — |
-| 35–45 | 5. Case study: what is public, what is reported, what is ours | Check yourself (2 min) |
-| 45–50 | 7. Case study: Jev's interface | — |
-| 50–55 | 8. Case study: probabilities, not `confidence`, on a reliability diagram | — |
+| 0–3 | 1. What Module 11 Left Open | — |
+| 3–16 | 2. Two Training Signals: Preference and Outcome | Predict (2 min) |
+| 16–31 | 3. Act, Ask, Escalate: Thresholds From Costs | Demo (4 min); Check yourself (2 min) |
+| 31–35 | 4. Where a Decision Model Fits: Route, Guard, Verify | — |
+| 35–45 | 5. Case Study: What Is Public, What Is Reported, What Is Ours | Check yourself (2 min) |
+| 45–50 | 7. Case Study: Jev's Interface | — |
+| 50–55 | 8. Case Study: Probabilities, Not `confidence`, on a Reliability Diagram | — |

@@ -112,6 +112,8 @@ class CleaningRules(unittest.TestCase):
         "```{ojs echo=false}\noption_demo = 2\n```\n\n"
         "```python\nkept_code = 3\n# shape {B, T, d}\n```\n\n"
         "### 2.1 A subsection {#sec-sub}\n\nSubsection text.\n\n"
+        "## Agenda {#live-plan}\n\n{{< include /_includes/live-01.md >}}\n\nan agenda timetable\n\n"
+        "## 3. Last\n\n{{< include /_includes/lab-03.md >}}\n\nAfter the lab list.\n\n"
         "## Live plan\n\na timetable at the end\n"
     )
 
@@ -121,6 +123,11 @@ class CleaningRules(unittest.TestCase):
     def test_live_plans_are_dropped_wherever_they_are(self):
         self.assertNotIn("timetable", self.text)
         self.assertNotIn("Live plan", self.text)
+        self.assertNotIn("Agenda", self.text)
+
+    def test_the_lab_task_list_is_dropped(self):
+        self.assertNotIn("lab-03", self.text)
+        self.assertIn("## 3. Last\n\nAfter the lab list.", self.text)
 
     def test_heading_attributes_go_and_the_blank_line_stays(self):
         self.assertIn("## 2. A reference section\n\n**Objective", self.text)

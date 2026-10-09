@@ -2,30 +2,30 @@
 title: "FAQ"
 ---
 
-## Do I need API keys?
+## Do I Need API Keys?
 
 No. Every lab runs without keys: the API labs fall back to a free open model, and Module 12 falls back to a small decision model you train in the lab. A result from a fallback describes that model, not OpenAI, Claude or Jev. Keys for OpenAI, Anthropic and TypeSafe let you run the commercial models themselves. See [Setup](setup.qmd).
 
-## Do I need a GPU?
+## Do I Need a GPU?
 
 The labs are designed for Google Colab's free tier: a T4 GPU for most labs, a CPU runtime for Labs 1, 9, 11 and 12. Each lab's planning estimate is ten minutes of compute or less. Those are estimates. Which labs have actually been run and timed, and on which machines, is on the [readiness page](readiness.qmd):
 
 {{< include /_includes/readiness-summary.md >}}
 
-## How much will the API labs cost?
+## How Much Will the API Labs Cost?
 
 Nothing, without keys. With keys, each API lab states its estimated cost for one full run, and prints the measured cost of your run from the token counts each response reports. The estimates are collected on the [readiness page](readiness.qmd); they run from under 5 cents to under 1 USD per lab for one person, and under 2 USD per pair for the capstone on Claude.
 
-## What are RLCD and Jev?
+## What Are RLCD and Jev?
 
 Jev is a decision model from TypeSafe AI: it takes typed questions and returns typed answers with probabilities, instead of generating text. TypeSafe's documentation (read 2026-10-06) says Jev "is trained with RLCD to return calibrated decisions", where RLCD is reinforcement learning for calibrated decisions, and that its models' "probabilities are optimized against outcomes to reflect uncertainty". [Module 12](modules/12-rlcd-jev.qmd) lists TypeSafe's statements with their sources, separately from what third parties report.
 
 TypeSafe has published RLCD's name and aim, but not the method: no reward function, no algorithm, no paper and no measured calibration for Jev. Day 4 teaches calibration from the published literature, separates what TypeSafe has stated from what third parties report, and includes a small training experiment that is our own illustration of the idea, not TypeSafe's method.
 
-## Can I attend only some of the days?
+## Can I Attend Only Some of the Days?
 
 Each day builds on the one before, but the days fall into two units. Days 1 and 2 cover how the models work, from counting words to transformers, pretraining and fine-tuning. Days 3 to 5 cover how the models are used through APIs, what they are trained to want, when their answers can be trusted, and how to build systems from them. If you join on Day 3, you should already know what a transformer is and how a pretrained model is fine-tuned, which Modules 5 to 7 teach. Each notebook loads its own data, with the exceptions listed on the [notebooks page](notebooks.qmd).
 
-## I found a mistake. How do I report it?
+## I Found a Mistake. How Do I Report It?
 
 Open an issue or a pull request on [GitHub]({{< var repo.url >}}).

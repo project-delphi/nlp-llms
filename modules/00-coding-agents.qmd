@@ -6,7 +6,7 @@ title: "{{< var modules.m00.title >}}"
 
 {{< include /_includes/module-00.md >}}
 
-## How this module works
+## How This Module Works
 
 You work alone, at your own pace, by giving a coding agent short prompts in a terminal. It is optional pre-work: do it at home, before Day 1. If you get stuck, bring your laptop to the optional drop-in clinic on Day 1 from 08:00 to 09:00, before the first briefing.
 
@@ -34,7 +34,7 @@ The minutes are an estimate, not a measurement: no one has yet timed this module
 **You need:** a laptop or desktop with macOS, Linux or Windows 10/11; a GitHub account; an account for one agent (each tab below says which, and what it costs); and Python 3.10 or later, or a recent R 4.x. On Windows, use **WSL 2** (the Windows Subsystem for Linux) with Ubuntu for the whole module. This page gives no native Windows or PowerShell instructions: inside WSL 2 you follow the Linux steps, and every command works as written.
 
 ::: {.callout-important appearance="simple"}
-## Windows: set up WSL 2 first (5 minutes, once)
+## Windows: Set Up WSL 2 First (5 minutes, once)
 
 1. Open **Command Prompt** as administrator (Start menu, type `cmd`, right-click, *Run as administrator*) and run `wsl --install`. Restart when it asks. New installations get WSL 2 with Ubuntu.
 2. Open **Ubuntu** from the Start menu, choose a Linux user name and password, and run `sudo apt update`.
@@ -43,7 +43,7 @@ The minutes are an estimate, not a measurement: no one has yet timed this module
 
 The habit this module teaches is more durable than any one tool: **plan, act, check the work yourself, then commit.** An agent is fast and often right. It is also confidently wrong in ways you will only notice if you check one number against a source the agent did not produce.
 
-## 1. Install a coding agent (10 min) {#install}
+## 1. Install a Coding Agent (10 min) {#install}
 
 Pick one tab. The choice stays selected for the rest of the page. Commands were checked on {{< var assistants.checked >}} against the sources named at the end of each tab; the versions current that day were Claude Code {{< var assistants.claude_code >}}, Codex {{< var assistants.codex >}} and Gemini CLI {{< var assistants.gemini_cli >}}. These tools change weekly: if a command fails, check the tool's own page.
 
@@ -197,7 +197,7 @@ are installed? Do not create or change any files.
 :::
 
 ::: {.callout-note collapse="true"}
-## Cost and rate limits
+## Cost and Rate Limits
 
 - **Subscriptions** (Claude Pro or Max, ChatGPT plans, Google AI Pro or Ultra) include agent use up to a usage limit that resets over time. If you hit it, the tool says so; wait, or switch to the free Gemini tier for the rest of the module.
 - **API keys** are billed per token, and an agent sends the files it reads with every turn. Anthropic's cost page reports an average of about $13 per developer per active day across enterprise deployments; this module uses a small fraction of a day, but set a spend limit in your provider console before you start.
@@ -210,7 +210,7 @@ are installed? Do not create or change any files.
 GitHub Pages publishes a website from a GitHub repository, so your apps need a repository first. **git** tracks the files. The **GitHub CLI** (`gh`) signs you in to GitHub, creates the repository and turns on Pages. From here on you type prompts, not commands: the agent runs the commands and asks you first. (Codex asks before most of the commands in this section, because they use the network or write outside the project folder.)
 
 ::: {.callout-important appearance="simple"}
-## Passwords and tokens stay with you
+## Passwords and Tokens Stay With You
 
 The agent cannot type your password, and it should never see one. When a command needs `sudo` (likely on Linux and WSL when software is installed), the prompts below tell the agent to show you the command instead of running it. Run it yourself in a **second terminal** (open one, then `cd ~/agent-apps`), then tell the agent it is done. Never paste a password, token or API key into a prompt.
 :::
@@ -260,7 +260,7 @@ before you run them. Finish by giving me the repository's URL.
 
 *Sources:* `gh auth login` (the `--web` flag, the one-time code it prints, the git credential setup it skips when it is not run interactively, and the fallback to a plain text file) and `gh repo create` (`--public`, `--source`, and `--push`, which needs `--source`), from their definitions in [cli/cli](https://github.com/cli/cli) (`pkg/cmd/auth/login/login.go`, `pkg/cmd/auth/shared/login_flow.go`, `internal/authflow/flow.go`, `pkg/cmd/repo/create/create.go`), read through raw.githubusercontent.com on 2026-10-06. Pages availability from the GitHub Docs source ([github/docs](https://github.com/github/docs), `data/reusables/gated-features/pages.md`), checked {{< var agents_intro.checked >}}, when docs.github.com was not reachable from the build machine.
 
-## Working habits for both apps
+## Working Habits for Both Apps
 
 Read this once; it applies to every step below.
 
@@ -287,7 +287,7 @@ agent-apps/
 
 The **prompts are numbered boxes**: type each one into your agent, changing only what the text around it tells you to, and read "What you should see" before you move on. Where Python and R differ, a tab shows both.
 
-## 3. App 1: protein structure explorer (18 min) {#protein}
+## 3. App 1: Protein Structure Explorer (18 min) {#protein}
 
 Proteins fold into compact 3D shapes, and the shape decides what a protein does. Ubiquitin is a small, well-studied protein; its structure, entry **1UBQ** in the Protein Data Bank (PDB), was solved by X-ray crystallography. A PDB file lists every atom with its x, y and z coordinates in ångströms (Å; 1 Å = 0.1 nm). Each amino acid (*residue*) has one central carbon atom, the **C-alpha**; joining the C-alphas in chain order traces the **backbone**.
 
@@ -416,7 +416,7 @@ and run the script again.
 The new count is 177, equal to the $\lvert i - j \rvert \ge 3$ row of your check.
 
 ::: {.callout-note appearance="simple" collapse="true"}
-## R only: if your count was already right
+## R Only: If Your Count Was Already Right
 
 bio3d's `cmap()` function excludes near neighbors by default (its `scut` argument is 3) and uses a 4 Å cutoff unless you pass `dcut = 8`. If your agent used `cmap()`, the flaw may not have appeared; ask it which `dcut` and `scut` it passed, and make sure the cutoff is 8 Å. That is the same lesson: a default you did not choose changed the answer.
 :::
@@ -475,7 +475,7 @@ with the message "Protein structure explorer for 1UBQ", and do not push yet.
 
 *What you should see:* a list with `protein/1ubq.pdb`, the script, `protein/data.json`, `protein/index.html` and `.gitignore`. It must not include `.venv/` (Python) or `.Rhistory` and `.RData` (R). If anything else is in it, say no and ask why.
 
-## 4. App 2: customer segmentation (17 min) {#rfm}
+## 4. App 2: Customer Segmentation (17 min) {#rfm}
 
 Start a **new agent session** in `~/agent-apps` (quit and start again), so App 1's conversation does not fill the context.
 
@@ -652,7 +652,7 @@ Show me what you will commit and wait for my OK. Then commit rfm/ with the messa
 *What you should see:* a list with `rfm/purchases_v1.csv.gz`, the script, `rfm/data.json` and `rfm/index.html`, and nothing else.
 
 ::: {.callout-note collapse="true"}
-## Optional: a real retail dataset
+## Optional: A Real Retail Dataset
 
 The UCI Machine Learning Repository's **Online Retail II** dataset holds two years of real transactions from a UK online shop, with the same kind of columns. Real data brings real problems: cancelled invoices (invoice numbers starting with "C", negative quantities), missing customer IDs, and a different date range, so the reference date changes. Point your agent at it and ask it to adapt `analyze.py` or `analyze.R`, handling each of those explicitly.
 

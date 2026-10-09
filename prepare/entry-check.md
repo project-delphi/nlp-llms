@@ -71,7 +71,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
 `X / np.linalg.norm(X, axis=1, keepdims=True)`. With `keepdims=True` the norms have shape `(N, 1)`, which broadcasts across the `d` columns. Without it they have shape `(N,)`, which NumPy tries to align with the columns and fails (or, if `N == d`, silently divides the wrong way).
 :::
 
-### Machine-learning basics
+### Machine-Learning Basics
 
 **E7.** Why are hyperparameters chosen on a validation split rather than on the test split?
 

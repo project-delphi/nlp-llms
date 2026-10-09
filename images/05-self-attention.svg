@@ -24,7 +24,7 @@
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
     <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
     <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
-    <marker id="d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
   </defs>
   <rect width="760" height="404" rx="8" fill="#ffffff"/>
   <text x="80" y="26" text-anchor="middle" class="note b">query</text>
@@ -84,8 +84,8 @@
   <text x="270" y="282" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">k</tspan><tspan dy="4.6" font-size="12.9">4</tspan></text>
   <text x="400" y="282" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">h</tspan><tspan dy="4.6" font-size="12.9">4</tspan></text>
   <text x="530" y="282" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">v</tspan><tspan dy="4.6" font-size="12.9">4</tspan></text>
-  <line class="dln" x1="373" y1="336" x2="299" y2="336" marker-end="url(#d)"/>
-  <line class="dln" x1="427" y1="336" x2="501" y2="336" marker-end="url(#d)"/>
+  <line class="dln" x1="373" y1="336" x2="299" y2="336" marker-end="url(#dm)"/>
+  <line class="dln" x1="427" y1="336" x2="501" y2="336" marker-end="url(#dm)"/>
   <rect class="dim" x="243" y="319" width="54" height="34" rx="6"/>
   <text x="270" y="342" text-anchor="middle" class="m note" style="font-size:19px"><tspan class="i">k</tspan><tspan dy="4.6" font-size="12.9">5</tspan></text>
   <rect class="dim" x="373" y="319" width="54" height="34" rx="6"/>

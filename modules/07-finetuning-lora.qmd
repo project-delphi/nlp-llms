@@ -11,6 +11,13 @@ live:
   - {section: 6, minutes: 6}
   - {section: 7, minutes: 3}
   - {section: 8, minutes: 5, activities: [{block: chk-rouge, minutes: 2}]}
+lab:
+  - {exercise: 1, sections: [5]}
+  - {exercise: 2, sections: [5]}
+  - {exercise: 3, sections: [2]}
+  - {exercise: 4, sections: [3]}
+  - {exercise: 5, sections: [6]}
+  - {exercise: 6, sections: [7, 8]}
 ---
 
 {{< include /_includes/module-07.md >}}
@@ -25,7 +32,7 @@ live:
 
 {{< include /_includes/live-07.md >}}
 
-## 1. A language model continues; it does not answer
+## 1. A Language Model Continues; It Does Not Answer
 
 **In this section:** state what a pretrained causal language model lacks as an assistant, and what fine-tuning must add.
 
@@ -49,7 +56,28 @@ Module 6 also showed the standard remedy for a mismatch between pretraining and 
 
 Sections 7 and 8 then deal with the output: how to generate from the tuned model, and how to say with a number whether the text it writes is any good.
 
-## 2. Chat templates
+::: {.callout-tip collapse="true" title="Optional: Pretraining, Full Fine-Tuning and LoRA Compared"}
+The three ways of training that Modules 6 and 7 use, side by side. Read it now as a map of the module, or after section 6 as a summary.
+
+| | Pretraining (Module 6) | Full fine-tuning (Module 6, section 7) | Instruction tuning with LoRA (this module) |
+|---|---|---|---|
+| Data | a very large corpus of plain text, with no labels | labeled task data: arXiv abstracts and their topics | instruction–response pairs, formatted with the chat template (section 2) |
+| Loss | self-supervised: next-token (causal) or masked-token cross-entropy | cross-entropy of a new classification head | next-token cross-entropy on the response tokens only (@eq-masked-loss) |
+| What is updated | every parameter | every parameter, the pretrained body and the new head, at a small learning rate | only the adapter $A$ and $B$; $W_0$ is frozen (@eq-lora) |
+| Where training starts | random weights | $\theta_{\text{pre}}$, with a random head | exactly the pretrained model, because $B = 0$ |
+| What is kept per task | one model, reused by every task | a full copy of the model | the adapter: a few megabytes (section 6) |
+| Typical failure | as an assistant, it continues the prompt instead of answering, and does not stop (this section) | memory for a gradient and optimizer state on every weight, and a small dataset that pulls the model away from what pretraining learned (section 4) | too low a rank for a task far from the pretraining data (section 5); a closing token left out of the loss, so the model never learns to stop (section 3) |
+:::
+
+::: {.self-check}
+**Check yourself.** Apply the table to a new task. A team has a pretrained causal LM and 2,000 support tickets, each with the reply an agent sent. Run 1 trains every weight with the next-token loss on the whole formatted conversation, ticket included. Run 2 trains a LoRA adapter on `q_proj` and `v_proj` with the response mask of section 3. For each run, which weights change, which positions are in the loss, and what is saved at the end? Run 1's training loss is lower than run 2's. Does that show that it writes better replies?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Run 1 changes every weight, scores every position (the ticket, the role names and the reply), and saves a full copy of the model; during training it holds a gradient and optimizer state for every weight. Run 2 changes only $A$ and $B$ in the targeted layers, scores only the reply tokens and the closing `<|im_end|>`, and saves only the adapter; $W_0$ is unchanged, and the adapter can be merged into it afterwards. The two training losses are averages over different positions, so they cannot be compared, and run 1's includes the ticket text, which is not what the team wants the model to learn. Compare the two runs on held-out examples with the response perplexity (@eq-ppl-resp), over the same scored positions, and read the replies they generate.
+:::
+:::
+
+## 2. Chat Templates
 
 **In this section:** write a conversation as the single string the model sees.
 
@@ -112,7 +140,7 @@ The string ends with the user's message and its closing token: `Name the capital
 :::
 :::
 
-## 3. The instruction-tuning loss
+## 3. The Instruction-Tuning Loss
 
 **In this section:** write the loss that turns a language model into an instruction follower.
 
@@ -173,7 +201,7 @@ $\mathcal{L}_{\text{resp}} = \tfrac{1}{3}(\log 2 + \log 4 + \log 2) = \tfrac{4}{
 :::
 :::
 
-## 4. What full fine-tuning costs
+## 4. What Full Fine-Tuning Costs
 
 **In this section:** say where the cost of updating every weight comes from.
 
@@ -199,7 +227,7 @@ Full fine-tuning: $4 \times 4 \times 134.5 \times 10^6$ bytes $\approx 2.15$ GB.
 :::
 :::
 
-## 5. LoRA: a low-rank update
+## 5. LoRA: A Low-Rank Update
 
 **In this section:** derive the LoRA layer: its form, its initialization, its parameter count and its merge.
 
@@ -230,7 +258,7 @@ The product $BA$ has the shape of $W_0$, and its rank is at most $r$, because ev
 **Notation.** Three clashes, resolved for this module.
 
 - **$\alpha$.** In Modules 4 and 5, $\alpha$ with position subscripts, as in $\alpha_{t,i}$, is an attention weight. In this module **$\alpha$ with no subscript is LoRA's scaling constant**, a single number. In code it is `lora_alpha`.
-- **$A$ and $B$.** We keep the letters of the LoRA paper because the `peft` library names its tensors `lora_A` and `lora_B`. In this module $B$ is always the LoRA matrix. It is not the beam size of Module 4, and batch size is written out in words.
+- **$A$ and $B$.** We keep the letters of the LoRA paper because the `peft` library names its tensors `lora_A` and `lora_B`. In this module $A$ and $B$ are always the LoRA matrices. $A$ is not Module 5's matrix of attention weights. $B$ is not the batch size of Module 3's code shapes or the beam size of Module 4; batch size is written out in words here.
 - **$r$** is the LoRA rank, a different quantity from the frequency rank in Module 1's Zipf plot.
 :::
 
@@ -381,7 +409,7 @@ The scale $\alpha / r$ fell from $16 / 8 = 2$ to $16 / 16 = 1$. By @eq-lora-grad
 :::
 :::
 
-## 6. LoRA in practice: where, how large, and the `peft` library
+## 6. LoRA in Practice: Where, How Large, and the `peft` Library
 
 **In this section:** choose target modules and a rank, and read a `LoraConfig`.
 
@@ -432,7 +460,7 @@ Things to know when reading this:
 :::
 :::
 
-::: {.callout-tip collapse="true" title="Optional: quantization and QLoRA"}
+::: {.callout-tip collapse="true" title="Optional: Quantization and QLoRA"}
 **Quantization** stores each weight in fewer bits: 8 or 4 in place of 16 or 32. A weight is replaced by the nearest of a small set of levels ($2^4 = 16$ levels for 4 bits), and the levels are stored once per block of weights. Memory for the weights falls by the same factor, at the price of a rounding error in every weight.
 
 **QLoRA** (Dettmers et al., 2023) combines this with LoRA. The frozen base weights $W_0$ are held in 4-bit form; the adapters $A$ and $B$ are kept at full precision and are the only trained parameters. Gradients pass through the quantized layers to reach the adapters. Because $W_0$ is never updated, its rounding error is fixed, and the adapters can learn to compensate for part of it. The paper reports fine-tuning a 65-billion-parameter model on one 48 GB GPU.
@@ -440,7 +468,7 @@ Things to know when reading this:
 Two cautions. A merged weight $W_0 + \frac{\alpha}{r} BA$ is no longer on the 4-bit grid, so merging into a quantized model means quantizing again or keeping the adapter separate. And 4-bit loading in `transformers` relies on the `bitsandbytes` library, which needs a GPU. The lab's model is small enough to need neither.
 :::
 
-::: {.callout-tip collapse="true" title="Optional: other parameter-efficient methods"}
+::: {.callout-tip collapse="true" title="Optional: Other Parameter-Efficient Methods"}
 - **Adapters** (Houlsby et al., 2019): small bottleneck networks inserted *between* the layers of each block. They cannot be merged into the existing weights, so they add computation at inference. LoRA's merge was a response to this.
 - **Prefix tuning** (Li and Liang, 2021) and **prompt tuning** (Lester et al., 2021): the model is frozen entirely and a short sequence of continuous vectors, prepended to the input or to each layer's activations, is trained. Very few parameters; the trained prefix uses up part of the context.
 - **Rank-stabilized LoRA** (Kalajdzievski, 2023): scales the update by $\alpha / \sqrt{r}$ in place of $\alpha / r$, which the paper argues keeps learning stable at high rank. In `peft`: `use_rslora=True`.
@@ -449,11 +477,11 @@ Two cautions. A merged weight $W_0 + \frac{\alpha}{r} BA$ is no longer on the 4-
 All of them share the principle of section 4: freeze the pretrained weights, train a small addition.
 :::
 
-## 7. Decoding settings
+## 7. Decoding Settings
 
 **In this section:** choose generation settings for a task and name the `generate` arguments that set them.
 
-The fine-tuned model is still a language model: it outputs a distribution over the next token, and something must pick. [Module 3](03-sequence-models.qmd) defined greedy decoding, the temperature $\tau$, top-$k$ and nucleus (top-$p$) sampling; [Module 4](04-seq2seq-attention.qmd) defined beam search with beam size $B$. Nothing new is needed here, only the mapping to the `generate` method:
+The fine-tuned model is still a language model: it outputs a distribution over the next token, and something must pick. [Module 3](03-sequence-models.qmd) defined greedy decoding, the temperature $\tau$, top-$k$ and nucleus (top-$p$) sampling; [Module 4](04-seq2seq-attention.qmd) defined beam search, whose beam size it wrote $B$ (here it is `num_beams`). Nothing new is needed here, only the mapping to the `generate` method:
 
 | Strategy | `generate` arguments |
 |---|---|
@@ -501,7 +529,7 @@ Either the model improved, or the dice fell differently: with sampling, two runs
 :::
 :::
 
-## 8. Evaluating generated text
+## 8. Evaluating Generated Text
 
 **In this section:** define three kinds of metric for generated text and state what each one misses.
 
@@ -561,7 +589,7 @@ The reference has 6 unigrams, so the denominator is 6. (a) shares one: $1/6 \app
 - Decode greedily when measuring; sample when variety is wanted; always set a stop token and a length limit.
 - Exact match, overlap metrics and model-graded evaluation each miss something. Report more than one, and read the outputs.
 
-### Equations and where you implement them
+### Equations and Where You Implement Them
 
 | Equation | Lab 7 |
 |---|---|
@@ -577,7 +605,7 @@ The reference has 6 unigrams, so the denominator is 6. (a) shares one: $1/6 \app
 | Rank sweep; all-linear targets (section 6) | Stretch |
 | BLEU, model-graded evaluation | not implemented in this lab |
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"Instruction tuning needs a new architecture or a new loss."** It is the same model and the same cross-entropy. What changes is the data format and which positions are scored.
 - **"A chat template is a feature of the model's architecture."** It is a string format. The model sees one token sequence, and the roles exist only as special tokens in it.
@@ -590,11 +618,11 @@ The reference has 6 unigrams, so the denominator is 6. (a) shares one: $1/6 \app
 - **"A high ROUGE or BLEU score means the answer is correct."** These count shared words with one reference. A wrong answer can share most of its words with a right one.
 - **"A model-graded score is objective."** The judge is a model with biases of its own. Its grades need validation against human labels.
 
-## Next steps
+## Next Steps
 
 You now have an instruction follower that you tuned yourself, running on one GPU. The largest models are reached differently: through a commercial API that takes the list of messages directly and applies the template on the server. [Module 8](08-llm-apis.qmd) uses those APIs for chat, structured output and tool use, and compares providers with one evaluation harness. Its stretch section adds the model from this lab as one more provider.
 
-## Further reading
+## Further Reading
 
 1. Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L. and Chen, W. (2022). [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). *ICLR*. The method. Read section 4 for the layer and section 7 for the analysis of rank.
 2. Aghajanyan, A., Gupta, S. and Zettlemoyer, L. (2021). [Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning](https://arxiv.org/abs/2012.13255). *ACL*. The evidence that fine-tuning needs few degrees of freedom, on which LoRA's hypothesis builds.

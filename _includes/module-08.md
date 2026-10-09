@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 3 · Using and aligning LLMs](/day-3.qmd){.module-day} [Module 8]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
+[Day 3 · Using and Aligning LLMs](/day-3.qmd){.module-day} [Module 8]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Use one provider-agnostic wrapper for chat, structured output and tool use, on OpenAI, Claude or an open model
 - Implement an evaluation harness and score a provider with it; compare OpenAI and Claude when both keys are set
 - Reason about cost, latency and failure modes
+
+New terms, in the [glossary](/glossary.qmd): [context window](/glossary.qmd#context-window), [structured output](/glossary.qmd#structured-output), [tool call](/glossary.qmd#tool-call), [prompt injection](/glossary.qmd#prompt-injection).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 7 · Fine-tuning and LoRA](/modules/07-finetuning-lora.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 7 · Fine-Tuning and LoRA](/modules/07-finetuning-lora.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - API keys are optional. Without them an open model runs in place of the commercial one.
 :::

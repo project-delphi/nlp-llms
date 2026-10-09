@@ -3,16 +3,22 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–3 | 1. What the from-scratch transformer leaves open | — |
-| 3–16 | 2. Subword tokenization: byte-pair encoding | [Check yourself](#chk-bpe-merge) (2 min) |
-| 16–19 | 3. Pretrain once, reuse many times | — |
-| 19–27 | 4. Causal language modeling: GPT | [Check yourself](#chk-ppl-units) (2 min) |
-| 27–38 | 5. Masked language modeling: BERT | [Demo](#demo-masking) (4 min) |
-| 38–43 | 6. The Hugging Face stack | — |
-| 43–55 | 7. Fine-tuning an encoder for classification | [Check yourself](#chk-head-params) (2 min) |
+| 0–3 | 1. What the From-Scratch Transformer Leaves Open | — |
+| 3–16 | 2. Subword Tokenization: Byte-Pair Encoding | [Check yourself](#chk-bpe-merge) (2 min) |
+| 16–19 | 3. Pretrain Once, Reuse Many Times | — |
+| 19–27 | 4. Causal Language Modeling: GPT | [Check yourself](#chk-ppl-units) (2 min) |
+| 27–38 | 5. Masked Language Modeling: BERT | [Demo](#demo-masking) (4 min) |
+| 38–43 | 6. The Hugging Face Stack | — |
+| 43–55 | 7. Fine-Tuning an Encoder for Classification | [Check yourself](#chk-head-params) (2 min) |
 | **55** | **Total** | **45 minutes of exposition, 10 of activities** |
 :::
 
-Not taught in the room: *8. What changes at scale, and what is still missing*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–7, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 2; Exercise 2: sections 2 and 6; Exercise 3: section 4; Exercise 4: section 5; Exercise 5: section 7.
+
+**Read later** · Section 8, *What Changes at Scale, and What Is Still Missing* (**Reference**); the collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

@@ -114,21 +114,27 @@ def _has_tasks(found: list[dict], i: int) -> bool:
     return False
 
 
-def table(found: list[dict]) -> str:
-    """The core path as a two-column table: a part is a bold row spanning its tasks.
+def table(found: list[dict], briefing: dict[str, str] | None = None) -> str:
+    """The core path as a table: a part is a bold row spanning its tasks. With `briefing`
+    ({"Exercise 1": "2", ...}) a middle column names the briefing sections each task uses.
     The challenge is not in it; challenge() states it on its own."""
-    lines = ["| Task | Time |", "|---|---|"]
+    if briefing is None:
+        lines = ["| Task | Time |", "|---|---|"]
+    else:
+        lines = ["| Task | Briefing section | Time |", "|---|---|---|"]
     for i, r in enumerate(found):
         if r["kind"].startswith("challenge"):
             continue
         if r["kind"] == "part" and not _has_tasks(found, i):
             continue
+        middle = "" if briefing is None else f" {briefing.get(r['label'], '—')} |"
         if r["kind"] == "task":
             time = f"{r['minutes']} min" if r["minutes"] else "—"
-            lines.append(f"| {r['label']} · {r['title']} | {time} |")
+            lines.append(f"| {r['label']} · {r['title']} |{middle} {time} |")
         else:
             title = f" · {r['title']}" if r["title"] else ""
-            lines.append(f"| **{r['label']}{title}** | |")
+            blank = "" if briefing is None else " |"
+            lines.append(f"| **{r['label']}{title}** |{blank} |")
     return "\n".join(lines)
 
 

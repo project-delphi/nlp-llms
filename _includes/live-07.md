@@ -3,15 +3,23 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–4 | 1. A language model continues; it does not answer | — |
-| 4–9 | 2. Chat templates | — |
-| 9–17 | 3. The instruction-tuning loss | [Check yourself](#chk-resp-loss) (2 min) |
-| 17–21 | 4. What full fine-tuning costs | [Predict](#predict-ft-memory) (1 min) |
-| 21–39 | 5. LoRA: a low-rank update | [Demo](#demo-lora-count) (4 min); [Check yourself](#chk-lora-init) (2 min) |
-| 39–45 | 6. LoRA in practice: where, how large, and the `peft` library | — |
-| 45–48 | 7. Decoding settings | — |
-| 48–55 | 8. Evaluating generated text | [Check yourself](#chk-rouge) (2 min) |
+| 0–4 | 1. A Language Model Continues; It Does Not Answer | — |
+| 4–9 | 2. Chat Templates | — |
+| 9–17 | 3. The Instruction-Tuning Loss | [Check yourself](#chk-resp-loss) (2 min) |
+| 17–21 | 4. What Full Fine-Tuning Costs | [Predict](#predict-ft-memory) (1 min) |
+| 21–39 | 5. LoRA: A Low-Rank Update | [Demo](#demo-lora-count) (4 min); [Check yourself](#chk-lora-init) (2 min) |
+| 39–45 | 6. LoRA in Practice: Where, How Large, and the `peft` Library | — |
+| 45–48 | 7. Decoding Settings | — |
+| 48–55 | 8. Evaluating Generated Text | [Check yourself](#chk-rouge) (2 min) |
 | **55** | **Total** | **44 minutes of exposition, 11 of activities** |
 :::
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
+
+::: {.reading-guide}
+**Read now** · Sections 1–8, in the agenda above.
+
+**Use in the lab** · Exercises 1 and 2: section 5; Exercise 3: section 2; Exercise 4: section 3; Exercise 5: section 6; Exercise 6: sections 7 and 8.
+
+**Read later** · The collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

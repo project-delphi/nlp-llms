@@ -167,7 +167,7 @@ class Honesty(unittest.TestCase):
         self.assertIn("TypeSafe has not published how RLCD works.", TEXT)
         self.assertIn("System One models are trained for calibrated decisions", TEXT)
         self.assertIn("They measure our toy model, not Jev. Do not quote them as Jev's.", CODE)
-        self.assertIn("What this lab showed and what it did not", TEXT)
+        self.assertIn("What This Lab Showed and What It Did Not", TEXT)
 
     def test_jev_label_only_on_the_keyed_path(self):
         self.assertIn(

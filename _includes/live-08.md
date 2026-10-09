@@ -3,16 +3,24 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–3 | 1. From your own model to someone else's | — |
-| 3–12 | 2. The message list | [Check yourself](#chk-stateless) (2 min) |
-| 12–16 | 3. Prompting patterns | — |
-| 16–24 | 4. Structured output: the schema as a contract | — |
-| 24–34 | 5. Tool calling: a loop you write | [Check yourself](#chk-tool-trace) (3 min) |
-| 34–43 | 6. Cost and latency | [Demo](#demo-loop-cost) (4 min) |
-| 43–49 | 7. Evaluating outputs | [Check yourself](#chk-validity-em) (2 min) |
-| 49–53 | 8. Failure modes and security | — |
-| 53–55 | 9. A fluent answer carries no confidence signal | — |
+| 0–3 | 1. From Your Own Model to Someone Else's | — |
+| 3–12 | 2. The Message List | [Check yourself](#chk-stateless) (2 min) |
+| 12–16 | 3. Prompting Patterns | — |
+| 16–24 | 4. Structured Output: The Schema as a Contract | — |
+| 24–34 | 5. Tool Calling: A Loop You Write | [Check yourself](#chk-tool-trace) (3 min) |
+| 34–43 | 6. Cost and Latency | [Demo](#demo-loop-cost) (4 min) |
+| 43–49 | 7. Evaluating Outputs | [Check yourself](#chk-validity-em) (2 min) |
+| 49–53 | 8. Failure Modes and Security | — |
+| 53–55 | 9. A Fluent Answer Carries No Confidence Signal | — |
 | **55** | **Total** | **44 minutes of exposition, 11 of activities** |
 :::
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
+
+::: {.reading-guide}
+**Read now** · Sections 1–9, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 2; Exercise 2: section 4; Exercise 3: section 7; Exercise 4: section 5; Exercise 5: section 6.
+
+**Read later** · The collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

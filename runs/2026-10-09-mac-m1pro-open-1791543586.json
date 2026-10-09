@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-10-09",
+  "source": "test_notebooks",
+  "env": "mac-m1pro",
+  "env_detail": "macOS-26.6.2-arm64-arm-64bit, Python 3.12.13",
+  "path": "open",
+  "mode": "worked",
+  "settings": {},
+  "evidence": "scripts/test_notebooks.py --record",
+  "runs": [
+    {
+      "notebook": "13-rag",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 120.7,
+      "content_sha": "29dabe382a4b5c9a",
+      "phases": {
+        "generated": 0.0,
+        "setup": 20.3,
+        "other": 94.9,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 1.7
+      },
+      "note": "Run on battery power under caffeinate, after the snapshot rebuild from 2182ed1; times are upper estimates."
+    },
+    {
+      "notebook": "14-agents",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 235.8,
+      "content_sha": "52039bd1a2e72054",
+      "phases": {
+        "generated": 0.1,
+        "setup": 17.3,
+        "other": 207.6,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 6.9
+      },
+      "note": "Run on battery power under caffeinate, after the snapshot rebuild from 2182ed1; times are upper estimates."
+    },
+    {
+      "notebook": "15-capstone",
+      "scope": "notebook",
+      "status": "pass",
+      "seconds": 991.8,
+      "content_sha": "5c2ec08eb414c5ed",
+      "phases": {
+        "generated": 0.1,
+        "other": 1179.8,
+        "exercise": 0.0,
+        "solution": 0.0,
+        "checkpoint": 0.1
+      },
+      "note": "Run on battery power under caffeinate, after the snapshot rebuild from 2182ed1; times are upper estimates."
+    }
+  ]
+}

@@ -3,16 +3,24 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–5 | 1. What the Module 8 loop cannot do | — |
-| 5–9 | 2. ReAct: reasoning and acting in one loop | — |
-| 9–13 | 3. Tools: LangChain tools, runnables and tool design | — |
-| 13–23 | 4. LangGraph: state, nodes, edges, conditional routing | [Check yourself](#chk-guard-edge) (2 min) |
-| 23–30 | 5. Checkpoints, memory, interrupts and replay | [Check yourself](#chk-resume) (2 min) |
-| 30–38 | 6. Where agents fail | [Check yourself](#chk-poisoned) (2 min) |
-| 38–47 | 7. A decision model in the control loop: route, guard, verify | [Demo](#demo-guard-thresholds) (4 min) |
-| 47–50 | 8. Measuring an agent | — |
-| 50–55 | 9. Designing the harness: patterns, subagents and context | — |
+| 0–5 | 1. What the Module 8 Loop Cannot Do | — |
+| 5–9 | 2. ReAct: Reasoning and Acting in One Loop | — |
+| 9–13 | 3. Tools: LangChain Tools, Runnables and Tool Design | — |
+| 13–23 | 4. LangGraph: State, Nodes, Edges, Conditional Routing | [Check yourself](#chk-guard-edge) (2 min) |
+| 23–30 | 5. Checkpoints, Memory, Interrupts and Replay | [Check yourself](#chk-resume) (2 min) |
+| 30–38 | 6. Where Agents Fail | [Check yourself](#chk-poisoned) (2 min) |
+| 38–47 | 7. A Decision Model in the Control Loop: Route, Guard, Verify | [Demo](#demo-guard-thresholds) (4 min) |
+| 47–50 | 8. Measuring an Agent | — |
+| 50–55 | 9. Designing the Harness: Patterns, Subagents and Context | — |
 | **55** | **Total** | **45 minutes of exposition, 10 of activities** |
 :::
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
+
+::: {.reading-guide}
+**Read now** · Sections 1–9, in the agenda above.
+
+**Use in the lab** · Exercise 0: sections 4 and 7; Exercise 1: section 3; Exercise 2: sections 4 and 7; Exercises 3 and 4: section 5; Exercise 5: sections 6 and 8.
+
+**Read later** · The collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

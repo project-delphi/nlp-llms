@@ -2,9 +2,9 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–5 | 1. What makes language hard | — |
-| 5–14 | 2. Tokens, vocabularies and Zipf's law | Check yourself (2 min) |
-| 14–30 | 3. N-gram language models | Demo (4 min) |
-| 30–35 | 4. Bag-of-words and TF-IDF | — |
-| 35–40 | 5. Naive Bayes and logistic regression | — |
-| 40–45 | 7. Where count-based methods stop working | Check yourself (2 min) |
+| 0–5 | 1. What Makes Language Hard | — |
+| 5–14 | 2. Tokens, Vocabularies and Zipf's Law | Check yourself (2 min) |
+| 14–30 | 3. N-Gram Language Models | Demo (4 min) |
+| 30–35 | 4. Bag-of-Words and TF-IDF | — |
+| 35–40 | 5. Naive Bayes and Logistic Regression | — |
+| 40–45 | 7. Where Count-Based Methods Stop Working | Check yourself (2 min) |

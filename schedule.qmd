@@ -1,6 +1,6 @@
 ---
 title: "Schedule"
-subtitle: "Five days, 09:00 to 17:00"
+subtitle: "Five Days, 09:00 to 17:00"
 toc: false
 # Five columns need more than the text measure (custom.scss, body.wide).
 page-layout: full

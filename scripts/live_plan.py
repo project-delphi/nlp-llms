@@ -17,6 +17,16 @@ fill the module's briefing minutes exactly (45 on Day 1, 55 on Days 2 to 5).
 A numbered section left out of the plan is reference material: its heading carries
 `{.reference}`, and it stays on the page, styled, for reading after class.
 
+Beside the plan, `lab:` names the sections each exercise of the module's notebook uses:
+
+    lab:
+      - {exercise: 1, sections: [2]}
+      - {exercise: 6, sections: [6]}
+
+One entry per `Exercise N` heading of the notebook, in order. From it the agenda gets a
+reading guide (read now, use in the lab, read later), and the "In the Lab" table a column
+naming each exercise's sections.
+
 scripts/gen_tables.py writes `_includes/live-NN.md` (the briefing's timing table) and
 `_includes/pace-NN.md` (the pace sheet's briefing rows) from this; tests/test_live.py
 checks it. filters/live.lua marks the planned blocks so the page shows which ones are
@@ -28,6 +38,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+import lab_steps
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -90,6 +101,12 @@ def read(slug: str) -> dict:
                 block_sections[ids[0]] = current
     return {
         "front": front,
+        # What the page has for reading afterwards, for the reading guide.
+        "later": {
+            "optional": 'title="Optional' in body,
+            "after-lab": 'title="After the Lab' in body,
+            "further": "\n## Further Reading" in body,
+        },
         "sections": sections,
         "blocks": blocks,
         "block_sections": block_sections,
@@ -162,6 +179,115 @@ def is_count(x) -> bool:
     return type(x) is int and x >= 0
 
 
+def lab_map(briefing: dict) -> dict[int, list[int]]:
+    """{exercise: [sections]} from the `lab:` front matter; empty when there is none."""
+    entries = briefing["front"].get("lab") or []
+    return {e["exercise"]: list(e["sections"]) for e in entries if isinstance(e, dict)}
+
+
+def notebook_exercises(slug: str) -> list[int]:
+    """The `Exercise N` numbers of the module's notebook, in order."""
+    return [
+        int(r["label"].split()[1])
+        for r in lab_steps.rows(slug)
+        if r["kind"] == "task" and r["label"].startswith("Exercise")
+    ]
+
+
+def lab_problems(slug: str, briefing: dict) -> list[str]:
+    """Everything wrong with a briefing's `lab:` map."""
+    entries = briefing["front"].get("lab")
+    exercises = notebook_exercises(slug)
+    if entries is None:
+        return [f"{slug}: no `lab` map in the front matter"] if exercises else []
+    out = []
+    if not isinstance(entries, list) or not all(
+        isinstance(e, dict)
+        and set(e) == {"exercise", "sections"}
+        and is_count(e["exercise"])
+        and isinstance(e["sections"], list)
+        and e["sections"]
+        and all(is_count(n) and n > 0 for n in e["sections"])
+        for e in entries
+    ):
+        return [f"{slug}: each `lab` entry is {{exercise: <n>, sections: [<n>, ...]}}"]
+    mapped = [e["exercise"] for e in entries]
+    if mapped != exercises:
+        out.append(f"{slug}: the `lab` map names exercises {mapped}; the notebook has {exercises}")
+    for e in entries:
+        for n in e["sections"]:
+            if n not in briefing["sections"]:
+                out.append(
+                    f"{slug}: exercise {e['exercise']} names section {n}, which does not exist"
+                )
+    return out
+
+
+def _numbers(ns: list[int]) -> str:
+    """[1, 2, 3, 5] -> '1–3 and 5'."""
+    runs: list[list[int]] = []
+    for n in sorted(set(ns)):
+        if runs and n == runs[-1][-1] + 1:
+            runs[-1].append(n)
+        else:
+            runs.append([n])
+    parts = []
+    for r in runs:
+        # A run of three or more is a range; a pair is two items: "6 and 7", "1, 2 and 4".
+        parts += [f"{r[0]}–{r[-1]}"] if len(r) > 2 else [str(n) for n in r]
+    return parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " and " + parts[-1]
+
+
+def _sections_word(ns: list[int]) -> str:
+    return f"section{'s' if len(ns) > 1 else ''} {_numbers(ns)}"
+
+
+def guide(slug: str, briefing: dict | None = None) -> str:
+    """Read now, use in the lab, read later: the reading guide under the agenda."""
+    briefing = briefing or read(slug)
+    sections = briefing["sections"]
+    planned = [r["n"] for r in rows(slug, briefing)]
+    reference = [n for n, s in sorted(sections.items()) if s["reference"]]
+    used = lab_map(briefing)
+    lines = ["::: {.reading-guide}"]
+    lines += [
+        "**Read now** · " + _sections_word(planned).capitalize() + ", in the agenda above.",
+        "",
+    ]
+    if used:
+        groups: list[tuple[list[int], list[int]]] = []
+        for ex, ns in used.items():
+            if groups and groups[-1][1] == ns and groups[-1][0][-1] == ex - 1:
+                groups[-1][0].append(ex)
+            else:
+                groups.append(([ex], ns))
+        items = []
+        for exs, ns in groups:
+            who = f"Exercise {exs[0]}" if len(exs) == 1 else f"Exercises {_numbers(exs)}"
+            refs = [n for n in ns if sections[n]["reference"]]
+            note = (
+                f" ({_sections_word(refs)}: **Reference**; the exercise restates what it needs)"
+                if refs
+                else ""
+            )
+            items.append(f"{who}: {_sections_word(ns)}{note}")
+        lines += ["**Use in the lab** · " + "; ".join(items) + ".", ""]
+    later = [f"section {n}, *{sections[n]['title']}* (**Reference**)" for n in reference]
+    has = briefing.get("later", {})
+    marks = [
+        m
+        for m, k in (("**Optional**", "optional"), ("**After the Lab**", "after-lab"))
+        if has.get(k)
+    ]
+    if marks:
+        later.append(f"the collapsed callouts marked {' or '.join(marks)}")
+    if has.get("further"):
+        later.append("[Further Reading](#further-reading)")
+    text = "; ".join(later)
+    lines += ["**Read later** · " + text[0].upper() + text[1:] + ".", ":::"]
+    return "\n".join(lines)
+
+
 def problems(slug: str, lecture_minutes: int) -> list[str]:
     """Everything wrong with a briefing's plan, as readable strings."""
     briefing = read(slug)
@@ -200,6 +326,7 @@ def problems(slug: str, lecture_minutes: int) -> list[str]:
         out.append(f"{slug}: more than one activity block has the id #{block}")
     if len(used) != len(set(used)):
         out.append(f"{slug}: an activity block is planned twice")
+    out += lab_problems(slug, briefing)
     exposition, activities = totals(rows(slug, briefing))
     if exposition + activities != lecture_minutes:
         out.append(
@@ -240,24 +367,18 @@ def table(slug: str, briefing: dict | None = None) -> str:
         f"| **{t}** | **Total** | **{exposition} minutes of exposition,"
         f" {activities} of activities** |"
     )
-    reference = [
-        f"{n}. {s['title']}" for n, s in sorted(briefing["sections"].items()) if s["reference"]
-    ]
-    out = ["::: {.live-plan}", "\n".join(lines), ":::"]
-    if reference:
-        out += [
+    return "\n".join(
+        [
+            "::: {.live-plan}",
+            "\n".join(lines),
+            ":::",
             "",
-            "Not taught in the room: "
-            + "; ".join(f"*{title}*" for title in reference)
-            + ". These sections are marked **Reference**; read them after the session.",
+            "Checks, demos and predictions listed here are part of the live session and its"
+            " minutes; the others on the page are for reading afterwards.",
+            "",
+            guide(slug, briefing),
         ]
-    out += [
-        "",
-        "Checks, demos and predictions listed here are part of the live session and its"
-        " minutes. The others on the page, and collapsed callouts marked **Optional**, are"
-        " for reading afterwards.",
-    ]
-    return "\n".join(out)
+    )
 
 
 def pace_rows(slug: str, briefing: dict | None = None) -> str:

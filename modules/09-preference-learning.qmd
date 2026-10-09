@@ -10,6 +10,13 @@ live:
   - {section: 6, minutes: 2, activities: [{block: predict-comparisons, minutes: 1}]}
   - {section: 7, minutes: 6, activities: [{block: chk-oracle, minutes: 3}]}
   - {section: 8, minutes: 11}
+lab:
+  - {exercise: 0, sections: [2]}
+  - {exercise: 1, sections: [2, 3, 5]}
+  - {exercise: 2, sections: [4]}
+  - {exercise: 3, sections: [7]}
+  - {exercise: 4, sections: [8]}
+  - {exercise: 5, sections: [8]}
 ---
 
 {{< include /_includes/module-09.md >}}
@@ -24,7 +31,7 @@ live:
 
 {{< include /_includes/live-09.md >}}
 
-## Notation for this module
+## Notation for This Module
 
 ::: {.callout-important appearance="simple"}
 **Notation.** The workshop notation applies; several letters take a new meaning here, and Module 10 keeps them.
@@ -35,7 +42,7 @@ live:
 | $y_{<t}$ | $y_1, \dots, y_{t-1}$ |
 | $s_t$, $a_t$ | state and action at step $t$. For text, $s_t = (x, y_{<t})$ and $a_t = y_t$. This $a_t$ is not the RNN pre-activation of Module 3 |
 | $\pi_\theta(a \mid s)$ | the **policy**: a distribution over actions given the state, with parameters $\theta$. For text it is the language model, $\pi_\theta = P_\theta$ |
-| $r_t$, $R(x, y)$ | reward at step $t$; reward of a complete response. $r$ is not the LoRA rank of Module 7 |
+| $r_t$, $R(x, y)$ | reward at step $t$; reward of a complete response. $r$ is not the LoRA rank of Module 7, and $R$ is not Module 8's limit on retries |
 | $G_t$ | the return from step $t$ onward (the reward-to-go); $G = G_1$ is the return of the whole episode |
 | $J(\theta)$ | expected return, the quantity we maximize |
 | $b_t$ | a **baseline** subtracted from $G_t$ (section 4). Not a bias: no bias vector appears in this module |
@@ -52,7 +59,7 @@ live:
 $\beta$ is left free on purpose: Module 10 uses it for the KL coefficient. A value function, mentioned once below, is written $v_\psi$ in lowercase, because $V$ is the vocabulary.
 :::
 
-## 1. No label for "better"
+## 1. No Label for "Better"
 
 **In this section:** say what supervised fine-tuning cannot express, and what we need in its place.
 
@@ -71,7 +78,7 @@ What we would like instead is a number $R(x, y)$, a **reward**, for *any* respon
 
 [Module 10](10-rlhf.qmd) puts the two halves together: it optimizes a language model against a reward model.
 
-## 2. The minimum reinforcement learning
+## 2. The Minimum Reinforcement Learning
 
 **In this section:** define policy, reward, episode and return, and map each onto text generation.
 
@@ -113,17 +120,7 @@ $$ {#eq-seq-logprob}
 
 So the language model you trained in Modules 5 to 7 already *is* a policy. What changes in this module is the training signal, not the model.
 
-<!-- FIGURE PLACEHOLDER (Quarto/Colab Architect): images/09-text-as-mdp.svg
-     Spec: a horizontal strip of four state boxes s_1..s_4, each showing the prompt "x" in gray
-     followed by the tokens so far (s_1: "x", s_2: "x y_1", s_3: "x y_1 y_2", s_4: "x y_1 y_2 y_3").
-     Between consecutive states, an arrow labeled "a_t = y_t ~ pi_theta(. | s_t)" passing through a
-     small box "LM" (same box style for every step, to show the shared policy). Above each arrow a
-     small reward label: "r_1 = 0", "r_2 = 0", and at the last arrow, which ends in a box marked
-     "<eos>", "r_T = R(x, y)" in the accent color. Below the strip, one bracket spanning all steps
-     labeled "return G = sum_t r_t = R(x, y)". Same style as images/04-encoder-decoder.svg.
-     Alt text: "Text generation as a sequence of decisions: each state is the prompt plus the tokens
-     so far, each action is the next token drawn from the language model, and the reward arrives at
-     the end of the response." -->
+![Text generation as a sequence of decisions, drawn for a response of $T = 4$ tokens, the last one the end token. The state $s_t = (x, y_{<t})$ is the prompt and the tokens so far, and the action $a_t = y_t$ is drawn from the same language model $\pi_\theta$ at every step. With a reward for the whole response, $r_t = 0$ before the last step and $r_T = R(x, y)$, so the return $G$ of @eq-return is $R(x, y)$.](/images/09-text-as-mdp.svg){#fig-text-as-mdp fig-alt="Text generation as a sequence of decisions: each state is the prompt plus the tokens so far, each action is the next token drawn from the language model, and the reward arrives at the end of the response."}
 
 ::: {.callout-note appearance="simple"}
 **In the lab.** The first half of Lab 9 uses a toy environment whose optimum you know. The policy writes $T = 6$ symbols from a vocabulary of 8, conditioned on its position and the previous symbol (a bigram policy, as in Module 1). The reward is the fraction of positions that match a hidden target string $y^\star$. The optimal policy writes $y^\star$ with probability 1 and earns $J = 1$; the uniform policy, where training starts, earns $J = 1/8$. The provided `token_logprobs(logits, actions)` returns the per-step terms of @eq-seq-logprob for a batch, shape $(N, T)$.
@@ -137,7 +134,7 @@ By @eq-seq-logprob, $\log \pi_\theta(y \mid x) = 6 \log \tfrac{1}{8} \approx -12
 :::
 :::
 
-## 3. The policy gradient and REINFORCE
+## 3. The Policy Gradient and REINFORCE
 
 **In this section:** derive the gradient of the expected reward, and turn it into a loss that autograd can use.
 
@@ -172,7 +169,7 @@ Three facts make @eq-pg useful.
 - **The environment is never differentiated.** In a general RL problem the probability of an episode also contains the environment's transition probabilities. They do not depend on $\theta$, so their terms vanish from $\nabla_\theta \log$ of the episode probability. For text the transitions are deterministic anyway.
 - **It is an expectation, so it can be estimated by sampling.**
 
-::: {.callout-tip collapse="true" title="Optional: the general policy-gradient theorem"}
+::: {.callout-tip collapse="true" title="Optional: The General Policy-Gradient Theorem"}
 Sutton and Barto (2018, section 13.2) state the theorem for episodic problems with states that recur: $\nabla J(\theta) \propto \sum_s \mu(s) \sum_a q_\pi(s, a)\, \nabla_\theta \pi_\theta(a \mid s)$, where $\mu(s)$ is how often the policy visits state $s$ and $q_\pi(s, a)$ is the expected return after taking action $a$ in state $s$. @eq-pg and the reward-to-go form of section 5 are its sample-based versions for a finite episode. For text, a state is a whole prefix and almost never recurs, so the episode form above is the natural one.
 :::
 
@@ -218,7 +215,7 @@ The true gradient does not change. $J = 101p + 100(1 - p) = 100 + p$, so $dJ/d\t
 :::
 :::
 
-## 4. Baselines and variance
+## 4. Baselines and Variance
 
 **In this section:** show that the score function has mean zero, that a baseline therefore leaves the gradient unbiased, and why a baseline reduces variance.
 
@@ -321,21 +318,11 @@ A third common choice, a running mean of recent rewards, lags behind a policy th
 
 Noise has a cost beyond slow progress. A policy that is pushed hard by a noisy estimate can become nearly deterministic on a wrong choice, and a nearly deterministic policy stops sampling the alternatives, so it receives almost no signal to leave. Exercise 2 lets you look for this in the toy task.
 
-::: {.callout-tip collapse="true" title="Optional: the variance-minimizing baseline, and learned baselines"}
+::: {.callout-tip collapse="true" title="Optional: The Variance-Minimizing Baseline, and Learned Baselines"}
 For a single parameter, the variance of $(R - b)\, g$ with $g = \partial_\theta \log \pi_\theta(y \mid x)$ is minimized by $b^\ast = \mathbb{E}[R\, g^2] / \mathbb{E}[g^2]$: the mean reward, weighted by the squared score. In practice $\mathbb{E}[R]$ is close enough. **Actor-critic** methods learn the baseline: a second network, the **critic** or **value function** $v_\psi(s_t)$ with parameters $\psi$, is trained to predict the return from each state, and $G_t - v_\psi(s_t)$ is used as the advantage. PPO, the algorithm of the original RLHF pipeline, is an actor-critic method; Module 10 describes it in outline.
 :::
 
-<!-- FIGURE PLACEHOLDER (Quarto/Colab Architect): images/09-baseline-variance.svg
-     DATA FIGURE: draw from Lab 9's measured gradient estimates, not invented values. The Neural
-     Lab Engineer saves them to images/09-baseline-variance.json (Exercise 2: K batches at the
-     uniform initial theta, one coordinate of g-hat per batch, for "no baseline" and
-     "leave-one-out").
-     Spec: two overlaid histograms (or strip plots) of that coordinate's estimates, "no baseline" in
-     gray and "leave-one-out baseline" in the accent color, with one vertical line at the exact
-     gradient from exact_gradient(theta). Caption numbers (the two standard deviations) are read
-     from the JSON, as for images/05-causal-mask.svg.
-     Alt text: "Gradient estimates with and without a baseline: both are centered on the exact
-     gradient, but the estimates with the leave-one-out baseline are much less spread out." -->
+![Measured in Lab 9, Exercise 2: 500 one-batch REINFORCE estimates ($N = 16$) of one coordinate of $\nabla_\theta J$ at the uniform starting policy, the logit of the target's first symbol at step 1. Both histograms are centered on the exact gradient from `exact_gradient`; the leave-one-out baseline (@eq-loo) cuts the standard deviation from 0.023 to 0.014. The spike at 0 in the lower panel is mostly batches in which no sample wrote that symbol: the leave-one-out weights sum to zero over a batch, so such a batch gives exactly 0. Data: `images/09-baseline-variance.json`; drawn by `scripts/make_figures_09_11.py`.](/images/09-baseline-variance.svg){#fig-baseline-variance fig-alt="Gradient estimates with and without a baseline: both are centered on the exact gradient, but the estimates with the leave-one-out baseline are much less spread out."}
 
 **Credit across tokens.** A reward model scores a complete response, so in @eq-pg-loss every token of a response gets the same weight $R - b$. The reward says the response was good, not which tokens made it good, and only averaging over many samples sorts that out. When a reward arrives after each token instead, each token is weighted by its reward-to-go $G_t$ (@eq-return), and the rewards earned before it, which it could not affect, are dropped. Section 5, for reading after class, derives this and gives the loss code that the lab and Module 10 use.
 
@@ -351,7 +338,9 @@ By @eq-loo the baselines are the means of the other three rewards: $(1/3,\ 1,\ 4
 :::
 :::
 
-## 5. Generation as sequential decisions {.reference}
+## 5. Generation as Sequential Decisions {.reference}
+
+*Not taught in the room. Lab 9's Exercise 1 restates the return $G_t$ and the loss it needs; this section explains why a reward that arrives only at the end leaves credit assignment to averaging.*
 
 **In this section:** distinguish a sequence-level reward from token-level rewards, and say what each implies for credit assignment.
 
@@ -393,7 +382,7 @@ def loo_baseline(returns):                   # (N, T) -> (N, T); needs N >= 2
 
 Here `logp[i, t]` is $\log \pi_\theta(y^{(i)}_t \mid s^{(i)}_t)$, so `logp.sum(-1)` is @eq-seq-logprob. Responses of different lengths need one more step: zero the padding positions of `logp`, as the masked loss of Module 7 does, so that only the response's own tokens, up to and including its end token, are counted.
 
-::: {.callout-tip collapse="true" title="Optional: discounting"}
+::: {.callout-tip collapse="true" title="Optional: Discounting"}
 Many RL texts weight later rewards by $\gamma^{t'-t}$ with a **discount factor** $0 < \gamma \le 1$, so that $G_t = \sum_{t' \ge t} \gamma^{t'-t} r_{t'}$. Discounting keeps returns finite in episodes with no end and lowers variance at the price of bias. Text episodes are short and always end, and most language-model work uses $\gamma = 1$, as this module does.
 :::
 
@@ -409,7 +398,7 @@ With $r_t = \mathbf{1}[y_t = y^\star_t] / 6$, the rewards are $(\tfrac16, 0, \tf
 :::
 :::
 
-## 6. Why comparisons instead of scores
+## 6. Why Comparisons Instead of Scores
 
 **In this section:** say why preference data is usually collected as comparisons.
 
@@ -427,7 +416,7 @@ So most preference data is collected as **comparisons**: a prompt $x$, two respo
 
 A comparison is a **relative** label. To use it in the policy gradient we need a number per response. The next section supplies the model that links the two.
 
-## 7. The Bradley–Terry model
+## 7. The Bradley–Terry Model
 
 **In this section:** write the probability that one response is preferred to another, and state what that model can and cannot identify.
 
@@ -459,7 +448,7 @@ $$ {#eq-oracle}
 
   Pairs of equal quality contribute $0.5$. No reward model can beat $\mathrm{Acc}^\star$ on held-out labels from the same raters, except by chance on a small set; one that does so by a wide margin is overfitting or leaking labels.
 
-::: {.callout-tip collapse="true" title="Optional: other comparison models"}
+::: {.callout-tip collapse="true" title="Optional: Other Comparison Models"}
 **Thurstone's model** replaces the sigmoid with the normal cumulative distribution function, which corresponds to Gaussian rather than logistic noise on the qualities. The two give very similar probabilities after rescaling. The **Plackett–Luce model** extends Bradley–Terry from pairs to full rankings of $K$ items: the top item is chosen by a softmax over all $K$, the next by a softmax over the rest, and so on. Training on all $\binom{K}{2}$ pairs of a ranking, as InstructGPT did, is a simpler alternative.
 :::
 
@@ -475,7 +464,7 @@ By @eq-bt-rater the label probabilities are $\sigma(0) = 0.5$, $\sigma(2) \appro
 :::
 :::
 
-## 8. Training a reward model
+## 8. Training a Reward Model
 
 **In this section:** write the reward-model loss, connect it to logistic regression, and say what held-out accuracy does and does not tell you.
 
@@ -520,18 +509,7 @@ The shift changes nothing in the comparisons. It matters downstream: the policy 
 
 **What accuracy does not tell you.** Held-out accuracy is measured on responses like those in the training pairs. An optimizer will not stay there: Module 10 searches for the responses with the highest $r_\phi$, and those can lie where the reward model never saw data and is confidently wrong. This is Goodhart's law (a measure that becomes a target stops being a good measure), and Gao et al. (2023) measure it for reward models: optimizing harder against a learned reward first raises and then lowers the true reward.
 
-<!-- FIGURE PLACEHOLDER (Quarto/Colab Architect): images/09-reward-model.svg
-     Spec: left, a prompt box "x" with two response boxes below it, "y_w" (outlined in the accent
-     color, a small check mark) and "y_l" (gray). Each response, together with x, enters its own
-     copy of one box "r_phi" (draw the two copies with a dashed line between them labeled "shared
-     parameters phi"). The two outputs, "r_phi(x, y_w)" and "r_phi(x, y_l)", meet at a circled minus
-     sign, then a box "sigma", then the output "P(y_w preferred) = sigma(r_w - r_l)", then a box
-     "loss = -log sigma(r_w - r_l)". A small inset at the bottom right: the curve -log sigma(Delta)
-     against Delta, decreasing toward 0 for large Delta, with the point Delta = 0 marked "log 2".
-     Same style as images/07-lora-update.svg.
-     Alt text: "A reward model scores the preferred and the rejected response with shared
-     parameters; the difference of the two scores passes through a sigmoid, and the loss is its
-     negative logarithm." -->
+![The reward model and its loss (@eq-rm-loss). One network $r_\phi$, with the same parameters, scores the prompt with the preferred response and with the rejected one; only the difference $\Delta = r_\phi(x, y_w) - r_\phi(x, y_l)$ enters the loss. Inset: the loss $-\log \sigma(\Delta)$ is $\log 2 \approx 0.693$ when the two scores are equal and falls toward 0 as the preferred response pulls ahead.](/images/09-reward-model.svg){#fig-reward-model fig-alt="A reward model scores the preferred and the rejected response with shared parameters; the difference of the two scores passes through a sigmoid, and the loss is its negative logarithm."}
 
 ::: {.callout-note appearance="simple"}
 **In the lab.** In **Exercise 4** you write `bt_loss(reward_w, reward_l)` (@eq-rm-loss); the checkpoint compares it with hand values and with PyTorch's binary cross-entropy, and checks that adding a constant to both scores leaves it unchanged. The provided reward model is a small transformer built from the block of Lab 5. It reads GPT-2's token ids for the prompt and the response together and outputs one number at the last position. Unlike the reward models described at the start of this section, it does not start from a pretrained language model: it is trained from scratch, which keeps Lab 9 on a CPU with no download. One consequence matters in Module 10: it has an embedding only for tokens that occur at least twice in its training pairs, and every other token looks the same to it. After training, three numbers on held-out pairs: pairwise accuracy beside $\mathrm{Acc}^\star$, accuracy against the ordering by $g$, and the rank correlation between $r_\phi$ and $g$. A provided cell then scores a few hand-written responses that the reference model rarely writes, such as one positive word repeated many times or a response made only of positive words, and prints $r_\phi$ beside $g$: a preview of Module 10. In **Exercise 5** you write `fit_normalizer(raw_scores)` (@eq-normalize) on the held-out responses and save the reward model, normalization included, to the file that Lab 10 loads. The **stretch** section raises $\tau_{\text{label}}$ and measures how the reward model's accuracy degrades as the raters get noisier.
@@ -557,7 +535,7 @@ A and B have the same gap, 2, so the same loss: $-\log \sigma(2) \approx 0.127$.
 - Bradley–Terry turns qualities into preference probabilities (@eq-bt, @eq-bt-rater). Only differences are identified, scale is tangled with rater noise, and held-out accuracy has a ceiling (@eq-oracle).
 - A reward model is trained with the pairwise logistic loss (@eq-rm-loss), is normalized before use (@eq-normalize), and is only trustworthy on data like its training data.
 
-### Equations and where you implement them
+### Equations and Where You Implement Them
 
 | Equation | Lab 9 |
 |---|---|
@@ -576,7 +554,7 @@ A and B have the same gap, 2, so the same loss: $-\log \sigma(2) \approx 0.127$.
 | Accuracy against rater noise (section 7) | Stretch |
 | Actor-critic baselines, discounting, Plackett–Luce (optional callouts) | not implemented in this lab |
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"The reward has to be differentiable."** It never is differentiated. @eq-pg needs only its value.
 - **"The policy-gradient loss tells you how training is going."** @eq-pg-loss is a device for producing the right gradient. Its value depends on the baseline and moves for reasons unrelated to progress. Monitor the mean reward.
@@ -588,11 +566,11 @@ A and B have the same gap, 2, so the same loss: $-\log \sigma(2) \approx 0.127$.
 - **"An accurate reward model is a safe objective."** Its accuracy is measured on the data it was trained on. An optimizer leaves that data, and Module 10 shows what happens then.
 - **"Preferences measure truth."** They measure what raters prefer. Whether that is what we want is a question for Modules 10 and 12.
 
-## Next steps
+## Next Steps
 
 You can now optimize a policy against any reward with the policy gradient, and you can learn a reward from comparisons. [Module 10](10-rlhf.qmd) joins them into reinforcement learning from human feedback: the pretrained GPT-2 whose samples made up this lab's pairs is fine-tuned against the reward model you saved, with a penalty that keeps it close to where it started. It then removes the penalty to watch the reward model's blind spots get exploited, and introduces DPO, which learns from the same comparisons without a separate reward model or a sampling loop.
 
-## Further reading
+## Further Reading
 
 1. Sutton, R. S. and Barto, A. G. (2018). [*Reinforcement Learning: An Introduction*](http://incompleteideas.net/book/the-book-2nd.html), 2nd edition, MIT Press. Chapter 13, sections 13.1 to 13.4: the policy-gradient theorem, REINFORCE, and REINFORCE with a baseline.
 2. Williams, R. J. (1992). [Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://doi.org/10.1007/BF00992696). *Machine Learning* 8, 229–256. The original REINFORCE paper, including baselines.

@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 4 · Calibration, decisions, RAG](/day-4.qmd){.module-day} [Module 12]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [11:30 briefing · 13:25 lab · 14:20 debrief]{.module-clock}
+[Day 4 · Calibration, Decisions, RAG](/day-4.qmd){.module-day} [Module 12]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [11:30 briefing · 13:25 lab · 14:20 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,17 +32,19 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Implement an accuracy reward and a proper-score reward, and explain from a toy model why only the second pays for honest probabilities
 - Implement act, ask and escalate thresholds from stated costs, and choose them on development data
 - State what is and is not public about RLCD, and evaluate a decision model's answers by their probabilities, not their confidence field
+
+New terms, in the [glossary](/glossary.qmd): [act, ask, escalate](/glossary.qmd#act-ask-escalate), [RLCD](/glossary.qmd#rlcd), [Jev's confidence field](/glossary.qmd#jev-confidence).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
 - [Module 11 · Calibration](/modules/11-calibration.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account. Colab's default CPU runtime is enough.

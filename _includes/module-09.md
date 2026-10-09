@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 3 · Using and aligning LLMs](/day-3.qmd){.module-day} [Module 9]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [11:30 briefing · 13:25 lab · 14:20 debrief]{.module-clock}
+[Day 3 · Using and Aligning LLMs](/day-3.qmd){.module-day} [Module 9]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [11:30 briefing · 13:25 lab · 14:20 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Frame text generation as a reinforcement-learning problem
 - Derive and implement the policy gradient
 - Train a reward model from pairwise preferences
+
+New terms, in the [glossary](/glossary.qmd): [policy gradient](/glossary.qmd#policy-gradient), [Bradley–Terry model](/glossary.qmd#bradley-terry-model), [reward model](/glossary.qmd#reward-model).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 8 · LLMs through APIs](/modules/08-llm-apis.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 8 · LLMs Through APIs](/modules/08-llm-apis.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account. Colab's default CPU runtime is enough.
 - No API keys: the lab runs its own models throughout.
 :::

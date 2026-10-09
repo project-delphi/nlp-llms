@@ -2,10 +2,10 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–3 | 1. What Day 3 has left open | — |
-| 3–9 | 2. What a probability should mean | Check yourself (2 min) |
-| 9–16 | 3. Measuring calibration: reliability diagrams and ECE | — |
-| 16–28 | 4. Proper scoring rules | Check yourself (3 min) |
-| 28–39 | 6. Temperature scaling | Demo (4 min) |
-| 39–45 | 7. Confidence from a language model behind an API | — |
-| 45–55 | 8. Selective prediction and the cost of a wrong action | Check yourself (2 min) |
+| 0–3 | 1. What Day 3 Has Left Open | — |
+| 3–9 | 2. What a Probability Should Mean | Check yourself (2 min) |
+| 9–16 | 3. Measuring Calibration: Reliability Diagrams and ECE | — |
+| 16–28 | 4. Proper Scoring Rules | Check yourself (3 min) |
+| 28–39 | 6. Temperature Scaling | Demo (4 min) |
+| 39–45 | 7. Confidence From a Language Model Behind an API | — |
+| 45–55 | 8. Selective Prediction and the Cost of a Wrong Action | Check yourself (2 min) |

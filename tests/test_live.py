@@ -132,6 +132,60 @@ live:
         self.assertEqual(live_plan.shape_problems("x", [{"section": 1, "minutes": 0}]), [])
 
 
+class LabMap(unittest.TestCase):
+    """The `lab:` front matter: which sections each exercise uses (live_plan.lab_problems),
+    and the reading guide built from it."""
+
+    PAGE = """---
+live:
+  - {section: 1, minutes: 5}
+lab:
+  - {exercise: 1, sections: [1]}
+  - {exercise: 2, sections: [1]}
+  - {exercise: 3, sections: [2]}
+---
+
+## 1. Taught
+
+## 2. Looked Up {.reference}
+
+## Further Reading
+"""
+
+    def page(self, text: str, exercises=(1, 2, 3)):
+        Parsing.page(self, text)
+        patch = mock.patch.object(live_plan, "notebook_exercises", lambda slug: list(exercises))
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def test_a_complete_map_has_no_problems_and_builds_the_guide(self):
+        self.page(self.PAGE)
+        self.assertEqual(live_plan.problems("x", 5), [])
+        text = live_plan.guide("x")
+        self.assertIn("**Read now** · Section 1, in the agenda above.", text)
+        self.assertIn(
+            "Exercises 1 and 2: section 1; Exercise 3: section 2 (section 2: **Reference**", text
+        )
+        self.assertIn("**Read later** · Section 2, *Looked Up* (**Reference**)", text)
+        self.assertIn("[Further Reading](#further-reading)", text)
+
+    def test_a_missing_exercise_or_section_is_reported(self):
+        self.page(self.PAGE.replace("sections: [2]", "sections: [9]"), exercises=(1, 2, 3, 4))
+        found = "\n".join(live_plan.problems("x", 5))
+        self.assertIn("names exercises [1, 2, 3]; the notebook has [1, 2, 3, 4]", found)
+        self.assertIn("names section 9, which does not exist", found)
+
+    def test_a_lab_without_a_map_is_reported(self):
+        self.page(
+            self.PAGE.split("lab:")[0] + "---\n\n## 1. Taught\n\n## 2. Looked Up {.reference}\n"
+        )
+        self.assertIn("x: no `lab` map in the front matter", live_plan.problems("x", 5))
+
+    def test_a_malformed_map_is_reported(self):
+        self.page(self.PAGE.replace("{exercise: 1, sections: [1]}", "{exercise: 1, section: 1}"))
+        self.assertIn("each `lab` entry is", "\n".join(live_plan.problems("x", 5)))
+
+
 class Generated(unittest.TestCase):
     def test_tables_are_current(self):
         for _key, m in LECTURED:

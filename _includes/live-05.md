@@ -3,15 +3,23 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–5 | 1. From attention over an encoder to self-attention | — |
-| 5–20 | 2. Scaled dot-product attention | [Demo](#demo-scaling) (4 min); [Check yourself](#chk-scaling) (2 min) |
-| 20–27 | 3. The causal mask | [Check yourself](#chk-mask) (2 min) |
-| 27–33 | 4. Multi-head attention | — |
-| 33–38 | 5. Positional encodings | — |
-| 38–47 | 6. The transformer block | [Check yourself](#chk-layernorm) (2 min) |
-| 47–51 | 7. A decoder-only language model, and the other two variants | — |
-| 51–55 | 8. Cost and parallelism | — |
+| 0–5 | 1. From Attention Over an Encoder to Self-Attention | — |
+| 5–20 | 2. Scaled Dot-Product Attention | [Demo](#demo-scaling) (4 min); [Check yourself](#chk-scaling) (2 min) |
+| 20–27 | 3. The Causal Mask | [Check yourself](#chk-mask) (2 min) |
+| 27–33 | 4. Multi-Head Attention | — |
+| 33–38 | 5. Positional Encodings | — |
+| 38–47 | 6. The Transformer Block | [Check yourself](#chk-layernorm) (2 min) |
+| 47–51 | 7. A Decoder-Only Language Model, and the Other Two Variants | — |
+| 51–55 | 8. Cost and Parallelism | — |
 | **55** | **Total** | **45 minutes of exposition, 10 of activities** |
 :::
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
+
+::: {.reading-guide}
+**Read now** · Sections 1–8, in the agenda above.
+
+**Use in the lab** · Exercise 0: sections 6 and 7; Exercise 1: section 2; Exercise 2: section 3; Exercise 3: section 5; Exercise 4: sections 7 and 8; Exercise 5: section 4.
+
+**Read later** · The collapsed callouts marked **Optional** or **After the Lab**; [Further Reading](#further-reading).
+:::

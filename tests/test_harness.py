@@ -17,6 +17,18 @@ except ImportError:  # the render job's test environment has no IPython
     InteractiveShell = None
 
 SOURCE = harness.harness_source("toy", "0" * 16, {1: ("double",)})
+HINTED = harness.harness_source(
+    "toy",
+    "0" * 16,
+    {1: ("double",)},
+    hints=[1],
+    paths={
+        "offline": "offline stand-ins and test doubles: they do not measure a model",
+        "open": "real open models, no API keys",
+        "keyed": "commercial APIs with keys",
+    },
+    fallback_note="a toy model answers",
+)
 
 
 @unittest.skipIf(InteractiveShell is None, "IPython is not installed")
@@ -153,6 +165,61 @@ class Harness(unittest.TestCase):
         self.cell(SOURCE)
         result = self.cell("K = workshop.solution_value(1, 'K', 5)")
         self.assertIsInstance(result.error_in_exec, TypeError)
+
+    def captured(self, code):
+        """What a cell printed."""
+        import contextlib
+        import io
+
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.cell(code)
+        return out.getvalue()
+
+    def test_a_failed_checkpoint_points_at_the_hint(self):
+        self.cell(HINTED)
+        self.cell("def double(x):\n    return x + x + 1")
+        self.cell("@workshop.solution(1)\ndef double(x):\n    return 2 * x")
+        printed = self.captured("workshop.checkpoint(1)\nassert double(2) == 4")
+        self.assertIn("failed on your code", printed)
+        self.assertIn("Hint above TODO 1", printed)
+        self.cell(SOURCE)  # no hint for exercise 1
+        self.cell("@workshop.solution(1)\ndef double(x):\n    return 2 * x")
+        self.assertNotIn("Hint", self.captured("workshop.checkpoint(1)\nassert double(2) == 4"))
+
+    def without_offline_flags(self):
+        """CI's notebook job sets the offline flags for every test, and the path rule reads them."""
+        saved = {f: os.environ.pop(f) for f in harness.OFFLINE_FLAGS if f in os.environ}
+        self.addCleanup(os.environ.update, saved)
+
+    def test_the_summary_says_what_ran(self):
+        self.without_offline_flags()
+        self.cell(HINTED)
+        self.assertIn("real open models", self.captured("workshop.summary()"))
+        self.assertIn("a toy model", self.captured("workshop.summary()"))
+        self.cell("PROVIDER = 'anthropic'")
+        printed = self.captured("workshop.summary()")
+        self.assertIn("commercial APIs", printed)
+        self.assertNotIn("a toy model", printed)
+        self.cell("print('USING StubProvider')")
+        printed = self.captured("workshop.summary()")
+        self.assertIn("offline stand-ins", printed)
+        self.assertIn("do not measure a model", printed)
+
+    def test_a_cpu_only_note_shows_only_for_the_shorter_run(self):
+        self.without_offline_flags()
+        source = harness.harness_source(
+            "toy", "0" * 16, {1: ("double",)}, fallback_note="a shorter CPU run", cpu_only=True
+        )
+        self.cell(source)
+        self.cell("DEVICE = 'cpu'")
+        self.assertIn("a shorter CPU run", self.captured("workshop.summary()"))
+        self.cell("DEVICE = 'cuda'")
+        self.assertNotIn("a shorter CPU run", self.captured("workshop.summary()"))
+        self.cell("DEVICE = 'cpu'; FAST = False")  # the full run, forced on a CPU
+        self.assertNotIn("a shorter CPU run", self.captured("workshop.summary()"))
+        self.cell("FAST = True")
+        self.assertIn("a shorter CPU run", self.captured("workshop.summary()"))
 
     def test_rerunning_the_harness_starts_a_new_run(self):
         self.cell(SOURCE)

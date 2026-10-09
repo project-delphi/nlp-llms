@@ -859,11 +859,24 @@ blockquote {
     font-size: 0.93rem;
   }
 
+  // Pandoc gives a long pipe table equal column widths; the task column takes the rest.
+  colgroup col {
+    width: auto !important;
+  }
+
   td:last-child {
     width: 5.5rem;
     white-space: nowrap;
     text-align: right;
     font-variant-numeric: tabular-nums;
+    color: $nl-muted;
+  }
+
+  // The briefing sections an exercise uses (three-column tables only).
+  th:nth-child(2):not(:last-child),
+  td:nth-child(2):not(:last-child) {
+    width: 9rem;
+    white-space: nowrap;
     color: $nl-muted;
   }
 
@@ -1978,5 +1991,47 @@ section.reference > h2::after {
 
   li {
     color: $nl-heading;
+  }
+}
+
+// Under each agenda: read now, use in the lab, read later (scripts/live_plan.py, guide).
+.reading-guide {
+  margin: 1rem 0 1.6rem;
+  padding: 0.8rem 1.15rem 0.2rem;
+  border: 1px solid $nl-border;
+  border-left: 4px solid $nl-briefing;
+  border-radius: 9px;
+  background: $nl-surface;
+  font-size: 0.93rem;
+
+  p {
+    margin-bottom: 0.6rem;
+  }
+}
+
+// The glossary's letter index (glossary.qmd) and its definition list.
+.glossary-letters {
+  margin: 0.5rem 0 1.5rem;
+  font-family: $headings-font-family;
+  word-spacing: 0.15rem;
+}
+
+body:has(.glossary-letters) {
+  dt {
+    margin-top: 1.1rem;
+  }
+
+  dd p {
+    margin-bottom: 0.4rem;
+  }
+}
+
+// The results worksheet (worksheet.qmd): blank columns stay visibly blank.
+.worksheet table {
+  font-size: 0.88rem;
+
+  td:nth-last-child(-n + 2) {
+    min-width: 6rem;
+    border-bottom: 1px dashed $nl-border-strong;
   }
 }

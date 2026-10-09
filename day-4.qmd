@@ -8,7 +8,7 @@ toc: false
 
 Day 4 asks when a model's answer can be trusted. Calibration measures whether a model's probabilities mean what they say; Module 12 turns calibrated probabilities into act, ask or escalate decisions, and asks what changes when calibration itself is the training objective: TypeSafe names this RLCD but has not published the method, so the module keeps what TypeSafe has stated apart from third-party reports and from our own illustration. Module 13 grounds answers in retrieved sources and measures retrieval and answers separately.
 
-## Warm-up: what carried over (09:00–09:15) {#warm-up}
+## Warm-Up: What Carried Over (09:00–09:15) {#warm-up}
 
 Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4; the facilitator takes the two most-missed questions for 5. Each link opens the question with its folded answer. Three questions come from Day 3, one from Day 2 and one from Day 1.
 
@@ -22,16 +22,16 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 
 {{< include /_includes/day-4.md >}}
 
-## Run sheet {#run-sheet}
+## Run Sheet {#run-sheet}
 
 {{< include /_includes/run-4.md >}}
 
-## Day wrap-up (16:45–17:00) {#wrap-up}
+## Day Wrap-Up (16:45–17:00) {#wrap-up}
 
 In pairs for 5 minutes, then the room for 10. The facilitator adds today's rows to the board and keeps them for Day 5. The numbers are the room's own, from its runs.
 
 1. **Fixed and left open.** For Modules 11, 12 and 13, which limitation of the step before did each remove, and which did it leave for the next? Start from Module 10: RLHF optimizes what raters prefer, and raters do not judge confidence.
-2. **The running table.** Fill in the room's results:
+2. **The running table.** Fill in the room's results. Write the path beside each number, as the notebook's last cell prints it (real open models, Lab 12's toy model, commercial APIs, or offline stand-ins, which measure no model); the [results worksheet](worksheet.qmd) has a table per comparison group.
 
    | Lab | Rows | Metric |
    |---|---|---|
@@ -41,5 +41,7 @@ In pairs for 5 minutes, then the room for 10. The facilitator adds today's rows 
    | Lab 13, workshop briefings | chunk size and top-$k$ at a fixed context budget; with and without reranking | recall@$k$, MRR; faithfulness and the two-by-two table |
 
 3. **Ranking or values.** Which of today's numbers depend only on how the cases are ranked, and which on the probability values themselves? Which would temperature scaling change? And which rows of Lab 12 are evidence about our toy model, and which about Jev?
+
+If time allows, a transfer question from today's modules ([T11](knowledge-checks.md#t11), [T12](knowledge-checks.md#t12) or [T13](knowledge-checks.md#t13)) can replace item 3, in the same minutes. It changes the example, so the answer has to be reasoned out rather than recalled.
 
 Times are on the [schedule](schedule.qmd).

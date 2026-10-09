@@ -9,6 +9,12 @@ live:
   - {section: 4, minutes: 10, activities: [{block: demo-gradient, minutes: 4}]}
   - {section: 5, minutes: 10, activities: [{block: chk-forget, minutes: 2}]}
   - {section: 6, minutes: 4, activities: [{block: chk-claims, minutes: 2}]}
+lab:
+  - {exercise: 1, sections: [2]}
+  - {exercise: 2, sections: [3, 6]}
+  - {exercise: 3, sections: [4]}
+  - {exercise: 4, sections: [5]}
+  - {exercise: 5, sections: [7]}
 ---
 
 {{< include /_includes/module-03.md >}}
@@ -25,7 +31,7 @@ live:
 
 In section 4 the demo plays out the same one-unit RNN, and the same three cases, as the worked example before it. In the room, use the demo in place of walking through the example's table, which stays on the page for reading.
 
-## 1. Where Module 2 left us
+## 1. Where Module 2 Left Us
 
 Both neural models of Module 2 have the same blind spot.
 
@@ -36,7 +42,7 @@ Language has dependencies of no fixed length. In "The keys to the cabinet in the
 
 We want a model that (1) reads a sequence of any length, (2) applies the same parameters at every position, and (3) carries what it has read forward in a state. That model is the **recurrent neural network** (RNN).
 
-## Notation for this module
+## Notation for This Module
 
 The workshop notation applies. Tokens are $w_1,\dots,w_T$, with $T$ the sequence length, drawn from a vocabulary $V$ of size $|V|$. In this module's lab the tokens are **characters**, so $|V|$ is small: the 65 distinct characters of the training split.
 
@@ -55,12 +61,18 @@ The workshop notation applies. Tokens are $w_1,\dots,w_T$, with $T$ the sequence
 | $\tau$ | sampling temperature (not $T$, which is sequence length) |
 
 ::: {.callout-important appearance="simple"}
-## A notation clash, resolved
+## Notation Clashes, Resolved
 
 Module 1 uses $c(\cdot)$ for a count, as in $c(w_{t-1}, w_t)$. The LSTM literature uses $c_t$ for the cell state. In this module **$c_t$ with a time subscript is always the LSTM cell state, a vector in $\mathbb{R}^{d_h}$**. The count function is always written with an argument in parentheses, $c(\cdot)$, and appears only where we describe the n-gram baseline.
+
+Three letters from Module 2 also change meaning here.
+
+- **$U$** is the input-to-hidden matrix, $(d_h, d)$, not Module 2's matrix of context vectors.
+- **$\tau$** is the sampling temperature (section 7), not Module 2's subsampling threshold. From here on, plain $\tau$ is always a temperature.
+- **$o_t$** is the LSTM's output gate (section 5), not Module 2's context word $o$.
 :::
 
-## 2. The recurrent neural network
+## 2. The Recurrent Neural Network
 
 An RNN reads one token at a time and updates a state vector with the same function at every step:
 
@@ -91,7 +103,7 @@ $W$ has $256 \times 256 = 65{,}536$ entries, $U$ has $256 \times 64 = 16{,}384$ 
 :::
 :::
 
-## 3. The RNN language model
+## 3. The RNN Language Model
 
 A language model assigns a probability to the next token given the tokens so far. With an RNN, the hidden state is the summary of "the tokens so far":
 
@@ -117,14 +129,14 @@ $$ {#eq-ppl}
 
 **In the lab:** Exercise 2 asks you to write `lm_loss_and_ppl(logits, targets)`, which is @eq-loss and @eq-ppl. It returns the mean loss in nats, the perplexity and the bits per character (defined in the section on measuring fairly). The checkpoint feeds it equal logits, for which the perplexity must equal $|V| = 65$, and compares the loss with `F.cross_entropy`. The same function is the training loss and scores every model in the lab, the n-gram baseline included.
 
-### Teacher forcing
+### Teacher Forcing
 
 During training, the input at step $t$ is the **true** token $w_t$ from the corpus, whatever the model predicted at step $t-1$. This is called **teacher forcing**. It has two consequences.
 
 - All $T$ losses of a sequence come from one forward pass, because the inputs are known in advance.
 - At generation time there is no teacher: the model reads its own samples. It can drift into prefixes it never saw in training, and errors can compound. This mismatch is called **exposure bias**. We accept it here; it is one reason sampling choices (the last section) matter.
 
-### Training on a long text: truncated backpropagation
+### Training on a Long Text: Truncated Backpropagation
 
 The corpus is one long string, far too long to treat as a single sequence. At each training step the lab takes 64 random chunks of $T = 128$ characters from the training split, runs the model on each from $h_0 = 0$, computes @eq-loss, and backpropagates within the chunk only. This is **truncated backpropagation through time**. It bounds memory and compute, and it also means the model receives no gradient signal for dependencies longer than $T$. The training loop is provided in the lab.
 
@@ -138,7 +150,7 @@ Nothing in the architecture forbids it: $h_t$ is a function of the whole prefix,
 :::
 :::
 
-## 4. Backpropagation through time
+## 4. Backpropagation Through Time
 
 **In this section:** explain why a plain RNN struggles to learn long-range dependencies.
 
@@ -158,7 +170,7 @@ Reading the three factors from right to left:
 
 The term with $s$ far below $t$ is the one that teaches the network a long-range dependency: "what I stored at step $s$ mattered for the prediction at step $t$". Everything depends on the size of the middle factor.
 
-### The product of Jacobians
+### The Product of Jacobians
 
 By the chain rule, the middle factor is a product of one-step Jacobians:
 
@@ -172,7 +184,7 @@ $$
 \frac{\partial h_j}{\partial h_{j-1}} = \mathrm{diag}(1 - h_j^2)\, W.
 $$ {#eq-jac}
 
-### Why the product vanishes or explodes
+### Why the Product Vanishes or Explodes
 
 Write $\lVert \cdot \rVert$ for the spectral norm of a matrix: the largest factor by which it can stretch a vector. Two facts: the norm of a product is at most the product of the norms, and every entry of $1 - h_j^2$ lies in $(0, 1]$, so $\lVert \mathrm{diag}(1 - h_j^2) \rVert \le 1$. Applying both to @eq-jacprod and @eq-jac:
 
@@ -195,7 +207,7 @@ It is the *same* matrix $W$ multiplied $t-s$ times that makes the problem severe
 
 **In the lab:** Exercise 3, part A, is a provided measurement of $\lVert \partial \mathcal{L}_T / \partial h_s \rVert$ against the distance $T - s$, for the RNN you trained (`grad_norm_by_distance`, on 64 validation chunks of 200 characters, with the loss at the last position only). You predict the shape of the curve before running the cell. It is @eq-jacprod made visible; the cell also prints $\lVert W \rVert$, so you can check whether @eq-bound accounts for what you see. The same plot is repeated for the LSTM later.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 3 measured in Exercise 3, part A"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 3 Measured in Exercise 3, Part A"}
 Open this after Exercise 3, part A, so that it does not answer the lab's prediction for you. The lab measures the case of vanishing with $\lVert W \rVert > 1$. The RNN trained in Lab 3 has $\lVert W \rVert \approx 5.2$, so @eq-bound allows growth by up to a factor of 5.2 per character. Yet the measured $\lVert \partial \mathcal{L}_T / \partial h_s \rVert$ falls by a roughly constant factor per character and underflows to exactly 0 in 32-bit floating point from about 138 characters back. The bound with $\lVert W \rVert$ alone cannot explain that; the actual one-step Jacobians, with their $\mathrm{diag}(1 - h_j^2)$ factors, do. The lab does not measure how much of the decay each of the two routes contributes. The demo below is the lab's trained RNN in miniature.
 :::
 
@@ -261,7 +273,7 @@ We need $(1 - h^2) \times 5.2 < 1$, so $h^2 > 1 - 1/5.2 = 0.808$ and $|h| > 0.90
 :::
 :::
 
-### Gradient clipping fixes explosion, not vanishing
+### Gradient Clipping Fixes Explosion, Not Vanishing
 
 Let $g$ be the gradient of $\mathcal{L}$ with respect to all parameters, flattened into one vector, and let $\kappa > 0$ be a chosen threshold. **Gradient clipping by norm** rescales $g$ when it is too long:
 
@@ -275,7 +287,7 @@ Clipping does nothing for vanishing gradients: rescaling a whole gradient vector
 
 **In the lab:** Exercise 3, part B, asks you to write `clip_gradients(params, kappa)`, which is @eq-clip; the checkpoint compares it with `torch.nn.utils.clip_grad_norm_`. A provided demonstration then trains two fresh RNNs at a deliberately high learning rate, one with your `clip_gradients` and one without, and plots the gradient norm and the loss per step. Both language models in the lab are trained with Adam and clipping at $\kappa = 1$.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 3 measured in Exercise 3, part B"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 3 Measured in Exercise 3, Part B"}
 Open this after the clipping demonstration, so that it does not answer the lab's prediction for you. The demonstration trains the two RNNs for 150 steps on identical batches at a learning rate of 2.0, one with your `clip_gradients` at $\kappa = 1$ and one without. It uses **plain SGD**, not the Adam optimizer used everywhere else, because Adam divides each step by a running estimate of the gradient's size, which already hides most of the effect of one huge gradient. With SGD the difference is stark: in the build run, the unclipped model ended at a training loss of 9.34 nats per character, worse than the uniform guess ($\ln 65 \approx 4.17$), while the clipped one ended at 2.11. With SGD and clipping, every update has length at most $\text{lr} \cdot \kappa$.
 :::
 
@@ -324,7 +336,7 @@ def lstm_cell_step(x_t, h_prev, c_prev, p):
 
 **In the lab:** Exercise 4 gives you the four gate lines and asks you to write the last two, the cell update and the hidden state of @eq-lstm. The checkpoint compares your step with `nn.LSTMCell`. After that the lab uses `nn.LSTM`, which is the same computation in optimized form.
 
-### Why this helps the gradient
+### Why This Helps the Gradient
 
 Look at the cell update and differentiate $c_t$ with respect to $c_{t-1}$ along the direct path, holding the gates and the candidate fixed:
 
@@ -344,7 +356,7 @@ A practical detail that follows directly from @eq-lstm-jac: implementations ofte
 
 **In the lab:** after training, the gradient–distance measurement of Exercise 3 is repeated for the LSTM on the same 64 validation chunks, unrolled with your `lstm_cell_step`. The cell also prints the share of gate entries above 0.9 and 0.99, the units on which the direct path of @eq-lstm-jac barely decays. What the build run measured is in the box after the lab.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 3 measured for the LSTM's gradient"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 3 Measured for the LSTM's Gradient"}
 Open this after the LSTM's gradient plot, so that it does not answer the lab's prediction for you. In the build run, 50 characters back the LSTM's gradient was about $5 \times 10^{4}$ times the RNN's. Its curve still falls: the trained forget gates average 0.74 over those chunks, well below 1.
 :::
 
@@ -357,17 +369,17 @@ $0.73^{50} \approx 1.5 \times 10^{-7}$: at initialization the direct path still 
 :::
 
 ::: {.callout-note collapse="true"}
-## Optional: a historical note on the forget gate
+## Optional: A Historical Note on the Forget Gate
 
 The 1997 LSTM had no forget gate: the cell update was $c_t = c_{t-1} + i_t \odot \tilde{c}_t$, the "constant error carousel", whose direct-path Jacobian is exactly the identity. The forget gate was added by Gers, Schmidhuber and Cummins (2000) so that the cell can reset itself on continual input streams. What is called "the LSTM" today, and what `nn.LSTM` implements, is the version with the forget gate.
 :::
 
-### The GRU in brief
+### The GRU in Brief
 
 The **gated recurrent unit** (GRU; Cho et al., 2014) keeps the same idea, a gated additive update, with one state vector and two gates instead of two states and three gates. It has three quarters of the LSTM's parameters and usually performs comparably. PyTorch provides it as `nn.GRU`, with the same interface as `nn.LSTM` minus the cell state. The lab uses the LSTM.
 
 ::: {.callout-note collapse="true"}
-## Optional: the GRU equations
+## Optional: The GRU Equations
 
 With an **update gate** $u_t$ and a **reset gate** $r_t$, both in $(0,1)^{d_h}$ (we write $u_t$ where the literature writes $z_t$, because $z$ is reserved for logits in this workshop):
 
@@ -383,7 +395,7 @@ $$
 The last line is the counterpart of the LSTM cell update: where $u_t \approx 1$ the state is copied forward and the direct-path Jacobian is close to the identity. This is the form in Cho et al. (2014). PyTorch's `nn.GRU` applies the reset gate after the matrix product instead of before it; the difference does not change the idea.
 :::
 
-## 6. Measuring the improvement fairly
+## 6. Measuring the Improvement Fairly
 
 **In this section:** compare perplexity against the n-gram baseline, and know when such a comparison means something.
 
@@ -404,7 +416,7 @@ Character-level results are also often reported in **bits per character**, $\mat
 
 The two neural models are **not trained at equal compute**. The RNN ($d_h = 256$) trains for 1,000 steps and has 103,041 parameters; the LSTM ($d_h = 256$) trains for 2,000 steps (each step is 64 chunks of 128 characters) and has 350,593, about 3.4 times as many. So the table can show whether each recurrent model beats the counts, but not how much of any gap between the RNN and the LSTM is due to gating. The evidence for gating is the gradient measurement of Exercise 3 and its LSTM follow-up. The measured table is in the box after the lab, below.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 3 measured"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 3 Measured"}
 Open this after the lab's results table, so that it does not answer the lab's predictions for you. The checkpoint asserts that the LSTM's test perplexity is at least 1.0 below the trigram's and below the 5-gram's.
 
 These are the values measured by Lab 1 and Lab 3 and recorded in `data/baselines.json` (Lab 3 at full settings, seed 0, on a CPU, not yet on a Colab T4). All rows are on the same 60,394 test characters, in the same units.
@@ -432,7 +444,7 @@ Only (b) can conclude what it sets out to. Comparison (a) sets a per-character q
 :::
 
 ::: {.callout-note collapse="true"}
-## Optional: converting between character and word perplexity
+## Optional: Converting Between Character and Word Perplexity
 
 If two models both assign a probability to *the same complete test string*, their total log-probabilities are comparable even when their token units differ. Let the test text contain $N_c$ characters (counting spaces) and $N_w$ words. A character model with total negative log-likelihood $\mathrm{NLL}$ has $\mathrm{PPL}_{\text{char}} = \exp(\mathrm{NLL}/N_c)$, and its implied per-word perplexity is
 
@@ -443,7 +455,9 @@ $$
 For example, if a text averages 5.5 characters per word including the space, a character perplexity of 4.5 corresponds to $4.5^{5.5} \approx 3{,}900$ per word. The reverse conversion is usually *not* valid: a word-level model with a closed vocabulary maps rare words to an unknown-word token and so does not assign probability to the full string. This is why the lab compares like with like instead of converting.
 :::
 
-## 7. Generating text: sampling strategies {.reference}
+## 7. Generating Text: Sampling Strategies {.reference}
+
+*Not taught in the room. Lab 3's Exercise 5 restates temperature sampling, the one strategy it asks you to write; top-$k$ and nucleus sampling are its stretch section.*
 
 A trained language model gives a distribution $\hat{y}_t$ over the next token. To generate, pick a token from it, feed that token back in as the next input, and repeat. How we pick matters.
 
@@ -504,7 +518,7 @@ First step. Top-2 keeps $(0.50, 0.30)$ and renormalizes to $(0.625, 0.375)$. Nuc
 - Perplexities are comparable only at the same token unit, on the same data, vocabulary and scored positions. Lab 3 compares the RNN and the LSTM with Lab 1's character n-grams on those terms (the box after the lab in section 6).
 - Greedy, temperature, top-$k$ and nucleus sampling trade off repetition against incoherence (@eq-temp).
 
-### Equations and where you implement them
+### Equations and Where You Implement Them
 
 | Equation | What it is | In Lab 3 |
 |---|---|---|
@@ -521,7 +535,7 @@ First step. Top-2 keeps $(0.50, 0.30)$ and renormalizes to $(0.625, 0.375)$. Nuc
 | Top-$k$ and nucleus sampling | Tail filters | Stretch: `top_k_filter` and `nucleus_filter` |
 | GRU (optional) and the character-to-word conversion (optional) | – | Not in the lab |
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"An RNN can use unlimited context."** In principle $h_t$ depends on the whole prefix. In practice the usable context is limited by vanishing gradients, by the truncation length used in training, and by the fixed size of $h_t$.
 - **"If $\lVert W \rVert > 1$, the gradient explodes."** $\lVert W \rVert > 1$ only removes the guarantee of vanishing. Saturated $\tanh$ units pass almost no gradient back, so the gradient can vanish all the same (the worked example and the demo in section 4).
@@ -532,11 +546,11 @@ First step. Top-2 keeps $(0.50, 0.30)$ and renormalizes to $(0.625, 0.375)$. Nuc
 - **"Temperature changes what the model knows."** It reshapes one distribution at sampling time. The model, its ranking of tokens and its perplexity are unchanged.
 - **"Teacher forcing is cheating."** It is ordinary maximum-likelihood training. Its cost is the train/generate mismatch (exposure bias), not an inflated score: held-out perplexity is also computed with the true prefix.
 
-## Next steps
+## Next Steps
 
 An RNN language model emits one output per input, in step with it. Many tasks instead map one sequence to *another sequence of a different length*: a sentence to its translation, "March 5, 2024" to "2024-03-05". The natural move is to read the input with one RNN and take its **final hidden state** $h_T$ as a summary from which a second RNN generates the output. That single fixed-size vector must then hold everything about the input, however long it is. Module 4 builds this encoder-decoder model, shows where the summary fails, and introduces attention to fix it.
 
-## Further reading
+## Further Reading
 
 1. Hochreiter, S. and Schmidhuber, J. (1997). [Long Short-Term Memory](https://doi.org/10.1162/neco.1997.9.8.1735). *Neural Computation* 9(8), 1735–1780. The original paper; read sections 1 to 4 for the argument.
 2. Pascanu, R., Mikolov, T. and Bengio, Y. (2013). [On the difficulty of training recurrent neural networks](https://proceedings.mlr.press/v28/pascanu13.html). *Proceedings of the 30th International Conference on Machine Learning*, PMLR 28(3), 1310–1318. The source of the Jacobian analysis and of gradient norm clipping.

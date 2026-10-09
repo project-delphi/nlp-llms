@@ -9,7 +9,7 @@
 ::: {.module-card-body}
 [Module 0 · pre-work, optional clinic]{.eyebrow}
 
-[Coding agents in the terminal](modules/00-coding-agents.qmd){.module-card-title}
+[Coding Agents in the Terminal](modules/00-coding-agents.qmd){.module-card-title}
 
 Install a terminal coding agent and use it to build, check and publish two small data apps in Python or R, each with a three.js page. Pre-work, on your own laptop before Day 1.
 
@@ -26,7 +26,7 @@ Install a terminal coding agent and use it to build, check and publish two small
 ::: {.module-card-body}
 [Module 1]{.eyebrow}
 
-[Text as data](modules/01-text-as-data.qmd){.module-card-title}
+[Text as Data](modules/01-text-as-data.qmd){.module-card-title}
 
 Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against.
 
@@ -43,7 +43,7 @@ Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-b
 ::: {.module-card-body}
 [Module 2]{.eyebrow}
 
-[Word vectors and neural networks](modules/02-word-vectors.qmd){.module-card-title}
+[Word Vectors and Neural Networks](modules/02-word-vectors.qmd){.module-card-title}
 
 From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model.
 
@@ -60,7 +60,7 @@ From one-hot vectors to learned embeddings, with a PyTorch refresher and the fir
 ::: {.module-card-body}
 [Module 3]{.eyebrow}
 
-[Sequence models](modules/03-sequence-models.qmd){.module-card-title}
+[Sequence Models](modules/03-sequence-models.qmd){.module-card-title}
 
 RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences.
 
@@ -77,7 +77,7 @@ RNNs, LSTMs and neural language modeling, and why gradients vanish over long seq
 ::: {.module-card-body}
 [Module 4]{.eyebrow}
 
-[Seq2seq and attention](modules/04-seq2seq-attention.qmd){.module-card-title}
+[Seq2seq and Attention](modules/04-seq2seq-attention.qmd){.module-card-title}
 
 Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.
 

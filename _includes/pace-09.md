@@ -2,10 +2,10 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–4 | 1. No label for "better" | — |
-| 4–9 | 2. The minimum reinforcement learning | — |
-| 9–20 | 3. The policy gradient and REINFORCE | Check yourself (2 min) |
-| 20–32 | 4. Baselines and variance | Demo (4 min) |
-| 32–35 | 6. Why comparisons instead of scores | Predict (1 min) |
-| 35–44 | 7. The Bradley–Terry model | Check yourself (3 min) |
-| 44–55 | 8. Training a reward model | — |
+| 0–4 | 1. No Label for "Better" | — |
+| 4–9 | 2. The Minimum Reinforcement Learning | — |
+| 9–20 | 3. The Policy Gradient and REINFORCE | Check yourself (2 min) |
+| 20–32 | 4. Baselines and Variance | Demo (4 min) |
+| 32–35 | 6. Why Comparisons Instead of Scores | Predict (1 min) |
+| 35–44 | 7. The Bradley–Terry Model | Check yourself (3 min) |
+| 44–55 | 8. Training a Reward Model | — |

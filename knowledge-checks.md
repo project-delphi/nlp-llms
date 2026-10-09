@@ -1,8 +1,8 @@
 ---
-title: "Knowledge checks"
+title: "Knowledge Checks"
 aliases:
   - /assessments.html
-subtitle: "Entry check and knowledge checks"
+subtitle: "Entry Check and Knowledge Checks"
 ---
 
 <!--
@@ -10,26 +10,28 @@ Instructor page, rendered by Quarto. Module titles come from _variables.yml thro
 shortcodes. Objective numbers refer to the objectives listed at the top of each briefing
 page, which are generated from _variables.yml; they are not repeated here. Numbers in
 the answers are the build runs recorded in data/baselines.json and quoted in the briefings.
+The transfer questions (T1 to T15) set up invented examples on purpose; the numbers in
+their answers are computed from those examples, not measured.
 -->
 
 Two short checks. The **entry check** tells a participant, before Day 1, whether the prerequisites are in place. The **knowledge checks** ask one or two questions per module objective, so a participant (or a facilitator) can see which objectives landed. Neither is graded. Every question can be answered from the briefings and labs; none is a trick question.
 
-## How to use them
+## How to Use Them
 
 - **Entry check.** Participants take it on the [Before Day 1](prepare.qmd) page, the first step before Setup: about 15 minutes, on paper or in a notebook, with no web search. One rule applies: a participant who misses two or more of the three questions in an area does that area's remediation, listed on the same page, before Day 1; one miss in an area needs no action. Send the page a week ahead, so there is time for the remediation.
 - **Knowledge check.** On Days 2 to 5, the 15 minutes of warm-up that open the day use five of these questions: about three from the previous day and two from earlier days. The picks and the routine are on each day page ([Day 2](day-2.qmd#warm-up), [Day 3](day-3.qmd#warm-up), [Day 4](day-4.qmd#warm-up), [Day 5](day-5.qmd#warm-up)). Participants can also use the questions of the day's modules as a self-check that evening, or all of them after Day 5. Answers are folded under each question. Each answer names the lab and exercise that produced the evidence, so a participant who misses a question knows which cell to rerun.
 - **Numbers.** Where an answer quotes a measured number, it is the build run recorded in `data/baselines.json` and quoted in the briefing. If your room ran on another runtime and got a different number, accept the room's number with the same reasoning.
 - **Labs whose real path has not run.** The [readiness page](readiness.qmd) lists which labs have run on their real models, and where. A question on a lab that has not tests the reasoning of the briefing and the checkpoint, not a model result.
 
-## Entry check {#entry-check}
+## Entry Check {#entry-check}
 
 Participants take this check on the [Before Day 1](prepare.qmd#entry-check) page, which also says how to read the score and what to study in each area.
 
 {{< include /prepare/entry-check.md >}}
 
-## Knowledge check
+## Knowledge Check
 
-Questions are numbered *module.objective*, with a letter when an objective has two. Objective numbers refer to the list at the top of each module page. Each question has its own link, with the dot replaced by a hyphen: `#q10-2` for 10.2, `#q12-3a` for 12.3a. The day pages use these links. The outcome numbers refer to the workshop's learning outcomes:
+Questions are numbered *module.objective*, with a letter when an objective has two. Objective numbers refer to the list at the top of each module page. Each question has its own link, with the dot replaced by a hyphen: `#q10-2` for 10.2, `#q12-3a` for 12.3a. The day pages use these links. Each module's block ends with a **transfer question**, numbered T and the module (`#t5` for T5). It changes the example, so the answer has to be worked out from the idea rather than recalled from the lab or the page, and its folded answer names the misconception it rules out and the exercise to revisit. The outcome numbers refer to the workshop's learning outcomes:
 
 | Outcome | By the end of the workshop a participant can | Modules |
 |---|---|---|
@@ -71,6 +73,16 @@ Sparsity. At $n = 3$, 77% of the test trigrams never occur in training, so most 
 Naive Bayes sets its weights by counting words per class, under the assumption that words are independent given the class. Logistic regression sets them by minimizing cross-entropy. Naive Bayes is the overconfident one: correlated words are counted as independent evidence, so the evidence is double-counted. The false assumption harms the probabilities more than the ranking. **Evidence:** Lab 1, Exercises 5 and 6 (both classifiers, per-class precision and recall, the most confident errors).
 :::
 
+[**T1**]{#t1} (Transfer · Objective 3 · Outcome 1) Two versions of a classifier send arXiv papers to the robotics reviewers. For the Robotics class, version A has precision 0.95 and recall 0.80; version B has precision 0.60 and recall 0.95. A Robotics paper that is not flagged never reaches those reviewers; a paper flagged by mistake costs a reviewer a minute to send back. Which version has the higher F1 for Robotics, and which would you deploy?
+
+::: {.callout-tip collapse="true" title="Answer"}
+A has the higher F1: $2 \times 0.95 \times 0.80 / 1.75 \approx 0.87$, against $2 \times 0.60 \times 0.95 / 1.55 \approx 0.74$ for B. Deploy B all the same. Recall is the share of Robotics papers that get flagged, so A misses one in five and B one in twenty. B's lower precision means more papers flagged by mistake, and here those are cheap. F1 weighs the two kinds of error equally; these costs do not.
+
+**Misconception ruled out:** the classifier with the higher F1 is the better one for every use.
+
+**Revisit:** Lab 1, Exercise 6 (Module 1, section 6).
+:::
+
 ### Module 2 · {{< var modules.m02.title >}}
 
 Objectives: [Module 2](modules/02-word-vectors.qmd).
@@ -97,6 +109,16 @@ Cost: each pair costs $O(K)$ instead of $O(|V|)$. It gives up normalized probabi
 
 ::: {.callout-tip collapse="true" title="Answer"}
 Averaging discards word order and blurs the few distinctive words that decide a topic. The embeddings were trained on about one million tokens. On topic classification with plenty of labels, word identity carries most of the signal, which TF-IDF keeps. Whether dense features win is an empirical question. **Evidence:** Lab 2, Exercises 3 and 4 and the results table.
+:::
+
+[**T2**]{#t2} (Transfer · Objective 1 · Outcome 1) A teammate ranks the neighbors of *network* by the raw dot product $e_a^\top e_b$ instead of the cosine. Which words do you expect to climb the list, and why does Lab 2 divide by the two norms?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Words with long vectors. The dot product is the cosine times both lengths, $e_a^\top e_b = \lVert e_a \rVert \, \lVert e_b \rVert \cos(e_a, e_b)$, so for a fixed query the ranking is by $\lVert e_b \rVert \cos(e_a, e_b)$, and a long vector can outrank a closer direction. Vector length tends to track word frequency rather than meaning, so expect frequent words to climb whatever they mean. Dividing by the norms compares directions only.
+
+**Misconception ruled out:** the dot product and the cosine rank neighbors in the same order.
+
+**Revisit:** Lab 2, Exercise 2 (Module 2, section 2).
 :::
 
 ### Module 3 · {{< var modules.m03.title >}}
@@ -127,6 +149,16 @@ No. Clipping caps the size of an update, which handles explosion. The LSTM adds 
 Perplexities are comparable only at the same token unit, on the same test text, vocabulary and scored positions. The LSTM and the 5-gram are both scored per character on the same 60,394 test characters with the same 65-character vocabulary. A word-level perplexity is on a different scale. **Evidence:** Lab 3, the results table (the checkpoint asserts the LSTM beats the trigram and the 5-gram).
 :::
 
+[**T3**]{#t3} (Transfer · Objective 3 · Outcome 1) A colleague lowercases Tiny Shakespeare, trains Lab 3's character LSTM on it, and reports a test perplexity below Lab 3's. Is theirs the better model of Shakespeare's text? What comparison would be fair?
+
+::: {.callout-tip collapse="true" title="Answer"}
+The two numbers cannot tell you. Both are per character, but lowercasing changes the text and shrinks the vocabulary, so two of Module 3's conditions fail: the same data and the same vocabulary. Even a model that knows nothing would score lower, because a uniform model's perplexity equals the vocabulary size ([1.2a](#q1-2a)). A fair comparison trains and scores both models on the same text with the same vocabulary, lowercased or not. Converting through the total log-probability of the test text does not rescue it: that needs both models to assign a probability to the same complete string, and the lowercased model assigns none to the original capitals.
+
+**Misconception ruled out:** two perplexities are comparable whenever both are per character.
+
+**Revisit:** Lab 3, Exercise 2 and the results table (Module 3, section 6).
+:::
+
 ### Module 4 · {{< var modules.m04.title >}}
 
 Objectives: [Module 4](modules/04-seq2seq-attention.qmd).
@@ -153,6 +185,16 @@ Scores $e_{t,i} = s_t^\top h_i$; set masked positions to $-\infty$; weights $\al
 
 ::: {.callout-tip collapse="true" title="Answer"}
 It shows which encoder state the decoder read at that step: a soft alignment. It does not show how the information was used, so it is evidence, not an explanation. The softmax is over source positions, never exactly 0 or 1. **Evidence:** Lab 4, Exercise 5 (heat-maps and the alignment hit rate).
+:::
+
+[**T4**]{#t4} (Transfer · Objectives 2 and 3 · Outcome 1) A seq2seq model with attention is trained to write its input backwards: `stressed` becomes `desserts`. (1) Where do you expect the bright cells of its attention heat-map? (2) The same task without attention, at a fixed $d_h$: what happens to exact match as the inputs grow from 5 to 50 characters, and is that the vanishing-gradient problem?
+
+::: {.callout-tip collapse="true" title="Answer"}
+(1) On the anti-diagonal. Output position $t$ should read source position $S + 1 - t$, so the bright cells run from the top right to the bottom left: when source and target order differ, the bright cells leave the diagonal. A weight can still land one position away from where you expect, because each encoder state summarizes a prefix of the source. (2) Exact match should fall as the inputs grow. Every character must pass through $h_S$, which has $d_h$ numbers whatever $S$ is: that is the capacity problem of the fixed-vector bottleneck. It would remain with perfect training, whereas vanishing gradients are a problem of optimization along the long path.
+
+**Misconception ruled out:** a good attention map is a bright diagonal.
+
+**Revisit:** Lab 4, Exercises 2 and 5 (Module 4, sections 3 and 6).
 :::
 
 ### Module 5 · {{< var modules.m05.title >}}
@@ -183,6 +225,16 @@ Token embeddings plus position embeddings; $n_\ell$ blocks, each $x + \mathrm{At
 A tie at this budget, not a ranking. The difference is within seed noise. The comparison is meaningful only with each model's parameter count, steps and time stated; with a shorter budget the LSTM won clearly. **Evidence:** Lab 5, Exercise 4 (the results table).
 :::
 
+[**T5**]{#t5} (Transfer · Objective 1 · Outcome 2) A teammate adds a layer before the first block of Lab 5's model that replaces each position's vector by the average of itself and the next position's vector. The causal mask is unchanged. Which of the lab's leak tests catches the bug, and which passes?
+
+::: {.callout-tip collapse="true" title="Answer"}
+The test on the whole model catches it; the test on one attention step passes. The weights above the diagonal are still exactly zero, and an attention layer tested on its own never sees the new layer. But position $t$ now holds part of token $t + 1$ before attention begins, so changing the token at $t_0$ moves the logits at $t_0 - 1$. The mask makes position $t$ depend only on tokens $1, \dots, t$ only if no other component mixes positions, which is why the lab also runs the leak test on the logits of the whole model.
+
+**Misconception ruled out:** zero attention weights above the diagonal guarantee that the model cannot see the future.
+
+**Revisit:** Lab 5, Exercise 2 and the whole-model leak test at the end of Exercise 3 (Module 5, sections 3 and 6).
+:::
+
 ### Module 6 · {{< var modules.m06.title >}}
 
 Objectives: [Module 6](modules/06-pretraining-huggingface.qmd).
@@ -209,6 +261,16 @@ Nothing is broken: the classification head is new and must be trained. The token
 
 ::: {.callout-tip collapse="true" title="Answer"}
 About $\ln 4 \approx 1.386$: a fresh head gives near-uniform predictions. Standard fine-tuning updates every parameter, body and head, with a small learning rate for a few epochs; training only the head is a different, cheaper method. **Evidence:** Lab 6, Exercise 5 (the starting loss is checked against $\log 4$).
+:::
+
+[**T6**]{#t6} (Transfer · Objective 1 · Outcome 3) Lab 6's BPE tokenizer, trained with 4,000 entries on arXiv abstracts, needs 1.548 tokens per word on the arXiv validation texts. You use it unchanged on Shakespeare's plays. Do you expect more or fewer tokens per word, and what follows for a model that truncates its input at 256 tokens? Could you instead retrain the tokenizer of a pretrained model on the plays?
+
+::: {.callout-tip collapse="true" title="Answer"}
+More. The merges are the frequent strings of arXiv abstracts, so words that are common in the plays and rare in abstracts (*thou*, *doth*, the characters' names) are likely to be split into more, shorter pieces; measure it with your `tokens_per_word` before relying on it. Each passage then costs more tokens: more of it is cut off at 256, the attention step costs more (it grows with the square of the length, Module 5), and API limits and prices are counted in tokens. For a model you train yourself, train the tokenizer on text like the target. A pretrained model must keep its own tokenizer: token IDs index rows of its embedding matrix, so a new tokenizer gives wrong rows and no error ([6.2](#q6-2)).
+
+**Misconception ruled out:** tokens per word is a property of the tokenizer alone, whatever text it reads.
+
+**Revisit:** Lab 6, Exercises 1 and 2 (Module 6, section 2).
 :::
 
 ### Module 7 · {{< var modules.m07.title >}}
@@ -239,6 +301,16 @@ $B = 0$ at initialization, so $BA = 0$ and $W = W_0$. The gradient of $B$ depend
 Perplexity measures the probability of the reference responses, not the quality of generated text; ROUGE counts shared words with one reference, so a wrong answer can score well. Neither shows correctness: read the outputs. When measuring, decode greedily, and always set a stop token and a length limit. **Evidence:** Lab 7, Exercise 6 and the before-and-after checkpoint.
 :::
 
+[**T7**]{#t7} (Transfer · Objective 2 · Outcome 3) Two teams start from the same pretrained model and train LoRA adapters at $r = 8$ on `q_proj` and `v_proj`. Team A teaches the model to always reply in a fixed three-line format. Team B teaches it the drug interactions in a pharmacology handbook that its pretraining data did not cover. Which team is more likely to find $r = 8$ enough, and how should each find out?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Team A. A format and a behavior are the kind of small change that LoRA's low-rank hypothesis is about: the model keeps its pretrained ability and learns only the change. Team B asks the model to absorb much new knowledge far from its pretraining data, which is where a low rank can underperform full fine-tuning. Neither team should assume: sweep the rank, compare query-and-value targets with every linear layer, report $\alpha$ beside each rank, and score held-out examples.
+
+**Misconception ruled out:** a small-rank adapter matches full fine-tuning on every task.
+
+**Revisit:** Lab 7, Exercise 5 and the stretch's rank sweep (Module 7, sections 5 and 6).
+:::
+
 ### Module 8 · {{< var modules.m08.title >}}
 
 Objectives: [Module 8](modules/08-llm-apis.qmd).
@@ -265,6 +337,16 @@ If invalid outputs were dropped, a provider that fails more often could look mor
 
 ::: {.callout-tip collapse="true" title="Answer"}
 $(400 \times 1 + 60 \times 5)/10^6 = \$0.0007$. The API is stateless, so every call resends the whole message list, which grows by about $\delta$ tokens per round: input tokens total $K n_0 + \delta K(K-1)/2$, quadratic in $K$. **Evidence:** Lab 8, Exercise 5 (`cost_usd`; measured input tokens against the formula).
+:::
+
+[**T8**]{#t8} (Transfer · Objective 3 · Outcome 4) On a new extraction task, a provider's first reply validates against the schema 60% of the time. You run Lab 8's `extract` with $R = 2$, and assume that each attempt validates independently with that probability. (1) What share of items ends with a valid record, and how many calls does an item take on average? (2) Why does the input cost grow faster than the number of calls? (3) Validity rose from 0.60 to about 0.94. What does that tell you about exact match?
+
+::: {.callout-tip collapse="true" title="Answer"}
+(1) A share of $1 - 0.4^3 = 0.936$ ends valid, and an item takes $1 + 0.4 + 0.4^2 = 1.56$ calls on average. (2) The API is stateless, and each retry appends the failed reply and the validation error to the message list, so every retry resends a longer conversation than the call before it. (3) Only that more records can be scored. A valid record guarantees form, not truth: exact match is a separate number, computed over all $N$ items with invalid outputs counted as wrong, and only measuring it shows whether the retries made more records right.
+
+**Misconception ruled out:** a retry that makes an output valid makes it right.
+
+**Revisit:** Lab 8, Exercises 2 and 3 (Module 8, sections 4 and 7).
 :::
 
 ### Module 9 · {{< var modules.m09.title >}}
@@ -295,6 +377,16 @@ A baseline that includes the sample's own reward depends on the response it is s
 $P(a \succ b) = \sigma\big((g_a - g_b)/\tau_{\text{label}}\big)$; loss $-\log \sigma\big(r_\phi(y_w) - r_\phi(y_l)\big)$. Raters are noisy and many pairs are close, so even the true rule would mislabel some pairs: the ceiling is $\mathrm{Acc}^\star$, often well below 1. **Evidence:** Lab 9, Exercises 3 and 4 (`bt_prob`, `bt_loss`, held-out accuracy beside $\mathrm{Acc}^\star$).
 :::
 
+[**T9**]{#t9} (Transfer · Objective 2 · Outcome 5) Two actions are each sampled with probability $p = 0.5$. Action 1 earns reward 1 and action 2 earns 0. A teammate uses the constant baseline $b = 5$. As in Module 9's two-action table, compute the two one-sample REINFORCE estimates, their mean and their standard deviation. Is the estimate biased? Did the baseline help?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Unbiased, and worse. The score functions are $1 - p = 0.5$ and $-p = -0.5$, so the estimates are $(1 - 5) \times 0.5 = -2$ and $(0 - 5) \times (-0.5) = 2.5$: mean $0.25$, which is the true gradient $p(1 - p)(1 - 0)$, and standard deviation $2.25$. Without a baseline they are $0.5$ and $0$, with standard deviation $0.25$; at the mean reward, $b = 0.5$, both are $0.25$ and the standard deviation is 0. A baseline that does not depend on the sample never moves the mean, because the score has mean zero, but it changes the variance, and one far from the rewards makes it nine times larger here. The sign of a single estimate is now a coin flip.
+
+**Misconception ruled out:** any baseline reduces the variance of the policy gradient.
+
+**Revisit:** Lab 9, Exercise 2 (Module 9, section 4).
+:::
+
 ### Module 10 · {{< var modules.m10.title >}}
 
 Objectives: [Module 10](modules/10-rlhf.qmd).
@@ -323,6 +415,16 @@ $\log 2$: both implicit rewards are 0 and $-\log \sigma(0) = \log 2$. DPO remove
 Reward hacking: the reward model's score holds up while the gold reward ends lower than with the penalty, and the policy drifts far from the reference and loses variety. The gold rule lets the two scores part in three ways: no credit past three distinct positive words (the cap), a penalty for crowding, and simply fewer distinct positive words, or more negative ones, in the samples. The reward model was trained on the reference's own samples. There the cap and the crowding term almost never fire, so it never learned them, and on text unlike those samples its score is extrapolation. Which route a run takes is not fixed: one exploratory run (seed 0, on an Apple M1 Pro laptop, not the T4 protocol) collapsed onto one positive word and filler, "good as as as …", which neither the cap nor the crowding term penalizes. Other failure modes named in the briefing: mode collapse, sycophancy, and optimizing for what raters can judge rather than what is true. **Evidence:** Lab 10, Exercise 4 (the asserted signature; not yet verified across seeds on a T4).
 :::
 
+[**T10**]{#t10} (Transfer · Objectives 2 and 4 · Outcome 5) For one prompt only two responses are possible. The reference gives each probability 0.5, and the reward model scores them 0 and 1. (1) Compute the optimal policy $\pi^*$ of the KL-regularized objective for $\beta = 1$ and for $\beta = 0.5$. (2) The gold reward turns out to be 0 and $-1$: the reward model was wrong about the second response. Which $\beta$ loses less gold reward? (3) Would training longer at $\beta = 1$ reach the $\beta = 0.5$ policy?
+
+::: {.callout-tip collapse="true" title="Answer"}
+(1) $\pi^* \propto \pi_{\text{ref}}\, e^{r/\beta}$. At $\beta = 1$ the weights are $0.5$ and $0.5e$, so $\pi^* \approx (0.27, 0.73)$; at $\beta = 0.5$ they are $0.5$ and $0.5e^2$, so $\pi^* \approx (0.12, 0.88)$. (2) The expected gold reward is $-0.5$ under the reference, $-0.73$ at $\beta = 1$ and $-0.88$ at $\beta = 0.5$. The larger $\beta$ loses less, because it holds the policy closer to the reference, where the reward model can be trusted. (3) No. $\beta$ is a coefficient in the objective: it sets where the optimum lies, not how fast training gets there.
+
+**Misconception ruled out:** $\beta$ is a kind of learning rate.
+
+**Revisit:** Lab 10, Exercises 3 and 4 (Module 10, sections 3 and 6).
+:::
+
 ### Module 11 · {{< var modules.m11.title >}}
 
 Objectives: [Module 11](modules/11-calibration.qmd).
@@ -349,6 +451,16 @@ For a binary event with true probability $p$, the expected Brier score of a repo
 
 ::: {.callout-tip collapse="true" title="Answer"}
 Act when $\hat{p} > \lambda^* = 1 - 1/10 = 0.9$. The curve depends only on the order of the confidences, which temperature scaling keeps for two classes (for four classes the top-class order changed on 0.92% of test pairs). What changes is where the cost-based threshold sits. **Evidence:** Lab 11, Exercises 3 and 5.
+:::
+
+[**T11**]{#t11} (Transfer · Objective 4 · Outcome 6) A calibrated classifier gives $\hat{p} = 0.95$ on 70% of cases and $\hat{p} = 0.75$ on the rest. A wrong action costs 10 and deferring to a reviewer costs 1. Then the review queue grows, and deferring costs 4. What is the act threshold before and after? Once deferring costs 4, what is the expected cost per case with the old threshold and with the new one?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Before, $\lambda^* = 1 - 1/10 = 0.9$: the system acts on the 0.95 cases and defers the 0.75 ones. After, $\lambda^* = 1 - 4/10 = 0.6$: it acts on both. At the new cost of deferring, the old threshold costs $0.7 \times 0.05 \times 10 + 0.3 \times 4 = 1.55$ per case, and the new one $0.7 \times 0.05 \times 10 + 0.3 \times 0.25 \times 10 = 1.10$. The model did not change. A 0.75 case is wrong a quarter of the time, which costs 2.5 on average when the system acts, and that is now less than the 4 of deferring.
+
+**Misconception ruled out:** the threshold is a fixed property of the model, like 0.5 or 0.8.
+
+**Revisit:** Lab 11, Exercise 5 (Module 11, section 8).
 :::
 
 ### Module 12 · {{< var modules.m12.title >}}
@@ -385,6 +497,16 @@ Stated by TypeSafe: 1 (`typesafe-ai/skills`, `SKILL.md`; the documentation's Sys
 "No", with probability $1 - 0.2 = 0.8$ ("yes" when `noul >= 0.5`). For the choice answer, 0.6: the probability of the chosen answer. `confidence` measures how concentrated the distribution is; on calibrated synthetic data its ECE was above 0.10 while the probabilities' was below 0.01. **Evidence:** Lab 12, Exercises 2 and 3 (`chosen_answer`, `calibration_arrays`).
 :::
 
+[**T12**]{#t12} (Transfer · Objectives 2 and 3 · Outcome 6) A vendor sells a decision model that it says was trained for calibration, and reports an ECE of 0.01 on its own benchmark. On your 100 `dev` items, the model's answers with $\hat{p} \ge 0.97$ are right 80% of the time. Your costs are the worked example's (wrong 20, ask 0.5, miss 4, escalate 3), so $\tau_{\text{act}} = 0.969$. Do you let the system act on those answers? What are the vendor's two claims worth here?
+
+::: {.callout-tip collapse="true" title="Answer"}
+No. On your data those answers are wrong one time in five, so acting costs about $0.2 \times 20 = 4$ per case, against $0.5 + 0.2 \times 4 = 1.3$ for asking and 3 for escalating. Choose the thresholds on `dev` and report the cost on `test`; the gap between the analytic thresholds and the chosen ones measures miscalibration where it matters. The benchmark's ECE describes the benchmark's data, not yours, and a training claim is not a measurement. Lab 12's toy, our own illustration, shows the pattern: its Brier-rewarded model was calibrated on its training items and overconfident on held-out wordings. TypeSafe gives the same advice about its own models: "validate their performance in the target domain".
+
+**Misconception ruled out:** a model trained for calibration is calibrated on your data.
+
+**Revisit:** Lab 12, Exercises 1 and 4 (Module 12, sections 2 and 3).
+:::
+
 ### Module 13 · {{< var modules.m13.title >}}
 
 Objectives: [Module 13](modules/13-rag.qmd).
@@ -419,6 +541,16 @@ $(1/3 + 1 + 0)/3 \approx 0.444$. **Evidence:** Lab 13, Exercise 1 (the briefing'
 Evidence not retrieved, answer wrong: a retrieval failure. It is faithful to the wrong passages, so change retrieval first (chunking, $k$, hybrid retrieval, reranking). A faithfulness score is a judge model's opinion until it has been compared with human labels. **Evidence:** Lab 13, Exercise 5 and the two-by-two table.
 :::
 
+[**T13**]{#t13} (Transfer · Objective 3 · Outcome 7) Your RAG pipeline reaches a Recall@5 of 0.94 on `test`, but only 55% of the answerable questions get a correct answer, and many of the rest are abstentions. Where do most failures sit in the two-by-two table, what do you look at first, and which change would be wasted?
+
+::: {.callout-tip collapse="true" title="Answer"}
+In the cell "evidence retrieved, answer wrong or abstained": a generation failure, so work on the prompt or the model before retrieval. Count the false abstentions on answerable questions: an abstention instruction that fires too readily shows up there. Read the faithfulness of the wrong answers: a low score means the generator ignores or contradicts its passages. Look at where the evidence sits in the context: a right passage in the middle of a long context can still produce a wrong answer, and fewer, better-ranked passages address that. The wasted change is raising $k$ or re-chunking for more recall: it adds context tokens and cost and leaves the failing half alone.
+
+**Misconception ruled out:** high retrieval recall means the system answers well.
+
+**Revisit:** Lab 13, Exercise 5 and its two-by-two table (Module 13, sections 9 and 10).
+:::
+
 ### Module 14 · {{< var modules.m14.title >}}
 
 Objectives: [Module 14](modules/14-agents.qmd).
@@ -447,6 +579,16 @@ It asks: the run pauses for a person. The guard's question is "is this email all
 Not that the guard is safe: 0 out of 45 is consistent with a true rate of several percent, and claiming below 1% would take hundreds of disallowed items with no failure. A guard that escalates everything also scores 0, so report the held-back rate and the number of interrupts beside it, with $N$. **Evidence:** Lab 14, Exercise 5 and the closing cell.
 :::
 
+[**T14**]{#t14} (Transfer · Objective 2 · Outcome 8) You add a `refund_payment` tool to the desk agent, guarded like `send_email`. A run pauses in `human_review`, the person approves, and the refund is paid. The next day you replay the thread from the snapshot taken before the tool ran, to debug a later step. What happens to the refund, and what must the tool do to make replay safe? A teammate then moves the refund call into `human_review`, before its `interrupt()`. What goes wrong?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Replay re-executes every node after the snapshot, tools included, so a tool that simply pays refunds the participant a second time. Make it idempotent, as the lab's mock `send_email` is: record each refund under the ID of the tool call that requested it, and do nothing for an ID already paid. Moving the call before `interrupt()` makes things worse. The refund is paid when the node first runs, before the person has answered, and again on resume, because LangGraph reruns an interrupted node from its first line. Put side effects, like the decision-model call, in nodes of their own, never before an `interrupt()` in the same node.
+
+**Misconception ruled out:** replay only reads back saved results and never reruns a tool.
+
+**Revisit:** Lab 14, Exercises 3 and 4 (Module 14, section 5).
+:::
+
 ### Module 15 · {{< var modules.m15.title >}}
 
 Objectives: [Module 15](modules/15-capstone.qmd). These questions were written from Module 15 before `15-capstone.ipynb` was built; check them against the notebook's starter system before you use them. The capstone's evaluation set does not exist yet, so no question here asks for a measured result.
@@ -473,4 +615,14 @@ Not at the 0.05 level: the sign test gives $p \approx 0.18$ (8 and 1 would give 
 
 ::: {.callout-tip collapse="true" title="Answer"}
 What you changed, and why the traces suggested it; what you predicted; what happened to the cost, accuracy and abstention, with $g$, $l$ and $p$; what it cost in dollars or calls and in seconds. End with the one thing that surprised you. **Evidence:** Lab 15, the hypothesis card and the share card.
+:::
+
+[**T15**]{#t15} (Transfer · Objective 2 · Outcome 9) A pair's change gains 15 questions and loses 5 against the baseline, so the sign test gives $p \approx 0.041$. The pair's two baseline runs, its own and the instructor's recorded one, disagree on 22 questions. Is the improvement shown? What does the pair report?
+
+::: {.callout-tip collapse="true" title="Answer"}
+Not shown. The sign test asks whether 15 against 5 would be surprising if each changed question were a coin flip, and on its own it says yes. But Module 15 sets a second test: a change whose $g + l$ is not clearly larger than the number of questions on which two runs of the same baseline disagree has shown nothing, and here $g + l = 20$ is below the 22 flips. Report $g = 15$, $l = 5$, $p = 0.041$ and the 22 flips together, and call the result "not shown", not "no effect".
+
+**Misconception ruled out:** a sign-test $p$ below 0.05 settles a comparison by itself.
+
+**Revisit:** Lab 15, `compare` and `flips` on the share card (Module 15, section 3).
 :::

@@ -1,10 +1,12 @@
 ---
 title: "Notebooks"
-subtitle: "One lab per module, each opens in Google Colab"
+subtitle: "One Lab per Module, Each Opens in Google Colab"
 toc: false
 ---
 
-Start with the setup notebook, then follow the modules in order. Every notebook loads its own data from this repository, so you can open any of them cold, with two exceptions: Lab 10 starts from Lab 9's preference data and reward model, which are [not built yet](readiness.qmd#open-work), and Lab 12's comparison with Lab 11 uses a file that Lab 11 writes.
+Start with the setup notebook, then follow the modules in order. Every notebook downloads its own data from this repository, so any lab opens cold, without the labs before it. Lab 10, for example, downloads the preference data and reward model that Lab 9's code built. One comparison is optional and needs a file from an earlier lab: Lab 12 draws Lab 11's language model beside its own decision model only if you upload the `lab11_decisions_<provider>.jsonl` file that Lab 11's Exercise 4 writes. Without that file, Lab 12 draws its own model alone. It refuses a file written by Lab 11's offline test double, because a test double is not a model.
+
+Keep each lab's headline number, and the conditions needed to compare it, in the [results worksheet](worksheet.qmd). A term you have forgotten is in the [glossary](glossary.qmd).
 
 {{< include /_includes/notebooks.md >}}
 
@@ -12,14 +14,27 @@ Start with the setup notebook, then follow the modules in order. Every notebook 
 Notebooks are stored without outputs. Work through the cells one at a time. **Runtime → Run all** stops at the first exercise you have not written, which is the point: to see a whole lab run, tick `WORKED_EXAMPLE` in the harness cell first.
 :::
 
-## How the labs are laid out
+## How the Labs Are Laid Out
 
-- **Setup cell.** Installs and imports. Run it first.
-- **Exercises.** Each has a `# TODO` cell for you to complete.
-- **Harness.** The first code cell. Run it first; it keeps the solutions from replacing your code. Tick `WORKED_EXAMPLE` in it to run the whole lab as a worked example instead.
-- **Solutions.** Folded directly beneath each exercise. Try the exercise first, then open the solution to compare. Running a solution cell stores the reference; it does not overwrite your function.
-- **Checkpoints.** A cell after each exercise that passes or fails and says whose code it checked: yours or the reference. If you are stuck, run exercise N's folded solution cell, then `workshop.use_reference(N)`, and go on with the reference solution.
-- **Summary.** The last code cell lists which checkpoints passed on your own code.
-- **Stretch.** An optional final section. Nothing later depends on it.
+Run the cells in this order:
 
-API keys are optional. See [Setup](setup.qmd).
+1. **Harness.** The first code cell. It keeps the folded solutions from replacing your code and records which checkpoints passed. Leave `WORKED_EXAMPLE` unticked to do the lab yourself (learner mode); tick it to run every reference solution in place of your code (worked-example mode).
+2. **Setup.** Installs, imports and seeds.
+3. **Data.** Downloads the lab's data and checks it.
+4. **Exercises.** Each has a `# TODO` cell for you to complete, then a folded solution, then a checkpoint.
+    - **Solution.** Try the exercise first, then open the solution to compare. Running a solution cell stores the reference; it does not overwrite your function.
+    - **Checkpoint.** Passes or fails, and says whose code it checked: yours or the reference.
+5. **Stretch.** An optional final section. Nothing later depends on it.
+6. **Summary.** The last code cell lists which checkpoints passed on your own code.
+
+A checkpoint's message tells you which of three things happened:
+
+| The checkpoint says | What it means | What to do |
+|---|---|---|
+| TODO N is not written yet | You have not run your `# TODO N` cell, or your function still raises `NotImplementedError`. | Write the exercise and run its cell, then rerun the checkpoint. |
+| failed on your code | Your function returned a wrong value. | Read the assertion message above it, fix TODO N, and rerun both cells. |
+| failed on the reference solution | A problem with the lab or the runtime, not with your code. | Tell the instructor. |
+
+If you are stuck on exercise N, run its folded solution cell, then `workshop.use_reference(N)`, and go on with the reference solution. Rerun your `# TODO N` cell to switch back to your own code.
+
+An error in the harness, setup or data cells is a setup problem, not an unfinished exercise: see [Setup](setup.qmd), which also explains the optional API keys.
