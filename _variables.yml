@@ -160,14 +160,14 @@ datasets:
     urls:
       - https://raw.githubusercontent.com/project-delphi/nlp-llms/main/data/workshop_lectures_v1.jsonl.gz
       - https://cdn.jsdelivr.net/gh/project-delphi/nlp-llms@main/data/workshop_lectures_v1.jsonl.gz
-    sha256: "8970f45034784f98a97f6feaae60de371a6992d411afdf38340db8c8c4709f47"
-    bytes: 234595
+    sha256: "413ca5a44061b3268b3c8145c09d3a31e008b65127f62e95a60b069967909391"
+    bytes: 241591
     license: "CC BY 4.0"
     license_url: https://creativecommons.org/licenses/by/4.0/
-    source_commit: "31d5d92cd1d5ac7c12b05f547caa6d56ca55765d"
+    source_commit: "05da48646b2c6ffac4752b1c8d40635c4489710d"
     status: "provisional"
     documents: 13
-    characters: 684704
+    characters: 703608
   # Lab 9 and Lab 10 (spec: briefs/09-preference-learning.md). Built by
   # data/build_lab09_preferences.py on 2026-10-06 from models.causal_lm at
   # models.causal_lm_revision (Apple M1 Pro CPU, torch 2.14.1, transformers 5.18.0,

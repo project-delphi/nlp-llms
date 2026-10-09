@@ -330,19 +330,19 @@ The instructions for the two people (proposed: Romeo and one instructor; estimat
 
 | | |
 |---|---|
-| File | `workshop_lectures_v1.jsonl.gz`, 234,595 bytes (700,508 uncompressed), 13 lines, one JSON object per page |
-| SHA-256 | `8970f45034784f98a97f6feaae60de371a6992d411afdf38340db8c8c4709f47` |
+| File | `workshop_lectures_v1.jsonl.gz`, 241,591 bytes (719,612 uncompressed), 13 lines, one JSON object per page |
+| SHA-256 | `413ca5a44061b3268b3c8145c09d3a31e008b65127f62e95a60b069967909391` |
 | Canonical URL | <https://raw.githubusercontent.com/project-delphi/nlp-llms/main/data/workshop_lectures_v1.jsonl.gz> |
 | Fallback URL | <https://cdn.jsdelivr.net/gh/project-delphi/nlp-llms@main/data/workshop_lectures_v1.jsonl.gz> |
 | Builder | [`build_lectures_corpus.py`](build_lectures_corpus.py): standard library plus PyYAML, no network, no model; reads the pages from one git commit with `git show`, not from the working tree; `--check` rebuilds in memory and compares |
-| Source | lecture pages 01–12 and `references.qmd` at commit `31d5d92cd1d5ac7c12b05f547caa6d56ca55765d` (`source_commit`; also recorded in every record), the merge of the five-day revision's last lecture edits (PR #16, 2026-10-06). Earlier builds read `ec97bea` (before the reading list was finished) and `3ba37bc` (before the five-day revision); this one also drops each lecture's in-room timetable and the demos' Observable code, which are not lecture content. Lecture 13 is not included: a corpus that explains RAG to a RAG lab adds nothing |
-| Size | 13 documents, 684,704 characters, 108,079 words; 186,495 tokens of `SentenceSplitter`'s tokenizer (tiktoken `cl100k_base`), measured with Lab 13's tokenizer call (`llama_index.core.utils.get_tokenizer()`) outside the notebook. `references` is 49,351 characters and 14,545 tokens |
-| Chunks | 1,812 / 878 / 448 at $L$ = 128 / 256 / 512 tokens with $L_o = L/8$ and metadata excluded (`SentenceSplitter`, `llama-index-core` 0.14.25; printed by Lab 13 itself on the build Mac, 2026-10-06, for the snapshot built from `31d5d92`) |
+| Source | module pages 01–12 and `references.qmd` at commit `05da48646b2c6ffac4752b1c8d40635c4489710d` (`source_commit`; also recorded in every record), the October 8 review's edits: title case, the new figure captions, spelling, the comparison tables and the reading-guide maps (2026-10-08). Earlier builds read `31d5d92` (the five-day revision, PR #16), `ec97bea` (before the reading list was finished) and `3ba37bc` (before the five-day revision). The builder drops each page's agenda (in-room timetable and reading guide), its generated lab task list and the demos' Observable code, which are not module content. Lecture 13 is not included: a corpus that explains RAG to a RAG lab adds nothing |
+| Size | 13 documents, 703,608 characters, 111,299 words; 191,544 tokens of `SentenceSplitter`'s tokenizer (tiktoken `cl100k_base`), measured with Lab 13's tokenizer call (`llama_index.core.utils.get_tokenizer()`, `llama-index-core` 0.14.25) outside the notebook. `references` is 49,540 characters and 14,601 tokens |
+| Chunks | 1,863 / 905 / 458 at $L$ = 128 / 256 / 512 tokens with $L_o = L/8$ and metadata excluded (`SentenceSplitter`, `llama-index-core` 0.14.25; printed by Lab 13 itself on the build Mac, 2026-10-08, for the snapshot built from `05da486`) |
 | License | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), the license of the pages. The pages quote short passages of third-party material, with sources |
 | Specification | `briefs/13-rag.md`, decision (a) |
 | Status | **`provisional`**. See below |
 
-**Status: provisional.** The snapshot was rebuilt 2026-10-06 from `31d5d92`, after the five-day revision's lecture edits; `references.qmd` is complete for Modules 1–15. The status stays `provisional` because lecture 12's TypeSafe quotations await sign-off, and lectures may still change after their Colab T4 runs and the spoken dry runs. Questions quote the pages verbatim, so the snapshot must be **frozen, rebuilt if any page changed, and set to `final` before anyone writes a question against it**: set `SOURCE_COMMIT` in the builder to the new commit, run it, and update `sha256`, `bytes`, `source_commit`, `characters` and `status` in `_variables.yml`, and the hash everywhere it is pinned: `notebooks/13-rag.ipynb` (twice), `notebooks/14-agents.ipynb` (once), `notebooks/15-capstone.ipynb` (twice), `tests/fixtures/rag_questions_fixture.json`, `tests/fixtures/capstone_questions_fixture.json`, and this page (the table above and the loading snippet below). `git grep` for the old hash finds them all; then rerun Labs 13 to 15 with `--record`. Questions store verbatim evidence quotes and character offsets are computed from them at load time, so a rebuild after questions exist could silently invalidate them. Three checks in `tests/test_rag_questions.py` prevent that:
+**Status: provisional.** The snapshot was rebuilt 2026-10-08 from `05da486`, after the October 8 review's edits to the module pages; `references.qmd` is complete for Modules 1–15. The status stays `provisional` because lecture 12's TypeSafe quotations await sign-off, and lectures may still change after their Colab T4 runs and the spoken dry runs. Questions quote the pages verbatim, so the snapshot must be **frozen, rebuilt if any page changed, and set to `final` before anyone writes a question against it**: set `SOURCE_COMMIT` in the builder to the new commit, run it, and update `sha256`, `bytes`, `source_commit`, `characters` and `status` in `_variables.yml`, and the hash everywhere it is pinned: `notebooks/13-rag.ipynb` (twice), `notebooks/14-agents.ipynb` (once), `notebooks/15-capstone.ipynb` (twice), `tests/fixtures/rag_questions_fixture.json`, `tests/fixtures/capstone_questions_fixture.json`, and this page (the table above and the loading snippet below). `git grep` for the old hash finds them all; then rerun Labs 13 to 15 with `--record`. Questions store verbatim evidence quotes and character offsets are computed from them at load time, so a rebuild after questions exist could silently invalidate them. Three checks in `tests/test_rag_questions.py` prevent that:
 
 1. every evidence quote must occur **exactly once** in its page of the current snapshot, so a rebuild that changes or duplicates the quoted text fails the test, naming each broken item;
 2. the test fails if `data/rag_questions_v1.jsonl` exists while `datasets.lectures.status` is still `provisional`;
@@ -358,7 +358,7 @@ The instructions for the two people (proposed: Romeo and one instructor; estimat
 
 Each record: `slug` (e.g. `01-text-as-data`; `references` for the reading list), `module` (1–12, or `null`), `title`, `text`, `source_commit`, `source_sha256` (of the `.qmd` bytes). Keys are sorted and the gzip header has `mtime=0` and no file name.
 
-**Determinism, as checked (2026-10-06, the current build).** `--check` reported "identical to a fresh build" after every change to the builder's rules; the 2026-10-05 build was also checked across two interpreters. `tests/test_rag_questions.py` rebuilds from the source commit and compares the hash when that commit is in the clone's history (it skips on a shallow clone). As for the decision set, the compressed bytes depend on the zlib build, and `--check` says whether a difference is in the content or only in the compression.
+**Determinism, as checked (2026-10-06; the 2026-10-08 build was checked the same way).** `--check` reported "identical to a fresh build" after every change to the builder's rules; the 2026-10-05 build was also checked across two interpreters. `tests/test_rag_questions.py` rebuilds from the source commit and compares the hash when that commit is in the clone's history (it skips on a shallow clone). As for the decision set, the compressed bytes depend on the zlib build, and `--check` says whether a difference is in the content or only in the compression.
 
 **Loading.** Paste this cell after the loading cell of the [Loading contract](#loading-contract) (it uses `fetch`). Labs 14 and 15 instead restate Lab 13's retriever cell, which carries its own `load_corpus`:
 
@@ -374,7 +374,7 @@ def load_lectures():
             "https://raw.githubusercontent.com/project-delphi/nlp-llms/main/data/workshop_lectures_v1.jsonl.gz",
             "https://cdn.jsdelivr.net/gh/project-delphi/nlp-llms@main/data/workshop_lectures_v1.jsonl.gz",
         ],
-        "8970f45034784f98a97f6feaae60de371a6992d411afdf38340db8c8c4709f47",
+        "413ca5a44061b3268b3c8145c09d3a31e008b65127f62e95a60b069967909391",
     )
     pages = [json.loads(line) for line in gzip.decompress(blob).decode("utf-8").splitlines()]
     return [{"doc_id": p["slug"], "title": p["title"], "text": p["text"]} for p in pages]

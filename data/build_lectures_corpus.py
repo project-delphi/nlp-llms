@@ -52,16 +52,17 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "workshop_lectures_v1.jsonl.gz"
 
-# The commit the v1 pages are read from: the merge of the five-day revision's last
-# lecture edits (PR #16, 2026-10-06). Lecture 13 itself is not in the corpus
-# (briefs/13-rag.md). Earlier builds read ec97bea (before references.qmd was finished)
-# and 3ba37bc (before the five-day revision).
+# The commit the v1 pages are read from: the October 8 review's edits (title case, figure
+# captions, spelling, comparison tables; branch improve/review-title-case-learning-aids,
+# 2026-10-08). Module 13 itself is not in the corpus (briefs/13-rag.md). Earlier builds
+# read 31d5d92 (the five-day revision, PR #16), ec97bea (before references.qmd was
+# finished) and 3ba37bc (before the five-day revision).
 # STILL PROVISIONAL: lecture 12's quotations of TypeSafe's documentation await sign-off,
 # and lectures may still change after their Colab T4 runs and spoken dry runs. If a page
 # changes, rebuild from the new commit and update _variables.yml (sha256, bytes,
 # source_commit, characters, status) before anyone writes a question against the snapshot
 # (data/README.md, "Status: provisional").
-SOURCE_COMMIT = "31d5d92cd1d5ac7c12b05f547caa6d56ca55765d"
+SOURCE_COMMIT = "05da48646b2c6ffac4752b1c8d40635c4489710d"
 # The pages moved from lectures/ to modules/ on 2026-10-07.
 LECTURE = re.compile(r"^(?:lectures|modules)/(0[1-9]|1[0-2])-[a-z0-9-]+\.qmd$")
 REFERENCES = "references.qmd"
