@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 5 · Agents and capstone](/day-5.qmd){.module-day} [Module 15]{.module-num} [240 minutes]{.module-time} [11:30–12:25 · 13:25–14:30 · 14:45–16:45]{.module-clock}
+[Day 5 · Agents and Capstone](/day-5.qmd){.module-day} [Module 15]{.module-num} [240 minutes]{.module-time} [11:30–12:25 · 13:25–14:30 · 14:45–16:45]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,7 +32,7 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
@@ -42,7 +42,7 @@ In this module you will:
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
 - [Module 14 · Agents](/modules/14-agents.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).

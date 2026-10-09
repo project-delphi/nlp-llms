@@ -2,11 +2,11 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–4 | 1. A language model continues; it does not answer | — |
-| 4–9 | 2. Chat templates | — |
-| 9–17 | 3. The instruction-tuning loss | Check yourself (2 min) |
-| 17–21 | 4. What full fine-tuning costs | Predict (1 min) |
-| 21–39 | 5. LoRA: a low-rank update | Demo (4 min); Check yourself (2 min) |
-| 39–45 | 6. LoRA in practice: where, how large, and the `peft` library | — |
-| 45–48 | 7. Decoding settings | — |
-| 48–55 | 8. Evaluating generated text | Check yourself (2 min) |
+| 0–4 | 1. A Language Model Continues; It Does Not Answer | — |
+| 4–9 | 2. Chat Templates | — |
+| 9–17 | 3. The Instruction-Tuning Loss | Check yourself (2 min) |
+| 17–21 | 4. What Full Fine-Tuning Costs | Predict (1 min) |
+| 21–39 | 5. LoRA: A Low-Rank Update | Demo (4 min); Check yourself (2 min) |
+| 39–45 | 6. LoRA in Practice: Where, How Large, and the `peft` Library | — |
+| 45–48 | 7. Decoding Settings | — |
+| 48–55 | 8. Evaluating Generated Text | Check yourself (2 min) |

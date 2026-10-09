@@ -2,14 +2,14 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–3 | 1. What Module 12 left open: why retrieve | — |
-| 3–8 | 2. The pipeline | Check yourself (2 min) |
+| 0–3 | 1. What Module 12 Left Open: Why Retrieve | — |
+| 3–8 | 2. The Pipeline | Check yourself (2 min) |
 | 8–12 | 3. Chunking | — |
-| 12–18 | 4. Dense retrieval | — |
-| 18–22 | 5. Sparse and hybrid retrieval | — |
-| 22–30 | 6. Reranking: cross-encoders and a decision model | Check yourself (2 min) |
-| 30–33 | 7. Generation: sources, citations, abstention | — |
-| 33–42 | 8. Evaluating retrieval | Demo (4 min) |
-| 42–49 | 9. Evaluating answers | Check yourself (2 min) |
-| 49–51 | 10. Common failures | — |
+| 12–18 | 4. Dense Retrieval | — |
+| 18–22 | 5. Sparse and Hybrid Retrieval | — |
+| 22–30 | 6. Reranking: Cross-Encoders and a Decision Model | Check yourself (2 min) |
+| 30–33 | 7. Generation: Sources, Citations, Abstention | — |
+| 33–42 | 8. Evaluating Retrieval | Demo (4 min) |
+| 42–49 | 9. Evaluating Answers | Check yourself (2 min) |
+| 49–51 | 10. Common Failures | — |
 | 51–55 | 11. LlamaIndex and LangChain | — |

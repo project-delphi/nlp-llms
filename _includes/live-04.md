@@ -3,15 +3,21 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–5 | 1. From next-token prediction to transduction | — |
-| 5–13 | 2. The encoder-decoder model | — |
-| 13–19 | 3. The fixed-vector bottleneck | [Check yourself](#chk-bottleneck) (2 min) |
+| 0–5 | 1. From Next-Token Prediction to Transduction | — |
+| 5–13 | 2. The Encoder-Decoder Model | — |
+| 13–19 | 3. The Fixed-Vector Bottleneck | [Check yourself](#chk-bottleneck) (2 min) |
 | 19–35 | 4. Attention | [Demo](#demo-attention) (4 min) |
-| 35–40 | 5. Three score functions | — |
-| 40–45 | 6. Attention as soft alignment | [Check yourself](#chk-prefix) (2 min) |
+| 35–40 | 5. Three Score Functions | — |
+| 40–45 | 6. Attention as Soft Alignment | [Check yourself](#chk-prefix) (2 min) |
 | **45** | **Total** | **37 minutes of exposition, 8 of activities** |
 :::
 
-Not taught in the room: *7. Decoding*; *8. Attention as a query-key-value lookup*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–6, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 2; Exercise 2: section 3; Exercise 3: sections 4 and 5; Exercise 4: section 5; Exercise 5: section 6.
+
+**Read later** · Section 7, *Decoding* (**Reference**); section 8, *Attention as a Query-Key-Value Lookup* (**Reference**); the collapsed callouts marked **Optional** or **After the Lab**; [Further Reading](#further-reading).
+:::

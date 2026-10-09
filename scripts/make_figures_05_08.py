@@ -84,7 +84,8 @@ def marker(mid: str, color: str, size: int = 7) -> str:
     )
 
 
-MARKERS = [marker("a", NAVY), marker("b", ACCENT, 5), marker("c", MUTED, 6), marker("d", DIM, 6)]
+# Not "d": that is the id of each figure's <desc>, and a duplicate id drops the arrowheads.
+MARKERS = [marker("a", NAVY), marker("b", ACCENT, 5), marker("c", MUTED, 6), marker("dm", DIM, 6)]
 THICK = marker("e", ACCENT, 3)  # for the 4px residual stream
 
 
@@ -302,8 +303,8 @@ def fig_self_attention() -> str:
         b.append(M(XV, y + 6, f"v_{i + 1}"))
     # row 5: computed, but masked for the query of position 4
     y = Y[4]
-    b.append(line(XH - bw / 2, y, XK + bw / 2 + 2, y, cls="dln", mk="d"))
-    b.append(line(XH + bw / 2, y, XV - bw / 2 - 2, y, cls="dln", mk="d"))
+    b.append(line(XH - bw / 2, y, XK + bw / 2 + 2, y, cls="dln", mk="dm"))
+    b.append(line(XH + bw / 2, y, XV - bw / 2 - 2, y, cls="dln", mk="dm"))
     for x, lab in [(XK, "k_5"), (XH, "h_5"), (XV, "v_5")]:
         b.append(rect(x - bw / 2, y - bh / 2, bw, bh, "dim"))
         b.append(M(x, y + 6, lab, cls="note", size=19))

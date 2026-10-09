@@ -16,7 +16,7 @@ The welcome slot opens the day with the [intro slides](welcome.qmd): the setup c
 
 {{< include /_includes/day-1.md >}}
 
-## Run sheet {#run-sheet}
+## Run Sheet {#run-sheet}
 
 {{< include /_includes/run-1.md >}}
 

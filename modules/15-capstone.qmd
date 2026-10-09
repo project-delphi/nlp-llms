@@ -24,7 +24,7 @@ The capstone takes Day 5 from 11:30 to the end of the day: the two module slots 
 | 13:25–14:30 | **Part II. Build**, continued | 65 |
 | 14:30–14:45 | Break | |
 | 14:45–16:30 | **Part III. Evaluate and share** (section 6) | 105 |
-| 16:30–16:45 | **Part IV. Wrap-up** (sections 7–10) | 15 |
+| 16:30–16:45 | **Part IV. Wrap-Up** (sections 7–10) | 15 |
 | | **Total in the capstone's slots** | **240** |
 | 16:45–17:00 | **Part IV, continued**, in the day's closing slot | 15 |
 
@@ -40,7 +40,7 @@ Check-yourself questions and interactive demos are for self-study and sit outsid
 **Frameworks change; the evaluation does not.** The starter system uses the pins of Labs 13 and 14: `llama-index-core` 0.14.25, `langgraph` 1.2.12, `langchain-core` 1.6.6, `langchain-typesafe` 0.0.1a3 and `typesafe-sdk` 0.7.2. Their behavior was checked against installed source for those labs, not against the framework documentation sites, which the build environment could not reach. What this module teaches will outlast those versions: a fixed task contract, a fixed human-written evaluation set, a baseline, one change at a time, and a comparison that is read against its noise.
 :::
 
-## Notation for this module
+## Notation for This Module
 
 The workshop notation applies. From [Module 8](08-llm-apis.qmd) we keep the cost of a request (eq. `cost`), latency (eq. `latency`), the standard error (eq. `se`), and the rule that an invalid output counts as wrong. From [Module 11](11-calibration.qmd) we keep Chow's threshold $\lambda^*$ and the empirical cost (eq. `selective-cost`). From [Module 12](12-rlcd-jev.qmd) we keep the costs $\ell$ and the act, ask and escalate thresholds. From [Module 13](13-rag.qmd) we keep the query $q$, the chunks, $k$, the abstention sentence, recall@$k$ and the judge $J(a, R)$. From [Module 14](14-agents.qmd) we keep the graph state $s$ and $K_{\max}$.
 
@@ -64,11 +64,11 @@ New in this module:
 **Notation.** $o_i$ means correctness here, as in Modules 11 and 12. In Module 14, $o_t$ was an observation of the agent; that use does not appear on this page.
 :::
 
-## Part I. The brief
+## Part I. The Brief
 
 11:30 to 11:40, the whole room. Sections 1 to 4.
 
-## 1. The task
+## 1. The Task
 
 **In this section:** state the capstone task and the contract a correct system must keep.
 
@@ -91,7 +91,7 @@ Neither. (1) is an answer from memory. It happens to be right, but no source sup
 :::
 :::
 
-## 2. The starter system
+## 2. The Starter System
 
 **In this section:** read the starter system from its state table and node table, and say where each threshold comes from.
 
@@ -108,11 +108,7 @@ Every pair starts from the same working system, `notebooks/15-capstone.ipynb`. I
 
 The state holds the question, the plan and its probability, the queries, the retrieved passages, the draft, $p_{\text{sup}}$ for each attempt, a retry counter $r$, the counts of model calls and decision calls, and a trace of every step with its probabilities and thresholds. Its fields are plain data, following Lab 14's rule, so every run can be checkpointed, inspected and replayed.
 
-<!-- FIGURE 15.1
-Spec: a left-to-right directed graph of the starter system, drawn from the node table above. Nodes: START, plan, retrieve, answer, verify, deliver, abstain, END. Solid arrows for fixed edges (START -> plan, plan -> retrieve, retrieve -> answer, deliver -> END, abstain -> END). Dashed arrows for conditional edges, each labeled: answer -> verify ("draft"), answer -> abstain ("abstention sentence"), verify -> deliver ("p_sup >= tau_verify"), verify -> retrieve ("p_sup < tau_verify, retry left: k -> 2k"), verify -> abstain ("p_sup < tau_verify, no retry left"). plan carries a small note "p_multi >= tau_plan: two queries". The two decision-model nodes (plan, verify) share one fill color and carry the gauge labeled "p" used in Figures 12.1 and 14.1; the generative node (answer) has a second color; retrieve has a third. Under the graph, a dotted box labeled "scorer (fixed, outside the system)" holds "reference judge" and "key-fact check", with a dotted arrow from deliver and abstain into it, to show that the system's verifier and the scorer's judge are different. Use the workshop palette.
-Target path: images/15-capstone-graph.svg
-Alt text: The capstone system as a graph. A planner decides whether to split the question, a retriever fetches passages, a generator writes a cited answer, and a verifier either delivers it, retrieves again with more passages, or abstains. A separate scorer, outside the system, judges the delivered answers.
--->
+![The node table above as a graph. The planner's rule (@eq-plan-rule) acts inside `plan`; the verifier's rule (@eq-verify-rule) is the edge out of `verify`, which Exercise 1 writes: deliver at $p_{\text{sup}} \ge \tau_{\text{verify}} = 0.8$, otherwise retrieve once more with $2k$ chunks, otherwise abstain. The scorer sits outside the system on purpose: it grades what `deliver` and `abstain` return with its own reference judge and key-fact check, and never calls the system's verifier. The markers on the gauges are illustrative, not measured.](/images/15-capstone-graph.svg){#fig-capstone-graph fig-alt="The capstone system as a graph. A planner decides whether to split the question, a retriever fetches passages, a generator writes a cited answer, and a verifier either delivers it, retrieves again with more passages, or abstains. A separate scorer, outside the system, judges what the system returns."}
 
 **The two thresholds.** Both come from stated costs, following Modules 11 and 12, and both are printed in the notebook.
 
@@ -160,7 +156,7 @@ The open model is not a calibrated decision model. It is there so that the syste
 :::
 :::
 
-## 3. The evaluation set and the scoring
+## 3. The Evaluation Set and the Scoring
 
 **In this section:** define the five numbers every pair reports, each with its denominator, and the single cost that combines accuracy and abstention.
 
@@ -242,7 +238,7 @@ With 8 gained and 1 lost, $p = 0.039$. With 7 and 2 it is $0.18$, and with 4 and
 :::
 :::
 
-## 4. The rules of the capstone
+## 4. The Rules of the Capstone
 
 **In this section:** know what may change, what may not, and what a pair hands in.
 
@@ -275,7 +271,7 @@ The reported score is the largest of five noisy measurements. Even if none of th
 
 11:40 to 12:25 and 13:25 to 14:30, in pairs, with lunch between. Section 5.
 
-## 5. Build: one change, measured
+## 5. Build: One Change, Measured
 
 **In this section:** improve one component of the system and measure the effect against the baseline.
 
@@ -308,18 +304,18 @@ The reported score is the largest of five noisy measurements. Even if none of th
 
 Two changes are **not** allowed in the scored run: adding documents to the corpus, which would turn unanswerable questions into answerable ones, and changing the reference judge or the scoring code.
 
-::: {.callout-tip collapse="true" title="Optional: for instructors, how to circulate during the build"}
+::: {.callout-tip collapse="true" title="Optional: For Instructors, How to Circulate During the Build"}
 - **At minute 20**, check that every pair has a baseline on `dev` and has read traces. A pair choosing a component without having looked at failures is guessing.
 - **Steer toward the failures.** If the two-by-two table of Module 13 shows mostly retrieval failures, a prompt change is unlikely to help, and the reverse is also true.
 - **Watch the budget on keyed paths.** A reranker with Jev, or a tool-calling node, multiplies calls. A room of pairs on one shared key can hit rate limits that we have not been able to measure.
 - **Encourage null results.** A well-measured "no difference" with $g$, $l$ and $p$ is a good share. A large claimed gain with $g + l$ below the flip count is not.
 :::
 
-## Part III. Evaluate and share
+## Part III. Evaluate and Share
 
 14:45 to 16:30. Section 6.
 
-## 6. Evaluate, then share
+## 6. Evaluate, Then Share
 
 **In this section:** report one change against the baseline in two minutes, with its uncertainty.
 
@@ -345,11 +341,11 @@ Each test has a 5% chance of a false alarm, so the expected number is $15 \times
 :::
 :::
 
-## Part IV. Wrap-up
+## Part IV. Wrap-Up
 
 16:30 to 17:00, the whole room, ending in the day's closing slot. Sections 7 to 10.
 
-## 7. Five days, one line of ideas
+## 7. Five Days, One Line of Ideas
 
 **In this section:** say, for each module, which limitation of the previous one it removed.
 
@@ -379,7 +375,7 @@ Three threads run through the table.
 - **Days 1 and 2 asked what a model predicts; Days 3 to 5 asked when to trust it.** Preference learning shaped what models say, calibration asked whether their probabilities mean anything, and the capstone used those probabilities to decide whether to speak at all.
 - **The unit of evaluation grew.** It went from a perplexity on one corpus, to a classifier's accuracy, to a reliability diagram, to a system's cost per question. At each step the evaluation had to be designed before the model.
 
-## 8. An evaluation checklist for agentic systems
+## 8. An Evaluation Checklist for Agentic Systems
 
 **In this section:** apply a checklist that makes an agentic system's evaluation trustworthy.
 
@@ -408,7 +404,7 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 :::
 :::
 
-## 9. Open problems
+## 9. Open Problems
 
 **In this section:** name questions the workshop raised and could not close.
 
@@ -419,7 +415,7 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 - **Training for calibrated decisions.** TypeSafe states that its System One models "are trained for calibrated decisions" and has not published how. Whether such training transfers across domains is a question anyone can test with a key and a labeled set, and TypeSafe's own advice is to "validate their performance in the target domain". Our Lab 12 toy shows what a proper-score reward does on a small model; it says nothing about Jev.
 - **Evaluating agents.** Benchmarks that report only accuracy reward needlessly costly systems. Kapoor et al. (2024) argue for reporting cost beside accuracy and for held-out tests. Agent evaluations are also expensive to repeat, which makes the run-to-run variation hard to pin down.
 
-## 10. Further study
+## 10. Further Study
 
 - **Courses.** The three this workshop calibrated against: Stanford CS224N, CMU CS 11-747 and MIT 6.S191 (see [References](../references.qmd)).
 - **A textbook.** Jurafsky and Martin, *Speech and Language Processing*, 3rd edition draft, especially the chapters on question answering and information retrieval.
@@ -428,7 +424,7 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 - **The systems you used.** Re-read the current documentation of the providers, LangGraph, LlamaIndex and TypeSafe before you build on them. Every page of this workshop that names a version gives the date it was checked.
 - **Your own corpus.** Point the capstone at documents you know, write 50 questions yourselves, including unanswerable ones, and run the checklist of section 8.
 
-## Equations and where you implement them
+## Equations and Where You Implement Them
 
 | Equation | Lab 15 |
 |---|---|
@@ -447,7 +443,7 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 - Change one component, predict first, develop on `dev`, and report what happened, including nothing.
 - The five days form one line: each module removed a limitation of the last, and the evaluation grew from a perplexity to a system's cost per question.
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"Abstaining is a failure."** On an unanswerable question it is the right answer. The capstone cost charges abstention only where an answer existed, and charges a wrong answer five times as much.
 - **"Accuracy on answered questions is the headline number."** It rises when a system abstains more. Report it beside accuracy on all answerable questions and both abstention rates.
@@ -458,11 +454,11 @@ Each step must succeed with probability $0.9^{1/10} = 0.9895$, about 99%: the fa
 - **"The Qwen decider's results tell us about Jev."** They describe a 0.5B open model scored on yes and no. Only the keyed path measures Jev, and only on these questions.
 - **"A bigger change always wins."** Swapping the generator may move accuracy most, at a cost the score does not include. Report dollars and seconds beside the score.
 
-## Next steps
+## Next Steps
 
 There is no Module 16. The checklist of section 8 and the starter system are yours to take to your own documents. When you do, write your own questions, unanswerable ones included, before you build anything.
 
-## Further reading
+## Further Reading
 
 1. Kapoor, S., Stroebl, B., Siegel, Z. S., Nadgir, N. and Narayanan, A. (2024). [AI Agents That Matter](https://arxiv.org/abs/2407.01502). arXiv:2407.01502 (reported as published in *TMLR*, 2025). Why agent evaluations must report cost beside accuracy, use held-out tests and be reproducible. *Title, authors and summary checked by web search on 2026-10-05; the TMLR venue was seen only in a search summary.*
 2. Rajpurkar, P., Jia, R. and Liang, P. (2018). [Know What You Don't Know: Unanswerable Questions for SQuAD](https://aclanthology.org/P18-2124/). *ACL* (short papers). The case for putting unanswerable questions in an evaluation set, and how far a system that cannot abstain falls. *Checked by web search.*

@@ -1,6 +1,6 @@
 ---
-title: "Pace sheet"
-subtitle: "Minute by minute, day by day"
+title: "Pace Sheet"
+subtitle: "Minute by Minute, Day by Day"
 ---
 
 <!--
@@ -12,7 +12,7 @@ and wrap-up rows follow the day pages (day-2.qmd to day-5.qmd) and the facilitat
 capstone rows follow Module 15's timing. Module titles and slot lengths come from _variables.yml.
 -->
 
-## How to read this sheet
+## How to Read This Sheet
 
 {{< include /_includes/module-shape.md >}}
 
@@ -129,7 +129,7 @@ Optional pre-work, planned at {{< var modules.m00.minutes >}} minutes, with no b
 
 ## Day 2
 
-### Warm-up
+### Warm-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -200,7 +200,7 @@ The briefing stops at lunch, wherever it has reached. On slow Wi-Fi, participant
 
 **Behind at minute 37:** run Exercise 6's `SAMPLING` cell as a demonstration and keep `rouge_n`. The stretch is the first thing dropped on any day.
 
-### Day wrap-up
+### Day Wrap-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -209,7 +209,7 @@ The briefing stops at lunch, wherever it has reached. On slow Wi-Fi, participant
 
 ## Day 3
 
-### Warm-up
+### Warm-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -280,7 +280,7 @@ The briefing stops at lunch, wherever it has reached.
 
 **Behind at minute 24:** do not cut a training run; ask the Predict questions while training runs (estimated 1.5 minutes per run on a T4, unmeasured).
 
-### Day wrap-up
+### Day Wrap-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -289,7 +289,7 @@ The briefing stops at lunch, wherever it has reached.
 
 ## Day 4
 
-### Warm-up
+### Warm-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -360,7 +360,7 @@ The briefing stops at lunch, wherever it has reached.
 
 **Behind at minute 34:** on the keyed Jev path, rerank `test` only.
 
-### Day wrap-up
+### Day Wrap-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -370,7 +370,7 @@ The briefing stops at lunch, wherever it has reached.
 
 ## Day 5
 
-### Warm-up
+### Warm-Up
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -429,7 +429,7 @@ Module 14 was the densest briefing in the desk timing of 2026-10-06, and its pla
 
 **More than 15 pairs:** group the shares by component, four minutes per group.
 
-**Part IV. Wrap-up** (30 minutes: the last 15 of the afternoon slot, then the day's closing slot)
+**Part IV. Wrap-Up** (30 minutes: the last 15 of the afternoon slot, then the day's closing slot)
 
 | Minutes | Segment | By the end |
 |---|---|---|
@@ -438,6 +438,6 @@ Module 14 was the densest briefing in the desk timing of 2026-10-06, and its pla
 | 18–25 | Section 9, open problems | each pair has named one open problem and the measurement it would start with |
 | 25–30 | Section 10, further study; close | |
 
-### Day wrap-up
+### Day Wrap-Up
 
 On Day 5 the day wrap-up is not a separate slot: it is the wrap-up's last 15 minutes, and the prompts on the [Day 5 page](day-5.qmd#wrap-up) run through the whole wrap-up. Item 1 (the whole line) is section 7's table. Item 2 (today's table) takes Lab 14's numbers from its debrief and the capstone's from Part III's combined table. Item 3 (what is still open) is section 9.

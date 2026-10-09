@@ -3,15 +3,21 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–5 | 1. What makes language hard | — |
-| 5–14 | 2. Tokens, vocabularies and Zipf's law | [Check yourself](#chk-tokenize) (2 min) |
-| 14–30 | 3. N-gram language models | [Demo](#demo-smoothing) (4 min) |
-| 30–35 | 4. Bag-of-words and TF-IDF | — |
-| 35–40 | 5. Naive Bayes and logistic regression | — |
-| 40–45 | 7. Where count-based methods stop working | [Check yourself](#chk-limits) (2 min) |
+| 0–5 | 1. What Makes Language Hard | — |
+| 5–14 | 2. Tokens, Vocabularies and Zipf's Law | [Check yourself](#chk-tokenize) (2 min) |
+| 14–30 | 3. N-Gram Language Models | [Demo](#demo-smoothing) (4 min) |
+| 30–35 | 4. Bag-of-Words and TF-IDF | — |
+| 35–40 | 5. Naive Bayes and Logistic Regression | — |
+| 40–45 | 7. Where Count-Based Methods Stop Working | [Check yourself](#chk-limits) (2 min) |
 | **45** | **Total** | **37 minutes of exposition, 8 of activities** |
 :::
 
-Not taught in the room: *6. Evaluation: precision, recall and F1*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–5 and 7, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 2; Exercises 2–4: section 3; Exercise 5: sections 4 and 5; Exercise 6: section 6 (section 6: **Reference**; the exercise restates what it needs).
+
+**Read later** · Section 6, *Evaluation: Precision, Recall and F1* (**Reference**); the collapsed callouts marked **Optional** or **After the Lab**; [Further Reading](#further-reading).
+:::

@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 372" width="820" height="372" role="img" aria-labelledby="t d">
+  <title id="t">Bi-encoder against cross-encoder</title>
+  <desc id="d">Two panels. Left, bi-encoder (retrieve), used in Exercises 2 and 3: the query q and the chunk c each pass through an encoder f; the two encoders share the same weights and are shaded alike. Each emits a vector, h_q and h_c, and a dot product combines them into s_dense = h_q transpose h_c. Notes: chunk vectors computed once, offline; one encoder pass per query. Right, cross-encoder (rerank), used in Exercise 4: one encoder reads the single input [CLS] q [SEP] c, and every layer attends across q and c. Only the output at the CLS position is used: a linear head w turns it into s_cross. Note: one pass per (query, chunk) pair.</desc>
+  <style>
+    text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; fill: #1f2933; }
+    .m { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+    .s { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .i { font-style: italic; }
+    .b { font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .note { font-size: 13.5px; fill: #52606d; }
+    .acc { fill: #b3541e; }
+    .box { fill: #eef2f6; stroke: #16324f; stroke-width: 1.5; }
+    .abox { fill: #f8e9de; stroke: #b3541e; stroke-width: 1.5; }
+    .dim { fill: #f4f6f9; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .ln { fill: none; stroke: #16324f; stroke-width: 1.5; }
+    .aln { fill: none; stroke: #b3541e; stroke-width: 2.5; }
+    .dln { fill: none; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .rule { fill: none; stroke: #c5ced8; stroke-width: 1.5; }
+    .op { fill: #ffffff; stroke: #16324f; stroke-width: 1.5; }
+    .panel { fill: #fafbfc; stroke: #c5ced8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+    <style>
+    .dbox { fill: #ece6f5; stroke: #6a4c9c; stroke-width: 1.5; }
+    .cln { fill: none; stroke: #16324f; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .dotted { fill: none; stroke: #52606d; stroke-width: 1.6; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
+    .bound { fill: none; stroke: #52606d; stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
+    .halo { paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+    .pill { fill: #16324f; }
+    .pilltext { fill: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; }
+    .tagbox { fill: #ffffff; stroke: #52606d; stroke-width: 1; }
+    .tag { font-size: 12px; font-weight: 600; fill: #52606d; }
+    .sm { font-size: 13px; }
+    .m { font-variant-numeric: lining-nums; }
+  </style>
+  </defs>
+  <rect width="820" height="372" rx="8" fill="#ffffff"/>
+  <rect class="panel" x="10" y="10" width="392" height="352" rx="12"/>
+  <text x="26" y="36" text-anchor="start" class="b" style="font-size:15px">bi-encoder (retrieve)</text>
+  <rect class="tagbox" x="327.2" y="21" width="64.8" height="18" rx="9"/>
+  <text x="359.6" y="34.2" text-anchor="middle" class="tag">Ex. 2, 3</text>
+  <rect class="op" x="64" y="56" width="92" height="30" rx="15"/>
+  <text x="110" y="76" text-anchor="middle" class="m" style="font-size:14px"><tspan class="s">query </tspan><tspan class="i">q</tspan></text>
+  <line class="ln" x1="110" y1="86" x2="110" y2="108" marker-end="url(#a)"/>
+  <rect class="box" x="52" y="110" width="116" height="48" rx="8"/>
+  <text x="110" y="131" text-anchor="middle" class="b" style="font-size:14.5px">encoder</text>
+  <text x="110" y="149" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="i">f</tspan></text>
+  <line class="ln" x1="110" y1="158" x2="110" y2="180" marker-end="url(#a)"/>
+  <rect class="op" x="256" y="56" width="92" height="30" rx="15"/>
+  <text x="302" y="76" text-anchor="middle" class="m" style="font-size:14px"><tspan class="s">chunk </tspan><tspan class="i">c</tspan></text>
+  <line class="ln" x1="302" y1="86" x2="302" y2="108" marker-end="url(#a)"/>
+  <rect class="box" x="244" y="110" width="116" height="48" rx="8"/>
+  <text x="302" y="131" text-anchor="middle" class="b" style="font-size:14.5px">encoder</text>
+  <text x="302" y="149" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="i">f</tspan></text>
+  <line class="ln" x1="302" y1="158" x2="302" y2="180" marker-end="url(#a)"/>
+  <text x="206" y="130" text-anchor="middle" class="note sm">same</text>
+  <text x="206" y="147" text-anchor="middle" class="note sm">weights</text>
+  <rect x="78" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="91" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="104" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="117" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="130" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="270" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="283" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="296" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="309" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <rect x="322" y="182" width="13" height="15" fill="#ffffff" stroke="#16324f" stroke-width="1.1"/>
+  <text x="68" y="195" text-anchor="end" class="m" style="font-size:15px"><tspan class="i">h</tspan><tspan dy="3.6" font-size="10.2" class="i">q</tspan></text>
+  <text x="344" y="195" text-anchor="start" class="m" style="font-size:15px"><tspan class="i">h</tspan><tspan dy="3.6" font-size="10.2" class="i">c</tspan></text>
+  <line class="ln" x1="110" y1="197" x2="196" y2="252" marker-end="url(#a)"/>
+  <line class="ln" x1="302" y1="197" x2="216" y2="252" marker-end="url(#a)"/>
+  <circle class="op" cx="206" cy="262" r="13"/>
+  <circle cx="206" cy="262" r="3.2" fill="#16324f"/>
+  <text x="184" y="267" text-anchor="end" class="note sm">dot product</text>
+  <line class="ln" x1="206" y1="275" x2="206" y2="298" marker-end="url(#a)"/>
+  <text x="206" y="318" text-anchor="middle" class="m" style="font-size:16px"><tspan class="i">s</tspan><tspan dy="3.8" font-size="10.9">dense</tspan><tspan dy="-3.8"> = </tspan><tspan class="i">h</tspan><tspan dy="3.8" font-size="10.9" class="i">q</tspan><tspan dy="-9.6" font-size="10.9">⊤</tspan><tspan dy="5.8"> </tspan><tspan class="i">h</tspan><tspan dy="3.8" font-size="10.9" class="i">c</tspan></text>
+  <text x="290" y="226" text-anchor="start" class="note sm">chunk vectors</text>
+  <text x="290" y="242" text-anchor="start" class="note sm">computed once,</text>
+  <text x="290" y="258" text-anchor="start" class="note sm">offline</text>
+  <text x="206" y="350" text-anchor="middle" class="note sm">one encoder pass per query</text>
+  <rect class="panel" x="418" y="10" width="392" height="352" rx="12"/>
+  <text x="434" y="36" text-anchor="start" class="b" style="font-size:15px">cross-encoder (rerank)</text>
+  <rect class="tagbox" x="755" y="21" width="45" height="18" rx="9"/>
+  <text x="777.5" y="34.2" text-anchor="middle" class="tag">Ex. 4</text>
+  <rect class="op" x="464" y="56" width="56" height="30" rx="5"/>
+  <text x="492" y="76" text-anchor="middle" class="mono" style="font-size:13px">[CLS]</text>
+  <line class="ln" x1="492" y1="86" x2="492" y2="108" marker-end="url(#a)"/>
+  <rect class="op" x="526" y="56" width="72" height="30" rx="5"/>
+  <text x="562" y="77" text-anchor="middle" class="m" style="font-size:15px"><tspan class="i">q</tspan></text>
+  <line class="ln" x1="562" y1="86" x2="562" y2="108" marker-end="url(#a)"/>
+  <rect class="op" x="604" y="56" width="56" height="30" rx="5"/>
+  <text x="632" y="76" text-anchor="middle" class="mono" style="font-size:13px">[SEP]</text>
+  <line class="ln" x1="632" y1="86" x2="632" y2="108" marker-end="url(#a)"/>
+  <rect class="op" x="666" y="56" width="112" height="30" rx="5"/>
+  <text x="722" y="77" text-anchor="middle" class="m" style="font-size:15px"><tspan class="i">c</tspan></text>
+  <line class="ln" x1="722" y1="86" x2="722" y2="108" marker-end="url(#a)"/>
+  <rect class="box" x="452" y="110" width="324" height="52" rx="6"/>
+  <text x="614" y="132" text-anchor="middle" class="b" style="font-size:14.5px">encoder</text>
+  <text x="614" y="151" text-anchor="middle" class="m note" style="font-size:13.5px"><tspan class="s">every layer attends across </tspan><tspan class="i">q</tspan><tspan class="s"> and </tspan><tspan class="i">c</tspan></text>
+  <line class="ln" x1="492" y1="162" x2="492" y2="184" marker-end="url(#a)"/>
+  <rect x="460" y="186" width="13" height="15" fill="#f8e9de" stroke="#b3541e" stroke-width="1.1"/>
+  <rect x="473" y="186" width="13" height="15" fill="#f8e9de" stroke="#b3541e" stroke-width="1.1"/>
+  <rect x="486" y="186" width="13" height="15" fill="#f8e9de" stroke="#b3541e" stroke-width="1.1"/>
+  <rect x="499" y="186" width="13" height="15" fill="#f8e9de" stroke="#b3541e" stroke-width="1.1"/>
+  <rect x="512" y="186" width="13" height="15" fill="#f8e9de" stroke="#b3541e" stroke-width="1.1"/>
+  <line class="dln" x1="562" y1="162" x2="562" y2="176"/>
+  <line class="dln" x1="632" y1="162" x2="632" y2="176"/>
+  <line class="dln" x1="722" y1="162" x2="722" y2="176"/>
+  <text x="556" y="199" text-anchor="start" class="note sm">other outputs unused</text>
+  <text x="452" y="199" text-anchor="end" class="m note" style="font-size:12.5px"><tspan class="s">CLS</tspan></text>
+  <line class="ln" x1="492" y1="201" x2="492" y2="232" marker-end="url(#a)"/>
+  <rect class="op" x="470" y="234" width="44" height="28" rx="5"/>
+  <text x="492" y="253" text-anchor="middle" class="m" style="font-size:15px"><tspan class="i">w</tspan></text>
+  <text x="524" y="253" text-anchor="start" class="note sm">linear head</text>
+  <line class="ln" x1="492" y1="262" x2="492" y2="298" marker-end="url(#a)"/>
+  <text x="478" y="318" text-anchor="start" class="m" style="font-size:16px"><tspan class="i">s</tspan><tspan dy="3.8" font-size="10.9">cross</tspan><tspan dy="-3.8"> = </tspan><tspan class="i">w</tspan><tspan dy="-5.8" font-size="10.9">⊤</tspan><tspan dy="5.8"> Enc([</tspan><tspan class="s">CLS</tspan><tspan>] </tspan><tspan class="i">q</tspan><tspan> [</tspan><tspan class="s">SEP</tspan><tspan>] </tspan><tspan class="i">c</tspan><tspan>)</tspan><tspan dy="3.8" font-size="10.9" class="s">CLS</tspan></text>
+  <text x="614" y="350" text-anchor="middle" class="note sm">one pass per (query, chunk) pair</text>
+</svg>

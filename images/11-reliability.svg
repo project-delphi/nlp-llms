@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 566" width="780" height="566" role="img" aria-labelledby="t d">
+  <title id="t">Reliability diagrams of the Lab 1 classifier before and after temperature scaling (measured)</title>
+  <desc id="d">Two reliability diagrams side by side, confidence (mean per bin) against accuracy (mean per bin), both from 0 to 1, with a dashed diagonal labeled perfect calibration. Each non-empty bin of 15 is a dot whose area grows with its count, joined to the diagonal by a shaded bar. Left, the Lab 1 classifier with C = 1, ECE 0.164: the dots lie well above the diagonal, the model is right more often than its confidence says (underconfident); its confidences spread from about 0.3 to 1. Right, the same model after temperature scaling with tau = 0.47, ECE 0.009: the dots lie on the diagonal, and most confidences have moved up, 962 of the 1600 into the top bin. Under each diagram, a histogram of the 1600 test confidences.</desc>
+  <style>
+    text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; fill: #1f2933; }
+    .m { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+    .s { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .i { font-style: italic; }
+    .b { font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .note { font-size: 13.5px; fill: #52606d; }
+    .acc { fill: #b3541e; }
+    .box { fill: #eef2f6; stroke: #16324f; stroke-width: 1.5; }
+    .abox { fill: #f8e9de; stroke: #b3541e; stroke-width: 1.5; }
+    .dim { fill: #f4f6f9; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .ln { fill: none; stroke: #16324f; stroke-width: 1.5; }
+    .aln { fill: none; stroke: #b3541e; stroke-width: 2.5; }
+    .dln { fill: none; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .rule { fill: none; stroke: #c5ced8; stroke-width: 1.5; }
+    .op { fill: #ffffff; stroke: #16324f; stroke-width: 1.5; }
+    .panel { fill: #fafbfc; stroke: #c5ced8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+  </defs>
+  <rect width="780" height="566" rx="8" fill="#ffffff"/>
+  <line class="rule" x1="76" y1="334" x2="346" y2="334" style="stroke-width:1"/>
+  <text x="69" y="338" text-anchor="end" class="note" style="font-size:12px">0</text>
+  <line class="rule" x1="76" y1="280" x2="346" y2="280" style="stroke-width:1"/>
+  <text x="69" y="284" text-anchor="end" class="note" style="font-size:12px">0.2</text>
+  <line class="rule" x1="76" y1="226" x2="346" y2="226" style="stroke-width:1"/>
+  <text x="69" y="230" text-anchor="end" class="note" style="font-size:12px">0.4</text>
+  <line class="rule" x1="76" y1="172" x2="346" y2="172" style="stroke-width:1"/>
+  <text x="69" y="176" text-anchor="end" class="note" style="font-size:12px">0.6</text>
+  <line class="rule" x1="76" y1="118" x2="346" y2="118" style="stroke-width:1"/>
+  <text x="69" y="122" text-anchor="end" class="note" style="font-size:12px">0.8</text>
+  <line class="rule" x1="76" y1="64" x2="346" y2="64" style="stroke-width:1"/>
+  <text x="69" y="68" text-anchor="end" class="note" style="font-size:12px">1</text>
+  <line class="rule" x1="76" y1="64" x2="76" y2="334" style="stroke-width:1"/>
+  <text x="76" y="350" text-anchor="middle" class="note" style="font-size:12px">0</text>
+  <line class="rule" x1="130" y1="64" x2="130" y2="334" style="stroke-width:1"/>
+  <text x="130" y="350" text-anchor="middle" class="note" style="font-size:12px">0.2</text>
+  <line class="rule" x1="184" y1="64" x2="184" y2="334" style="stroke-width:1"/>
+  <text x="184" y="350" text-anchor="middle" class="note" style="font-size:12px">0.4</text>
+  <line class="rule" x1="238" y1="64" x2="238" y2="334" style="stroke-width:1"/>
+  <text x="238" y="350" text-anchor="middle" class="note" style="font-size:12px">0.6</text>
+  <line class="rule" x1="292" y1="64" x2="292" y2="334" style="stroke-width:1"/>
+  <text x="292" y="350" text-anchor="middle" class="note" style="font-size:12px">0.8</text>
+  <line class="rule" x1="346" y1="64" x2="346" y2="334" style="stroke-width:1"/>
+  <text x="346" y="350" text-anchor="middle" class="note" style="font-size:12px">1</text>
+  <path class="ln" d="M76,64 V334 H346" style="stroke:#52606d;stroke-width:1"/>
+  <line class="ln" x1="76" y1="334" x2="346" y2="64" style="stroke:#52606d;stroke-width:1.2;stroke-dasharray:5 4"/>
+  <text transform="translate(92.2,335.8) rotate(-45)" text-anchor="start" class="note" style="font-size:12px">perfect calibration</text>
+  <line class="ln" x1="159.5" y1="250.5" x2="159.5" y2="199" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="175.9" y1="234.1" x2="175.9" y2="178.8" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="193.6" y1="216.4" x2="193.6" y2="179.3" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="211.3" y1="198.7" x2="211.3" y2="143.0" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="228.9" y1="181.1" x2="228.9" y2="112.0" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="247.4" y1="162.6" x2="247.4" y2="104.0" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="265.1" y1="144.9" x2="265.1" y2="81.0" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="283.6" y1="126.4" x2="283.6" y2="75.9" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="301.0" y1="109.0" x2="301.0" y2="69.7" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="319.8" y1="90.2" x2="319.8" y2="66.6" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="336.0" y1="74.0" x2="336.0" y2="64" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <circle cx="159.5" cy="199.0" r="2.9" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="175.9" cy="178.8" r="3.9" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="193.6" cy="179.3" r="5.0" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="211.3" cy="143.0" r="5.3" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="228.9" cy="112.0" r="5.7" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="247.4" cy="104.0" r="5.8" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="265.1" cy="81.0" r="6.0" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="283.6" cy="75.9" r="6.3" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="301.0" cy="69.7" r="6.6" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="319.8" cy="66.6" r="6.3" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="336.0" cy="64.0" r="6.1" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <text x="211" y="368" text-anchor="middle" class="note" style="font-size:13px">confidence (mean per bin)</text>
+  <text x="211" y="48" text-anchor="middle" style="font-size:15px" class="b"><tspan class="mono">C</tspan> = 1: ECE 0.164</text>
+  <text transform="translate(36,199) rotate(-90)" text-anchor="middle" class="note">accuracy (mean per bin)</text>
+  <text x="86.8" y="91" text-anchor="start" class="note" style="font-size:12.5px">above the diagonal:</text>
+  <text x="86.8" y="107" text-anchor="start" class="note b" style="font-size:12.5px">underconfident</text>
+  <text x="335.2" y="301.6" text-anchor="end" class="note" style="font-size:12.5px">below: overconfident</text>
+  <line class="rule" x1="76" y1="462" x2="346" y2="462" style="stroke-width:1"/>
+  <text x="69" y="466" text-anchor="end" class="note" style="font-size:11.5px">0</text>
+  <line class="rule" x1="76" y1="425" x2="346" y2="425" style="stroke-width:1"/>
+  <text x="69" y="429" text-anchor="end" class="note" style="font-size:11.5px">500</text>
+  <line class="rule" x1="76" y1="388" x2="346" y2="388" style="stroke-width:1"/>
+  <text x="69" y="392" text-anchor="end" class="note" style="font-size:11.5px">1,000</text>
+  <rect x="149.0" y="461.3" width="16.0" height="0.7" fill="#7f8e9e"/>
+  <rect x="167.0" y="459.0" width="16.0" height="3.0" fill="#7f8e9e"/>
+  <rect x="185.0" y="454.4" width="16.0" height="7.6" fill="#7f8e9e"/>
+  <rect x="203.0" y="452.9" width="16.0" height="9.1" fill="#7f8e9e"/>
+  <rect x="221.0" y="450.8" width="16.0" height="11.2" fill="#7f8e9e"/>
+  <rect x="239.0" y="450.0" width="16.0" height="12.0" fill="#7f8e9e"/>
+  <rect x="257.0" y="449.1" width="16.0" height="12.9" fill="#7f8e9e"/>
+  <rect x="275.0" y="446.9" width="16.0" height="15.1" fill="#7f8e9e"/>
+  <rect x="293.0" y="444.6" width="16.0" height="17.4" fill="#7f8e9e"/>
+  <rect x="311.0" y="446.8" width="16.0" height="15.2" fill="#7f8e9e"/>
+  <rect x="329.0" y="447.9" width="16.0" height="14.1" fill="#7f8e9e"/>
+  <path class="ln" d="M76,388 V462 H346" style="stroke:#52606d;stroke-width:1"/>
+  <text x="76" y="477" text-anchor="middle" class="note" style="font-size:11.5px">0</text>
+  <text x="211" y="477" text-anchor="middle" class="note" style="font-size:11.5px">0.5</text>
+  <text x="346" y="477" text-anchor="middle" class="note" style="font-size:11.5px">1</text>
+  <text transform="translate(30,425) rotate(-90)" text-anchor="middle" class="note">papers</text>
+  <text x="82" y="400" text-anchor="start" class="note" style="font-size:12px">histogram of the 1,600 test confidences</text>
+  <line class="rule" x1="470" y1="334" x2="740" y2="334" style="stroke-width:1"/>
+  <text x="463" y="338" text-anchor="end" class="note" style="font-size:12px">0</text>
+  <line class="rule" x1="470" y1="280" x2="740" y2="280" style="stroke-width:1"/>
+  <text x="463" y="284" text-anchor="end" class="note" style="font-size:12px">0.2</text>
+  <line class="rule" x1="470" y1="226" x2="740" y2="226" style="stroke-width:1"/>
+  <text x="463" y="230" text-anchor="end" class="note" style="font-size:12px">0.4</text>
+  <line class="rule" x1="470" y1="172" x2="740" y2="172" style="stroke-width:1"/>
+  <text x="463" y="176" text-anchor="end" class="note" style="font-size:12px">0.6</text>
+  <line class="rule" x1="470" y1="118" x2="740" y2="118" style="stroke-width:1"/>
+  <text x="463" y="122" text-anchor="end" class="note" style="font-size:12px">0.8</text>
+  <line class="rule" x1="470" y1="64" x2="740" y2="64" style="stroke-width:1"/>
+  <text x="463" y="68" text-anchor="end" class="note" style="font-size:12px">1</text>
+  <line class="rule" x1="470" y1="64" x2="470" y2="334" style="stroke-width:1"/>
+  <text x="470" y="350" text-anchor="middle" class="note" style="font-size:12px">0</text>
+  <line class="rule" x1="524" y1="64" x2="524" y2="334" style="stroke-width:1"/>
+  <text x="524" y="350" text-anchor="middle" class="note" style="font-size:12px">0.2</text>
+  <line class="rule" x1="578" y1="64" x2="578" y2="334" style="stroke-width:1"/>
+  <text x="578" y="350" text-anchor="middle" class="note" style="font-size:12px">0.4</text>
+  <line class="rule" x1="632" y1="64" x2="632" y2="334" style="stroke-width:1"/>
+  <text x="632" y="350" text-anchor="middle" class="note" style="font-size:12px">0.6</text>
+  <line class="rule" x1="686" y1="64" x2="686" y2="334" style="stroke-width:1"/>
+  <text x="686" y="350" text-anchor="middle" class="note" style="font-size:12px">0.8</text>
+  <line class="rule" x1="740" y1="64" x2="740" y2="334" style="stroke-width:1"/>
+  <text x="740" y="350" text-anchor="middle" class="note" style="font-size:12px">1</text>
+  <path class="ln" d="M470,64 V334 H740" style="stroke:#52606d;stroke-width:1"/>
+  <line class="ln" x1="470" y1="334" x2="740" y2="64" style="stroke:#52606d;stroke-width:1.2;stroke-dasharray:5 4"/>
+  <text transform="translate(486.2,335.8) rotate(-45)" text-anchor="start" class="note" style="font-size:12px">perfect calibration</text>
+  <line class="ln" x1="556.4" y1="247.6" x2="556.4" y2="199" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="567.5" y1="236.5" x2="567.5" y2="199" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="587.2" y1="216.8" x2="587.2" y2="212.5" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="606.4" y1="197.7" x2="606.4" y2="193.8" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="622.0" y1="182.0" x2="622.0" y2="183.3" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="641.3" y1="162.7" x2="641.3" y2="156.8" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="658.9" y1="145.1" x2="658.9" y2="149.9" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="677.9" y1="126.1" x2="677.9" y2="126.6" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="696.7" y1="107.3" x2="696.7" y2="103.5" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="713.8" y1="90.2" x2="713.8" y2="98.1" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <line class="ln" x1="735.5" y1="68.5" x2="735.5" y2="69.3" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <circle cx="556.4" cy="199.0" r="2.4" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="567.5" cy="199.0" r="2.6" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="587.2" cy="212.5" r="3.3" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="606.4" cy="193.8" r="4.2" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="622.0" cy="183.3" r="4.0" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="641.3" cy="156.8" r="4.4" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="658.9" cy="149.9" r="4.4" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="677.9" cy="126.6" r="4.7" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="696.7" cy="103.5" r="5.3" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="713.8" cy="98.1" r="6.0" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="735.5" cy="69.3" r="11.3" fill="#16324f" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+  <text x="605" y="368" text-anchor="middle" class="note" style="font-size:13px">confidence (mean per bin)</text>
+  <text x="605" y="48" text-anchor="middle" class="m b" style="font-size:15px"><tspan class="s">after temperature scaling (</tspan><tspan class="i">τ</tspan><tspan class="s"> = 0.47): ECE 0.009</tspan></text>
+  <line class="rule" x1="470" y1="462" x2="740" y2="462" style="stroke-width:1"/>
+  <text x="463" y="466" text-anchor="end" class="note" style="font-size:11.5px">0</text>
+  <line class="rule" x1="470" y1="425" x2="740" y2="425" style="stroke-width:1"/>
+  <text x="463" y="429" text-anchor="end" class="note" style="font-size:11.5px">500</text>
+  <line class="rule" x1="470" y1="388" x2="740" y2="388" style="stroke-width:1"/>
+  <text x="463" y="392" text-anchor="end" class="note" style="font-size:11.5px">1,000</text>
+  <rect x="543.0" y="461.9" width="16.0" height="0.1" fill="#7f8e9e"/>
+  <rect x="561.0" y="461.7" width="16.0" height="0.3" fill="#7f8e9e"/>
+  <rect x="579.0" y="460.5" width="16.0" height="1.5" fill="#7f8e9e"/>
+  <rect x="597.0" y="458.2" width="16.0" height="3.8" fill="#7f8e9e"/>
+  <rect x="615.0" y="458.8" width="16.0" height="3.2" fill="#7f8e9e"/>
+  <rect x="633.0" y="457.3" width="16.0" height="4.7" fill="#7f8e9e"/>
+  <rect x="651.0" y="457.1" width="16.0" height="4.9" fill="#7f8e9e"/>
+  <rect x="669.0" y="455.9" width="16.0" height="6.1" fill="#7f8e9e"/>
+  <rect x="687.0" y="452.9" width="16.0" height="9.1" fill="#7f8e9e"/>
+  <rect x="705.0" y="448.5" width="16.0" height="13.5" fill="#7f8e9e"/>
+  <rect x="723.0" y="390.8" width="16.0" height="71.2" fill="#7f8e9e"/>
+  <path class="ln" d="M470,388 V462 H740" style="stroke:#52606d;stroke-width:1"/>
+  <text x="470" y="477" text-anchor="middle" class="note" style="font-size:11.5px">0</text>
+  <text x="605" y="477" text-anchor="middle" class="note" style="font-size:11.5px">0.5</text>
+  <text x="740" y="477" text-anchor="middle" class="note" style="font-size:11.5px">1</text>
+  <text x="476" y="400" text-anchor="start" class="note" style="font-size:12px">histogram of the 1,600 test confidences</text>
+  <circle cx="84" cy="522" r="6" fill="#16324f" fill-opacity="0.85"/>
+  <text x="96" y="526" text-anchor="start" class="note" style="font-size:12.5px">one bin: area grows with its count</text>
+  <line class="ln" x1="320" y1="515" x2="320" y2="529" style="stroke:#b3541e;stroke-width:4;stroke-opacity:0.55"/>
+  <text x="330" y="526" text-anchor="start" class="note" style="font-size:12.5px">gap to the diagonal</text>
+  <text x="764" y="552" text-anchor="end" class="note acc" style="font-size:12.5px">measured: Lab 1 classifier, 1,600 test papers, 15 bins; τ fitted on the validation set</text>
+</svg>

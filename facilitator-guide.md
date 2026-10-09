@@ -1,6 +1,6 @@
 ---
-title: "Facilitator guide"
-subtitle: "How to run the five days, module by module"
+title: "Facilitator Guide"
+subtitle: "How to Run the Five Days, Module by Module"
 ---
 
 <!--
@@ -17,7 +17,7 @@ This guide is for the person running the room. It says what to set up, what to s
 
 {{< include /_includes/module-shape.md >}}
 
-## Read this first: what has been verified
+## Read This First: What Has Been Verified
 
 {{< include /_includes/readiness-summary.md >}}
 
@@ -29,9 +29,9 @@ The [readiness page](readiness.qmd) has the evidence for every module. It is gen
 
 **Model retirement.** Lab 8 and Module 8 pin `{{< var models.anthropic >}}`. On 2026-10-05 Anthropic listed its retirement as "not sooner than October 15, 2026". Check both providers' deprecation pages before every delivery.
 
-## Before the workshop
+## Before the Workshop
 
-### A week before
+### A Week Before
 
 1. Run every notebook from the [notebooks page](notebooks.qmd) on a fresh Colab runtime, with no keys set, then again with the keys you will hand out. Colab's preinstalled packages change. Record the run time per lab; the pace sheet needs it.
 2. Decide on keys. Every API lab runs without keys. If you provide keys, provide them for the whole room or for no one, so that groups compare like with like.
@@ -40,11 +40,11 @@ The [readiness page](readiness.qmd) has the evidence for every module. It is gen
 5. Check that the blocking work on the [readiness page](readiness.qmd#open-work) is done, or plan the fallback named in each module's section.
 6. Send participants the [Module 0](#module-0) page as optional pre-work, decide whether you will open the room at 08:00 on Day 1 for a drop-in clinic, and tell them. Ask anyone on a managed work laptop to check now that they may install software.
 
-### The day before
+### The Day Before
 
 Send participants to [Setup](setup.qmd). It asks them to run `00-setup.ipynb`, switch on a T4, and add any keys to Colab Secrets.
 
-### Runtimes, keys and downloads by lab
+### Runtimes, Keys and Downloads by Lab
 
 | Lab | Runtime | Downloads from the Hugging Face Hub | Keys it can use | Path without keys or Hub |
 |---|---|---|---|---|
@@ -64,7 +64,7 @@ Send participants to [Setup](setup.qmd). It asks them to run `00-setup.ipynb`, s
 | 14 | CPU or T4 | Qwen for the no-key guard | OpenAI, Anthropic, TypeSafe | toy router, stub guard, stub agent |
 | 15 | as Labs 13 and 14 | as Labs 13 and 14 | all three | stub path (code check only) |
 
-### Colab Secrets and which keys matter
+### Colab Secrets and Which Keys Matter
 
 Participants add keys in the key icon of Colab's left sidebar and switch on **Notebook access** for each. The names are fixed:
 
@@ -76,11 +76,11 @@ Participants add keys in the key icon of Colab's left sidebar and switch on **No
 
 Tell the room three things. A key is never pasted into a cell. A notebook with no keys is not a lesser notebook: every checkpoint gives the same verdict on every path. A number from the no-key path describes the open model, the toy model or the test double, never OpenAI, Claude or Jev.
 
-### The lookalike-package warning
+### The Lookalike-Package Warning
 
 Say this out loud on Day 4, before Lab 12, and again on Day 5. TypeSafe's SDK is published on PyPI only as `typesafe-sdk` (pinned at {{< var packages.typesafe_sdk >}}), and its LangChain integration only as `langchain-typesafe` (pinned at {{< var packages.langchain_typesafe >}}). Lab 12's stretch adds TypeSafe's emulator, `system-one-adapter` ({{< var packages.system_one_adapter >}}). Several unaffiliated packages sit on names a participant might guess, among them `typesafe-ai`, `jev` and `typesafe-client`, and a third-party LlamaIndex reranker. There is no official LlamaIndex integration. The labs install the right packages for you; nobody should install anything else under a TypeSafe-like name.
 
-### How the notebooks behave
+### How the Notebooks Behave
 
 - **Solutions never replace participants' code.** Each `# TODO` cell is followed by a folded solution. That solution is stored, not bound, unless `WORKED_EXAMPLE` is ticked in the harness cell at the top.
   - **Every checkpoint says whose code it checked:** "passed on your code" or "passed on the REFERENCE solution".
@@ -114,7 +114,7 @@ Optional pre-work, before Day 1, with an optional drop-in clinic on Day 1 from 0
 
 **No agent subscription.** Claude Code needs a Pro, Max, Team, Enterprise or Console account; the free Claude plan does not include it (Claude Code setup documentation, read {{< var agents_intro.checked >}}). Codex's README asks users to sign in with a ChatGPT Plus, Pro, Business, Edu or Enterprise plan, or to use an API key; we could not read OpenAI's plan pages from the build environment, so do not tell anyone Codex is free. Gemini CLI's README states a free tier for a personal Google account (60 requests a minute and 1,000 a day). So a participant with no subscription can use Gemini CLI with a personal Google account, after reading its terms, or pair with someone who has an agent. The pair takes turns writing the prompts; whoever is not typing reads each diff and compares the checks with the page's numbers. They work in the agent owner's repository; the other participant can publish their own copy at home. Recheck these plan terms before each delivery.
 
-## The shape of each day {#shape}
+## The Shape of Each Day {#shape}
 
 **Day 1** runs on the four-module clock: a 10-minute opening (the welcome and the setup check), then four modules of {{< var schedule.clocks.standard.shape.briefing >}} minutes of briefing and {{< var schedule.clocks.standard.shape.lab >}} of lab. There is no debrief and no closing slot; each lab ends at a break, at lunch or at the end of the day.
 
@@ -127,7 +127,7 @@ Optional pre-work, before Day 1, with an optional drop-in clinic on Day 1 from 0
 - **The middle module, across lunch.** Its briefing runs before lunch and its lab and debrief after. Stop the briefing at lunch, wherever it has reached; an unfinished section becomes reading. After lunch, the lab's first row holds the slack: participants reconnect and rerun the setup cell if Colab has reset the runtime, and you say in one minute where the briefing stopped.
 - **The day wrap-up (the last 15 minutes).** Three prompts on the day page: 5 minutes in pairs, then 10 with the room. Ask what each of the day's modules fixed and what it left open, and fill the running table with the room's numbers from the debriefs. Write it on the board and keep it, or a photo of it: Day 5's wrap-up completes the line of ideas from the boards of Days 2 to 4. On Day 5 the wrap-up is the end of the capstone wrap-up.
 
-### When the clock slips on Days 2 to 5
+### When the Clock Slips on Days 2 to 5
 
 Apply these in order. The module's own "behind" rules, in its section below and in the pace sheet, come first.
 
@@ -286,7 +286,7 @@ Apply these in order. The module's own "behind" rules, in its section below and 
   - Exercise 5: the DPO loss is exactly $\log 2$ when the policy equals the reference.
 - **The demonstration and its risk:** Exercise 4 removes the KL penalty and asserts the reward-hacking signature (proxy reward up, drift up, gold reward down, variety down). Whether it holds on every seed is unverified; it is the main risk of the lab. If a group's run misses one part, read the table with them; do not call it a bug.
 - **If the clock slips:** drop the stretch (the $\beta$ sweep, three more training runs) before anything in the core.
-- **If there is no GPU or no Lab 9 files:** with no GPU, run `FAST` and teach Exercises 4 and 5 from briefing figure 10.2 (a schematic). Without the Lab 9 files the lab cannot run; teach the KL-regularized objective and the DPO derivation on the board.
+- **If there is no GPU or no Lab 9 files:** with no GPU, run `FAST` and teach Exercises 4 and 5 from the briefing's [reward over-optimization figure](modules/10-rlhf.qmd#fig-reward-drift) (a schematic). Without the Lab 9 files the lab cannot run; teach the KL-regularized objective and the DPO derivation on the board.
 - **Debrief:** *numbers:* for the run with the KL penalty, the run without it ($\beta = 0$) and DPO: the reward-model gain, the KL drift from the reference, the gold reward and the share of distinct bigrams, plus DPO's held-out preference accuracy. Ask how many groups' $\beta = 0$ runs showed all four parts of the reward-hacking signature; that it holds on every seed is unverified, so a miss is data, not a bug. If the lab ran `FAST` or not at all, say that the room has no numbers and use briefing figure 10.2. *Misconception:* "a higher reward-model score means a better policy". Only near the reference: the $\beta = 0$ row is the counterexample. *Bridge:* RLHF optimizes what raters prefer, and raters do not judge whether a model's confidence is right. Day 4 opens with Module 11: what a confidence should mean, and how to measure it.
 - **Not verified:** nothing involving GPT-2 has run. All times are estimates (core path 6 to 7 minutes on a T4).
 
@@ -388,7 +388,7 @@ Apply these in order. The module's own "behind" rules, in its section below and 
 
 **Cost (estimate):** under 2 USD per pair on Claude, under 25 cents per pair on OpenAI, under 10 cents per pair for Jev.
 
-## When things fail
+## When Things Fail
 
 | Failure | What to do |
 |---|---|
@@ -400,6 +400,6 @@ Apply these in order. The module's own "behind" rules, in its section below and 
 | A key is pasted into a cell | Delete the cell's output and the cell, rotate the key with the provider, and remind the room to use Colab Secrets |
 | A checkpoint fails with the solution | Note the lab, the path and the message. Several thresholds are provisional (listed per module above); report it to the maintainers rather than editing the threshold in the room |
 
-## Feedback for the next delivery
+## Feedback for the Next Delivery
 
-After each day, record: where the clock slipped (by module and exercise), which checkpoints confused people, the measured run time per lab on the room's runtimes, and the measured cost per API lab. These replace the estimates in this guide and in the pace sheet.
+After each day, record: where the clock slipped (by module and exercise), which checkpoints confused people and whether the folded hint was enough, the measured run time per lab on the room's runtimes, and the measured cost per API lab. These replace the estimates in this guide and in the pace sheet. Keep the two kinds of record apart: run times go in `runs/` through `scripts/add_run_record.py`; observations of people (minutes per exercise, where they stalled) go in `pilot/`, in the form the [pilot protocol]({{< var repo.url >}}/tree/main/pilot) gives, and are never presented as compute times.

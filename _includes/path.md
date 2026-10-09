@@ -2,13 +2,13 @@
 
 ::: {.path}
 ::: {.path-day}
-[Before Day 1 · Pre-work](setup.qmd#module-0){.path-day-label}
+[Before Day 1 · Pre-Work](setup.qmd#module-0){.path-day-label}
 
 ::: {.path-step .path-step-optional}
 [0]{.path-num}
 
 ::: {.path-body}
-[Coding agents in the terminal](modules/00-coding-agents.qmd){.path-title} [Optional pre-work]{.chip}
+[Coding Agents in the Terminal](modules/00-coding-agents.qmd){.path-title} [Optional pre-work]{.chip}
 
 Install a terminal coding agent and use it to build, check and publish two small data apps in Python or R, each with a three.js page. Pre-work, on your own laptop before Day 1.
 :::
@@ -21,7 +21,7 @@ Install a terminal coding agent and use it to build, check and publish two small
 [1]{.path-num}
 
 ::: {.path-body}
-[Text as data](modules/01-text-as-data.qmd){.path-title}
+[Text as Data](modules/01-text-as-data.qmd){.path-title}
 
 Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against.
 :::
@@ -30,7 +30,7 @@ Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-b
 [2]{.path-num}
 
 ::: {.path-body}
-[Word vectors and neural networks](modules/02-word-vectors.qmd){.path-title}
+[Word Vectors and Neural Networks](modules/02-word-vectors.qmd){.path-title}
 
 From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model.
 :::
@@ -39,7 +39,7 @@ From one-hot vectors to learned embeddings, with a PyTorch refresher and the fir
 [3]{.path-num}
 
 ::: {.path-body}
-[Sequence models](modules/03-sequence-models.qmd){.path-title}
+[Sequence Models](modules/03-sequence-models.qmd){.path-title}
 
 RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences.
 :::
@@ -48,20 +48,20 @@ RNNs, LSTMs and neural language modeling, and why gradients vanish over long seq
 [4]{.path-num}
 
 ::: {.path-body}
-[Seq2seq and attention](modules/04-seq2seq-attention.qmd){.path-title}
+[Seq2seq and Attention](modules/04-seq2seq-attention.qmd){.path-title}
 
 Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.
 :::
 :::
 :::
 ::: {.path-day}
-[Day 2 · Transformers and pretraining](day-2.qmd){.path-day-label}
+[Day 2 · Transformers and Pretraining](day-2.qmd){.path-day-label}
 
 ::: {.path-step}
 [5]{.path-num}
 
 ::: {.path-body}
-[The transformer](modules/05-transformer-from-scratch.qmd){.path-title}
+[The Transformer](modules/05-transformer-from-scratch.qmd){.path-title}
 
 Self-attention, multi-head attention and positional encodings, assembled into a small GPT.
 :::
@@ -70,7 +70,7 @@ Self-attention, multi-head attention and positional encodings, assembled into a 
 [6]{.path-num}
 
 ::: {.path-body}
-[Pretraining and the Hugging Face stack](modules/06-pretraining-huggingface.qmd){.path-title}
+[Pretraining and the Hugging Face Stack](modules/06-pretraining-huggingface.qmd){.path-title}
 
 Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face.
 :::
@@ -79,20 +79,20 @@ Subword tokenization, masked and causal pretraining, and using pretrained models
 [7]{.path-num}
 
 ::: {.path-body}
-[Fine-tuning and LoRA](modules/07-finetuning-lora.qmd){.path-title}
+[Fine-Tuning and LoRA](modules/07-finetuning-lora.qmd){.path-title}
 
 Turning a pretrained language model into an instruction follower, efficiently.
 :::
 :::
 :::
 ::: {.path-day}
-[Day 3 · Using and aligning LLMs](day-3.qmd){.path-day-label}
+[Day 3 · Using and Aligning LLMs](day-3.qmd){.path-day-label}
 
 ::: {.path-step}
 [8]{.path-num}
 
 ::: {.path-body}
-[LLMs through APIs](modules/08-llm-apis.qmd){.path-title}
+[LLMs Through APIs](modules/08-llm-apis.qmd){.path-title}
 
 OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation.
 :::
@@ -101,7 +101,7 @@ OpenAI and Claude side by side: prompting, structured output, tool use, cost and
 [9]{.path-num}
 
 ::: {.path-body}
-[Reinforcement and preference learning](modules/09-preference-learning.qmd){.path-title}
+[Reinforcement and Preference Learning](modules/09-preference-learning.qmd){.path-title}
 
 Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons.
 :::
@@ -117,7 +117,7 @@ The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways 
 :::
 :::
 ::: {.path-day}
-[Day 4 · Calibration, decisions, RAG](day-4.qmd){.path-day-label}
+[Day 4 · Calibration, Decisions, RAG](day-4.qmd){.path-day-label}
 
 ::: {.path-step}
 [11]{.path-num}
@@ -132,7 +132,7 @@ What a probability should mean, how to measure it, and how to use confidence to 
 [12]{.path-num}
 
 ::: {.path-body}
-[Calibrated decisions: RLCD and Jev](modules/12-rlcd-jev.qmd){.path-title}
+[Calibrated Decisions: RLCD and Jev](modules/12-rlcd-jev.qmd){.path-title}
 
 Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public.
 :::
@@ -141,14 +141,14 @@ Training and using models for calibrated decisions: outcome rewards, thresholds 
 [13]{.path-num}
 
 ::: {.path-body}
-[Retrieval-augmented generation](modules/13-rag.qmd){.path-title}
+[Retrieval-Augmented Generation](modules/13-rag.qmd){.path-title}
 
 Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately.
 :::
 :::
 :::
 ::: {.path-day}
-[Day 5 · Agents and capstone](day-5.qmd){.path-day-label}
+[Day 5 · Agents and Capstone](day-5.qmd){.path-day-label}
 
 ::: {.path-step}
 [14]{.path-num}

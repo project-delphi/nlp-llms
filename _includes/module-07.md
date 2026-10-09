@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 2 · Transformers and pretraining](/day-2.qmd){.module-day} [Module 7]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [14:45 briefing · 15:40 lab · 16:35 debrief]{.module-clock}
+[Day 2 · Transformers and Pretraining](/day-2.qmd){.module-day} [Module 7]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [14:45 briefing · 15:40 lab · 16:35 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Turn a pretrained causal LM into an instruction follower
 - Apply LoRA and explain why it works
 - Choose decoding settings and evaluate generated text
+
+New terms, in the [glossary](/glossary.qmd): [chat template](/glossary.qmd#chat-template), [LoRA (low-rank adaptation)](/glossary.qmd#lora).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 6 · Pretraining and the Hugging Face stack](/modules/06-pretraining-huggingface.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 6 · Pretraining and the Hugging Face Stack](/modules/06-pretraining-huggingface.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - API keys are optional. Without them an open model runs in place of the commercial one.
 :::

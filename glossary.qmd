@@ -1,0 +1,14 @@
+---
+title: "Glossary and Notation"
+subtitle: "Every Term and Symbol, Where It Is Defined and Where You Use It"
+---
+
+<!--
+The entries are written in _glossary.yml; scripts/gen_tables.py turns them into
+_includes/glossary.md and tests/test_learner_pages.py checks every module, section and
+exercise they name. Edit _glossary.yml, not this page's include.
+-->
+
+A short definition of each term the workshop uses, a small example, the module and section that define it, and the lab exercise where you implement or measure it. The definitions are reminders, not replacements: the module pages derive each idea and say what it costs. Symbols are in the [notation table](#notation) at the end, with every letter that means two things in different modules.
+
+{{< include /_includes/glossary.md >}}

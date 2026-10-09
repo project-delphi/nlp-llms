@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 4 · Calibration, decisions, RAG](/day-4.qmd){.module-day} [Module 13]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [14:45 briefing · 15:40 lab · 16:35 debrief]{.module-clock}
+[Day 4 · Calibration, Decisions, RAG](/day-4.qmd){.module-day} [Module 13]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [14:45 briefing · 15:40 lab · 16:35 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Assemble a RAG pipeline in LlamaIndex and LangChain
 - Implement recall@k and MRR, and choose chunk size and top-k from a measured sweep
 - Evaluate retrieval and answer quality separately
+
+New terms, in the [glossary](/glossary.qmd): [retrieval](/glossary.qmd#retrieval), [recall@k](/glossary.qmd#recall-at-k), [reranking](/glossary.qmd#reranking), [faithfulness](/glossary.qmd#faithfulness).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 12 · Calibrated decisions: RLCD and Jev](/modules/12-rlcd-jev.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 12 · Calibrated Decisions: RLCD and Jev](/modules/12-rlcd-jev.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - API keys are optional. Without them an open model runs in place of the commercial one.
 :::

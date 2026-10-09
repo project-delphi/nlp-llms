@@ -3,18 +3,26 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–3 | 1. What Module 12 left open: why retrieve | — |
-| 3–8 | 2. The pipeline | [Check yourself](#chk-stages) (2 min) |
+| 0–3 | 1. What Module 12 Left Open: Why Retrieve | — |
+| 3–8 | 2. The Pipeline | [Check yourself](#chk-stages) (2 min) |
 | 8–12 | 3. Chunking | — |
-| 12–18 | 4. Dense retrieval | — |
-| 18–22 | 5. Sparse and hybrid retrieval | — |
-| 22–30 | 6. Reranking: cross-encoders and a decision model | [Check yourself](#chk-rerank) (2 min) |
-| 30–33 | 7. Generation: sources, citations, abstention | — |
-| 33–42 | 8. Evaluating retrieval | [Demo](#demo-recall-budget) (4 min) |
-| 42–49 | 9. Evaluating answers | [Check yourself](#chk-faith) (2 min) |
-| 49–51 | 10. Common failures | — |
+| 12–18 | 4. Dense Retrieval | — |
+| 18–22 | 5. Sparse and Hybrid Retrieval | — |
+| 22–30 | 6. Reranking: Cross-Encoders and a Decision Model | [Check yourself](#chk-rerank) (2 min) |
+| 30–33 | 7. Generation: Sources, Citations, Abstention | — |
+| 33–42 | 8. Evaluating Retrieval | [Demo](#demo-recall-budget) (4 min) |
+| 42–49 | 9. Evaluating Answers | [Check yourself](#chk-faith) (2 min) |
+| 49–51 | 10. Common Failures | — |
 | 51–55 | 11. LlamaIndex and LangChain | — |
 | **55** | **Total** | **45 minutes of exposition, 10 of activities** |
 :::
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
+
+::: {.reading-guide}
+**Read now** · Sections 1–11, in the agenda above.
+
+**Use in the lab** · Exercise 0: sections 2 and 8; Exercise 1: section 8; Exercise 2: sections 3 and 4; Exercise 3: sections 4 and 11; Exercise 4: section 6; Exercise 5: sections 7 and 9.
+
+**Read later** · The collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

@@ -8,7 +8,7 @@ toc: false
 
 Day 3 starts with the commercial models you reach through an API, and with what their answers do not tell you. It then asks what these models are trained to want: Module 9 frames generation as reinforcement learning and learns a reward from human comparisons, and Module 10 optimizes a model against that reward, which is RLHF, and shows how it fails.
 
-## Warm-up: what carried over (09:00–09:15) {#warm-up}
+## Warm-Up: What Carried Over (09:00–09:15) {#warm-up}
 
 Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4; the facilitator takes the two most-missed questions for 5. Each link opens the question with its folded answer. Three questions come from Day 2 and two from Day 1.
 
@@ -22,16 +22,16 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 
 {{< include /_includes/day-3.md >}}
 
-## Run sheet {#run-sheet}
+## Run Sheet {#run-sheet}
 
 {{< include /_includes/run-3.md >}}
 
-## Day wrap-up (16:45–17:00) {#wrap-up}
+## Day Wrap-Up (16:45–17:00) {#wrap-up}
 
 In pairs for 5 minutes, then the room for 10. The facilitator adds today's rows to the board and keeps them for Day 5. The numbers are the room's own, from its runs.
 
 1. **Fixed and left open.** For Modules 8, 9 and 10, which limitation of the step before did each remove, and which did it leave for the next? Start from Module 7: a small model can be tuned to follow instructions, but the strongest models are reached only through an API.
-2. **The running table.** Fill in the room's results:
+2. **The running table.** Fill in the room's results. Write the path beside each number, as the notebook's last cell prints it (real open models, commercial APIs, or offline stand-ins, which measure no model); the [results worksheet](worksheet.qmd) has a table per comparison group.
 
    | Lab | Rows | Metric |
    |---|---|---|
@@ -40,5 +40,7 @@ In pairs for 5 minutes, then the room for 10. The facilitator adds today's rows 
    | Lab 10, Lab 6's small GPT-2 against Lab 9's reward model | KL-penalized policy; the same with $\beta = 0$; DPO | reward gain, KL drift from the reference, gold reward, distinct-bigram share; DPO's held-out preference accuracy |
 
 3. **What the numbers do not say.** In which row did the number being optimized rise while the thing you care about fell? And which number in today's table, or in Day 2's, tells you how sure a model is of one particular answer?
+
+If time allows, a transfer question from today's modules ([T8](knowledge-checks.md#t8), [T9](knowledge-checks.md#t9) or [T10](knowledge-checks.md#t10)) can replace item 3, in the same minutes. It changes the example, so the answer has to be reasoned out rather than recalled.
 
 Times are on the [schedule](schedule.qmd).

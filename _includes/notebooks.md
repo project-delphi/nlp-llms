@@ -9,7 +9,7 @@ Before Day 1
 ::: {.module-card-body}
 [Start here · 10 minutes]{.eyebrow}
 
-[Setup and environment check]{.module-card-title}
+[Setup and Environment Check]{.module-card-title}
 
 Check the runtime, load optional API keys from Colab Secrets, and choose a provider.
 
@@ -25,43 +25,43 @@ Check the runtime, load optional API keys from Colab Secrets, and choose a provi
 ::: {.notebook-table}
 | # | Notebook | Briefing | Lab |
 |---|---|---|---|
-| 1 | **Text as data** [Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against.]{.notebook-summary} | [Read](modules/01-text-as-data.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/01-text-as-data.ipynb){.btn-colab} |
-| 2 | **Word vectors and neural networks** [From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model.]{.notebook-summary} | [Read](modules/02-word-vectors.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/02-word-vectors.ipynb){.btn-colab} |
-| 3 | **Sequence models** [RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences.]{.notebook-summary} | [Read](modules/03-sequence-models.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/03-sequence-models.ipynb){.btn-colab} |
-| 4 | **Seq2seq and attention** [Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.]{.notebook-summary} | [Read](modules/04-seq2seq-attention.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/04-seq2seq-attention.ipynb){.btn-colab} |
+| 1 | **Text as Data** [Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against.]{.notebook-summary} | [Read](modules/01-text-as-data.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/01-text-as-data.ipynb){.btn-colab} |
+| 2 | **Word Vectors and Neural Networks** [From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model.]{.notebook-summary} | [Read](modules/02-word-vectors.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/02-word-vectors.ipynb){.btn-colab} |
+| 3 | **Sequence Models** [RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences.]{.notebook-summary} | [Read](modules/03-sequence-models.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/03-sequence-models.ipynb){.btn-colab} |
+| 4 | **Seq2seq and Attention** [Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix.]{.notebook-summary} | [Read](modules/04-seq2seq-attention.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/04-seq2seq-attention.ipynb){.btn-colab} |
 :::
 
-## Day 2 · Transformers and pretraining {#day-2}
+## Day 2 · Transformers and Pretraining {#day-2}
 
 ::: {.notebook-table}
 | # | Notebook | Briefing | Lab |
 |---|---|---|---|
-| 5 | **The transformer** [Self-attention, multi-head attention and positional encodings, assembled into a small GPT.]{.notebook-summary} | [Read](modules/05-transformer-from-scratch.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb){.btn-colab} |
-| 6 | **Pretraining and the Hugging Face stack** [Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face.]{.notebook-summary} | [Read](modules/06-pretraining-huggingface.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb){.btn-colab} |
-| 7 | **Fine-tuning and LoRA** [Turning a pretrained language model into an instruction follower, efficiently.]{.notebook-summary} | [Read](modules/07-finetuning-lora.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb){.btn-colab} |
+| 5 | **The Transformer** [Self-attention, multi-head attention and positional encodings, assembled into a small GPT.]{.notebook-summary} | [Read](modules/05-transformer-from-scratch.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/05-transformer-from-scratch.ipynb){.btn-colab} |
+| 6 | **Pretraining and the Hugging Face Stack** [Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face.]{.notebook-summary} | [Read](modules/06-pretraining-huggingface.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/06-pretraining-huggingface.ipynb){.btn-colab} |
+| 7 | **Fine-Tuning and LoRA** [Turning a pretrained language model into an instruction follower, efficiently.]{.notebook-summary} | [Read](modules/07-finetuning-lora.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/07-finetuning-lora.ipynb){.btn-colab} |
 :::
 
-## Day 3 · Using and aligning LLMs {#day-3}
+## Day 3 · Using and Aligning LLMs {#day-3}
 
 ::: {.notebook-table}
 | # | Notebook | Briefing | Lab |
 |---|---|---|---|
-| 8 | **LLMs through APIs** [OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation.]{.notebook-summary} | [Read](modules/08-llm-apis.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/08-llm-apis.ipynb){.btn-colab} |
-| 9 | **Reinforcement and preference learning** [Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons.]{.notebook-summary} | [Read](modules/09-preference-learning.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/09-preference-learning.ipynb){.btn-colab} |
+| 8 | **LLMs Through APIs** [OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation.]{.notebook-summary} | [Read](modules/08-llm-apis.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/08-llm-apis.ipynb){.btn-colab} |
+| 9 | **Reinforcement and Preference Learning** [Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons.]{.notebook-summary} | [Read](modules/09-preference-learning.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/09-preference-learning.ipynb){.btn-colab} |
 | 10 | **RLHF** [The full reinforcement-learning-from-human-feedback pipeline, DPO, and the ways it goes wrong.]{.notebook-summary} | [Read](modules/10-rlhf.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/10-rlhf.ipynb){.btn-colab} |
 :::
 
-## Day 4 · Calibration, decisions, RAG {#day-4}
+## Day 4 · Calibration, Decisions, RAG {#day-4}
 
 ::: {.notebook-table}
 | # | Notebook | Briefing | Lab |
 |---|---|---|---|
 | 11 | **Calibration** [What a probability should mean, how to measure it, and how to use confidence to decide when to abstain.]{.notebook-summary} | [Read](modules/11-calibration.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/11-calibration.ipynb){.btn-colab} |
-| 12 | **Calibrated decisions: RLCD and Jev** [Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public.]{.notebook-summary} | [Read](modules/12-rlcd-jev.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb){.btn-colab} |
-| 13 | **Retrieval-augmented generation** [Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately.]{.notebook-summary} | [Read](modules/13-rag.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb){.btn-colab} |
+| 12 | **Calibrated Decisions: RLCD and Jev** [Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public.]{.notebook-summary} | [Read](modules/12-rlcd-jev.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/12-rlcd-jev.ipynb){.btn-colab} |
+| 13 | **Retrieval-Augmented Generation** [Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately.]{.notebook-summary} | [Read](modules/13-rag.qmd) | [Open in Colab](https://colab.research.google.com/github/project-delphi/nlp-llms/blob/main/notebooks/13-rag.ipynb){.btn-colab} |
 :::
 
-## Day 5 · Agents and capstone {#day-5}
+## Day 5 · Agents and Capstone {#day-5}
 
 ::: {.notebook-table}
 | # | Notebook | Briefing | Lab |

@@ -1,6 +1,6 @@
 ---
 title: "Readiness"
-subtitle: "What has run, where, and what is still missing"
+subtitle: "What Has Run, Where, and What Is Still Missing"
 page-layout: full
 ---
 

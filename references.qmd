@@ -1,11 +1,13 @@
 ---
 title: "References"
-subtitle: "Readings by module, the courses and documentation this workshop draws on, and how each entry was checked"
+subtitle: "Readings by Module, the Courses and Documentation This Workshop Draws on, and How Each Entry Was Checked"
 ---
 
 Every module page ends with five readings and a note on why each matters. This page collects them, together with the other works the briefings cite, as full citations with stable links. A source appears in full once, under the first module that lists it as a reading; later modules point back to it.
 
-## How the entries were checked
+For a term or a symbol rather than a source, use the [glossary and notation index](glossary.qmd); for your own numbers, the [results worksheet](worksheet.qmd).
+
+## How the Entries Were Checked
 
 Each entry ends with a note in italics saying how its citation was checked on 2026-10-05:
 
@@ -25,9 +27,9 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 
 - Jurafsky, D. and Martin, J. H. [*Speech and Language Processing*](https://web.stanford.edu/~jurafsky/slp3/), 3rd edition draft (the August 2026 release). Free chapter PDFs. Chapter numbers change between draft releases, so the briefings name chapters by title. Modules 1, 2, 4, 5 and 6 use the chapters "Words and Tokens", "N-gram Language Models", "Logistic Regression and Text Classification", "Embeddings", "Neural Networks", "RNNs and LSTMs", "Transformers and Pretraining" and "Masked Language Models". *Search summary: the draft and its August 2026 release confirmed; the chapter titles were not checked against the current table of contents.*
 
-## Day 1 · Foundations
+## Day 1 · {{< var days.d1.title >}}
 
-### Module 1 · Text as data
+### Module 1 · {{< var modules.m01.title >}}
 
 - Manning, C. D., Raghavan, P. and Schütze, H. (2008). [*Introduction to Information Retrieval*](https://nlp.stanford.edu/IR-book/). Cambridge University Press. Chapter 6 (term weighting and TF-IDF), chapter 13 (text classification and naive Bayes), and section 11.4.3, "Okapi BM25: a non-binary model", for the BM25 stretch exercise of Lab 1. *Search summary.*
 - Chen, S. F. and Goodman, J. (1999). An empirical study of smoothing techniques for language modeling. *Computer Speech & Language* 13(4), 359–394. The standard comparison of smoothing methods, for the optional box on interpolation, backoff and Kneser–Ney. An earlier version appeared at ACL 1996: [An Empirical Study of Smoothing Techniques for Language Modeling](https://aclanthology.org/P96-1041/), *Proceedings of the 34th Annual Meeting of the ACL*, 310–318 (preprint [arXiv:cmp-lg/9606011](https://arxiv.org/abs/cmp-lg/9606011)). *Journal version: search summary. ACL 1996 version: verified, ACL Anthology.*
@@ -35,7 +37,7 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Robertson, S. E. and Zaragoza, H. (2009). [The Probabilistic Relevance Framework: BM25 and Beyond](https://doi.org/10.1561/1500000019). *Foundations and Trends in Information Retrieval* 3(4), 333–389. The derivation of BM25; also used in Module 13. *Search summary.*
 - Also used: Jurafsky and Martin, the chapters "Words and Tokens", "N-gram Language Models" and "Logistic Regression and Text Classification" (Textbooks).
 
-### Module 2 · Word vectors and neural networks
+### Module 2 · {{< var modules.m02.title >}}
 
 - Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S. and Dean, J. (2013). [Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546). *Advances in Neural Information Processing Systems 26 (NIPS 2013)*, 3111–3119. Skip-gram with negative sampling, the loss implemented in Lab 2. *Search summary.*
 - Goldberg, Y. and Levy, O. (2014). [word2vec Explained: deriving Mikolov et al.'s negative-sampling word-embedding method](https://arxiv.org/abs/1402.3722). arXiv:1402.3722. A slower version of the briefing's derivation. *Search summary.*
@@ -48,7 +50,7 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Firth, J. R. (1957). A Synopsis of Linguistic Theory, 1930–1955. In *Studies in Linguistic Analysis* (special volume of the Philological Society), 1–32. Oxford: Blackwell. *Search summary; no stable link checked.*
 - Also used: Jurafsky and Martin, the chapters "Embeddings" and "Neural Networks" (Textbooks).
 
-### Module 3 · Sequence models
+### Module 3 · {{< var modules.m03.title >}}
 
 - Hochreiter, S. and Schmidhuber, J. (1997). [Long Short-Term Memory](https://doi.org/10.1162/neco.1997.9.8.1735). *Neural Computation* 9(8), 1735–1780. *Search summary.*
 - Pascanu, R., Mikolov, T. and Bengio, Y. (2013). [On the difficulty of training recurrent neural networks](https://proceedings.mlr.press/v28/pascanu13.html). *Proceedings of the 30th International Conference on Machine Learning*, PMLR 28(3), 1310–1318. The Jacobian analysis of vanishing and exploding gradients, and gradient norm clipping. *Verified, PMLR.*
@@ -58,7 +60,7 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Gers, F. A., Schmidhuber, J. and Cummins, F. (2000). [Learning to Forget: Continual Prediction with LSTM](https://doi.org/10.1162/089976600300015015). *Neural Computation* 12(10), 2451–2471. The forget gate. *Search summary.*
 - Also used: Cho et al. (2014), the GRU (Module 4).
 
-### Module 4 · Seq2seq and attention
+### Module 4 · {{< var modules.m04.title >}}
 
 - Sutskever, I., Vinyals, O. and Le, Q. V. (2014). [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215). *Advances in Neural Information Processing Systems 27 (NIPS 2014)*, 3104–3112. The LSTM encoder–decoder. *Search summary.*
 - Bahdanau, D., Cho, K. and Bengio, Y. (2015). [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473). *International Conference on Learning Representations (ICLR 2015)*. The bottleneck and additive attention. *Search summary.*
@@ -66,9 +68,9 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Cho, K., van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H. and Bengio, Y. (2014). [Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation](https://aclanthology.org/D14-1179/). *Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP)*, 1724–1734. The RNN encoder–decoder and the GRU; also cited in Module 3. *Verified, ACL Anthology.*
 - Also used: Jurafsky and Martin, the chapter "RNNs and LSTMs" (Textbooks).
 
-## Day 2 · Transformers and pretrained models
+## Day 2 · {{< var days.d2.title >}}
 
-### Module 5 · The transformer
+### Module 5 · {{< var modules.m05.title >}}
 
 - Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł. and Polosukhin, I. (2017). [Attention Is All You Need](https://arxiv.org/abs/1706.03762). *Advances in Neural Information Processing Systems 30 (NIPS 2017)*. *Search summary.*
 - Rush, A. (2018), revised by Huang, A., Subramanian, S., Sum, J., Almubarak, K. and Biderman, S. (2022). [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/). The paper, line by line, as working PyTorch code. *Verified: the author lines in the page's source, `harvardnlp/annotated-transformer` on GitHub.*
@@ -79,7 +81,7 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Radford, A., Wu, J., Child, R., Luan, D., Amodei, D. and Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. OpenAI technical report (GPT-2). *Search summary; no stable link checked.*
 - Also used: Jurafsky and Martin, the chapter "Transformers and Pretraining" (Textbooks).
 
-### Module 6 · Pretraining and the Hugging Face stack
+### Module 6 · {{< var modules.m06.title >}}
 
 - Sennrich, R., Haddow, B. and Birch, A. (2016). [Neural Machine Translation of Rare Words with Subword Units](https://aclanthology.org/P16-1162/). *Proceedings of the 54th Annual Meeting of the ACL (Volume 1: Long Papers)*, 1715–1725. Byte-pair encoding for words. *Verified, ACL Anthology.*
 - Radford, A., Narasimhan, K., Salimans, T. and Sutskever, I. (2018). [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf). OpenAI technical report (GPT). *Search summary.*
@@ -92,7 +94,7 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Brown, T. B. et al. (2020). [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165). *Advances in Neural Information Processing Systems 33 (NeurIPS 2020)*. GPT-3 and in-context learning. *Search summary.*
 - Also used: Jurafsky and Martin, the chapters "Words and Tokens", "Transformers and Pretraining" and "Masked Language Models" (Textbooks).
 
-### Module 7 · Fine-tuning and LoRA
+### Module 7 · {{< var modules.m07.title >}}
 
 - Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L. and Chen, W. (2022). [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). *International Conference on Learning Representations (ICLR 2022)*. *Search summary.*
 - Aghajanyan, A., Gupta, S. and Zettlemoyer, L. (2021). [Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning](https://aclanthology.org/2021.acl-long.568/). *Proceedings of the 59th Annual Meeting of the ACL and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)*, 7319–7328. *Verified, ACL Anthology.*
@@ -108,9 +110,9 @@ No entry is cited from memory alone. Page ranges and DOIs are given only where a
 - Kalajdzievski, D. (2023). [A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA](https://arxiv.org/abs/2312.03732). arXiv:2312.03732. Rank-stabilized LoRA. *Search summary.*
 - Liu, S.-Y., Wang, C.-Y., Yin, H., Molchanov, P., Wang, Y.-C. F., Cheng, K.-T. and Chen, M.-H. (2024). [DoRA: Weight-Decomposed Low-Rank Adaptation](https://proceedings.mlr.press/v235/liu24bn.html). *Proceedings of the 41st International Conference on Machine Learning*, PMLR 235, 32100–32121. *Verified, PMLR.*
 
-## Day 3 · Using and aligning LLMs
+## Day 3 · {{< var days.d3.title >}}
 
-### Module 8 · LLMs through APIs
+### Module 8 · {{< var modules.m08.title >}}
 
 The readings are the providers' own documentation. Documentation pages move and change; if a link breaks, search the provider's site for the page title.
 
@@ -123,7 +125,7 @@ The readings are the providers' own documentation. Documentation pages move and 
 - Anthropic. [Stop reasons and fallback](https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons). Every way a response can end. *Verified, page opened; this is the page's current title.*
 - Anthropic. [Pricing](https://platform.claude.com/docs/en/about-claude/pricing). *Verified, page opened.*
 
-### Module 9 · Reinforcement and preference learning
+### Module 9 · {{< var modules.m09.title >}}
 
 - Sutton, R. S. and Barto, A. G. (2018). [*Reinforcement Learning: An Introduction*](http://incompleteideas.net/book/the-book-2nd.html), 2nd edition. MIT Press. Chapter 13, sections 13.1 to 13.4: the policy-gradient theorem, REINFORCE, and REINFORCE with a baseline. *Search summary.*
 - Williams, R. J. (1992). [Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://doi.org/10.1007/BF00992696). *Machine Learning* 8, 229–256. The original REINFORCE paper. *Search summary.*
@@ -134,7 +136,7 @@ The readings are the providers' own documentation. Documentation pages move and 
 - Stiennon, N., Ouyang, L., Wu, J., Ziegler, D. M., Lowe, R., Voss, C., Radford, A., Amodei, D. and Christiano, P. (2020). [Learning to Summarize from Human Feedback](https://arxiv.org/abs/2009.01325). arXiv:2009.01325; published in *Advances in Neural Information Processing Systems 33 (NeurIPS 2020)* as "Learning to summarize with human feedback". Also a Module 10 reading. *Search summary.*
 - Gao, L., Schulman, J. and Hilton, J. (2023). [Scaling Laws for Reward Model Overoptimization](https://proceedings.mlr.press/v202/gao23h.html). *Proceedings of the 40th International Conference on Machine Learning*, PMLR 202, 10835–10866 (preprint [arXiv:2210.10760](https://arxiv.org/abs/2210.10760)). Also a Module 10 reading. *Verified, PMLR.*
 
-### Module 10 · RLHF
+### Module 10 · {{< var modules.m10.title >}}
 
 - Schulman, J., Wolski, F., Dhariwal, P., Radford, A. and Klimov, O. (2017). [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347). arXiv:1707.06347. *Search summary.*
 - Rafailov, R., Sharma, A., Mitchell, E., Ermon, S., Manning, C. D. and Finn, C. (2023). [Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/abs/2305.18290). *Advances in Neural Information Processing Systems 36 (NeurIPS 2023)*. *Search summary.*
@@ -147,9 +149,9 @@ The readings are the providers' own documentation. Documentation pages move and 
 - OpenAI (2023). [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774). arXiv:2303.08774. Calibration before and after post-training; also cited in Module 11. *Search summary.*
 - Also used: Ouyang et al. (2022), Stiennon et al. (2020), Gao et al. (2023) and Christiano et al. (2017) (Module 9).
 
-## Day 4 · Calibration, decisions and retrieval
+## Day 4 · {{< var days.d4.title >}}
 
-### Module 11 · Calibration
+### Module 11 · {{< var modules.m11.title >}}
 
 - Guo, C., Pleiss, G., Sun, Y. and Weinberger, K. Q. (2017). [On Calibration of Modern Neural Networks](https://proceedings.mlr.press/v70/guo17a.html). *Proceedings of the 34th International Conference on Machine Learning*, PMLR 70, 1321–1330. Reliability diagrams, ECE and temperature scaling. *Verified, PMLR.*
 - Gneiting, T. and Raftery, A. E. (2007). [Strictly Proper Scoring Rules, Prediction, and Estimation](https://doi.org/10.1198/016214506000001437). *Journal of the American Statistical Association* 102(477), 359–378. Also a Module 12 reading. *Search summary.*
@@ -174,9 +176,9 @@ The readings are the providers' own documentation. Documentation pages move and 
 - Zadrozny, B. and Elkan, C. (2002). Transforming classifier scores into accurate multiclass probability estimates. *Proceedings of the 8th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)*, 694–699. *Search summary; no stable link checked.*
 - Also used: OpenAI (2023), the GPT-4 Technical Report (Module 10).
 
-### Module 12 · Calibrated decisions: RLCD and Jev
+### Module 12 · {{< var modules.m12.title >}}
 
-TypeSafe has not published how RLCD works. The TypeSafe sources the briefing relies on are listed under [TypeSafe and Jev: public sources](#typesafe-and-jev-public-sources) below; nothing in this module's toy experiment is TypeSafe's method.
+TypeSafe has not published how RLCD works. The TypeSafe sources the briefing relies on are listed under [TypeSafe and Jev: Public Sources](#typesafe-and-jev-public-sources) below; nothing in this module's toy experiment is TypeSafe's method.
 
 - Damani, M., Puri, I., Slocum, S., Shenfeld, I., Choshen, L., Kim, Y. and Andreas, J. (2026). [Beyond Binary Rewards: Training LMs to Reason About Their Uncertainty](https://arxiv.org/abs/2507.16806). *International Conference on Learning Representations (ICLR 2026)*. RLCR, a published reinforcement-learning method with a correctness-plus-Brier reward, by authors unrelated to TypeSafe. RLCR is not RLCD. *Search summary.*
 - Kahneman, D. (2011). *Thinking, Fast and Slow*. New York: Farrar, Straus and Giroux. Part I, "Two Systems", for the System 1 and System 2 framing only. *Search summary; no stable link checked.*
@@ -184,7 +186,7 @@ TypeSafe has not published how RLCD works. The TypeSafe sources the briefing rel
 - Stanovich, K. E. and West, R. F. (2000). Individual differences in reasoning: Implications for the rationality debate? *Behavioral and Brain Sciences* 23(5), 645–665. *Search summary; no stable link checked.*
 - Also used: Gneiting and Raftery (2007) and Chow (1970) (Module 11).
 
-### Module 13 · Retrieval-augmented generation
+### Module 13 · {{< var modules.m13.title >}}
 
 - Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S. and Kiela, D. (2020). [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401). *Advances in Neural Information Processing Systems 33 (NeurIPS 2020)*. *Search summary.*
 - Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., Chen, D. and Yih, W. (2020). [Dense Passage Retrieval for Open-Domain Question Answering](https://aclanthology.org/2020.emnlp-main.550/). *Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)*, 6769–6781. The bi-encoder and in-batch negatives. *Verified, ACL Anthology.*
@@ -196,9 +198,9 @@ TypeSafe has not published how RLCD works. The TypeSafe sources the briefing rel
 - Deerwester, S., Dumais, S. T., Furnas, G. W., Landauer, T. K. and Harshman, R. (1990). Indexing by Latent Semantic Analysis. *Journal of the American Society for Information Science* 41(6), 391–407. Latent semantic analysis, the offline encoder of Lab 13. *Search summary; no stable link checked.*
 - Also used: Robertson and Zaragoza (2009) (Module 1); Greshake et al. (2023) (Module 14); the source of `llama-index-core` and `langchain-core` (Library and API documentation).
 
-## Day 5 · Agents and the capstone
+## Day 5 · {{< var days.d5.title >}}
 
-### Module 14 · Agents
+### Module 14 · {{< var modules.m14.title >}}
 
 - Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K. and Cao, Y. (2023). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629). *International Conference on Learning Representations (ICLR 2023)*. *Search summary.*
 - Greshake, K., Abdelnabi, S., Mishra, S., Endres, C., Holz, T. and Fritz, M. (2023). [Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173). *Proceedings of the 16th ACM Workshop on Artificial Intelligence and Security (AISec '23)*, 79–90. Indirect prompt injection; also cited in Module 13. *Search summary.*
@@ -227,7 +229,7 @@ TypeSafe has not published how RLCD works. The TypeSafe sources the briefing rel
 - Greenblatt, R. (2024). [Getting 50% (SoTA) on ARC-AGI with GPT-4o](https://blog.redwoodresearch.org/p/getting-50-sota-on-arc-agi-with-gpt). Redwood Research blog. Berman, J. (2024). [How I came in first on ARC-AGI-Pub using Sonnet 3.5 with evolutionary test-time compute](https://jeremyberman.substack.com/p/how-i-got-a-record-536-on-arc-agi). Poetiq (2025). [ARC-AGI-2 SOTA at half the cost](https://poetiq.ai/posts/arcagi_verified), 5 December 2025. The three harnesses in section 1's worked example, described by their authors. *Verified, pages opened 2026-10-06.*
 - Also used: Liu et al. (2024) (Module 13); the LangGraph documentation and `langgraph` source, the Claude Agent SDK and the Model Context Protocol (Library and API documentation); `langchain-typesafe` (TypeSafe and Jev: public sources).
 
-### Module 15 · Capstone
+### Module 15 · {{< var modules.m15.title >}}
 
 - Kapoor, S., Stroebl, B., Siegel, Z. S., Nadgir, N. and Narayanan, A. (2024). [AI Agents That Matter](https://arxiv.org/abs/2407.01502). arXiv:2407.01502; reported as published in *Transactions on Machine Learning Research* (2025). Report cost beside accuracy. *Search summary.*
 - Rajpurkar, P., Jia, R. and Liang, P. (2018). [Know What You Don't Know: Unanswerable Questions for SQuAD](https://aclanthology.org/P18-2124/). *Proceedings of the 56th Annual Meeting of the ACL (Volume 2: Short Papers)*, 784–789. *Verified, ACL Anthology.*
@@ -236,7 +238,7 @@ TypeSafe has not published how RLCD works. The TypeSafe sources the briefing rel
 - Liang, P., Bommasani, R., Lee, T., Tsipras, D. et al. (2023). [Holistic Evaluation of Language Models](https://arxiv.org/abs/2211.09110). *Transactions on Machine Learning Research*. *Search summary.*
 - Also used: Modules 8 and 11 to 14 of this workshop.
 
-## Library and API documentation
+## Library and API Documentation
 
 The labs pin their package versions in `_variables.yml`. The versions below are the ones the briefings were checked against.
 
@@ -248,7 +250,7 @@ The labs pin their package versions in `_variables.yml`. The versions below are 
 - Anthropic. [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview): the overview, agent-loop, hooks, subagents and sessions pages, for the optional mapping in Module 14, section 9. *Verified, pages opened 2026-10-06; no SDK code was run.*
 - Model Context Protocol. [Introduction](https://modelcontextprotocol.io/docs/getting-started/intro) and [server concepts](https://modelcontextprotocol.io/docs/learn/server-concepts); LangChain's MCP adapter, now installed as `langchain[mcp]`. *Verified, pages opened 2026-10-06.*
 
-## TypeSafe and Jev: public sources
+## TypeSafe and Jev: Public Sources
 
 TypeSafe's documentation names its training method, RLCD ("Reinforcement learning for calibrated decisions"), states its aim and says that Jev "is trained with RLCD to return calibrated decisions". TypeSafe has not published how RLCD works: we have found no paper, reward function, training dataset or reliability data from TypeSafe. Module 12 separates what TypeSafe states from our illustration, and lists the remaining third-party reports about RLCD as unverified; those third-party pages are not TypeSafe sources and are not listed here.
 

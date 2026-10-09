@@ -1,6 +1,6 @@
 # Module 0 reference solutions
 
-Instructor material for Module 0, "Coding agents in the terminal" (`modules/00-coding-agents.qmd`). Participants build these two apps themselves with a coding agent, in Python or R; these references show that the page's prompts lead somewhere that works, and give the numbers to compare against ([MEASURED.md](MEASURED.md)).
+Instructor material for Module 0, "Coding Agents in the Terminal" (`modules/00-coding-agents.qmd`). Participants build these two apps themselves with a coding agent, in Python or R; these references show that the page's prompts lead somewhere that works, and give the numbers to compare against ([MEASURED.md](MEASURED.md)).
 
 Each app is one script that writes `data.json`, plus an `index.html` that reads it and draws a three.js scene. Both language versions write the same fields, so `python/index.html` and `r/index.html` are the same file (a test keeps them identical). three.js is pinned to `agents_intro.threejs` in `_variables.yml` and loaded from jsDelivr through an import map.
 

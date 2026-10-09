@@ -235,7 +235,7 @@ class Honesty(unittest.TestCase):
         ):
             with self.subTest(text=text):
                 self.assertIn(text, CODE)
-        self.assertIn("What this lab showed and what it did not", TEXT)
+        self.assertIn("What This Lab Showed and What It Did Not", TEXT)
 
     def test_no_classifier_without_a_key(self):
         constructions = re.findall(r"TypeSafeClassifier\(", CODE)
@@ -295,7 +295,7 @@ class Stretch(unittest.TestCase):
     def test_stretch_follows_the_core_path(self):
         self.assertLess(
             TEXT.index("This is the end of the core path."),
-            TEXT.index("## Stretch (optional) · Designing the harness"),
+            TEXT.index("## Stretch (optional) · Designing the Harness"),
         )
         self.assertEqual(len(re.findall(r"^## Stretch", TEXT, flags=re.MULTILINE)), 1)
 

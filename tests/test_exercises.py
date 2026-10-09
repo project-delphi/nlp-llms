@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
+import gen_notebooks  # noqa: E402
 import harness  # noqa: E402
 import run_records  # noqa: E402
 
@@ -82,13 +83,14 @@ class Generated(unittest.TestCase):
                 self.assertEqual(text(cells[-2]), harness.SUMMARY)
 
     def test_the_harness_names_the_exercises_and_the_code_hash(self):
+        v = gen_notebooks.load_variables()
+        entry = {e["slug"]: e for e in gen_notebooks.entries(v)}
         for path in NOTEBOOKS:
             cells = load(path)
-            expected = harness.harness_source(
-                path.stem, run_records.sha_of_cells(cells), harness.exercises_of(cells)
-            )
+            expected = gen_notebooks.harness_cell_source(v, entry[path.stem], cells)
             with self.subTest(path.name):
                 self.assertEqual(text(cells[1]), expected)
+                self.assertIn(f'_CONTENT_SHA = "{run_records.sha_of_cells(cells)}"', expected)
 
 
 class Exercises(unittest.TestCase):
@@ -134,6 +136,31 @@ class Exercises(unittest.TestCase):
                             marked or value == given[target.id],
                             f"a plain assignment replaces {target.id}: mark it",
                         )
+
+    def test_each_hint_is_folded_and_sits_above_its_todo(self):
+        """A hint (CONTRIBUTING.md, Notebook rules) is a markdown cell tagged `hint`, folded
+        in <details> with the summary "Hint for TODO N", directly above the TODO N cell (or
+        above a markdown cell that is). It names a principle; it holds no code block."""
+        for path in NOTEBOOKS:
+            cells = load(path)
+            seen = []
+            for i, cell in enumerate(cells):
+                if "hint" not in tags(cell):
+                    continue
+                body = text(cell)
+                with self.subTest(f"{path.stem} cell {i}"):
+                    self.assertEqual(cell["cell_type"], "markdown")
+                    found = harness.HINT_SUMMARY.search(body)
+                    self.assertIsNotNone(found, 'summary must read "Hint for TODO N"')
+                    n = int(found.group(1))
+                    self.assertTrue(body.lstrip().startswith("<details>"), "fold the hint")
+                    self.assertTrue(body.rstrip().endswith("</details>"), "fold the hint")
+                    self.assertNotIn("```", body, "a hint names a principle; no code block")
+                    nxt = next(c for c in cells[i + 1 :] if c["cell_type"] == "code")
+                    self.assertIn("exercise", tags(nxt), "the next code cell is the TODO")
+                    self.assertEqual(number(TODO.search(text(nxt)).group(1)), n)
+                    self.assertNotIn(n, seen, "one hint per exercise")
+                    seen.append(n)
 
     def test_pure_stubs_raise_not_implemented(self):
         for path in NOTEBOOKS:

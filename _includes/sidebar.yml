@@ -5,45 +5,45 @@ website:
     title: Modules
     style: floating
     contents:
-    - section: Before Day 1 · Pre-work
+    - section: Before Day 1 · Pre-Work
       contents:
       - href: modules/00-coding-agents.qmd
-        text: 0 · Coding agents in the terminal
+        text: 0 · Coding Agents in the Terminal
     - section: Day 1 · Foundations
       contents:
       - href: modules/01-text-as-data.qmd
-        text: 1 · Text as data
+        text: 1 · Text as Data
       - href: modules/02-word-vectors.qmd
-        text: 2 · Word vectors and neural networks
+        text: 2 · Word Vectors and Neural Networks
       - href: modules/03-sequence-models.qmd
-        text: 3 · Sequence models
+        text: 3 · Sequence Models
       - href: modules/04-seq2seq-attention.qmd
-        text: 4 · Seq2seq and attention
-    - section: Day 2 · Transformers and pretraining
+        text: 4 · Seq2seq and Attention
+    - section: Day 2 · Transformers and Pretraining
       contents:
       - href: modules/05-transformer-from-scratch.qmd
-        text: 5 · The transformer
+        text: 5 · The Transformer
       - href: modules/06-pretraining-huggingface.qmd
-        text: 6 · Pretraining and the Hugging Face stack
+        text: 6 · Pretraining and the Hugging Face Stack
       - href: modules/07-finetuning-lora.qmd
-        text: 7 · Fine-tuning and LoRA
-    - section: Day 3 · Using and aligning LLMs
+        text: 7 · Fine-Tuning and LoRA
+    - section: Day 3 · Using and Aligning LLMs
       contents:
       - href: modules/08-llm-apis.qmd
-        text: 8 · LLMs through APIs
+        text: 8 · LLMs Through APIs
       - href: modules/09-preference-learning.qmd
-        text: 9 · Reinforcement and preference learning
+        text: 9 · Reinforcement and Preference Learning
       - href: modules/10-rlhf.qmd
         text: 10 · RLHF
-    - section: Day 4 · Calibration, decisions, RAG
+    - section: Day 4 · Calibration, Decisions, RAG
       contents:
       - href: modules/11-calibration.qmd
         text: 11 · Calibration
       - href: modules/12-rlcd-jev.qmd
-        text: '12 · Calibrated decisions: RLCD and Jev'
+        text: '12 · Calibrated Decisions: RLCD and Jev'
       - href: modules/13-rag.qmd
-        text: 13 · Retrieval-augmented generation
-    - section: Day 5 · Agents and capstone
+        text: 13 · Retrieval-Augmented Generation
+    - section: Day 5 · Agents and Capstone
       contents:
       - href: modules/14-agents.qmd
         text: 14 · Agents

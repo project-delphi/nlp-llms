@@ -8,7 +8,7 @@ toc: false
 
 Day 2 builds the transformer, then follows it through pretraining to fine-tuning with LoRA. Like Days 3 to 5, it opens with a warm-up on earlier days and closes with a wrap-up of the day's results. Each module ends with a short debrief of its lab, and the middle module's lab comes after lunch.
 
-## Warm-up: what carried over (09:00–09:15) {#warm-up}
+## Warm-Up: What Carried Over (09:00–09:15) {#warm-up}
 
 Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4; the facilitator takes the two most-missed questions for 5. Each link opens the question with its folded answer. Day 1 is the only earlier day, so three questions come from its afternoon and two from its morning.
 
@@ -22,16 +22,16 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 
 {{< include /_includes/day-2.md >}}
 
-## Run sheet {#run-sheet}
+## Run Sheet {#run-sheet}
 
 {{< include /_includes/run-2.md >}}
 
-## Day wrap-up (16:45–17:00) {#wrap-up}
+## Day Wrap-Up (16:45–17:00) {#wrap-up}
 
 In pairs for 5 minutes, then the room for 10. The facilitator writes the table on the board and keeps it for Day 5. The numbers are the room's own, from its runs.
 
 1. **Fixed and left open.** For Modules 5, 6 and 7, which limitation of the step before did each remove, and which did it leave for the next? Start from Module 4: attention still read from a recurrent encoder, one step at a time.
-2. **The running table.** Fill in the room's results (test split, held-out examples for Lab 7):
+2. **The running table.** Fill in the room's results (test split, held-out examples for Lab 7). Write the path beside each number, as the notebook's last cell prints it (real open models, commercial APIs, or offline stand-ins, which measure no model); the [results worksheet](worksheet.qmd) has a table per comparison group.
 
    | Thread | Rows | Metric |
    |---|---|---|
@@ -40,5 +40,7 @@ In pairs for 5 minutes, then the room for 10. The facilitator writes the table o
    | Dolly instructions | the base model before and after LoRA (Lab 7) | response perplexity, ROUGE-1, trainable parameters |
 
 3. **One claim.** Which row would you defend as an improvement on the row above it, and what must be stated beside it to make the claim fair? Why does Lab 7's perplexity not belong in the same column as Lab 5's?
+
+If time allows, a transfer question from today's modules ([T5](knowledge-checks.md#t5), [T6](knowledge-checks.md#t6) or [T7](knowledge-checks.md#t7)) can replace item 3, in the same minutes. It changes the example, so the answer has to be reasoned out rather than recalled.
 
 Times are on the [schedule](schedule.qmd).

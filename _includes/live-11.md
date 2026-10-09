@@ -3,16 +3,22 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–3 | 1. What Day 3 has left open | — |
-| 3–9 | 2. What a probability should mean | [Check yourself](#chk-mean-confidence) (2 min) |
-| 9–16 | 3. Measuring calibration: reliability diagrams and ECE | — |
-| 16–28 | 4. Proper scoring rules | [Check yourself](#chk-brier-reports) (3 min) |
-| 28–39 | 6. Temperature scaling | [Demo](#demo-temperature) (4 min) |
-| 39–45 | 7. Confidence from a language model behind an API | — |
-| 45–55 | 8. Selective prediction and the cost of a wrong action | [Check yourself](#chk-chow) (2 min) |
+| 0–3 | 1. What Day 3 Has Left Open | — |
+| 3–9 | 2. What a Probability Should Mean | [Check yourself](#chk-mean-confidence) (2 min) |
+| 9–16 | 3. Measuring Calibration: Reliability Diagrams and ECE | — |
+| 16–28 | 4. Proper Scoring Rules | [Check yourself](#chk-brier-reports) (3 min) |
+| 28–39 | 6. Temperature Scaling | [Demo](#demo-temperature) (4 min) |
+| 39–45 | 7. Confidence From a Language Model Behind an API | — |
+| 45–55 | 8. Selective Prediction and the Cost of a Wrong Action | [Check yourself](#chk-chow) (2 min) |
 | **55** | **Total** | **44 minutes of exposition, 11 of activities** |
 :::
 
-Not taught in the room: *5. Why models are miscalibrated*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–4 and 6–8, in the agenda above.
+
+**Use in the lab** · Exercise 0: section 7; Exercise 1: section 3; Exercise 2: section 4; Exercise 3: section 6; Exercise 4: section 7; Exercise 5: section 8.
+
+**Read later** · Section 5, *Why Models Are Miscalibrated* (**Reference**); the collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

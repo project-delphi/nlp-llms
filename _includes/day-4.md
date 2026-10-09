@@ -27,7 +27,7 @@ What a probability should mean, how to measure it, and how to use confidence to 
 ::: {.module-card-body}
 [Module 12]{.eyebrow}
 
-[Calibrated decisions: RLCD and Jev](modules/12-rlcd-jev.qmd){.module-card-title}
+[Calibrated Decisions: RLCD and Jev](modules/12-rlcd-jev.qmd){.module-card-title}
 
 Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public.
 
@@ -44,7 +44,7 @@ Training and using models for calibrated decisions: outcome rewards, thresholds 
 ::: {.module-card-body}
 [Module 13]{.eyebrow}
 
-[Retrieval-augmented generation](modules/13-rag.qmd){.module-card-title}
+[Retrieval-Augmented Generation](modules/13-rag.qmd){.module-card-title}
 
 Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately.
 

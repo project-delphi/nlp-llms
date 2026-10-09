@@ -4,7 +4,7 @@
 ::: {.day-card}
 [Day 1]{.eyebrow}
 
-[Foundations: from counts to attention](day-1.qmd){.day-card-title}
+[Foundations: From Counts to Attention](day-1.qmd){.day-card-title}
 
 [How do we turn text into something a model can learn from?]{.day-card-question}
 
@@ -13,7 +13,7 @@
 ::: {.day-card}
 [Day 2]{.eyebrow}
 
-[Transformers and pretrained models](day-2.qmd){.day-card-title}
+[Transformers and Pretrained Models](day-2.qmd){.day-card-title}
 
 [How does one architecture, pretrained at scale, become a general tool?]{.day-card-question}
 
@@ -22,7 +22,7 @@
 ::: {.day-card}
 [Day 3]{.eyebrow}
 
-[Using and aligning LLMs](day-3.qmd){.day-card-title}
+[Using and Aligning LLMs](day-3.qmd){.day-card-title}
 
 [How do we use these models, and what are they trained to want?]{.day-card-question}
 
@@ -31,7 +31,7 @@
 ::: {.day-card}
 [Day 4]{.eyebrow}
 
-[Calibration, decisions and retrieval](day-4.qmd){.day-card-title}
+[Calibration, Decisions and Retrieval](day-4.qmd){.day-card-title}
 
 [When should a model's answer be trusted, and how do we ground it in sources?]{.day-card-question}
 
@@ -40,7 +40,7 @@
 ::: {.day-card}
 [Day 5]{.eyebrow}
 
-[Agents and the capstone](day-5.qmd){.day-card-title}
+[Agents and the Capstone](day-5.qmd){.day-card-title}
 
 [How do we build reliable systems out of these models?]{.day-card-question}
 

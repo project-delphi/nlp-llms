@@ -2,10 +2,10 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–3 | 1. Where counts stop | — |
-| 3–10 | 2. The distributional hypothesis and dense vectors | Check yourself (2 min) |
-| 10–16 | 3. Skip-gram with a full softmax | — |
-| 16–29 | 4. Negative sampling | Demo (4 min) |
-| 29–36 | 6. PyTorch refresher | Check yourself (2 min) |
-| 36–40 | 7. Feed-forward networks and backpropagation | — |
-| 40–45 | 8. Bengio's neural language model | — |
+| 0–3 | 1. Where Counts Stop | — |
+| 3–10 | 2. The Distributional Hypothesis and Dense Vectors | Check yourself (2 min) |
+| 10–16 | 3. Skip-Gram With a Full Softmax | — |
+| 16–29 | 4. Negative Sampling | Demo (4 min) |
+| 29–36 | 6. PyTorch Refresher | Check yourself (2 min) |
+| 36–40 | 7. Feed-Forward Networks and Backpropagation | — |
+| 40–45 | 8. Bengio's Neural Language Model | — |

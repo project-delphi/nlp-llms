@@ -13,7 +13,7 @@ repo:
 
 workshop:
   title: "From Traditional NLP to Modern LLMs"
-  subtitle: "n-grams, attention, RLHF, RLCD and agents"
+  subtitle: "N-Grams, Attention, RLHF, RLCD and Agents"
   org: "Genial Labs"
   days: 5
 
@@ -321,57 +321,57 @@ days:
   d1:
     n: 1
     clock: standard
-    title: "Foundations: from counts to attention"
+    title: "Foundations: From Counts to Attention"
     short: "Foundations"
     question: "How do we turn text into something a model can learn from?"
-    opening: "Welcome, setup check"
+    opening: "Welcome, Setup Check"
     # The deck shown in the opening slot (welcome.qmd); the schedule links the slot to it.
     opening_page: welcome.qmd
-    clinic: {module: m00, label: "Drop-in clinic: Module 0 pre-work (optional)"}
+    clinic: {module: m00, label: "Drop-In Clinic: Module 0 Pre-Work (optional)"}
     slots: [m01, m02, m03, m04]
   d2:
     n: 2
     clock: long
-    title: "Transformers and pretrained models"
-    short: "Transformers and pretraining"
+    title: "Transformers and Pretrained Models"
+    short: "Transformers and Pretraining"
     question: "How does one architecture, pretrained at scale, become a general tool?"
-    opening: "Warm-up"
-    closing: "Wrap-up"
+    opening: "Warm-Up"
+    closing: "Wrap-Up"
     slots: [m05, m06, m07]
   d3:
     n: 3
     clock: long
-    title: "Using and aligning LLMs"
-    short: "Using and aligning LLMs"
+    title: "Using and Aligning LLMs"
+    short: "Using and Aligning LLMs"
     question: "How do we use these models, and what are they trained to want?"
-    opening: "Warm-up"
-    closing: "Wrap-up"
+    opening: "Warm-Up"
+    closing: "Wrap-Up"
     slots: [m08, m09, m10]
   d4:
     n: 4
     clock: long
-    title: "Calibration, decisions and retrieval"
-    short: "Calibration, decisions, RAG"
+    title: "Calibration, Decisions and Retrieval"
+    short: "Calibration, Decisions, RAG"
     question: "When should a model's answer be trusted, and how do we ground it in sources?"
-    opening: "Warm-up"
-    closing: "Wrap-up"
+    opening: "Warm-Up"
+    closing: "Wrap-Up"
     slots: [m11, m12, m13]
   d5:
     n: 5
     clock: long
-    title: "Agents and the capstone"
-    short: "Agents and capstone"
+    title: "Agents and the Capstone"
+    short: "Agents and Capstone"
     question: "How do we build reliable systems out of these models?"
-    opening: "Warm-up"
-    closing: "Wrap-up and close"
+    opening: "Warm-Up"
+    closing: "Wrap-Up and Close"
     slots:
       - m14
-      - {module: m15, label: "Capstone: build"}
-      - {module: m15, label: "Capstone: evaluate and share"}
+      - {module: m15, label: "Capstone: Build"}
+      - {module: m15, label: "Capstone: Evaluate and Share"}
 
 setup:
   slug: 00-setup
-  title: "Setup and environment check"
+  title: "Setup and Environment Check"
   minutes: 10
   # The runtime a participant runs it on (readiness.envs): Colab's default CPU runtime;
   # the notebook tells them to switch a T4 on for the labs from Module 2 onward.
@@ -483,7 +483,7 @@ modules:
     level: 100
     minutes: 60
     notebook: false
-    title: "Coding agents in the terminal"
+    title: "Coding Agents in the Terminal"
     summary: "Install a terminal coding agent and use it to build, check and publish two small data apps in Python or R, each with a three.js page. Pre-work, on your own laptop before Day 1."
     objectives:
       - "Install and drive a terminal coding agent"
@@ -506,7 +506,7 @@ modules:
     day: 1
     level: 200
     minutes: 95
-    title: "Text as data"
+    title: "Text as Data"
     summary: "Tokenization, n-gram language models, TF-IDF and linear classifiers: the count-based baseline everything else is measured against."
     objectives:
       - "Tokenize text and justify the choices"
@@ -527,7 +527,7 @@ modules:
     day: 1
     level: 200
     minutes: 95
-    title: "Word vectors and neural networks"
+    title: "Word Vectors and Neural Networks"
     summary: "From one-hot vectors to learned embeddings, with a PyTorch refresher and the first neural language model."
     objectives:
       - "Explain the distributional hypothesis and find nearest neighbors by cosine similarity"
@@ -548,7 +548,7 @@ modules:
     day: 1
     level: 200
     minutes: 95
-    title: "Sequence models"
+    title: "Sequence Models"
     summary: "RNNs, LSTMs and neural language modeling, and why gradients vanish over long sequences."
     objectives:
       - "Implement the RNN and LSTM cell updates and the language-model loss"
@@ -569,7 +569,7 @@ modules:
     day: 1
     level: 300
     minutes: 95
-    title: "Seq2seq and attention"
+    title: "Seq2seq and Attention"
     summary: "Encoder-decoder models, the fixed-vector bottleneck, and attention as the fix."
     objectives:
       - "Assemble an encoder-decoder's teacher-forced forward pass and loss"
@@ -590,7 +590,7 @@ modules:
     day: 2
     level: 300
     minutes: 120
-    title: "The transformer"
+    title: "The Transformer"
     summary: "Self-attention, multi-head attention and positional encodings, assembled into a small GPT."
     objectives:
       - "Implement scaled dot-product attention with a causal mask"
@@ -611,7 +611,7 @@ modules:
     day: 2
     level: 300
     minutes: 120
-    title: "Pretraining and the Hugging Face stack"
+    title: "Pretraining and the Hugging Face Stack"
     summary: "Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face."
     objectives:
       - "Explain subword tokenization and the masked and causal pretraining objectives"
@@ -633,7 +633,7 @@ modules:
     day: 2
     level: 300
     minutes: 120
-    title: "Fine-tuning and LoRA"
+    title: "Fine-Tuning and LoRA"
     summary: "Turning a pretrained language model into an instruction follower, efficiently."
     objectives:
       - "Turn a pretrained causal LM into an instruction follower"
@@ -654,7 +654,7 @@ modules:
     day: 3
     level: 200
     minutes: 120
-    title: "LLMs through APIs"
+    title: "LLMs Through APIs"
     summary: "OpenAI and Claude side by side: prompting, structured output, tool use, cost and evaluation."
     objectives:
       - "Use one provider-agnostic wrapper for chat, structured output and tool use, on OpenAI, Claude or an open model"
@@ -676,7 +676,7 @@ modules:
     day: 3
     level: 300
     minutes: 120
-    title: "Reinforcement and preference learning"
+    title: "Reinforcement and Preference Learning"
     summary: "Text generation as a reinforcement-learning problem, the policy gradient, and reward models learned from comparisons."
     objectives:
       - "Frame text generation as a reinforcement-learning problem"
@@ -745,7 +745,7 @@ modules:
     day: 4
     level: 400
     minutes: 120
-    title: "Calibrated decisions: RLCD and Jev"
+    title: "Calibrated Decisions: RLCD and Jev"
     summary: "Training and using models for calibrated decisions: outcome rewards, thresholds from costs, and TypeSafe's RLCD and Jev as a case study in what is and is not public."
     objectives:
       - "Implement an accuracy reward and a proper-score reward, and explain from a toy model why only the second pays for honest probabilities"
@@ -768,7 +768,7 @@ modules:
     day: 4
     level: 300
     minutes: 120
-    title: "Retrieval-augmented generation"
+    title: "Retrieval-Augmented Generation"
     summary: "Building a RAG pipeline with LlamaIndex and LangChain, and evaluating retrieval and answers separately."
     objectives:
       - "Assemble a RAG pipeline in LlamaIndex and LangChain"

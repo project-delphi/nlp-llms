@@ -8,7 +8,7 @@ toc: false
 
 Day 5 builds systems. Module 14 turns the hand-written tool loop of Module 8 into an agent graph with state, human approval and confidence-gated control. The capstone takes the rest of the day: in pairs, you improve one component of a research assistant and measure whether the system got better. The wrap-up closes the workshop.
 
-## Warm-up: what carried over (09:00–09:15) {#warm-up}
+## Warm-Up: What Carried Over (09:00–09:15) {#warm-up}
 
 Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4; the facilitator takes the two most-missed questions for 5. Each link opens the question with its folded answer. Three questions come from Day 4 and two from Day 3.
 
@@ -22,22 +22,22 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 
 {{< include /_includes/day-5.md >}}
 
-## Run sheet {#run-sheet}
+## Run Sheet {#run-sheet}
 
 {{< include /_includes/run-5.md >}}
 
-## Day wrap-up (16:45–17:00) {#wrap-up}
+## Day Wrap-Up (16:45–17:00) {#wrap-up}
 
 The last 15 minutes of the capstone wrap-up ([Module 15, Part IV](modules/15-capstone.qmd#part-iv.-wrap-up)), and the close of the workshop. The whole room, with the boards from Days 2 to 4. The numbers are the room's own, from its runs.
 
-1. **The whole line.** Complete the table in [Five days, one line of ideas](modules/15-capstone.qmd#five-days-one-line-of-ideas): add what Modules 14 and 15 fixed and left open, and set the room's numbers from the boards beside the build's.
-2. **Today's table.** Fill in the room's results:
+1. **The whole line.** Complete the table in [Five Days, One Line of Ideas](modules/15-capstone.qmd#five-days-one-line-of-ideas): add what Modules 14 and 15 fixed and left open, and set the room's numbers from the boards beside the build's.
+2. **Today's table.** Fill in the room's results. Write the path beside each number, as the notebook's last cell prints it (real open models, commercial APIs, or offline stand-ins, which measure no model); the [results worksheet](worksheet.qmd) has a table per comparison group.
 
    | Lab | Rows | Metric |
    |---|---|---|
    | Lab 14, decision set and the injection test | the router; the guard | route accuracy; unsafe-action rate and injection success rate, each with its denominator |
    | Lab 15, the capstone's `test` split | the baseline; each pair's final system | accuracy, both abstention rates, cost per question; questions gained and lost, with the sign test's $p$ |
 
-3. **What is still open.** Each pair names one problem the workshop left open (see [Open problems](modules/15-capstone.qmd#open-problems)) and the measurement from the last five days it would start with.
+3. **What is still open.** Each pair names one problem the workshop left open (see [Open Problems](modules/15-capstone.qmd#open-problems)) and the measurement from the last five days it would start with.
 
 Times are on the [schedule](schedule.qmd).

@@ -6,22 +6,22 @@
 
 | Time | |
 |---|---|
-| 08:00–09:00 | Drop-in clinic: Module 0 pre-work (optional) |
-| 09:00–09:10 | Welcome, setup check |
-| 09:10–10:45 | 1 · Text as data: briefing 45 · lab 50 |
+| 08:00–09:00 | Drop-In Clinic: Module 0 Pre-Work (optional) |
+| 09:00–09:10 | Welcome, Setup Check |
+| 09:10–10:45 | 1 · Text as Data: briefing 45 · lab 50 |
 | 10:45–11:00 | Break |
-| 11:00–12:35 | 2 · Word vectors and neural networks: briefing 45 · lab 50 |
+| 11:00–12:35 | 2 · Word Vectors and Neural Networks: briefing 45 · lab 50 |
 | 12:35–13:35 | Lunch |
-| 13:35–15:10 | 3 · Sequence models: briefing 45 · lab 50 |
+| 13:35–15:10 | 3 · Sequence Models: briefing 45 · lab 50 |
 | 15:10–15:25 | Break |
-| 15:25–17:00 | 4 · Seq2seq and attention: briefing 45 · lab 50 |
+| 15:25–17:00 | 4 · Seq2seq and Attention: briefing 45 · lab 50 |
 :::
 ::: {.column width="49%"}
 **Days 2–5** · 120-minute modules
 
 | Time | |
 |---|---|
-| 09:00–09:15 | Warm-up |
+| 09:00–09:15 | Warm-Up |
 | 09:15–11:15 | Briefing 55 · Lab 55 · Debrief 10 |
 | 11:15–11:30 | Break |
 | 11:30–12:25 | Briefing 55 (Day 5: hands-on) |
@@ -29,6 +29,6 @@
 | 13:25–14:30 | Lab 55 · Debrief 10 (Day 5: hands-on) |
 | 14:30–14:45 | Break |
 | 14:45–16:45 | Briefing 55 · Lab 55 · Debrief 10 (Day 5: hands-on) |
-| 16:45–17:00 | Wrap-up (Day 5: Wrap-up and close) |
+| 16:45–17:00 | Wrap-Up (Day 5: Wrap-Up and Close) |
 :::
 :::

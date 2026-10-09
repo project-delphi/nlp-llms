@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Implement the RNN and LSTM cell updates and the language-model loss
 - Explain vanishing gradients and how gating addresses them, from measured gradient decay
 - Evaluate the LSTM against the n-gram baseline in a like-for-like perplexity comparison
+
+New terms, in the [glossary](/glossary.qmd): [recurrent neural network (RNN)](/glossary.qmd#recurrent-network), [teacher forcing](/glossary.qmd#teacher-forcing), [long short-term memory (LSTM)](/glossary.qmd#lstm).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 2 · Word vectors and neural networks](/modules/02-word-vectors.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 2 · Word Vectors and Neural Networks](/modules/02-word-vectors.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - No API keys: the lab runs its own models throughout.
 :::

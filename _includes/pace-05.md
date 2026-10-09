@@ -2,11 +2,11 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–5 | 1. From attention over an encoder to self-attention | — |
-| 5–20 | 2. Scaled dot-product attention | Demo (4 min); Check yourself (2 min) |
-| 20–27 | 3. The causal mask | Check yourself (2 min) |
-| 27–33 | 4. Multi-head attention | — |
-| 33–38 | 5. Positional encodings | — |
-| 38–47 | 6. The transformer block | Check yourself (2 min) |
-| 47–51 | 7. A decoder-only language model, and the other two variants | — |
-| 51–55 | 8. Cost and parallelism | — |
+| 0–5 | 1. From Attention Over an Encoder to Self-Attention | — |
+| 5–20 | 2. Scaled Dot-Product Attention | Demo (4 min); Check yourself (2 min) |
+| 20–27 | 3. The Causal Mask | Check yourself (2 min) |
+| 27–33 | 4. Multi-Head Attention | — |
+| 33–38 | 5. Positional Encodings | — |
+| 38–47 | 6. The Transformer Block | Check yourself (2 min) |
+| 47–51 | 7. A Decoder-Only Language Model, and the Other Two Variants | — |
+| 51–55 | 8. Cost and Parallelism | — |

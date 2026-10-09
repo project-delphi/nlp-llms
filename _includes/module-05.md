@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 2 · Transformers and pretraining](/day-2.qmd){.module-day} [Module 5]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
+[Day 2 · Transformers and Pretraining](/day-2.qmd){.module-day} [Module 5]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Implement scaled dot-product attention with a causal mask
 - Inspect how heads, blocks and positions assemble into a decoder-only transformer
 - Train a small GPT with the provided loop and evaluate it against the LSTM
+
+New terms, in the [glossary](/glossary.qmd): [self-attention](/glossary.qmd#self-attention), [causal mask](/glossary.qmd#causal-mask), [positional encoding](/glossary.qmd#positional-encoding), [transformer block](/glossary.qmd#transformer-block).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 4 · Seq2seq and attention](/modules/04-seq2seq-attention.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 4 · Seq2seq and Attention](/modules/04-seq2seq-attention.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - No API keys: the lab runs its own models throughout.
 :::

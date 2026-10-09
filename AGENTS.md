@@ -64,8 +64,8 @@ Requirements:
 - Define every symbol; keep derivations to the steps a practitioner needs.
 - For each key equation, name the lab exercise that implements it.
 - End with a summary, gotchas and troubleshooting, next steps, and 3–5 further
-  readings. The header, details panel, "What you will build", "Before you start"
-  and "In the lab" are generated into `_includes/module-NN.md` and
+  readings. The header, details panel, "What You Will Build", "Before You Start"
+  and "In the Lab" are generated into `_includes/module-NN.md` and
   `_includes/lab-NN.md`: do not write them by hand.
 Then write a one-page lab brief for notebooks/<NN-slug>.ipynb: exercises, the
 checkpoint for each, and the expected run time.

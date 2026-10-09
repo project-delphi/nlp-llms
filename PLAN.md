@@ -604,3 +604,14 @@ Romeo approved a revision from four to five days after a review brief and a crit
 - [x] Rebuild the corpus snapshot from `31d5d92` (the merge of the last briefing edits): 13 pages, 684,704 characters, 186,495 `cl100k_base` tokens (was 544,974 and 147,738). The builder now drops each briefing's in-room timetable and the demos' Observable code and strips heading attributes, keeping the blank line after a heading; `tests/test_rag_questions.CleaningRules` covers each rule and checks the snapshot has no heading glued to its text. Labs 13, 14 and 15 re-pin the hash and were re-recorded on the build Mac (126 s, 233 s, 1,285 s); Module 13's cost and chunk figures and the data README follow. Status stays `provisional` until Romeo freezes it; the question sets are written only after that
 - [ ] Find out why two cells of Lab 15 (the worked change and the share card) took about three times as long on the build Mac with the rebuilt snapshot (99 to 304 s, 67 to 295 s; the kernel waited on GPU synchronization), and whether the T4 path shows it
 
+### Repository review — October 8, 2026
+
+- [x] Review text casing, editorial consistency, and learning clarity; save prioritized, source-grounded recommendations in [suggestions.md](suggestions.md). Suggestions are recorded, not implemented; this review did not execute notebooks or render the site.
+- [x] Act on the first five suggestions (October 8, 2026):
+  - Draw the 13 figures that Modules 9–15 specified only in comments (`scripts/make_figures_09_11.py`, `scripts/make_figures_12_15.py`). Module 11's two plots are recomputed with Lab 11's code (`images/11-calibration.json`), matching the recorded summary numbers. The system diagrams name the nodes and edges of the lab code and the exercise that writes each part.
+  - Fix the stale and contradictory learner text in `notebooks.qmd` and the generated-cell guidance in `CONTRIBUTING.md`.
+  - Write the casing, spelling and terminology rules in `CONTRIBUTING.md`, choosing sentence case (the site's existing practice). Make an American-spelling pass, guarded by `tests/test_style.py`.
+  - State on each agenda that an exercise using a Reference section restates what it needs, with a pointer in Modules 1, 3 and 9.
+  - Fix the arrowheads that a duplicate SVG id removed from `05-self-attention.svg`.
+  - Not executed: no notebook was run. `quarto render`, the link check and the browser check were run.
+- [ ] Before freezing Workshop Lectures v1, decide whether to rebuild it from a commit that includes the October 8 edits to Modules 1, 3 and 9–12 (new figure captions, spelling); it is still built from `31d5d92`

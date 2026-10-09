@@ -3,15 +3,21 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–2 | 1. Where Module 2 left us | — |
-| 2–5 | 2. The recurrent neural network | — |
-| 5–13 | 3. The RNN language model | — |
-| 13–27 | 4. Backpropagation through time | [Demo](#demo-gradient) (4 min) |
+| 0–2 | 1. Where Module 2 Left Us | — |
+| 2–5 | 2. The Recurrent Neural Network | — |
+| 5–13 | 3. The RNN Language Model | — |
+| 13–27 | 4. Backpropagation Through Time | [Demo](#demo-gradient) (4 min) |
 | 27–39 | 5. The LSTM | [Check yourself](#chk-forget) (2 min) |
-| 39–45 | 6. Measuring the improvement fairly | [Check yourself](#chk-claims) (2 min) |
+| 39–45 | 6. Measuring the Improvement Fairly | [Check yourself](#chk-claims) (2 min) |
 | **45** | **Total** | **37 minutes of exposition, 8 of activities** |
 :::
 
-Not taught in the room: *7. Generating text: sampling strategies*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–6, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 2; Exercise 2: sections 3 and 6; Exercise 3: section 4; Exercise 4: section 5; Exercise 5: section 7 (section 7: **Reference**; the exercise restates what it needs).
+
+**Read later** · Section 7, *Generating Text: Sampling Strategies* (**Reference**); the collapsed callouts marked **After the Lab**; [Further Reading](#further-reading).
+:::

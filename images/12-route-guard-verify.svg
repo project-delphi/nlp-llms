@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 446" width="860" height="446" role="img" aria-labelledby="t d">
+  <title id="t">Where a decision model fits: route, guard, verify</title>
+  <desc id="d">A left-to-right system diagram. A user request enters the router, a decision model that answers a Choice question, what should happen next. Its five next steps fan out: retrieve, calculate, the guard in front of send_email, ask_user and escalate to a person. Retrieve and calculate feed an LLM answer, a generative model, which is followed by verify, a decision model that answers a Noul question: is the answer supported by the sources? If p-hat is at least tau_act, the answer is delivered. The guard, a decision model with a Noul question, may this action run, stands before the risky send_email tool, which runs if p-hat is at least tau_act. Each decision-model box carries a gauge for its probability p-hat with two threshold ticks, tau_esc and tau_act. Tags note where the labs build each one: the router and the guard in Lab 14, Exercise 2, the verifier in Lab 15, Exercise 1. A note says that between tau_esc and tau_act the system asks a person, and below tau_esc it escalates; only the act exits of guard and verify are drawn.</desc>
+  <style>
+    text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; fill: #1f2933; }
+    .m { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+    .s { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .i { font-style: italic; }
+    .b { font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .note { font-size: 13.5px; fill: #52606d; }
+    .acc { fill: #b3541e; }
+    .box { fill: #eef2f6; stroke: #16324f; stroke-width: 1.5; }
+    .abox { fill: #f8e9de; stroke: #b3541e; stroke-width: 1.5; }
+    .dim { fill: #f4f6f9; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .ln { fill: none; stroke: #16324f; stroke-width: 1.5; }
+    .aln { fill: none; stroke: #b3541e; stroke-width: 2.5; }
+    .dln { fill: none; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .rule { fill: none; stroke: #c5ced8; stroke-width: 1.5; }
+    .op { fill: #ffffff; stroke: #16324f; stroke-width: 1.5; }
+    .panel { fill: #fafbfc; stroke: #c5ced8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+    <style>
+    .dbox { fill: #ece6f5; stroke: #6a4c9c; stroke-width: 1.5; }
+    .cln { fill: none; stroke: #16324f; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .dotted { fill: none; stroke: #52606d; stroke-width: 1.6; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
+    .bound { fill: none; stroke: #52606d; stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
+    .halo { paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+    .pill { fill: #16324f; }
+    .pilltext { fill: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; }
+    .tagbox { fill: #ffffff; stroke: #52606d; stroke-width: 1; }
+    .tag { font-size: 12px; font-weight: 600; fill: #52606d; }
+    .sm { font-size: 13px; }
+    .m { font-variant-numeric: lining-nums; }
+  </style>
+  </defs>
+  <rect width="860" height="446" rx="8" fill="#ffffff"/>
+  <g transform="translate(0,18)">
+  <rect class="op" x="12" y="210" width="78" height="52" rx="8"/>
+  <text x="51" y="233" text-anchor="middle" class="b" style="font-size:14px">user</text>
+  <text x="51" y="251" text-anchor="middle" class="b" style="font-size:14px">request</text>
+  <line class="ln" x1="90" y1="236" x2="110" y2="236" marker-end="url(#a)"/>
+  <rect class="dbox" x="112" y="177" width="172" height="118" rx="10"/>
+  <text x="198" y="199" text-anchor="middle" class="b" style="font-size:15px">router</text>
+  <text x="198" y="217" text-anchor="middle" class="note sm">decision model · <tspan class="mono">Choice</tspan></text>
+  <text x="198" y="234" text-anchor="middle" class="note sm i">what should happen next?</text>
+  <rect x="134" y="264" width="128" height="6" rx="3" fill="#ffffff" stroke="#6a4c9c" stroke-width="1.2"/>
+  <rect x="134" y="264" width="76.8" height="6" rx="3" fill="#6a4c9c" fill-opacity="0.55"/>
+  <path d="M205.8,254 H215.8 L210.8,262 z" fill="#6a4c9c"/>
+  <text x="210.8" y="250" text-anchor="middle" class="m" style="font-size:14px"><tspan class="i">p̂</tspan></text>
+  <line x1="182" y1="261" x2="182" y2="275" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="182" y="290" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">esc</tspan></text>
+  <line x1="258.0" y1="261" x2="258.0" y2="275" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="258.0" y="290" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">act</tspan></text>
+  <rect class="tagbox" x="179.6" y="155" width="104.4" height="18" rx="9"/>
+  <text x="231.8" y="168.2" text-anchor="middle" class="tag">Lab 14 · Ex. 2</text>
+  <line class="ln" x1="284" y1="236" x2="302" y2="236"/>
+  <path class="ln" d="M302,42 V392"/>
+  <line class="ln" x1="302" y1="42" x2="326" y2="42" marker-end="url(#a)"/>
+  <line class="ln" x1="302" y1="104" x2="326" y2="104" marker-end="url(#a)"/>
+  <line class="ln" x1="302" y1="236" x2="326" y2="236" marker-end="url(#a)"/>
+  <line class="ln" x1="302" y1="340" x2="326" y2="340" marker-end="url(#a)"/>
+  <line class="ln" x1="302" y1="392" x2="326" y2="392" marker-end="url(#a)"/>
+  <circle cx="302" cy="236" r="3.2" fill="#16324f"/>
+  <rect class="box" x="328" y="22" width="104" height="40" rx="8"/>
+  <text x="380" y="47" text-anchor="middle" class="b mono" style="font-size:14px">retrieve</text>
+  <rect class="box" x="328" y="84" width="104" height="40" rx="8"/>
+  <text x="380" y="109" text-anchor="middle" class="b mono" style="font-size:14px">calculate</text>
+  <rect class="op" x="328" y="320" width="120" height="40" rx="8"/>
+  <text x="388" y="345" text-anchor="middle" class="b mono" style="font-size:14px">ask_user</text>
+  <rect class="op" x="328" y="372" width="120" height="40" rx="8"/>
+  <text x="388" y="397" text-anchor="middle" class="b mono" style="font-size:14px">escalate</text>
+  <text x="456" y="345" text-anchor="start" class="note sm">ask the user</text>
+  <text x="456" y="397" text-anchor="start" class="note sm">to a person</text>
+  <path class="ln" d="M432,42 H446 V74"/>
+  <path class="ln" d="M432,104 H446 V74"/>
+  <circle cx="446" cy="74" r="3.2" fill="#16324f"/>
+  <line class="ln" x1="446" y1="74" x2="462" y2="74" marker-end="url(#a)"/>
+  <rect class="abox" x="464" y="46" width="112" height="56" rx="8"/>
+  <text x="520" y="71" text-anchor="middle" class="b" style="font-size:15px">LLM answer</text>
+  <text x="520" y="89" text-anchor="middle" class="note sm">generative model</text>
+  <line class="ln" x1="576" y1="74" x2="598" y2="74" marker-end="url(#a)"/>
+  <rect class="dbox" x="600" y="15" width="172" height="118" rx="10"/>
+  <text x="686" y="37" text-anchor="middle" class="b" style="font-size:15px">verify</text>
+  <text x="686" y="55" text-anchor="middle" class="note sm">decision model · <tspan class="mono">Noul</tspan></text>
+  <text x="686" y="72" text-anchor="middle" class="note sm i">supported by the sources?</text>
+  <rect x="622" y="102" width="128" height="6" rx="3" fill="#ffffff" stroke="#6a4c9c" stroke-width="1.2"/>
+  <rect x="622" y="102" width="76.8" height="6" rx="3" fill="#6a4c9c" fill-opacity="0.55"/>
+  <path d="M693.8,92 H703.8 L698.8,100 z" fill="#6a4c9c"/>
+  <text x="698.8" y="88" text-anchor="middle" class="m" style="font-size:14px"><tspan class="i">p̂</tspan></text>
+  <line x1="670" y1="99" x2="670" y2="113" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="670" y="128" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">esc</tspan></text>
+  <line x1="746.0" y1="99" x2="746.0" y2="113" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="746.0" y="128" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">act</tspan></text>
+  <rect class="tagbox" x="667.6" y="-7" width="104.4" height="18" rx="9"/>
+  <text x="719.8" y="6.2" text-anchor="middle" class="tag">Lab 15 · Ex. 1</text>
+  <line class="ln" x1="740" y1="133" x2="740" y2="156" marker-end="url(#a)"/>
+  <text x="748" y="150" text-anchor="start" class="m note" style="font-size:14px"><tspan class="i">p̂</tspan><tspan> ≥ </tspan><tspan class="i">τ</tspan><tspan dy="3.4" font-size="9.5">act</tspan></text>
+  <rect class="op" x="690" y="158" width="160" height="36" rx="8"/>
+  <text x="770" y="181" text-anchor="middle" class="b" style="font-size:14px">deliver the answer</text>
+  <rect class="dbox" x="328" y="177" width="172" height="118" rx="10"/>
+  <text x="414" y="199" text-anchor="middle" class="b" style="font-size:15px">guard</text>
+  <text x="414" y="217" text-anchor="middle" class="note sm">decision model · <tspan class="mono">Noul</tspan></text>
+  <text x="414" y="234" text-anchor="middle" class="note sm i">may this action run?</text>
+  <rect x="350" y="264" width="128" height="6" rx="3" fill="#ffffff" stroke="#6a4c9c" stroke-width="1.2"/>
+  <rect x="350" y="264" width="76.8" height="6" rx="3" fill="#6a4c9c" fill-opacity="0.55"/>
+  <path d="M421.8,254 H431.8 L426.8,262 z" fill="#6a4c9c"/>
+  <text x="426.8" y="250" text-anchor="middle" class="m" style="font-size:14px"><tspan class="i">p̂</tspan></text>
+  <line x1="398" y1="261" x2="398" y2="275" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="398" y="290" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">esc</tspan></text>
+  <line x1="474.0" y1="261" x2="474.0" y2="275" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="474.0" y="290" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">act</tspan></text>
+  <rect class="tagbox" x="395.6" y="155" width="104.4" height="18" rx="9"/>
+  <text x="447.8" y="168.2" text-anchor="middle" class="tag">Lab 14 · Ex. 2</text>
+  <line class="ln" x1="500" y1="236" x2="554" y2="236" marker-end="url(#a)"/>
+  <text x="527" y="228" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="i">p̂</tspan><tspan> ≥ </tspan><tspan class="i">τ</tspan><tspan dy="3.4" font-size="9.5">act</tspan></text>
+  <rect class="box" x="556" y="214" width="124" height="44" rx="8"/>
+  <text x="618" y="233" text-anchor="middle" class="b mono" style="font-size:14px">send_email</text>
+  <text x="618" y="251" text-anchor="middle" class="note sm">a risky tool</text>
+  <rect class="dbox" x="18" y="306" width="26" height="15" rx="4"/>
+  <text x="60" y="318" text-anchor="start" class="note sm">decision model: returns a probability</text>
+  <rect class="abox" x="18" y="328" width="26" height="15" rx="4"/>
+  <text x="60" y="340" text-anchor="start" class="note sm">generative model: writes text</text>
+  <rect class="box" x="18" y="350" width="26" height="15" rx="4"/>
+  <text x="60" y="362" text-anchor="start" class="note sm">tool or step</text>
+  <rect class="op" x="18" y="372" width="26" height="15" rx="4"/>
+  <text x="60" y="384" text-anchor="start" class="note sm">hand-off or output</text>
+  <rect class="tagbox" x="7" y="393" width="45" height="18" rx="9"/>
+  <text x="29.5" y="406.2" text-anchor="middle" class="tag">Ex. 2</text>
+  <text x="60" y="406" text-anchor="start" class="note sm">where a lab builds it</text>
+  <text x="570" y="336" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">Each decision model compares its </tspan><tspan class="i">p̂</tspan><tspan class="s"> with</tspan></text>
+  <text x="570" y="354" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">its own thresholds: act at </tspan><tspan class="i">p̂</tspan><tspan> ≥ </tspan><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">act</tspan><tspan dy="-3.2" class="s">,</tspan></text>
+  <text x="570" y="372" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">ask a person between </tspan><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">esc</tspan><tspan dy="-3.2" class="s"> and </tspan><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">act</tspan><tspan dy="-3.2" class="s">,</tspan></text>
+  <text x="570" y="390" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">escalate below </tspan><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">esc</tspan><tspan dy="-3.2" class="s"> (section 3). Only the</tspan></text>
+  <text x="570" y="408" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">act exits of guard and verify are drawn.</tspan></text>
+  </g>
+</svg>

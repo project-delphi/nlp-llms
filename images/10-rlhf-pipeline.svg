@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 438" width="800" height="438" role="img" aria-labelledby="t d">
+  <title id="t">The three stages of RLHF</title>
+  <desc id="d">Three panels from left to right, joined by arrows. Panel 1, supervised fine-tuning (Lab 7): a pretrained LM, trained on demonstrations (prompt, written response) with the masked NLL of Module 7, gives pi_SFT. An arrow carries pi_SFT to panel 2, the reward model (Lab 9): pi_SFT samples K responses y_1 to y_K for one prompt x, a person ranks them, and pairs (x, y_w, y_l) train r_phi(x, y), which returns a scalar, with the Bradley-Terry loss of Module 9. An arrow carries r_phi to panel 3, policy optimization (Lab 10): a loop in which the prompt x goes to pi_theta, a sampled response y goes to r_phi, which scores it, and a policy-gradient update changes theta. Above pi_theta, a frozen reference pi_ref, a copy of pi_SFT drawn with a dashed outline and a lock, is joined to pi_theta by a dashed line labeled KL penalty, beta. Small type: PPO in practice; REINFORCE in the lab.</desc>
+  <style>
+    text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; fill: #1f2933; }
+    .m { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+    .s { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .i { font-style: italic; }
+    .b { font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .note { font-size: 13.5px; fill: #52606d; }
+    .acc { fill: #b3541e; }
+    .box { fill: #eef2f6; stroke: #16324f; stroke-width: 1.5; }
+    .abox { fill: #f8e9de; stroke: #b3541e; stroke-width: 1.5; }
+    .dim { fill: #f4f6f9; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .ln { fill: none; stroke: #16324f; stroke-width: 1.5; }
+    .aln { fill: none; stroke: #b3541e; stroke-width: 2.5; }
+    .dln { fill: none; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .rule { fill: none; stroke: #c5ced8; stroke-width: 1.5; }
+    .op { fill: #ffffff; stroke: #16324f; stroke-width: 1.5; }
+    .panel { fill: #fafbfc; stroke: #c5ced8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+  </defs>
+  <rect width="800" height="438" rx="8" fill="#ffffff"/>
+  <rect class="panel" x="16" y="40" width="200" height="332" rx="10"/>
+  <text x="116" y="66" text-anchor="middle" class="b" style="font-size:15px">1. Supervised fine-tuning</text>
+  <rect class="op" x="86" y="384" width="60" height="22" rx="11"/>
+  <text x="116" y="400" text-anchor="middle" class="note" style="font-size:13px">Lab 7</text>
+  <rect class="panel" x="256" y="40" width="230" height="332" rx="10"/>
+  <text x="371" y="66" text-anchor="middle" class="b" style="font-size:15px">2. Reward model</text>
+  <rect class="op" x="341" y="384" width="60" height="22" rx="11"/>
+  <text x="371" y="400" text-anchor="middle" class="note" style="font-size:13px">Lab 9</text>
+  <rect class="panel" x="526" y="40" width="258" height="332" rx="10"/>
+  <text x="655" y="66" text-anchor="middle" class="b" style="font-size:15px">3. Policy optimization</text>
+  <rect class="op" x="625" y="384" width="60" height="22" rx="11"/>
+  <text x="655" y="400" text-anchor="middle" class="note" style="font-size:13px">Lab 10</text>
+  <rect class="box" x="54" y="84" width="124" height="38" rx="6"/>
+  <text x="116" y="108" text-anchor="middle" style="font-size:15px">pretrained LM</text>
+  <line class="ln" x1="116" y1="122" x2="116" y2="289" marker-end="url(#a)"/>
+  <rect x="26" y="169" width="180" height="64" fill="#fafbfc"/>
+  <text x="116" y="186" text-anchor="middle" class="m" style="font-size:14px"><tspan class="s">demonstrations</tspan></text>
+  <text x="116" y="206" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="s">(prompt, written response)</tspan></text>
+  <text x="116" y="226" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="s">masked NLL (Module 7)</tspan></text>
+  <rect class="abox" x="76" y="290" width="80" height="40" rx="6"/>
+  <text x="116" y="317" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">π</tspan><tspan dy="4.6" font-size="12.9">SFT</tspan></text>
+  <rect class="abox" x="331" y="78" width="80" height="38" rx="6"/>
+  <text x="371" y="104" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">π</tspan><tspan dy="4.6" font-size="12.9">SFT</tspan></text>
+  <text x="421" y="94" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">one prompt </tspan><tspan class="i">x</tspan><tspan class="s">,</tspan></text>
+  <text x="421" y="110" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="i">K</tspan><tspan class="s"> samples</tspan></text>
+  <line class="ln" x1="371" y1="116" x2="287" y2="140" marker-end="url(#c)" style="stroke:#52606d;stroke-width:1.2"/>
+  <rect class="op" x="269" y="142" width="36" height="26" rx="4"/>
+  <text x="287" y="161" text-anchor="middle" class="m" style="font-size:16px"><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9">1</tspan></text>
+  <line class="ln" x1="371" y1="116" x2="337" y2="140" marker-end="url(#c)" style="stroke:#52606d;stroke-width:1.2"/>
+  <rect class="op" x="319" y="142" width="36" height="26" rx="4"/>
+  <text x="337" y="161" text-anchor="middle" class="m" style="font-size:16px"><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9">2</tspan></text>
+  <line class="ln" x1="371" y1="116" x2="387" y2="140" style="stroke:#52606d;stroke-width:1.2"/>
+  <text x="387" y="160" text-anchor="middle" class="note" style="font-size:16px">…</text>
+  <line class="ln" x1="371" y1="116" x2="437" y2="140" marker-end="url(#c)" style="stroke:#52606d;stroke-width:1.2"/>
+  <rect class="op" x="419" y="142" width="36" height="26" rx="4"/>
+  <text x="437" y="161" text-anchor="middle" class="m" style="font-size:16px"><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9" class="i">K</tspan></text>
+  <circle cx="293" cy="186" r="6" fill="#ffffff" stroke="#16324f" stroke-width="1.5"/><path d="M283,208 q0,-13 10,-13 q10,0 10,13" fill="#ffffff" stroke="#16324f" stroke-width="1.5"/>
+  <text x="381" y="204" text-anchor="middle" class="m" style="font-size:16px"><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9">2</tspan><tspan dy="-3.8"> ≻ </tspan><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9" class="i">K</tspan><tspan dy="-3.8"> ≻ </tspan><tspan class="i">y</tspan><tspan dy="3.8" font-size="10.9">1</tspan></text>
+  <text x="381" y="222" text-anchor="middle" class="note" style="font-size:12.5px">a person ranks them</text>
+  <line class="ln" x1="371" y1="232" x2="371" y2="311" marker-end="url(#a)"/>
+  <rect x="267" y="247" width="208" height="44" fill="#fafbfc"/>
+  <text x="371" y="264" text-anchor="middle" class="m" style="font-size:14px"><tspan class="s">pairs </tspan><tspan>(</tspan><tspan class="i">x</tspan><tspan>, </tspan><tspan class="i">y</tspan><tspan dy="3.4" font-size="9.5" class="i">w</tspan><tspan dy="-3.4">, </tspan><tspan class="i">y</tspan><tspan dy="3.4" font-size="9.5" class="i">l</tspan><tspan dy="-3.4">)</tspan></text>
+  <text x="371" y="284" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="s">Bradley–Terry loss (Module 9)</tspan></text>
+  <rect class="abox" x="297" y="312" width="148" height="40" rx="6"/>
+  <text x="371" y="338" text-anchor="middle" class="m" style="font-size:17px"><tspan class="i">r</tspan><tspan dy="4.1" font-size="11.6" class="i">φ</tspan><tspan dy="-4.1">(</tspan><tspan class="i">x</tspan><tspan>, </tspan><tspan class="i">y</tspan><tspan>) → </tspan><tspan class="s">scalar</tspan></text>
+  <rect class="dim" x="572" y="78" width="60" height="38" rx="6"/>
+  <text x="602" y="103" text-anchor="middle" class="m" style="font-size:18px"><tspan class="i">π</tspan><tspan dy="4.3" font-size="12.2">ref</tspan></text>
+  <path d="M641,90 v-4 a4,4 0 0 1 8,0 v4" fill="none" stroke="#52606d" stroke-width="1.5"/><rect x="638" y="90" width="14" height="10" rx="2" fill="#52606d"/>
+  <text x="658" y="92" text-anchor="start" class="note" style="font-size:12.5px">frozen copy</text>
+  <text x="658" y="108" text-anchor="start" class="m note" style="font-size:13.5px"><tspan class="s">of </tspan><tspan class="i">π</tspan><tspan dy="3.2" font-size="9.2">SFT</tspan></text>
+  <line class="dln" x1="602" y1="116" x2="602" y2="176"/>
+  <text x="612" y="146" text-anchor="start" class="note" style="font-size:12.5px">KL penalty,</text>
+  <text x="612" y="163" text-anchor="start" class="m note" style="font-size:15px"><tspan class="i">β</tspan></text>
+  <text x="548" y="202" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">x</tspan></text>
+  <line class="ln" x1="558" y1="196" x2="570" y2="196" marker-end="url(#a)"/>
+  <rect class="box" x="572" y="176" width="60" height="40" rx="6"/>
+  <text x="602" y="202" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">π</tspan><tspan dy="4.6" font-size="12.9" class="i">θ</tspan></text>
+  <line class="ln" x1="632" y1="196" x2="710" y2="196" marker-end="url(#a)"/>
+  <text x="672" y="188" text-anchor="middle" class="m note" style="font-size:13.5px"><tspan class="s">sample </tspan><tspan class="i">y</tspan></text>
+  <rect class="abox" x="712" y="176" width="48" height="40" rx="6"/>
+  <text x="736" y="202" text-anchor="middle" class="m" style="font-size:19px"><tspan class="i">r</tspan><tspan dy="4.6" font-size="12.9" class="i">φ</tspan></text>
+  <text x="736" y="168" text-anchor="middle" class="m note" style="font-size:13.5px"><tspan class="s">scores </tspan><tspan class="i">y</tspan></text>
+  <path class="ln" d="M736,216 V250 H602 V218" marker-end="url(#a)"/>
+  <text x="669" y="270" text-anchor="middle" class="m note" style="font-size:13.5px"><tspan class="s">policy-gradient update of </tspan><tspan class="i">θ</tspan></text>
+  <text x="655" y="308" text-anchor="middle" class="note" style="font-size:12px">PPO in practice;</text>
+  <text x="655" y="324" text-anchor="middle" class="note" style="font-size:12px">REINFORCE in the lab</text>
+  <line class="aln" x1="220" y1="210" x2="252" y2="210" marker-end="url(#b)"/>
+  <text x="236" y="200" text-anchor="middle" class="m acc" style="font-size:16px"><tspan class="i">π</tspan><tspan dy="3.8" font-size="10.9">SFT</tspan></text>
+  <line class="aln" x1="490" y1="210" x2="522" y2="210" marker-end="url(#b)"/>
+  <text x="506" y="200" text-anchor="middle" class="m acc" style="font-size:16px"><tspan class="i">r</tspan><tspan dy="3.8" font-size="10.9" class="i">φ</tspan></text>
+</svg>

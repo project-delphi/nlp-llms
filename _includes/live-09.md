@@ -3,16 +3,22 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–4 | 1. No label for "better" | — |
-| 4–9 | 2. The minimum reinforcement learning | — |
-| 9–20 | 3. The policy gradient and REINFORCE | [Check yourself](#chk-constant-reward) (2 min) |
-| 20–32 | 4. Baselines and variance | [Demo](#demo-baseline) (4 min) |
-| 32–35 | 6. Why comparisons instead of scores | [Predict](#predict-comparisons) (1 min) |
-| 35–44 | 7. The Bradley–Terry model | [Check yourself](#chk-oracle) (3 min) |
-| 44–55 | 8. Training a reward model | — |
+| 0–4 | 1. No Label for "Better" | — |
+| 4–9 | 2. The Minimum Reinforcement Learning | — |
+| 9–20 | 3. The Policy Gradient and REINFORCE | [Check yourself](#chk-constant-reward) (2 min) |
+| 20–32 | 4. Baselines and Variance | [Demo](#demo-baseline) (4 min) |
+| 32–35 | 6. Why Comparisons Instead of Scores | [Predict](#predict-comparisons) (1 min) |
+| 35–44 | 7. The Bradley–Terry Model | [Check yourself](#chk-oracle) (3 min) |
+| 44–55 | 8. Training a Reward Model | — |
 | **55** | **Total** | **45 minutes of exposition, 10 of activities** |
 :::
 
-Not taught in the room: *5. Generation as sequential decisions*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–4 and 6–8, in the agenda above.
+
+**Use in the lab** · Exercise 0: section 2; Exercise 1: sections 2, 3 and 5 (section 5: **Reference**; the exercise restates what it needs); Exercise 2: section 4; Exercise 3: section 7; Exercises 4 and 5: section 8.
+
+**Read later** · Section 5, *Generation as Sequential Decisions* (**Reference**); the collapsed callouts marked **Optional**; [Further Reading](#further-reading).
+:::

@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Explain the distributional hypothesis and find nearest neighbors by cosine similarity
 - Derive the skip-gram negative-sampling loss, implement it, and check its gradients against autograd
 - Assemble a feed-forward classifier over averaged embeddings and evaluate it against TF-IDF
+
+New terms, in the [glossary](/glossary.qmd): [embedding](/glossary.qmd#embedding), [negative sampling](/glossary.qmd#negative-sampling).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 1 · Text as data](/modules/01-text-as-data.qmd) and its lab.
+- [Module 1 · Text as Data](/modules/01-text-as-data.qmd) and its lab.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - No API keys: the lab runs its own models throughout.
 :::

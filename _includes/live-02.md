@@ -3,16 +3,22 @@
 ::: {.live-plan}
 | Minutes | Section | In the room |
 |---|---|---|
-| 0–3 | 1. Where counts stop | — |
-| 3–10 | 2. The distributional hypothesis and dense vectors | [Check yourself](#chk-cosine) (2 min) |
-| 10–16 | 3. Skip-gram with a full softmax | — |
-| 16–29 | 4. Negative sampling | [Demo](#demo-sgns) (4 min) |
-| 29–36 | 6. PyTorch refresher | [Check yourself](#chk-zero-init) (2 min) |
-| 36–40 | 7. Feed-forward networks and backpropagation | — |
-| 40–45 | 8. Bengio's neural language model | — |
+| 0–3 | 1. Where Counts Stop | — |
+| 3–10 | 2. The Distributional Hypothesis and Dense Vectors | [Check yourself](#chk-cosine) (2 min) |
+| 10–16 | 3. Skip-Gram With a Full Softmax | — |
+| 16–29 | 4. Negative Sampling | [Demo](#demo-sgns) (4 min) |
+| 29–36 | 6. PyTorch Refresher | [Check yourself](#chk-zero-init) (2 min) |
+| 36–40 | 7. Feed-Forward Networks and Backpropagation | — |
+| 40–45 | 8. Bengio's Neural Language Model | — |
 | **45** | **Total** | **37 minutes of exposition, 8 of activities** |
 :::
 
-Not taught in the room: *5. CBOW and GloVe in brief*. These sections are marked **Reference**; read them after the session.
+Checks, demos and predictions listed here are part of the live session and its minutes; the others on the page are for reading afterwards.
 
-Checks, demos and predictions listed here are part of the live session and its minutes. The others on the page, and collapsed callouts marked **Optional**, are for reading afterwards.
+::: {.reading-guide}
+**Read now** · Sections 1–4 and 6–8, in the agenda above.
+
+**Use in the lab** · Exercise 1: section 4; Exercise 2: section 2; Exercise 3: section 7; Exercise 4: sections 6 and 7.
+
+**Read later** · Section 5, *CBOW and GloVe in Brief* (**Reference**); the collapsed callouts marked **Optional** or **After the Lab**; [Further Reading](#further-reading).
+:::

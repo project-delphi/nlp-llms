@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Assemble an encoder-decoder's teacher-forced forward pass and loss
 - Explain the fixed-vector bottleneck and measure it by input length
 - Implement dot-product and additive attention and read attention maps against the expected alignment
+
+New terms, in the [glossary](/glossary.qmd): [attention](/glossary.qmd#attention).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 3 · Sequence models](/modules/03-sequence-models.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 3 · Sequence Models](/modules/03-sequence-models.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - No API keys: the lab runs its own models throughout.
 :::

@@ -2,9 +2,9 @@
 
 | Minutes | Segment | In the room |
 |---|---|---|
-| 0–3 | 1. What Module 9 left open | — |
-| 3–9 | 2. The InstructGPT pipeline | — |
-| 9–19 | 3. The KL-regularized objective | Check yourself (2 min) |
-| 19–26 | 4. Optimizing it: a per-token penalty and the policy gradient | — |
-| 26–40 | 6. DPO: from the optimal policy to a classification loss | Check yourself (2 min) |
-| 40–55 | 7. Failure modes | Demo (4 min); Discuss (2 min) |
+| 0–3 | 1. What Module 9 Left Open | — |
+| 3–9 | 2. The InstructGPT Pipeline | — |
+| 9–19 | 3. The KL-Regularized Objective | Check yourself (2 min) |
+| 19–26 | 4. Optimizing It: A Per-Token Penalty and the Policy Gradient | — |
+| 26–40 | 6. DPO: From the Optimal Policy to a Classification Loss | Check yourself (2 min) |
+| 40–55 | 7. Failure Modes | Demo (4 min); Discuss (2 min) |

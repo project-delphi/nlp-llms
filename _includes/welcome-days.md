@@ -2,8 +2,8 @@
 
 | Day | Theme | Modules |
 |---|---|---|
-| [Day 1](day-1.qmd) | Foundations: from counts to attention | 1 Text as data, 2 Word vectors and neural networks, 3 Sequence models, 4 Seq2seq and attention |
-| [Day 2](day-2.qmd) | Transformers and pretrained models | 5 The transformer, 6 Pretraining and the Hugging Face stack, 7 Fine-tuning and LoRA |
-| [Day 3](day-3.qmd) | Using and aligning LLMs | 8 LLMs through APIs, 9 Reinforcement and preference learning, 10 RLHF |
-| [Day 4](day-4.qmd) | Calibration, decisions and retrieval | 11 Calibration, 12 Calibrated decisions: RLCD and Jev, 13 Retrieval-augmented generation |
-| [Day 5](day-5.qmd) | Agents and the capstone | 14 Agents, 15 Capstone |
+| [Day 1](day-1.qmd) | Foundations: From Counts to Attention | 1 Text as Data, 2 Word Vectors and Neural Networks, 3 Sequence Models, 4 Seq2seq and Attention |
+| [Day 2](day-2.qmd) | Transformers and Pretrained Models | 5 The Transformer, 6 Pretraining and the Hugging Face Stack, 7 Fine-Tuning and LoRA |
+| [Day 3](day-3.qmd) | Using and Aligning LLMs | 8 LLMs Through APIs, 9 Reinforcement and Preference Learning, 10 RLHF |
+| [Day 4](day-4.qmd) | Calibration, Decisions and Retrieval | 11 Calibration, 12 Calibrated Decisions: RLCD and Jev, 13 Retrieval-Augmented Generation |
+| [Day 5](day-5.qmd) | Agents and the Capstone | 14 Agents, 15 Capstone |

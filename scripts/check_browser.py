@@ -41,7 +41,7 @@ SIZES = {
     "1366x768@150%": {"viewport": {"width": 911, "height": 512}, "device_scale_factor": 1.5},
 }
 THEMES = ("light", "dark")
-NAVBAR = ["Home", "Start here", "Schedule", "Days", "Notebooks", "References", "Teach"]
+NAVBAR = ["Home", "Start Here", "Schedule", "Days", "Notebooks", "References", "Teach"]
 # Pages checked at every size; all pages are checked at the first size.
 REPRESENTATIVE = [
     "index.html",

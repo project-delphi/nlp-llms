@@ -11,6 +11,13 @@ live:
   - {section: 6, minutes: 7, activities: [{block: chk-layernorm, minutes: 2}]}
   - {section: 7, minutes: 4}
   - {section: 8, minutes: 4}
+lab:
+  - {exercise: 0, sections: [6, 7]}
+  - {exercise: 1, sections: [2]}
+  - {exercise: 2, sections: [3]}
+  - {exercise: 3, sections: [5]}
+  - {exercise: 4, sections: [7, 8]}
+  - {exercise: 5, sections: [4]}
 ---
 
 {{< include /_includes/module-05.md >}}
@@ -25,7 +32,7 @@ live:
 
 {{< include /_includes/live-05.md >}}
 
-## 1. From attention over an encoder to self-attention
+## 1. From Attention Over an Encoder to Self-Attention
 
 **In this section:** state what Module 4 left open and write self-attention as the query-key-value lookup with all three roles taken from one sequence.
 
@@ -58,13 +65,19 @@ $$ {#eq-self-attn}
 
 The output $\bar{v}_t \in \mathbb{R}^{d_k}$ is a weighted average of values. The bar has the same meaning as in Module 4's context vector $\bar{h}_t$, which was a weighted average of encoder states. There is one output per position, so a self-attention layer maps $T$ vectors to $T$ vectors.
 
-| General form | Module 4 | Self-attention |
+Attention whose queries come from one sequence and whose keys and values come from another, as in Module 4, is called **cross-attention**. The table sets it beside self-attention. The first five rows are the lookup; the last four are what changes when the recurrence goes, and sections 3, 5 and 8 take them up.
+
+| General form | Module 4: cross-attention over a recurrent encoder | Self-attention, no recurrence |
 |---|---|---|
 | query $q$ | decoder state $s_t$ | $W_Q^\top h_t$, from position $t$ |
 | keys $k_i$ | encoder states $h_i$ | $W_K^\top h_i$, same sequence |
 | values $v_i$ | encoder states $h_i$ | $W_V^\top h_i$, same sequence |
 | weights | $\alpha_{t,i}$, target $t$ on source $i$ | $\alpha_{t,i}$, position $t$ on position $i$ |
-| output | context vector $\bar{h}_t$ | $\bar{v}_t$ |
+| output | context vector $\bar{h}_t$ | $\bar{v}_t$, one per position |
+| what links the positions of one sequence | the recurrence: each state is computed from the one before | attention alone |
+| steps that run one after another in training | one per token, in both networks | none within a layer: all $T$ positions at once (section 8) |
+| where word order comes from | the order of the recurrent steps | positional encodings added to the input (section 5) |
+| typical failure | gradients fade along the recurrent chain (Module 3) | reading the future, unless a causal mask forbids it (section 3) |
 
 ![Self-attention for one position. Position 4 asks: its query $q_4 = W_Q^\top h_4$ is scored against the keys $k_1, \dots, k_4$, and the output $\bar{v}_4 = \sum_i \alpha_{4,i} v_i$ is the weighted average of the values. Line width grows with the weight $\alpha_{4,i}$; the weights drawn are illustrative. Position 5 is masked for this query (section 3).](/images/05-self-attention.svg){#fig-self-attention fig-alt="Self-attention for one position: its query is compared with the keys of the positions up to and including itself, and the output is the weighted average of their values."}
 
@@ -76,7 +89,15 @@ The two scores are equal. With $W_K = W_Q = W$, the score is $q_t^\top k_i = h_t
 :::
 :::
 
-## 2. Scaled dot-product attention
+::: {.self-check}
+**Check yourself.** Apply the table to a new model. An image-captioning model has an encoder that turns a photo into 49 vectors, one per image patch, and a transformer decoder that writes the caption. Each decoder block has a causally masked self-attention layer and a cross-attention layer. (1) In each of the two layers, where do the queries, the keys and the values come from, and what shape is $A$ when the caption so far has $T$ tokens? (2) In training, what in the decoder has to run one position after another? And when a caption is generated? Sections 3, 7 and 8 give what you need.
+
+::: {.callout-tip collapse="true" title="Answer"}
+(1) In self-attention the queries, keys and values all come from the caption's own vectors, and $A$ is $T \times T$ and lower triangular under the causal mask. In cross-attention the queries come from the decoder and the keys and values from the 49 patch vectors, so $A$ is $T \times 49$, with no causal mask: the whole image is known. This is the encoder-decoder transformer of section 7's optional box, with patches in place of source tokens. (2) In training, nothing within a layer: the whole caption is known (teacher forcing), so both layers compute all $T$ positions at once, and the mask, not a recurrence, keeps each position from reading ahead. At generation the decoder runs once per token, because token $t + 1$ must be sampled before position $t + 1$ exists (section 8). The patch vectors do not depend on the caption, so the encoder runs once.
+:::
+:::
+
+## 2. Scaled Dot-Product Attention
 
 **In this section:** write the attention step in matrix form and derive the scaling factor $1/\sqrt{d_k}$.
 
@@ -209,7 +230,7 @@ Dividing by $d_k$ divides the variance by $d_k^2$: $\mathrm{Var} = d_k / d_k^2 =
 :::
 :::
 
-## 3. The causal mask
+## 3. The Causal Mask
 
 **In this section:** explain why a language model must not read ahead, and write the mask that prevents it.
 
@@ -249,7 +270,7 @@ Correct: the scores become $(1, 1, -\infty, -\infty)$ and the row is $(0.5, 0.5,
 :::
 :::
 
-## 4. Multi-head attention
+## 4. Multi-Head Attention
 
 **In this section:** explain what one attention head cannot do, and write the multi-head layer and its split.
 
@@ -297,7 +318,7 @@ With $n_h = 4$: $d_k = 128/4 = 32$, and $3 \cdot n_h \cdot d \cdot d_k = 3 \time
 :::
 :::
 
-## 5. Positional encodings
+## 5. Positional Encodings
 
 **In this section:** show that self-attention ignores order, and give two ways to restore it.
 
@@ -323,7 +344,7 @@ Each pair of coordinates is a point moving around a circle at its own frequency 
 
 Both are **absolute** encodings: they mark where a token is, and leave the model to work out how far apart two tokens are. Many current models encode the *relative* offset inside the attention score instead.
 
-::: {.callout-tip collapse="true" title="Optional: rotary position embeddings (RoPE)"}
+::: {.callout-tip collapse="true" title="Optional: Rotary Position Embeddings (RoPE)"}
 Rotary embeddings (Su et al., 2021) add nothing to the input. They act inside each attention layer, on the queries and keys only.
 
 Group the $d_k$ coordinates of a query into $d_k/2$ pairs and treat each pair as a point in the plane. Before taking the dot product, rotate pair $j$ of $q_t$ by the angle $\omega_j t$, and pair $j$ of $k_i$ by the angle $\omega_j i$, with frequencies $\omega_j$ as in @eq-sinusoid (with $d_k$ in place of $d$). Write $R_t$ for this block-wise rotation at position $t$. Rotations preserve length, and the dot product of two rotated vectors depends only on the *difference* of the angles:
@@ -349,7 +370,7 @@ One layer: the same. In both orders position 3 holds *man* and reads the set {*d
 :::
 :::
 
-## 6. The transformer block
+## 6. The Transformer Block
 
 **In this section:** assemble attention, a feed-forward layer, residual connections and layer normalization into one block, and say where the normalization goes.
 
@@ -417,7 +438,7 @@ The mean is 3 and the variance is $(4 + 1 + 0 + 9)/4 = 3.5$, with square root $1
 :::
 :::
 
-## 7. A decoder-only language model, and the other two variants
+## 7. A Decoder-Only Language Model, and the Other Two Variants
 
 **In this section:** write the whole model from tokens to loss, and place it among the three transformer variants.
 
@@ -452,7 +473,7 @@ Generation is also unchanged: sample $w_{t+1}$ from $\mathrm{softmax}(z_t/\tau)$
 
 An encoder cannot generate text left to right, because its vectors depend on tokens to the right. It produces a representation of a whole input, which suits classification. Module 6 takes this up.
 
-::: {.callout-tip collapse="true" title="Optional: the encoder-decoder transformer and cross-attention"}
+::: {.callout-tip collapse="true" title="Optional: The Encoder-Decoder Transformer and Cross-Attention"}
 The original transformer was built for translation, the task of Module 4, and keeps Module 4's two-part shape.
 
 - **The encoder** is a stack of blocks as in @eq-block with no causal mask. Its output is one vector per source position: the counterpart of Module 4's encoder states $h_1, \dots, h_S$.
@@ -471,7 +492,7 @@ Padding is handled as in Module 4: the scores of padded source positions are set
 A decoder-only model handles a transduction task by writing source and target as one sequence, with the source as the prefix. Self-attention over the prefix then does the work of cross-attention. This is how the instruction-following models of Module 7 work.
 :::
 
-::: {.callout-tip collapse="true" title="Optional: details that implementations add"}
+::: {.callout-tip collapse="true" title="Optional: Details That Implementations Add"}
 - **Dropout.** The lab applies it in two places: to the input vectors $h_t^{(0)}$, after the embeddings are added, and to each sublayer's output (after $W_{\mathrm{proj}}$ in attention, after $W_2$ in the feed-forward layer), before the residual addition. Many implementations, nanoGPT among them, also apply it to the attention weights $A$; the lab does not. Dropout is switched off at evaluation, and the leak test in the lab runs with it off.
 - **Weight tying.** The output matrix $W_o$ and the token embedding table have the same shape, $|V| \times d$, and many models share one matrix for both. The lab keeps them separate.
 - **Bias terms.** Some implementations add biases to the projections of @eq-qkv-proj; we omit them, and so does the lab.
@@ -490,7 +511,7 @@ Only the position table grows: it needs a vector $p_t \in \mathbb{R}^{128}$ for 
 :::
 :::
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 5 measured"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 5 Measured"}
 Open this after Exercise 4, so that it does not answer the lab's prediction for you. These are the values recorded in `data/baselines.json` (Lab 5 at its full settings, seed 0, executed on a CPU; not yet run on a Colab T4). Every row scores the same 60,394 test characters with the same function, in nats per character.
 
 | Model | Lab | Parameters | Training steps (batch 64) | Test nats per character | Perplexity | Bits per character |
@@ -510,7 +531,7 @@ How to read it:
 - **Same characters, different context.** The LSTM carries its state across the whole test split. The GPT reads at most $T_{\max} = 128$ characters, so it is scored with overlapping windows of 128 moved forward by 64, scoring only the second half of each: every character has between 65 and 128 characters of context. The comparison is of the models as they are used, not of the architectures in isolation.
 :::
 
-## 8. Cost and parallelism
+## 8. Cost and Parallelism
 
 **In this section:** compare the cost of a self-attention layer with a recurrent layer, and say what the transformer gains and what it pays.
 
@@ -563,7 +584,7 @@ At $T = d = 128$ the two are equal: $128^3 = 2{,}097{,}152$ multiplications each
 - A decoder-only transformer is embeddings, $n_\ell$ blocks, a final normalization and Module 3's output layer, trained with Module 3's loss (@eq-gpt, @eq-loss).
 - Per layer, self-attention costs $O(T^2 d)$ against the RNN's $O(T d^2)$, with $O(1)$ sequential operations and path length against $O(T)$.
 
-### Equations and where you implement them
+### Equations and Where You Implement Them
 
 | Equation | Lab 5 |
 |---|---|
@@ -577,7 +598,7 @@ At $T = d = 128$ the two are equal: $128^3 = 2{,}097{,}152$ multiplications each
 | Projections, feed-forward layer, layer normalization (@eq-qkv-proj, @eq-ffn, @eq-ln) | provided |
 | Sinusoidal encodings, post-norm (@eq-sinusoid, @eq-postnorm) | not implemented |
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"The transformer is attention and nothing else."** Each block also has a feed-forward layer, which holds about two thirds of the block's weights when $d_{\mathrm{ff}} = 4d$, plus residual connections and layer normalization. Without the residual connections a deep stack does not train.
 - **"The scaling by $\sqrt{d_k}$ is a detail."** Without it the standard deviation of the scores grows as $\sqrt{d_k}$ and the softmax starts saturated. It is also not a temperature you tune: it is fixed by the dimension. The sampling temperature $\tau$ is a different thing, applied to the logits at generation time.
@@ -589,11 +610,11 @@ At $T = d = 128$ the two are equal: $128^3 = 2{,}097{,}152$ multiplications each
 - **"A transformer has unlimited context."** It reads at most $T_{\max}$ tokens, and nothing before them.
 - **"An attention map explains the prediction."** Module 4's caution applies with more force: there are $n_h \times n_\ell$ maps, and the vectors being read at layer $\ell$ are already mixtures of many tokens.
 
-## Next steps
+## Next Steps
 
 We now have the architecture. The model in the lab is tiny, reads characters, and is trained from scratch on one megabyte of text. Module 6 changes each of those: tokens become subwords, the model is trained once on a very large corpus and then reused (**pretraining**), and the two masks of section 7 give two training objectives, causal language modeling for decoders and masked language modeling for encoders. From there on we load transformers from the Hugging Face libraries instead of writing them.
 
-## Further reading
+## Further Reading
 
 1. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L. and Polosukhin, I. (2017). [Attention Is All You Need](https://arxiv.org/abs/1706.03762). *NeurIPS*. The original paper. Read sections 3 and 4; the variance argument is a footnote in section 3.2.1 and the cost comparison is Table 1.
 2. Rush, A. (2018), revised by Huang, A., Subramanian, S., Sum, J., Almubarak, K. and Biderman, S. (2022). [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/). The paper, line by line, as working PyTorch code. It implements the post-norm encoder-decoder model, not the pre-norm decoder of the lab.

@@ -46,7 +46,7 @@ class Deck(unittest.TestCase):
 
     def test_schedule_links_the_opening_slot_to_the_deck(self):
         self.assertEqual(V["days"]["d1"]["opening_page"], "welcome.qmd")
-        self.assertIn("[Welcome, setup check](welcome.qmd)", g.schedule(V))
+        self.assertIn("[Welcome, Setup Check](welcome.qmd)", g.schedule(V))
 
     def test_pages_link_to_the_deck(self):
         for page in ("index.qmd", "prepare.qmd", "schedule.qmd", "day-1.qmd", "teach.qmd"):

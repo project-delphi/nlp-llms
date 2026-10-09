@@ -1,0 +1,21 @@
+---
+title: "Results Worksheet"
+subtitle: "Your Own Numbers, With What It Takes to Compare Them"
+---
+
+<!--
+The rows are written in _worksheet.yml; scripts/gen_tables.py turns them into
+_includes/worksheet.md and downloads/results-worksheet.csv. Nothing here is a result.
+-->
+
+Each lab ends with a number. This worksheet keeps them in one place, beside the conditions a comparison needs: the data and split, the unit a loss is averaged over, the metric and which direction is better, and the baseline. Rows in the same table can be compared; rows in different tables cannot, and each table says why. [Download it as a CSV file](downloads/results-worksheet.csv) and fill it in as you go, or copy a table into your own notes.
+
+**What to write in each column.**
+
+- **Your result**: the number your run printed, with the seed if you changed it.
+- **Path**: what produced it, as the notebook's last cell prints it: real open models, commercial APIs with keys, or offline stand-ins and test doubles. A number from a test double checks that the code runs; it says nothing about a model, so do not compare it with anything.
+- **Interpretation** (in the CSV): one sentence on what changed from the row above and why, or why the comparison does not hold.
+
+The day wrap-ups use these tables. Run times and "has run on" claims on this site come from run records, never from this worksheet ([readiness](readiness.qmd)).
+
+{{< include /_includes/worksheet.md >}}

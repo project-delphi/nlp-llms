@@ -9,6 +9,13 @@ live:
   - {section: 4, minutes: 5}
   - {section: 5, minutes: 5}
   - {section: 7, minutes: 3, activities: [{block: chk-limits, minutes: 2}]}
+lab:
+  - {exercise: 1, sections: [2]}
+  - {exercise: 2, sections: [3]}
+  - {exercise: 3, sections: [3]}
+  - {exercise: 4, sections: [3]}
+  - {exercise: 5, sections: [4, 5]}
+  - {exercise: 6, sections: [6]}
 ---
 
 {{< include /_includes/module-01.md >}}
@@ -27,7 +34,7 @@ live:
 
 Notation used on every module page: a text is a sequence of tokens $w_1, \dots, w_T$ of length $T$; the vocabulary is $V$, with size $|V|$; $c(\cdot)$ is a count in the training data; $x$ is an input vector, $y$ a label, $C$ the number of classes; $\theta$ are parameters and $\mathcal{L}$ is a loss. All logarithms are natural.
 
-## 1. What makes language hard
+## 1. What Makes Language Hard
 
 **Objective: name the three properties of language that every model in this workshop has to deal with.**
 
@@ -54,11 +61,11 @@ There are $|V|^2 = 10^8$ possible pairs, and a corpus of $10^6$ tokens contains 
 :::
 :::
 
-## 2. Tokens, vocabularies and Zipf's law
+## 2. Tokens, Vocabularies and Zipf's Law
 
 **Objective: turn a string into a sequence of integer IDs, and say what each design choice costs.**
 
-### Tokenization and normalization
+### Tokenization and Normalization
 
 A **tokenizer** splits a string into units called **tokens**. **Normalization** maps variants of a string to one form before or after splitting (for example, lowercasing). The **vocabulary** $V$ is the set of distinct tokens the model knows; each token gets an integer ID from $0$ to $|V| - 1$.
 
@@ -95,7 +102,7 @@ Eight tokens: `the`, `u`, `.`, `s`, `.`, `isn't`, `us`, `.`, of which six are di
 :::
 :::
 
-### Zipf's law
+### Zipf's Law
 
 Sort the vocabulary by frequency. Let $r$ be the rank of a word (1 for the most frequent) and $f(r)$ its count. **Zipf's law** is the empirical observation that
 
@@ -113,7 +120,7 @@ What this means in practice:
 
 So any estimate that depends on the count of a specific word, or worse, a specific word sequence, is unreliable for most of the vocabulary. That is the sparsity problem of Section 1 in quantitative form. Exercise 1 plots this curve for the lab corpus; the recorded plot is in the box after the lab, below.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 1 measured in Exercise 1"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 1 Measured in Exercise 1"}
 Open this after Exercise 1, so that it does not answer the lab's prediction for you. On the Shakespeare training split, keeping every word gives 11,908 entries and covers 96.1% of validation tokens; dropping words seen once (`min_count = 2`) nearly halves the vocabulary, to 6,463 entries, and still covers 94.0%. In the lab corpus 46% of the distinct words occur exactly once (@fig-zipf).
 
 ![Word frequency against rank in the training split of the Shakespeare corpus, on log–log axes, with a reference line of slope $-1$. Punctuation tokens are left out. Measured with the Lab 1 tokenizer.](/images/01-zipf.svg){#fig-zipf fig-alt="Log-log plot of word count against rank for Tiny Shakespeare. The observed curve falls roughly along a dashed reference line of slope minus one. The top three words are annotated: the (5,703), and (5,041), to (4,439). A label on the flat tail at count 1 reads: 5,444 of 11,897 distinct words (46 percent) occur once."}
@@ -127,11 +134,11 @@ Rank 1 gives $A = f(1) = 5{,}703$, so $f(100) \approx 5{,}703 / 100 \approx 57$ 
 :::
 :::
 
-## 3. N-gram language models
+## 3. N-Gram Language Models
 
 **Objective: define a language model, estimate one from counts, fix its zeros, and measure it.**
 
-### What a language model is
+### What a Language Model Is
 
 A **language model** assigns a probability to a sequence of tokens. By the chain rule of probability, with no approximation,
 
@@ -141,7 +148,7 @@ $$ {#eq-chain}
 
 where $w_{<t}$ is shorthand for $w_1, \dots, w_{t-1}$, the tokens before position $t$. So modeling text reduces to one question, asked repeatedly: *given what came before, what comes next?* Every language model in this workshop, up to GPT, answers this same question. They differ only in how they compute $P(w_t \mid w_{<t})$.
 
-### The Markov assumption
+### The Markov Assumption
 
 We cannot estimate $P(w_t \mid w_{<t})$ by counting: a long history $w_{<t}$ almost never occurs twice. An **n-gram model** assumes that only the previous $n - 1$ tokens matter:
 
@@ -151,7 +158,7 @@ $$ {#eq-markov}
 
 Here $n$ is the **order** of the model. With $n = 2$ (a **bigram** model) the context is one token; with $n = 3$ (a **trigram** model) it is two. We write the context as $w_{t-n+1:t-1}$. The first positions of a text are padded with $n - 1$ copies of a start token `<s>` so that every position has a full context.
 
-### Estimation by counting
+### Estimation by Counting
 
 Let $c(w_{t-n+1:t})$ be the number of times the full n-gram occurs in the training data, and $c(w_{t-n+1:t-1})$ the number of times its context occurs. The **maximum-likelihood estimate** (MLE), the one that makes the training data most probable, is the relative frequency:
 
@@ -179,7 +186,7 @@ def ngram_counts(ids, n, bos):
 **Lab 1, Exercise 2** asks you to write `ngram_counts`: the numerator and denominator of @eq-mle.
 
 ::: {.callout-note collapse="true"}
-## Optional: why relative frequency is the maximum-likelihood estimate
+## Optional: Why Relative Frequency Is the Maximum-Likelihood Estimate
 
 Fix one context and let $p_w$ be the probability of next token $w$, with $c_w$ its count after that context. The log-likelihood of the training data for this context is $\sum_w c_w \log p_w$, to be maximized subject to $\sum_w p_w = 1$. Add a Lagrange multiplier $\lambda$ for the constraint and set the derivative with respect to $p_w$ to zero:
 
@@ -191,7 +198,7 @@ $$
 Summing over $w$ and using the constraint gives $\lambda = \sum_w c_w$, so $p_w = c_w / \sum_{w'} c_{w'}$.
 :::
 
-### The zero problem and add-k smoothing
+### The Zero Problem and Add-k Smoothing
 
 @eq-mle gives probability zero to any n-gram that did not occur in training. Section 1 showed that this is most of them. One zero in the product @eq-chain makes the whole text impossible.
 
@@ -239,7 +246,7 @@ With $k = 1$: $(3 + 1) / (3 + 10{,}000) \approx 0.0004$. With $k = 0.01$: $(3 + 
 :::
 
 ::: {.callout-note collapse="true"}
-## Optional: better smoothing (interpolation, backoff, Kneser–Ney)
+## Optional: Better Smoothing (interpolation, backoff, Kneser–Ney)
 
 Add-k gives every unseen n-gram the same share. A better idea uses lower-order evidence: if the trigram *drank green tea* is unseen, the bigram *green tea* is still informative. **Interpolation** mixes orders with weights $\lambda_1 + \lambda_2 + \lambda_3 = 1$:
 
@@ -261,7 +268,7 @@ $$ {#eq-ppl}
 Lower is better. How to read the number:
 
 - **It is an effective branching factor.** A model that spreads probability uniformly over the vocabulary has $P = 1/|V|$ at every step, so $\mathrm{PPL} = \exp(\log |V|) = |V|$. A perplexity of 20 means the model is, on average, as uncertain as if it were choosing uniformly among 20 tokens.
-- **It is the same quantity as the training loss of a neural language model.** The cross-entropy loss printed by the LSTM in Module 3 and the transformer in Module 5 is $\log \mathrm{PPL}$. That is why this lab's number is directly comparable with theirs.
+- **It is the same quantity as the training loss of a neural language model.** The cross-entropy loss printed by the LSTM in Module 3 and the transformer in Module 5 is $\log \mathrm{PPL}$. That is why this lab's character-level number is directly comparable with theirs: all three average over the same characters of the same test split. A word-level perplexity is not (Module 3, section 6).
 - **One zero makes it infinite.** $\log 0 = -\infty$. An unsmoothed model has infinite perplexity on almost any held-out text.
 
 ```python
@@ -373,7 +380,7 @@ A language model is also a generator. Start from a context, draw the next token 
 
 Raising $n$ further exposes the weakness of add-k. Most long contexts were seen only once or twice, so their counts are small, and the $k$ added to each of the $|V|$ possible next tokens takes a large share of the probability. What that does to the samples is the lab's prediction for Exercise 4; the box after the lab explains it.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 1 measured in Exercise 4"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 1 Measured in Exercise 4"}
 Open this after Exercise 4, so that it does not answer the lab's prediction for you. Character bigram samples are locally plausible and globally incoherent; at $n = 3$ fragments of English and the layout of a play appear. With the $k$ that predicts held-out text best, high-order samples dissolve into random characters; with a much smaller $k$ they copy the training text. At $n = 5$ with $k = 0.01$, a context seen once has total $1 + 0.01 \times 65 = 1.65$, so about 39% of the probability goes to the 64 characters that never followed it. One such draw produces a context never seen in training, where @eq-addk is uniform, and the sample dissolves into random characters. With a much smaller $k$ the same model stays fluent, but then its samples copy the training text more and more closely, because a context seen once has only one recorded continuation. The $k$ that predicts held-out text best (the one chosen on validation) is not the one that generates the best-looking text.
 :::
 
@@ -391,7 +398,7 @@ You cannot tell from the two numbers, because they are not comparable: the model
 :::
 :::
 
-## 4. Bag-of-words and TF-IDF
+## 4. Bag-of-Words and TF-IDF
 
 **Objective: represent a whole document as one vector.**
 
@@ -453,7 +460,7 @@ Two changes from TF-IDF:
 The idf form shown is the non-negative variant used by Lucene. See Robertson and Zaragoza (2009) in the readings. The lab's stretch section implements @eq-bm25 as `bm25_scores`.
 :::
 
-## 5. Naive Bayes and logistic regression
+## 5. Naive Bayes and Logistic Regression
 
 **Objective: build two linear classifiers on bag-of-words features and see that they differ only in how the weights are set.**
 
@@ -483,7 +490,7 @@ $$
 
 So the score of each class is a **linear function** of $x$: a weight per word, plus a bias. Naive Bayes is a linear classifier whose weights are read off from counts. The lab trains it in one line as a reference point.
 
-### Logistic regression
+### Logistic Regression
 
 **Logistic regression** uses the same linear form but learns the weights to make the correct labels probable. With weight matrix $W \in \mathbb{R}^{C \times |V|}$ and bias $b \in \mathbb{R}^{C}$, so $\theta = (W, b)$:
 
@@ -505,7 +512,7 @@ Compare with @eq-ppl: this is the same quantity as log-perplexity, with "the cor
 
 **The gradient.** The gradient of the loss with respect to the logits is the predicted probability minus the target, $\hat{y} - \mathrm{onehot}(y)$, where $\mathrm{onehot}(y)$ is 1 at position $y$ and 0 elsewhere (@eq-grad, derived in the optional box). You will meet @eq-grad again as the output layer of every neural network in this workshop.
 
-::: {.callout-tip collapse="true" title="Optional: deriving the gradient of the cross-entropy loss"}
+::: {.callout-tip collapse="true" title="Optional: Deriving the Gradient of the Cross-Entropy Loss"}
 For one example with correct class $y$, substitute @eq-softmax into the loss:
 
 $$
@@ -533,7 +540,7 @@ $e^2 = 7.39$, $e^1 = 2.72$, $e^0 = 1$, with sum $11.11$, so $\hat{y} = (0.665, 0
 :::
 :::
 
-### Which one?
+### Which One?
 
 | | Naive Bayes | Logistic regression |
 |---|---|---|
@@ -552,7 +559,9 @@ About 0.98. With equal priors, the log-odds between the two classes are $\sum_w 
 :::
 :::
 
-## 6. Evaluation: precision, recall and F1 {.reference}
+## 6. Evaluation: Precision, Recall and F1 {.reference}
+
+*Not taught in the room. Lab 1's Exercise 6 restates the definitions it needs; this section explains why accuracy alone is not enough.*
 
 **Objective: report a classifier with numbers that show where it fails.**
 
@@ -593,7 +602,7 @@ Accuracy is $950/1000 = 0.95$. Class A: $\mathrm{TP} = 950$, $\mathrm{FP} = 50$,
 :::
 :::
 
-## 7. Where count-based methods stop working
+## 7. Where Count-Based Methods Stop Working
 
 **Objective: name the limits that the rest of Day 1 addresses.**
 
@@ -616,7 +625,7 @@ They are equal: both are $(0 + k) / (10 + k|V|)$ by @eq-addk. The model has no w
 
 The numbers from this module's lab are the baseline for those claims: the n-gram perplexity is compared with the LSTM in Lab 3 and the transformer in Lab 5, and the classifier's accuracy and macro-F1 with Labs 2 and 6. Lab 1 measures them and records them in `data/baselines.json`; the values are in the box after the lab, below.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 1 measured"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 1 Measured"}
 Open this after the lab, so that it does not answer the lab's predictions for you. These are the values measured by Lab 1 and recorded in `data/baselines.json`; your run reproduces them.
 
 | Model | Test split | Result |
@@ -631,7 +640,7 @@ Open this after the lab, so that it does not answer the lab's predictions for yo
 The order $n$ and each $k$ were chosen on the validation split; `C` was chosen on validation by macro-F1. Word-level perplexities (304 for the bigram, 1,437 for the trigram) are printed in the lab for the sparsity discussion and are not comparable with any later number. On the lab's 4,800 training abstracts naive Bayes and logistic regression tie: 0.884 test accuracy each.
 :::
 
-## Equations and where you implement them
+## Equations and Where You Implement Them
 
 | Equation | What it is | In Lab 1 |
 |---|---|---|
@@ -663,7 +672,7 @@ The order $n$ and each $k$ were chosen on the validation split; `C` was chosen o
 - Report precision, recall and F1 per class, then read the errors.
 - Count-based methods treat words as unrelated symbols and see only a short window. That is what Module 2 starts to fix.
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"Lower perplexity always means a better model."** Only when the vocabulary, tokenization and test text are identical. Mapping more words to `<unk>` or switching from words to characters changes the number without changing the quality.
 - **"A higher-order n-gram model is always better."** More context helps only while the counts can support it. Past that point the model memorizes: training perplexity keeps falling, held-out perplexity rises, and samples are copied from the training text.
@@ -673,7 +682,7 @@ The order $n$ and each $k$ were chosen on the validation split; `C` was chosen o
 - **"High accuracy means the classifier is good."** Not with imbalanced classes, and not before you have read the errors.
 - **"These methods are obsolete."** A TF-IDF linear model trains in seconds, is easy to inspect, and is the baseline any neural model must beat to justify its cost. BM25 is still a standard retrieval component (Module 13).
 
-## Further reading
+## Further Reading
 
 1. Jurafsky, D. and Martin, J. H. [*Speech and Language Processing*](https://web.stanford.edu/~jurafsky/slp3/) (3rd edition draft). Chapters "Words and Tokens", "N-gram Language Models" and "Logistic Regression and Text Classification" (chapters 2 to 4 in the August 2026 draft; chapter numbers change between drafts, so go by title).
 2. Manning, C. D., Raghavan, P. and Schütze, H. (2008). [*Introduction to Information Retrieval*](https://nlp.stanford.edu/IR-book/). Cambridge University Press. Chapter 6 (term weighting and TF-IDF) and chapter 13 (text classification and naive Bayes); the section "Okapi BM25: a non-binary model" in chapter 11 for BM25.

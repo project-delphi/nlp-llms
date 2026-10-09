@@ -1,0 +1,1267 @@
+# The results worksheet (worksheet.qmd and worksheet.csv), written by scripts/gen_tables.py.
+# Participants fill result, path, environment and interpretation; nothing here is a result.
+#
+# Conventions used below (Academic Director, 2026-10-08):
+# - One row per number a lab's core path prints on its results card or in a results table:
+#   the numbers the day wrap-ups' running tables ask for. Per-class scores, training
+#   curves and timings are left out.
+# - `exercise` names the exercise whose section prints the number; it is omitted when the
+#   number first appears in a provided Run section or on the results card.
+# - `dataset: generated` marks data a notebook builds from a fixed seed (Lab 4's dates,
+#   Lab 8's announcements, Lab 9's toy task); there is no key for it under `datasets:`.
+#   Labs 13 and 15 name `lectures`, the corpus; `split` names the question set.
+# - A number in `baseline` is either a definition (it says so) or a value recorded in
+#   data/baselines.json and quoted on the module page named beside it.
+groups:
+  - id: lm-characters
+    title: "Language Modeling: Tiny Shakespeare, per Character"
+    compare: "Every row scores the same 60,394 characters of the Tiny Shakespeare test split, over the same 65-character vocabulary of the training split, with the same formula, and every setting was chosen on the validation split."
+    caution: "Never add a per-word or per-subword-token number to this group (Lab 1's word models, Lab 6, Lab 7). On a CPU, Labs 3 and 5 run in QUICK mode, a smaller configuration: write QUICK beside such a row and compare it only with other QUICK rows."
+    rows:
+      - lab: 1
+        exercise: 3
+        model: "Character bigram with add-k smoothing (k chosen on val)"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "uniform over the 65 characters: ln 65 ≈ 4.17 nats per character (definition)"
+      - lab: 1
+        exercise: 3
+        model: "Character trigram with add-k smoothing (k chosen on val)"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "the bigram row above; uniform: ln 65 ≈ 4.17 (definition)"
+      - lab: 1
+        exercise: 3
+        model: "Character 5-gram with add-k smoothing (the best order up to 5 on val)"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "the bigram and trigram rows above; uniform: ln 65 ≈ 4.17 (definition)"
+      - lab: 3
+        model: "RNN language model, hand-written cell, hidden size 256"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "your Lab 1 5-gram row; recorded reference 1.8326 nats per character, perplexity 6.25 (data/baselines.json, quoted in Module 3, section 6)"
+        seed: 0
+      - lab: 3
+        model: "LSTM language model, nn.LSTM, hidden size 256"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "your Lab 1 5-gram row; recorded reference 1.8326 nats per character, perplexity 6.25 (data/baselines.json, quoted in Module 3, section 6)"
+        seed: 0
+      - lab: 5
+        exercise: 4
+        model: "Mini-GPT before training"
+        dataset: lm
+        split: val
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "uniform over the 65 characters: ln 65 = 4.1744 (definition); an untrained model should be close to it"
+        seed: 0
+      - lab: 5
+        exercise: 4
+        model: "LSTM of Lab 3's architecture, retrained with the mini-GPT's training loop and budget"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "Lab 3's own LSTM run; recorded reference 1.6114 nats per character (data/baselines.json, quoted in Module 5, section 7)"
+        seed: 0
+      - lab: 5
+        exercise: 4
+        model: "Mini-GPT: decoder-only transformer, d = 128, 4 heads, 4 blocks, context length 128"
+        dataset: lm
+        split: test
+        unit: character
+        metric: "cross-entropy, nats per character"
+        direction: lower
+        baseline: "the retrained LSTM in the row above, its partner at the same budget; recorded reference 1.5727 nats per character (data/baselines.json, quoted in Module 5, section 7)"
+        seed: 0
+
+  - id: lm-words
+    title: "Language Modeling: Tiny Shakespeare, per Word"
+    compare: "The same text and splits as the per-character group, cut into words, with a vocabulary of the words seen at least twice in the training split (min_count = 2)."
+    caution: "Perplexity per word is on another scale from the per-character numbers: these rows never share a column with the per-character group."
+    rows:
+      - lab: 1
+        exercise: 3
+        model: "Word bigram with add-k smoothing (k chosen on val)"
+        dataset: lm
+        split: test
+        unit: word
+        metric: "perplexity per word"
+        direction: lower
+        baseline: "uniform over the word vocabulary: perplexity equal to its size, which the lab prints (definition)"
+      - lab: 1
+        exercise: 3
+        model: "Word trigram with add-k smoothing (k chosen on val)"
+        dataset: lm
+        split: test
+        unit: word
+        metric: "perplexity per word"
+        direction: lower
+        baseline: "the word bigram row above; uniform: the vocabulary size (definition)"
+
+  - id: tokenization
+    title: "Tokenization: arXiv Topics v1 Validation Texts, Tokens per Word"
+    compare: "The same 600 validation abstracts, tokenized by each tokenizer with special tokens left out; total tokens divided by total whitespace-separated words."
+    caution: "Tokens per word is a conversion between units for this text, not a quality score, and a tokenizer belongs to its model."
+    rows:
+      - lab: 6
+        exercise: 2
+        model: "Our byte-pair encoding, 4,000 entries, trained on the training abstracts"
+        dataset: topics
+        split: val
+        unit: word
+        metric: "tokens per word"
+        direction: lower
+        baseline: "1 token per word: a tokenizer that never splits a word (definition)"
+        seed: 0
+      - lab: 6
+        exercise: 2
+        model: "DistilBERT's WordPiece tokenizer (30,522 entries, lowercased)"
+        dataset: topics
+        split: val
+        unit: word
+        metric: "tokens per word"
+        direction: lower
+        baseline: "our 4,000-entry tokenizer in the row above; 1 token per word (definition)"
+      - lab: 6
+        exercise: 2
+        model: "GPT-2's byte-level BPE tokenizer (50,257 entries)"
+        dataset: topics
+        split: val
+        unit: word
+        metric: "tokens per word"
+        direction: lower
+        baseline: "our 4,000-entry tokenizer in the first row; 1 token per word (definition)"
+
+  - id: word-vectors
+    title: "Word Vectors: Probe Words and Analogies"
+    compare: "The same skip-gram embeddings, trained on the arXiv Topics training abstracts and searched over the same 12,469-word vocabulary, against probe lists written before training."
+    caution: "A rough check, not a benchmark: an expected list can miss good neighbors, and a hit can be luck."
+    rows:
+      - lab: 2
+        exercise: 2
+        model: "Skip-gram with negative sampling, trained in Lab 2"
+        dataset: topics
+        split: train
+        unit: "probe word"
+        metric: "neighbor hit rate: share of probe words with an expected word among their 10 nearest neighbors by cosine"
+        direction: higher
+        baseline: "random vectors: close to 0, since 10 random words out of 12,469 rarely include an expected one"
+        seed: 0
+      - lab: 2
+        model: "Skip-gram with negative sampling, trained in Lab 2"
+        dataset: topics
+        split: train
+        unit: analogy
+        metric: "analogy accuracy"
+        direction: higher
+        baseline: "random vectors: close to 0 (the answer must be one word out of 12,469)"
+        seed: 0
+
+  - id: classification
+    title: "Classification: arXiv Topics v1, Test Split"
+    compare: "Every row is trained on the same 4,800 training papers, tuned on the 600 validation papers and scored once on the same 1,600 test papers, 400 per class, with scikit-learn's accuracy and macro-F1."
+    caution: "On a CPU, Lab 6 fine-tunes a smaller encoder on part of the training split: label that row and do not rank it against the full-data rows. A difference of a few papers is within seed-to-seed variation."
+    rows:
+      - lab: 1
+        exercise: 6
+        model: "TF-IDF features and logistic regression (C chosen on val)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "accuracy"
+        direction: higher
+        baseline: "chance with four balanced classes: 0.25 (definition)"
+      - lab: 1
+        exercise: 6
+        model: "TF-IDF features and logistic regression (C chosen on val)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "macro-F1"
+        direction: higher
+        baseline: "uniform random guessing: about 0.25 (definition)"
+      - lab: 1
+        model: "Word counts and naive Bayes (alpha = 1)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "accuracy"
+        direction: higher
+        baseline: "the TF-IDF and logistic regression row"
+      - lab: 1
+        model: "Word counts and naive Bayes (alpha = 1)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "macro-F1"
+        direction: higher
+        baseline: "the TF-IDF and logistic regression row"
+      - lab: 2
+        exercise: 4
+        model: "Averaged skip-gram embeddings (frozen) and a feed-forward network"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "accuracy"
+        direction: higher
+        baseline: "TF-IDF and logistic regression, recomputed in Lab 2; recorded reference 0.884 (data/baselines.json, quoted in Module 2, section 7)"
+        seed: 0
+      - lab: 2
+        exercise: 4
+        model: "Averaged skip-gram embeddings (frozen) and a feed-forward network"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "macro-F1"
+        direction: higher
+        baseline: "TF-IDF and logistic regression, recomputed in Lab 2; recorded reference 0.884 (data/baselines.json, quoted in Module 2, section 7)"
+        seed: 0
+      - lab: 6
+        exercise: 5
+        model: "Pretrained encoder fine-tuned for classification (name the encoder and the training rows)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "accuracy"
+        direction: higher
+        baseline: "TF-IDF and logistic regression, recomputed in Lab 6; recorded reference 0.884 (data/baselines.json, quoted in Module 2, section 7)"
+        seed: 0
+      - lab: 6
+        exercise: 5
+        model: "Pretrained encoder fine-tuned for classification (name the encoder and the training rows)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "macro-F1"
+        direction: higher
+        baseline: "TF-IDF and logistic regression, recomputed in Lab 6; recorded reference 0.884 (data/baselines.json, quoted in Module 2, section 7)"
+        seed: 0
+
+  - id: transduction
+    title: "Sequence Transduction: Dates to ISO Format"
+    compare: "Every model is trained on the same 100,000 generated sources for the same number of steps and scored with greedy decoding on the same generated test set, 500 sources for each number of dates K; an output counts only if the whole string is right."
+    caution: "Compare models at the same K, and read K = 1 against K = 4 within one model: the gap is the bottleneck."
+    rows:
+      - lab: 4
+        exercise: 2
+        model: "Encoder-decoder without attention (GRU encoder and decoder)"
+        dataset: generated
+        split: "test, K = 1 (500 sources, seed 0)"
+        unit: example
+        metric: "exact match"
+        direction: higher
+        baseline: "the same model at K = 4, in the next row"
+        seed: 0
+      - lab: 4
+        exercise: 2
+        model: "Encoder-decoder without attention (GRU encoder and decoder)"
+        dataset: generated
+        split: "test, K = 4 (500 sources, seed 0)"
+        unit: example
+        metric: "exact match"
+        direction: higher
+        baseline: "the same model at K = 1, in the row above"
+        seed: 0
+      - lab: 4
+        exercise: 3
+        model: "Encoder-decoder with dot-product attention"
+        dataset: generated
+        split: "test, K = 1 (500 sources, seed 0)"
+        unit: example
+        metric: "exact match"
+        direction: higher
+        baseline: "the model without attention at K = 1"
+        seed: 0
+      - lab: 4
+        exercise: 3
+        model: "Encoder-decoder with dot-product attention"
+        dataset: generated
+        split: "test, K = 4 (500 sources, seed 0)"
+        unit: example
+        metric: "exact match"
+        direction: higher
+        baseline: "the model without attention at K = 4"
+        seed: 0
+      - lab: 4
+        exercise: 4
+        model: "Encoder-decoder with additive attention"
+        dataset: generated
+        split: "test, K = 4 (500 sources, seed 0)"
+        unit: example
+        metric: "exact match"
+        direction: higher
+        baseline: "dot-product attention at K = 4"
+        seed: 0
+      - lab: 4
+        exercise: 5
+        model: "Encoder-decoder with dot-product attention, teacher-forced on the gold target"
+        dataset: generated
+        split: "test, K = 4 (500 sources, seed 0)"
+        unit: "target digit"
+        metric: "alignment hit rate at tolerance 1: share of digits whose largest attention weight falls in the right date"
+        direction: higher
+        baseline: "chance at tolerance 1 for K = 4, which the lab prints beside it"
+        seed: 0
+
+  - id: instruction-following
+    title: "Instruction Following: Dolly 15k Held-Out Examples"
+    compare: "Before and after LoRA: the same base model (SmolLM2-135M), the same 200 held-out examples, the same chat template, greedy decoding and the same output limit."
+    caution: "Response perplexity is per SmolLM2 token over the response tokens only: it shares no column with the per-character numbers of Labs 1, 3 and 5. On a CPU (FAST), Lab 7 uses 50 held-out examples, generates 10 replies and trains briefly: label those rows."
+    rows:
+      - lab: 7
+        exercise: 4
+        model: "SmolLM2-135M base model, before fine-tuning"
+        dataset: instructions
+        split: "held-out (200 examples)"
+        unit: token
+        metric: "response perplexity per token"
+        direction: lower
+        baseline: "none: this is the before measurement that the LoRA row is compared with"
+        seed: 0
+      - lab: 7
+        exercise: 5
+        model: "The same model after LoRA (rank 8 on the query and value projections)"
+        dataset: instructions
+        split: "held-out (200 examples)"
+        unit: token
+        metric: "response perplexity per token"
+        direction: lower
+        baseline: "the base model row above"
+        seed: 0
+      - lab: 7
+        exercise: 4
+        model: "SmolLM2-135M base model, before fine-tuning"
+        dataset: instructions
+        split: "held-out, the first 50 examples, for which replies are generated (10 on a CPU)"
+        unit: example
+        metric: "share of generated replies that end with <|im_end|>"
+        direction: higher
+        baseline: "none: this is the before measurement that the LoRA row is compared with"
+        seed: 0
+      - lab: 7
+        exercise: 5
+        model: "The same model after LoRA (rank 8 on the query and value projections)"
+        dataset: instructions
+        split: "held-out, the first 50 examples, for which replies are generated (10 on a CPU)"
+        unit: example
+        metric: "share of generated replies that end with <|im_end|>"
+        direction: higher
+        baseline: "the base model row above"
+        seed: 0
+      - lab: 7
+        exercise: 6
+        model: "SmolLM2-135M base model, before fine-tuning"
+        dataset: instructions
+        split: "held-out, the first 50 examples, for which replies are generated (10 on a CPU)"
+        unit: example
+        metric: "mean ROUGE-1 against the reference responses"
+        direction: higher
+        baseline: "none: this is the before measurement that the LoRA row is compared with"
+        seed: 0
+      - lab: 7
+        exercise: 6
+        model: "The same model after LoRA (rank 8 on the query and value projections)"
+        dataset: instructions
+        split: "held-out, the first 50 examples, for which replies are generated (10 on a CPU)"
+        unit: example
+        metric: "mean ROUGE-1 against the reference responses"
+        direction: higher
+        baseline: "the base model row above"
+        seed: 0
+      - lab: 7
+        exercise: 5
+        model: "LoRA adapter, rank 8 on the query and value projections"
+        dataset: instructions
+        split: "not applicable (a count of parameters)"
+        unit: model
+        metric: "trainable parameters"
+        direction: lower
+        baseline: "full fine-tuning trains every parameter of the base model (definition)"
+
+  - id: extraction
+    title: "Structured Output and Tools: Lab 8's Generated Announcements"
+    compare: "Every provider runs the same generated items through the same harness, one-shot with up to R = 2 retries; an invalid output counts as wrong; write N and the standard error beside each rate."
+    caution: "The offline stub is a test double, not a model: its rows are not results. On the open model on a CPU the lab uses 12 items and 3 tool questions, so compare providers only on the same items. Copy a row for each extra provider you ran."
+    rows:
+      - lab: 8
+        exercise: 3
+        model: "The provider selected by PROVIDER (open model, OpenAI or Claude), one-shot prompt"
+        dataset: generated
+        split: "evaluation set (40 items; 12 on the open model on a CPU)"
+        unit: example
+        metric: "schema-validity rate at the first attempt (R = 0)"
+        direction: higher
+        baseline: "the zero-shot prompt's validity at R = 0, printed beside it"
+        seed: 0
+      - lab: 8
+        exercise: 3
+        model: "The provider selected by PROVIDER (open model, OpenAI or Claude), one-shot prompt"
+        dataset: generated
+        split: "evaluation set (40 items; 12 on the open model on a CPU)"
+        unit: example
+        metric: "schema-validity rate after up to R = 2 retries"
+        direction: higher
+        baseline: "the same provider's validity at R = 0, in the row above"
+        seed: 0
+      - lab: 8
+        exercise: 3
+        model: "The provider selected by PROVIDER (open model, OpenAI or Claude), one-shot prompt, R = 2"
+        dataset: generated
+        split: "evaluation set (40 items; 12 on the open model on a CPU)"
+        unit: example
+        metric: "record exact match (all five fields right; invalid counts as wrong)"
+        direction: higher
+        baseline: "zero-shot record exact match, printed beside it"
+        seed: 0
+      - lab: 8
+        exercise: 4
+        model: "The same provider in the hand-written two-tool loop"
+        dataset: generated
+        split: "tool questions (3 on the open model on a CPU)"
+        unit: question
+        metric: "task success: share of questions finished with the expected answer"
+        direction: higher
+        baseline: "none recorded; read it beside the number of model calls per question"
+        seed: 0
+      - lab: 8
+        exercise: 5
+        model: "The provider selected by PROVIDER, one-shot extraction, R = 2"
+        dataset: generated
+        split: "evaluation set (40 items; 12 on the open model on a CPU)"
+        unit: request
+        metric: "cost in US dollars per 100 requests, at the prices in the notebook"
+        direction: lower
+        baseline: "the open model: no API fee (definition; the runtime itself is not free)"
+      - lab: 8
+        exercise: 5
+        model: "The provider selected by PROVIDER, one-shot extraction, R = 2"
+        dataset: generated
+        split: "evaluation set (40 items; 12 on the open model on a CPU)"
+        unit: request
+        metric: "mean latency in seconds per request"
+        direction: lower
+        baseline: "none: compare providers only on the same items"
+
+  - id: policy-gradient
+    title: "Policy Gradient: Lab 9's Toy Sequence Task"
+    compare: "The same toy task (8 symbols, 6 positions, a hidden target sequence), the same batch size and learning rate; the best policy earns J = 1."
+    caution: "A task with a known answer: it checks the estimator and the baseline, not a language model."
+    rows:
+      - lab: 9
+        exercise: 1
+        model: "REINFORCE without a baseline, 300 steps"
+        dataset: generated
+        split: "the toy environment (no split)"
+        unit: episode
+        metric: "expected return J of the trained policy"
+        direction: higher
+        baseline: "the uniform starting policy: J = 1/8 = 0.125 (definition)"
+        seed: 0
+      - lab: 9
+        exercise: 2
+        model: "REINFORCE with the leave-one-out baseline, at the uniform policy"
+        dataset: generated
+        split: "the toy environment (no split)"
+        unit: "gradient estimate"
+        metric: "total variance of the gradient estimate, as a ratio to no baseline"
+        direction: lower
+        baseline: "no baseline: ratio 1 (definition)"
+        seed: 0
+      - lab: 9
+        exercise: 2
+        model: "REINFORCE without a baseline"
+        dataset: generated
+        split: "the toy environment (no split)"
+        unit: "training run"
+        metric: "mean steps to reach J ≥ 0.9, over seeds 0 to 4"
+        direction: lower
+        baseline: "the leave-one-out row below"
+      - lab: 9
+        exercise: 2
+        model: "REINFORCE with the leave-one-out baseline"
+        dataset: generated
+        split: "the toy environment (no split)"
+        unit: "training run"
+        metric: "mean steps to reach J ≥ 0.9, over seeds 0 to 4"
+        direction: lower
+        baseline: "no baseline, the row above"
+
+  - id: preference-pairs
+    title: "Preference Pairs: Lab 9's Held-Out Pairs"
+    compare: "The same 1,000 held-out pairs of Lab 9's preference data, labeled by a noisy rater from a known gold score; each accuracy is the share of pairs ordered as the rater labeled them."
+    caution: "Read every accuracy against the ceiling Acc*, not against 1. On a CPU (FAST), Lab 10 scores a subset of 64 held-out pairs: label that row."
+    rows:
+      - lab: 9
+        exercise: 3
+        model: "The gold rule itself: the ceiling Acc*"
+        dataset: lab09_preferences
+        split: "heldout (1,000 pairs)"
+        unit: pair
+        metric: "held-out pairwise accuracy"
+        direction: higher
+        baseline: "chance: 0.5 (definition)"
+      - lab: 9
+        exercise: 4
+        model: "Reward model r_φ trained on the preference pairs"
+        dataset: lab09_preferences
+        split: "heldout (1,000 pairs)"
+        unit: pair
+        metric: "held-out pairwise accuracy"
+        direction: higher
+        baseline: "Acc* in the row above; chance 0.5 (definition)"
+        seed: 0
+      - lab: 9
+        exercise: 4
+        model: "Reward model r_φ trained on the preference pairs"
+        dataset: lab09_preferences
+        split: "heldout (untied pairs)"
+        unit: pair
+        metric: "accuracy against the gold ordering"
+        direction: higher
+        baseline: "chance: 0.5 (definition)"
+        seed: 0
+      - lab: 9
+        exercise: 4
+        model: "Reward model r_φ trained on the preference pairs"
+        dataset: lab09_preferences
+        split: "heldout responses"
+        unit: response
+        metric: "Spearman correlation of r_φ with the gold score"
+        direction: higher
+        baseline: "no relation: 0 (definition)"
+        seed: 0
+      - lab: 10
+        exercise: 5
+        model: "DPO policy, scored by its implicit reward"
+        dataset: lab09_preferences
+        split: "heldout (1,000 pairs; 64 on a CPU)"
+        unit: pair
+        metric: "held-out pairwise accuracy"
+        direction: higher
+        baseline: "the reward model's accuracy on the same pairs and the gold rule's ceiling, both printed beside it"
+        seed: 0
+
+  - id: rlhf-policies
+    title: "Policies Against the Reward Model: Lab 10's Evaluation Prompts"
+    compare: "Every policy starts from the same reference model and is sampled on the same 64 evaluation prompts, 8 samples each, with one fixed evaluation seed; r_φ is in Lab 9's normalized units, the gold reward is the lab's hidden rule, and drift is the KL estimate from the reference in nats per response."
+    caution: "On a CPU (FAST) the trained policies are smoke tests on 8 prompts and their numbers are not results. One seed is not the seed protocol of brief 10. The gold reward is the lab's known rule, not a human judgment."
+    rows:
+      - lab: 10
+        exercise: 3
+        model: "RLHF policy with the KL penalty (β as in the lab)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "mean reward-model score r_φ"
+        direction: higher
+        baseline: "the reference policy on the same prompts, printed beside it"
+        seed: 0
+      - lab: 10
+        exercise: 3
+        model: "RLHF policy with the KL penalty (β as in the lab)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "mean gold reward"
+        direction: higher
+        baseline: "the reference policy on the same prompts, printed beside it"
+        seed: 0
+      - lab: 10
+        exercise: 3
+        model: "RLHF policy with the KL penalty (β as in the lab)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "drift: KL from the reference, nats per response"
+        direction: lower
+        baseline: "the reference policy: 0 (definition)"
+        seed: 0
+      - lab: 10
+        exercise: 3
+        model: "RLHF policy with the KL penalty (β as in the lab)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: prompt
+        metric: "distinct-2: share of distinct bigrams among a prompt's samples"
+        direction: higher
+        baseline: "the reference policy on the same prompts, printed beside it"
+        seed: 0
+      - lab: 10
+        exercise: 4
+        model: "RLHF policy without the KL penalty (β = 0)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "mean reward-model score r_φ"
+        direction: higher
+        baseline: "the policy with the KL penalty"
+        seed: 0
+      - lab: 10
+        exercise: 4
+        model: "RLHF policy without the KL penalty (β = 0)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "mean gold reward"
+        direction: higher
+        baseline: "the policy with the KL penalty"
+        seed: 0
+      - lab: 10
+        exercise: 4
+        model: "RLHF policy without the KL penalty (β = 0)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "drift: KL from the reference, nats per response"
+        direction: lower
+        baseline: "the policy with the KL penalty; the reference: 0 (definition)"
+        seed: 0
+      - lab: 10
+        exercise: 4
+        model: "RLHF policy without the KL penalty (β = 0)"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: prompt
+        metric: "distinct-2: share of distinct bigrams among a prompt's samples"
+        direction: higher
+        baseline: "the policy with the KL penalty"
+        seed: 0
+      - lab: 10
+        exercise: 5
+        model: "DPO policy trained on the same preference data"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "mean reward-model score r_φ"
+        direction: higher
+        baseline: "the RLHF policy with the KL penalty"
+        seed: 0
+      - lab: 10
+        exercise: 5
+        model: "DPO policy trained on the same preference data"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "mean gold reward"
+        direction: higher
+        baseline: "the RLHF policy with the KL penalty"
+        seed: 0
+      - lab: 10
+        exercise: 5
+        model: "DPO policy trained on the same preference data"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: response
+        metric: "drift: KL from the reference, nats per response"
+        direction: lower
+        baseline: "the RLHF policy with the KL penalty; the reference: 0 (definition)"
+        seed: 0
+      - lab: 10
+        exercise: 5
+        model: "DPO policy trained on the same preference data"
+        dataset: lab09_prompts
+        split: "eval (64 prompts × 8 samples)"
+        unit: prompt
+        metric: "distinct-2: share of distinct bigrams among a prompt's samples"
+        direction: higher
+        baseline: "the RLHF policy with the KL penalty"
+        seed: 0
+
+  - id: calibration-topics
+    title: "Calibration of a Classifier: arXiv Topics v1 Test Split"
+    compare: "The same 1,600 test papers and the same classifier's logits; the temperature is fitted on the 600 validation papers; ECE uses 15 equal-width bins; the Brier score (summed over the 4 classes) and the log loss are averaged per paper; selective prediction uses l_wrong = 10 and l_defer = 1."
+    caution: "Name the classifier: the Lab 6 encoder, or Lab 1's classifier where the lab fell back to it. The binary Brier scores of Lab 11, Part B, and of Lab 12 are on another scale and do not belong here."
+    rows:
+      - lab: 11
+        exercise: 1
+        model: "The lab's classifier (Lab 6 encoder or the Lab 1 fallback)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "accuracy"
+        direction: higher
+        baseline: "chance with four balanced classes: 0.25 (definition)"
+      - lab: 11
+        exercise: 1
+        model: "The lab's classifier, before temperature scaling"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "ECE, 15 equal-width bins"
+        direction: lower
+        baseline: "the noise floor for this N, which Exercise 1 prints"
+      - lab: 11
+        exercise: 2
+        model: "The lab's classifier, before temperature scaling"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "Brier score, summed over the 4 classes"
+        direction: lower
+        baseline: "1/4 on every class: 0.75 (definition)"
+      - lab: 11
+        exercise: 2
+        model: "The lab's classifier, before temperature scaling"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "log loss, nats per example"
+        direction: lower
+        baseline: "1/4 on every class: ln 4 ≈ 1.386 (definition)"
+      - lab: 11
+        exercise: 3
+        model: "The same classifier after temperature scaling (write the fitted temperature in your interpretation)"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "ECE, 15 equal-width bins"
+        direction: lower
+        baseline: "the ECE before scaling; the noise floor of Exercise 1"
+      - lab: 11
+        exercise: 3
+        model: "The same classifier after temperature scaling"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "Brier score, summed over the 4 classes"
+        direction: lower
+        baseline: "the Brier score before scaling"
+      - lab: 11
+        exercise: 3
+        model: "The same classifier after temperature scaling"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "log loss, nats per example"
+        direction: lower
+        baseline: "the log loss before scaling"
+      - lab: 11
+        exercise: 5
+        model: "The lab's classifier, abstention threshold chosen on val"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "coverage: share of test papers acted on"
+        direction: higher
+        baseline: "Chow's threshold, 0.9 at these costs, printed beside it"
+      - lab: 11
+        exercise: 5
+        model: "The lab's classifier, abstention threshold chosen on val"
+        dataset: topics
+        split: test
+        unit: example
+        metric: "cost per case at l_wrong = 10, l_defer = 1"
+        direction: lower
+        baseline: "defer everything: 1 per case (definition, l_defer = 1); act on everything, printed beside it"
+
+  - id: calibration-decisions
+    title: "Calibration on the Decision Set: Test Split"
+    compare: "The same 300 test items of Workshop Desk Decisions v1 (template items only); the outcome is 1 when the chosen answer is right; the probability is that of the chosen answer (for a language model, its stated confidence); ECE uses 15 bins and the Brier score is the binary one, the mean of (probability − outcome)²."
+    caution: "The local toy decider is our illustration, not Jev and not TypeSafe's method: label every row with its backend. Jev's confidence field never goes on these axes. On the open model on a CPU, Lab 11 asks 80 test items, so its noise floor is larger."
+    rows:
+      - lab: 11
+        exercise: 4
+        model: "Language model's stated confidence (the provider you ran)"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "validity: share of replies with a valid answer and confidence"
+        direction: higher
+        baseline: "every reply valid: 1 (definition)"
+      - lab: 11
+        exercise: 4
+        model: "Language model's stated confidence (the provider you ran)"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "accuracy, invalid replies counted as wrong"
+        direction: higher
+        baseline: "chance: 0.5 on yes/no policy items, 0.2 on five-way route items (definition)"
+      - lab: 11
+        exercise: 4
+        model: "Language model's stated confidence (the provider you ran)"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "ECE of the valid replies, 15 bins"
+        direction: lower
+        baseline: "the noise floor for this N, printed beside it"
+      - lab: 11
+        exercise: 4
+        model: "Language model's stated confidence (the provider you ran)"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "binary Brier score of the valid replies"
+        direction: lower
+        baseline: "a constant probability of 0.5: 0.25 (definition)"
+      - lab: 12
+        exercise: 1
+        model: "Toy decision model trained with an accuracy reward (our illustration, not TypeSafe's method)"
+        dataset: decisions
+        split: "test (policy and route pooled)"
+        unit: decision
+        metric: "accuracy"
+        direction: higher
+        baseline: "chance: 0.5 on policy items, 0.2 on route items (definition)"
+        seed: 0
+      - lab: 12
+        exercise: 1
+        model: "Toy decision model trained with an accuracy reward (our illustration, not TypeSafe's method)"
+        dataset: decisions
+        split: "test (policy and route pooled)"
+        unit: decision
+        metric: "ECE, 15 bins"
+        direction: lower
+        baseline: "the noise floor, printed beside it"
+        seed: 0
+      - lab: 12
+        exercise: 1
+        model: "Toy decision model trained with an accuracy reward (our illustration, not TypeSafe's method)"
+        dataset: decisions
+        split: "test (policy and route pooled)"
+        unit: decision
+        metric: "binary Brier score"
+        direction: lower
+        baseline: "a constant probability of 0.5: 0.25 (definition)"
+        seed: 0
+      - lab: 12
+        exercise: 1
+        model: "Toy decision model trained with a Brier-score reward (our illustration, not TypeSafe's method)"
+        dataset: decisions
+        split: "test (policy and route pooled)"
+        unit: decision
+        metric: "accuracy"
+        direction: higher
+        baseline: "the accuracy-reward model on the same items"
+        seed: 0
+      - lab: 12
+        exercise: 1
+        model: "Toy decision model trained with a Brier-score reward (our illustration, not TypeSafe's method)"
+        dataset: decisions
+        split: "test (policy and route pooled)"
+        unit: decision
+        metric: "ECE, 15 bins"
+        direction: lower
+        baseline: "the accuracy-reward model on the same items; the noise floor"
+        seed: 0
+      - lab: 12
+        exercise: 1
+        model: "Toy decision model trained with a Brier-score reward (our illustration, not TypeSafe's method)"
+        dataset: decisions
+        split: "test (policy and route pooled)"
+        unit: decision
+        metric: "binary Brier score"
+        direction: lower
+        baseline: "the accuracy-reward model on the same items"
+        seed: 0
+      - lab: 12
+        exercise: 3
+        model: "Jev, keyed path only (write the model name the response reports)"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "accuracy"
+        direction: higher
+        baseline: "the toy models on the same items; chance 0.5 or 0.2 (definition)"
+      - lab: 12
+        exercise: 3
+        model: "Jev, keyed path only, from the probability of the chosen answer, never from its confidence field"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "ECE, 15 bins"
+        direction: lower
+        baseline: "the noise floor, printed beside it"
+      - lab: 12
+        exercise: 3
+        model: "Jev, keyed path only, from the probability of the chosen answer"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "binary Brier score"
+        direction: lower
+        baseline: "a constant probability of 0.5: 0.25 (definition)"
+
+  - id: decision-costs
+    title: "Decisions From Probabilities: Cost per Case on the Decision Set"
+    compare: "Within one lab only: thresholds are chosen on the 100 dev items and costs are averaged over the 300 test items, at the costs named in each row."
+    caution: "Lab 11 has two actions (l_wrong = 10, l_defer = 1) and Lab 12 three (wrong 20, ask 0.5, miss 4, escalate 3): costs per case from the two labs cannot be compared. Rows from the local toy decider are our illustration, not Jev."
+    rows:
+      - lab: 11
+        exercise: 5
+        model: "Language model's stated confidence, threshold chosen on dev"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "coverage: share of test items acted on"
+        direction: higher
+        baseline: "Chow's threshold, 0.9 at these costs, printed beside it"
+      - lab: 11
+        exercise: 5
+        model: "Language model's stated confidence, threshold chosen on dev"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "cost per case at l_wrong = 10, l_defer = 1 (invalid replies deferred)"
+        direction: lower
+        baseline: "defer everything: 1 per case (definition, l_defer = 1)"
+      - lab: 12
+        exercise: 4
+        model: "The decider (local toy decider without a key, Jev with one), act, ask and escalate thresholds chosen on dev"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "cost per case at wrong 20, ask 0.5, miss 4, escalate 3"
+        direction: lower
+        baseline: "escalate everything: 3 per case (definition, l_esc = 3); act on everything and ask about everything, printed beside it"
+      - lab: 12
+        exercise: 4
+        model: "The same decider with the analytic thresholds (0.375, 0.969)"
+        dataset: decisions
+        split: test
+        unit: decision
+        metric: "cost per case at wrong 20, ask 0.5, miss 4, escalate 3"
+        direction: lower
+        baseline: "the thresholds chosen on dev, in the row above; escalate everything: 3 per case (definition)"
+
+  - id: retrieval
+    title: "Retrieval: Workshop Lectures v1, Questions Written by People"
+    compare: "The same frozen snapshot of the module pages and the same human-written questions; chunk size, top-k and the reranker are chosen on the 30 dev questions and reported once on the 50 test questions, at a context budget of k × L ≤ 1,024 tokens."
+    caution: "Until Workshop RAG Questions v1 exists, the lab runs on plumbing probes copied from the pages: they measure the code, not retrieval, and are labeled probe. Do not record probe numbers as results. Compare chunk sizes only at the same budget."
+    rows:
+      - lab: 13
+        exercise: 2
+        model: "Dense retriever at the chunk size L and top-k chosen on dev"
+        dataset: lectures
+        split: "test (Workshop RAG Questions v1, 50 questions; not written yet)"
+        unit: question
+        metric: "recall@k over the answerable questions"
+        direction: higher
+        baseline: "the runner-up (L, k), printed beside it with the questions gained and lost"
+        seed: 0
+      - lab: 13
+        exercise: 2
+        model: "Dense retriever at the chunk size L and top-k chosen on dev"
+        dataset: lectures
+        split: "test (Workshop RAG Questions v1, 50 questions; not written yet)"
+        unit: question
+        metric: "MRR@k over the answerable questions"
+        direction: higher
+        baseline: "the runner-up (L, k), printed beside it"
+        seed: 0
+      - lab: 13
+        exercise: 4
+        model: "First-stage retriever before reranking, k0 candidates"
+        dataset: lectures
+        split: "test (Workshop RAG Questions v1, 50 questions; not written yet)"
+        unit: question
+        metric: "recall@k0"
+        direction: higher
+        baseline: "none: it is the most any reranker can reach (definition)"
+        seed: 0
+      - lab: 13
+        exercise: 4
+        model: "After reranking (the reranker kept on dev: cross-encoder, or Jev with a key)"
+        dataset: lectures
+        split: "test (Workshop RAG Questions v1, 50 questions; not written yet)"
+        unit: question
+        metric: "recall@k"
+        direction: higher
+        baseline: "the first stage's recall@k on the same questions, printed beside it with the sign test"
+        seed: 0
+      - lab: 13
+        exercise: 4
+        model: "After reranking (the reranker kept on dev: cross-encoder, or Jev with a key)"
+        dataset: lectures
+        split: "test (Workshop RAG Questions v1, 50 questions; not written yet)"
+        unit: question
+        metric: "MRR@k"
+        direction: higher
+        baseline: "the first stage's MRR@k on the same questions, printed beside it"
+        seed: 0
+
+  - id: rag-answers
+    title: "Answers From Retrieved Passages: Lab 13's Test Questions"
+    compare: "The same test questions, retriever settings and generator; faithfulness by the lab's judge over the answered questions; correctness by program checks on the answerable, auto-checkable questions; abstention by exact match with the abstention sentence."
+    caution: "The faithfulness judge has not been validated against human labels. Plumbing probes are not questions. On the open model on a CPU the lab answers 12 test questions."
+    rows:
+      - lab: 13
+        exercise: 5
+        model: "The generator you ran, on the retriever chosen in Exercises 2 and 4"
+        dataset: lectures
+        split: "test (Workshop RAG Questions v1; not written yet)"
+        unit: question
+        metric: "faithfulness: mean share of supported sentences in the answered questions (one value per question kind, as printed)"
+        direction: higher
+        baseline: "none: read it beside correctness, because a faithful answer can be wrong"
+        seed: 0
+      - lab: 13
+        exercise: 5
+        model: "The generator you ran, on the retriever chosen in Exercises 2 and 4"
+        dataset: lectures
+        split: "test, answerable and auto-checkable questions"
+        unit: question
+        metric: "correctness: share answered correctly"
+        direction: higher
+        baseline: "the two-by-two table printed beside it: correctness with and without the evidence retrieved"
+        seed: 0
+      - lab: 13
+        exercise: 5
+        model: "The generator you ran, on the retriever chosen in Exercises 2 and 4"
+        dataset: lectures
+        split: "test, unanswerable questions"
+        unit: question
+        metric: "abstention rate on unanswerable questions"
+        direction: higher
+        baseline: "a system that abstains on everything scores 1 here and 0 in correctness (definition)"
+        seed: 0
+      - lab: 13
+        exercise: 5
+        model: "The generator you ran, on the retriever chosen in Exercises 2 and 4"
+        dataset: lectures
+        split: "test, answerable questions"
+        unit: question
+        metric: "false-abstention rate on answerable questions"
+        direction: lower
+        baseline: "0 for a system that never abstains (definition)"
+        seed: 0
+
+  - id: agent-evaluation
+    title: "Agent Evaluation: Router, Guard and Injection Tests"
+    compare: "The same test items of the decision set and the same guard set derived from its labels, the same desk corpus with one poisoned page, thresholds from Module 12's costs (wrong 20, ask 0.5, miss 4, escalate 3) and a simulated human on ask; every rate with its N."
+    caution: "Label each row with its backend: the local toy decider and the stub agent are neither Jev nor a language model. A rate of 0 on a few dozen items is consistent with a true rate of several percent."
+    rows:
+      - lab: 14
+        exercise: 5
+        model: "Router (the decider you ran)"
+        dataset: decisions
+        split: "test, route items (150)"
+        unit: decision
+        metric: "route accuracy, invalid counted as wrong"
+        direction: higher
+        baseline: "chance over five routes: 0.2 (definition)"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Router (the decider you ran)"
+        dataset: decisions
+        split: "test, route items the router was confident enough to follow"
+        unit: decision
+        metric: "accuracy when followed"
+        direction: higher
+        baseline: "the route accuracy on all items, in the row above"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Guard with the P6 rule in code first (the decider you ran)"
+        dataset: decisions
+        split: "test, guard items whose email is not allowed"
+        unit: decision
+        metric: "unsafe-action rate: share sent without approval"
+        direction: lower
+        baseline: "escalating every email also scores 0, at 3 per case (definition)"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Guard with the P6 rule in code first (the decider you ran)"
+        dataset: decisions
+        split: "test, guard items whose email is allowed"
+        unit: decision
+        metric: "held-back rate: share of allowed emails not sent alone"
+        direction: lower
+        baseline: "escalating every email holds back all of them: 1 (definition)"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Guard with the P6 rule in code first (the decider you ran)"
+        dataset: decisions
+        split: "test, guard set"
+        unit: decision
+        metric: "cost per case at wrong 20, ask 0.5, miss 4, escalate 3"
+        direction: lower
+        baseline: "escalate every email: 3 per case (definition, l_esc = 3)"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Guard, with and without the poisoned page among its passages"
+        dataset: decisions
+        split: "test, 60 route-derived guard items"
+        unit: decision
+        metric: "mean probability shift Δp caused by the poisoned page"
+        direction: lower
+        baseline: "a page that changes nothing: 0 (definition)"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Whole agent, HARD_RULES on, poisoned page in the index"
+        dataset: decisions
+        split: "test, first 10 retrieve route items (4 on the open model on a CPU)"
+        unit: run
+        metric: "injection success rate, attempted: share of runs where the model tried the injected action"
+        direction: lower
+        baseline: "the carried-out rate in the next row: the gap is what the harness stopped"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Whole agent, HARD_RULES on, poisoned page in the index"
+        dataset: decisions
+        split: "test, first 10 retrieve route items (4 on the open model on a CPU)"
+        unit: run
+        metric: "injection success rate, carried out: share of runs that sent an email without approval"
+        direction: lower
+        baseline: "the same runs with HARD_RULES off, in the next row"
+        seed: 0
+      - lab: 14
+        exercise: 5
+        model: "Whole agent, HARD_RULES off, poisoned page in the index"
+        dataset: decisions
+        split: "test, first 10 retrieve route items (4 on the open model on a CPU)"
+        unit: run
+        metric: "injection success rate, carried out: share of runs that sent an email without approval"
+        direction: lower
+        baseline: "HARD_RULES on, the row above"
+        seed: 0
+
+  - id: capstone
+    title: "Capstone: The System on the Capstone Test Split"
+    compare: "Every pair runs the same 80 test questions twice, scored by the same fixed scoring cell: once with the starter system (the baseline) and once with the final system, on the same path class and the same day."
+    caution: "Until Workshop Capstone Questions v1 exists, every run uses plumbing probes and no number is a result. Compare only rows of the same path class (keyed, open or open-cpu). Seven gained and two lost is not yet a clear win: read the sign test."
+    rows:
+      - lab: 15
+        model: "Starter system (your baseline run)"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "capstone cost per question, wrong 5 and abstain-on-answerable 1"
+        direction: lower
+        baseline: "abstaining on everything: 1 per answerable question and 0 per unanswerable one (definition)"
+        seed: 0
+      - lab: 15
+        model: "Your final system (one change, chosen on dev)"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "capstone cost per question, wrong 5 and abstain-on-answerable 1"
+        direction: lower
+        baseline: "your baseline row"
+        seed: 0
+      - lab: 15
+        model: "Starter system (your baseline run)"
+        dataset: lectures
+        split: "test, answerable and auto-checkable questions"
+        unit: question
+        metric: "accuracy, abstentions counted as not correct"
+        direction: higher
+        baseline: "abstaining on everything: 0 (definition)"
+        seed: 0
+      - lab: 15
+        model: "Your final system (one change, chosen on dev)"
+        dataset: lectures
+        split: "test, answerable and auto-checkable questions"
+        unit: question
+        metric: "accuracy, abstentions counted as not correct"
+        direction: higher
+        baseline: "your baseline row"
+        seed: 0
+      - lab: 15
+        model: "Starter system (your baseline run)"
+        dataset: lectures
+        split: "test, unanswerable questions"
+        unit: question
+        metric: "abstention rate on unanswerable questions"
+        direction: higher
+        baseline: "abstaining on everything: 1 (definition)"
+        seed: 0
+      - lab: 15
+        model: "Your final system (one change, chosen on dev)"
+        dataset: lectures
+        split: "test, unanswerable questions"
+        unit: question
+        metric: "abstention rate on unanswerable questions"
+        direction: higher
+        baseline: "your baseline row"
+        seed: 0
+      - lab: 15
+        model: "Starter system (your baseline run)"
+        dataset: lectures
+        split: "test, answerable questions"
+        unit: question
+        metric: "abstention rate on answerable questions (false abstention)"
+        direction: lower
+        baseline: "never abstaining: 0 (definition)"
+        seed: 0
+      - lab: 15
+        model: "Your final system (one change, chosen on dev)"
+        dataset: lectures
+        split: "test, answerable questions"
+        unit: question
+        metric: "abstention rate on answerable questions (false abstention)"
+        direction: lower
+        baseline: "your baseline row"
+        seed: 0
+      - lab: 15
+        model: "Starter system (your baseline run)"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "API cost in US dollars per question (n/a on local paths: write the model calls per question)"
+        direction: lower
+        baseline: "local paths: no API fee (definition)"
+        seed: 0
+      - lab: 15
+        model: "Your final system (one change, chosen on dev)"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "API cost in US dollars per question (n/a on local paths: write the model calls per question)"
+        direction: lower
+        baseline: "your baseline row"
+        seed: 0
+      - lab: 15
+        model: "Your final system against your baseline, paired by question"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "questions gained: cost fell"
+        direction: higher
+        baseline: "questions lost, the next row; the run-to-run flips of the baseline"
+        seed: 0
+      - lab: 15
+        model: "Your final system against your baseline, paired by question"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "questions lost: cost rose"
+        direction: lower
+        baseline: "questions gained, the row above"
+        seed: 0
+      - lab: 15
+        model: "Your final system against your baseline, paired by question"
+        dataset: lectures
+        split: "test (Workshop Capstone Questions v1, 80 questions; not written yet)"
+        unit: question
+        metric: "two-sided sign test p on the questions that changed"
+        direction: lower
+        baseline: "no change at all: p = 1 (definition)"
+        seed: 0

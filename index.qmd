@@ -1,6 +1,6 @@
 ---
 title: "{{< var workshop.title >}}"
-subtitle: "A five-day workshop: {{< var workshop.subtitle >}}"
+subtitle: "A Five-Day Workshop: {{< var workshop.subtitle >}}"
 toc: false
 page-layout: full
 # custom.scss hides the title block on this page: the hero below carries the title.
@@ -29,7 +29,7 @@ Modern language models did not appear from nowhere. Each step, from counting wor
 {{< include /_includes/readiness-summary.md >}}
 :::
 
-## The five days
+## The Five Days
 
 ::: {.section-lede}
 Each day answers one question. Modules 1 to 14 are each a short briefing followed by a hands-on lab in Google Colab; the capstone fills most of Day 5 with hands-on pair work.
@@ -41,7 +41,7 @@ See the full [schedule](schedule.qmd) or go straight to the [notebooks](notebook
 
 Before Day 1, [Module 0 · {{< var modules.m00.title >}}](modules/00-coding-agents.qmd) is optional pre-work on your own laptop. If you get stuck, an optional drop-in clinic runs on Day 1 from 08:00 to 09:00.
 
-## The path {#path}
+## The Path {#path}
 
 ::: {.section-lede}
 Each step fixes a failure of the one before it. The same small datasets and tasks come back from module to module, so each improvement is measured, not asserted.
@@ -49,7 +49,7 @@ Each step fixes a failure of the one before it. The same small datasets and task
 
 {{< include /_includes/path.md >}}
 
-## What you will be able to do
+## What You Will Be Able to Do
 
 ::: {.outcomes}
 - Explain the line of ideas from count-based language models to transformers, and say what problem each step solved.
@@ -62,7 +62,7 @@ Each step fixes a failure of the one before it. The same small datasets and task
 - Build a LangGraph agent with tools, state, human-in-the-loop checkpoints and confidence-gated control.
 :::
 
-## Who it is for {#prerequisites}
+## Who It Is For {#prerequisites}
 
 ::: {.prose}
 Machine learning practitioners who want to understand language models from the ground up. You should be comfortable with:
@@ -77,7 +77,7 @@ Not sure? The 15-minute [entry check](prepare.qmd#entry-check) on the Before Day
 You need a Google account for Colab. API keys are optional: every lab runs without them, on a free open model or, in Module 12, on a small decision model you train in the lab. See [Setup](setup.qmd).
 :::
 
-## How each module works
+## How Each Module Works
 
 {{< include /_includes/module-shape.md >}}
 
@@ -92,6 +92,6 @@ The labs follow one rhythm:
 
 Each exercise has a solution folded directly beneath it, and each lab ends with an optional stretch section for those who finish early.
 
-## Where the material comes from
+## Where the Material Comes From
 
 The approach draws on Stanford [CS224N](https://web.stanford.edu/class/cs224n/), CMU [CS 11-747](https://phontron.com/class/nn4nlp2021/) and MIT [6.S191](https://introtodeeplearning.com/). The full reading list is on the [References](references.qmd) page.

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 474" width="860" height="474" role="img" aria-labelledby="t d">
+  <title id="t">The capstone starter system as a graph</title>
+  <desc id="d">A left-to-right graph. START leads to plan, a decision model that answers a Noul: does the question need two documents? Its gauge shows p_multi against tau_plan; if p_multi is at least tau_plan, the question is split into two queries. Plan leads to retrieve (k chunks per query), retrieve to answer, the generator, which writes a draft. Dashed conditional edges: answer goes to verify with a draft, or to abstain on the abstention sentence or no draft. Verify, a decision model that answers a Noul, is every claim supported, shows p_sup against tau_verify and is tagged Ex. 1. It goes to deliver if p_sup is at least tau_verify; back to retrieve if p_sup is below tau_verify and a retry is left, with k doubled; and to abstain if no retry is left. Deliver and abstain lead to END. Below, a dotted box labeled scorer (fixed, outside the system) holds a reference judge and a key-fact check, with dotted arrows from deliver and abstain into it: the system's verifier and the scorer's judge are different. A note says that a node that raises ends the run with an error, and a failed decision call abstains.</desc>
+  <style>
+    text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; fill: #1f2933; }
+    .m { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+    .s { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .i { font-style: italic; }
+    .b { font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .note { font-size: 13.5px; fill: #52606d; }
+    .acc { fill: #b3541e; }
+    .box { fill: #eef2f6; stroke: #16324f; stroke-width: 1.5; }
+    .abox { fill: #f8e9de; stroke: #b3541e; stroke-width: 1.5; }
+    .dim { fill: #f4f6f9; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .ln { fill: none; stroke: #16324f; stroke-width: 1.5; }
+    .aln { fill: none; stroke: #b3541e; stroke-width: 2.5; }
+    .dln { fill: none; stroke: #9aa5b1; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .rule { fill: none; stroke: #c5ced8; stroke-width: 1.5; }
+    .op { fill: #ffffff; stroke: #16324f; stroke-width: 1.5; }
+    .panel { fill: #fafbfc; stroke: #c5ced8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16324f"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3541e"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52606d"/></marker>
+    <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa5b1"/></marker>
+    <style>
+    .dbox { fill: #ece6f5; stroke: #6a4c9c; stroke-width: 1.5; }
+    .cln { fill: none; stroke: #16324f; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .dotted { fill: none; stroke: #52606d; stroke-width: 1.6; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
+    .bound { fill: none; stroke: #52606d; stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
+    .halo { paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+    .pill { fill: #16324f; }
+    .pilltext { fill: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; }
+    .tagbox { fill: #ffffff; stroke: #52606d; stroke-width: 1; }
+    .tag { font-size: 12px; font-weight: 600; fill: #52606d; }
+    .sm { font-size: 13px; }
+    .m { font-variant-numeric: lining-nums; }
+  </style>
+  </defs>
+  <rect width="860" height="474" rx="8" fill="#ffffff"/>
+  <g transform="translate(0,-18)">
+  <rect class="pill" x="2.5" y="165" width="63" height="26" rx="13"/>
+  <text x="34" y="182.5" text-anchor="middle" class="pilltext">START</text>
+  <line class="ln" x1="61" y1="178" x2="80" y2="178" marker-end="url(#a)"/>
+  <rect class="dbox" x="82" y="119" width="156" height="118" rx="10"/>
+  <text x="160" y="141" text-anchor="middle" class="b mono" style="font-size:15px">plan</text>
+  <text x="160" y="159" text-anchor="middle" class="note sm">decision model · <tspan class="mono">Noul</tspan></text>
+  <text x="160" y="176" text-anchor="middle" class="note sm i">needs two documents?</text>
+  <rect x="104" y="206" width="112" height="6" rx="3" fill="#ffffff" stroke="#6a4c9c" stroke-width="1.2"/>
+  <rect x="104" y="206" width="33.6" height="6" rx="3" fill="#6a4c9c" fill-opacity="0.55"/>
+  <path d="M132.6,196 H142.6 L137.6,204 z" fill="#6a4c9c"/>
+  <text x="137.6" y="192" text-anchor="middle" class="m" style="font-size:14px"><tspan class="i">p</tspan><tspan dy="3.4" font-size="9.5">multi</tspan></text>
+  <line x1="160" y1="203" x2="160" y2="217" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="160" y="232" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">plan</tspan></text>
+  <text x="160" y="258" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="i">p</tspan><tspan dy="3.4" font-size="9.5">multi</tspan><tspan dy="-3.4"> ≥ </tspan><tspan class="i">τ</tspan><tspan dy="3.4" font-size="9.5">plan</tspan><tspan dy="-3.4" class="s">:</tspan></text>
+  <text x="160" y="275" text-anchor="middle" class="note sm">split into two queries</text>
+  <line class="ln" x1="238" y1="178" x2="266" y2="178" marker-end="url(#a)"/>
+  <rect class="box" x="268" y="150" width="136" height="56" rx="8"/>
+  <text x="336" y="175" text-anchor="middle" class="b mono" style="font-size:15px">retrieve</text>
+  <text x="336" y="193" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="i">k</tspan><tspan class="s"> chunks per query</tspan></text>
+  <line class="ln" x1="404" y1="178" x2="430" y2="178" marker-end="url(#a)"/>
+  <rect class="abox" x="432" y="150" width="122" height="56" rx="8"/>
+  <text x="493" y="175" text-anchor="middle" class="b mono" style="font-size:15px">answer</text>
+  <text x="493" y="193" text-anchor="middle" class="note sm">generator: a draft</text>
+  <line class="cln" x1="554" y1="178" x2="596" y2="178" marker-end="url(#a)"/>
+  <text x="575" y="170" text-anchor="middle" class="note sm">draft</text>
+  <rect class="dbox" x="598" y="119" width="156" height="118" rx="10"/>
+  <text x="676" y="141" text-anchor="middle" class="b mono" style="font-size:15px">verify</text>
+  <text x="676" y="159" text-anchor="middle" class="note sm">decision model · <tspan class="mono">Noul</tspan></text>
+  <text x="676" y="176" text-anchor="middle" class="note sm i">every claim supported?</text>
+  <rect x="620" y="206" width="112" height="6" rx="3" fill="#ffffff" stroke="#6a4c9c" stroke-width="1.2"/>
+  <rect x="620" y="206" width="95.2" height="6" rx="3" fill="#6a4c9c" fill-opacity="0.55"/>
+  <path d="M710.2,196 H720.2 L715.2,204 z" fill="#6a4c9c"/>
+  <text x="715.2" y="192" text-anchor="middle" class="m" style="font-size:14px"><tspan class="i">p</tspan><tspan dy="3.4" font-size="9.5">sup</tspan></text>
+  <line x1="709.6" y1="203" x2="709.6" y2="217" stroke="#1f2933" stroke-width="1.6"/>
+  <text x="709.6" y="232" text-anchor="middle" class="m" style="font-size:13.5px"><tspan class="i">τ</tspan><tspan dy="3.2" font-size="9.2">verify</tspan></text>
+  <rect class="tagbox" x="705" y="110" width="45" height="18" rx="9"/>
+  <text x="727.5" y="123.2" text-anchor="middle" class="tag">Ex. 1</text>
+  <path class="cln" d="M640,119 V70 H336 V148" marker-end="url(#a)"/>
+  <text x="486" y="61" text-anchor="middle" class="m note" style="font-size:14px"><tspan class="i">p</tspan><tspan dy="3.4" font-size="9.5">sup</tspan><tspan dy="-3.4"> &lt; </tspan><tspan class="i">τ</tspan><tspan dy="3.4" font-size="9.5">verify</tspan><tspan dy="-3.4" class="s">, retry left: </tspan><tspan class="i">k</tspan><tspan> → </tspan><tspan class="s">2</tspan><tspan class="i">k</tspan></text>
+  <rect class="op" x="540" y="332" width="100" height="40" rx="8"/>
+  <text x="590" y="357" text-anchor="middle" class="b mono" style="font-size:14px">abstain</text>
+  <rect class="pill" x="670.5" y="339" width="45" height="26" rx="13"/>
+  <text x="693" y="356.5" text-anchor="middle" class="pilltext">END</text>
+  <rect class="op" x="748" y="332" width="96" height="40" rx="8"/>
+  <text x="796" y="357" text-anchor="middle" class="b mono" style="font-size:14px">deliver</text>
+  <line class="ln" x1="640" y1="352" x2="664" y2="352" marker-end="url(#a)"/>
+  <line class="ln" x1="748" y1="352" x2="722" y2="352" marker-end="url(#a)"/>
+  <path class="cln" d="M493,206 V352 H538" marker-end="url(#a)"/>
+  <text x="485" y="268" text-anchor="end" class="note sm">abstention</text>
+  <text x="485" y="285" text-anchor="end" class="note sm">sentence, or</text>
+  <text x="485" y="302" text-anchor="end" class="note sm">no draft</text>
+  <line class="cln" x1="620" y1="237" x2="620" y2="330" marker-end="url(#a)"/>
+  <text x="612" y="268" text-anchor="end" class="m note" style="font-size:14px"><tspan class="i">p</tspan><tspan dy="3.4" font-size="9.5">sup</tspan><tspan dy="-3.4"> &lt; </tspan><tspan class="i">τ</tspan><tspan dy="3.4" font-size="9.5">verify</tspan><tspan dy="-3.4" class="s">,</tspan></text>
+  <text x="612" y="285" text-anchor="end" class="note sm">no retry left</text>
+  <path class="cln" d="M754,208 H796 V330" marker-end="url(#a)"/>
+  <text x="788" y="268" text-anchor="end" class="m note" style="font-size:14px"><tspan class="i">p</tspan><tspan dy="3.4" font-size="9.5">sup</tspan><tspan dy="-3.4"> ≥ </tspan><tspan class="i">τ</tspan><tspan dy="3.4" font-size="9.5">verify</tspan></text>
+  <rect class="bound" x="470" y="412" width="380" height="70" rx="10"/>
+  <text x="484" y="432" text-anchor="start" class="note sm b">scorer (fixed, outside the system)</text>
+  <rect class="op" x="486" y="442" width="168" height="30" rx="5"/>
+  <text x="570" y="462" text-anchor="middle" class="sm">reference judge</text>
+  <rect class="op" x="664" y="442" width="168" height="30" rx="5"/>
+  <text x="748" y="462" text-anchor="middle" class="sm">key-fact check</text>
+  <line class="dotted" x1="590" y1="372" x2="590" y2="410" marker-end="url(#c)"/>
+  <line class="dotted" x1="796" y1="372" x2="796" y2="410" marker-end="url(#c)"/>
+  <line class="ln" x1="16" y1="332" x2="50" y2="332" marker-end="url(#a)"/>
+  <text x="62" y="336" text-anchor="start" class="note sm">fixed edge</text>
+  <line class="cln" x1="16" y1="354" x2="50" y2="354" marker-end="url(#a)"/>
+  <text x="62" y="358" text-anchor="start" class="note sm">conditional edge</text>
+  <rect class="dbox" x="20" y="368" width="26" height="15" rx="4"/>
+  <text x="62" y="380" text-anchor="start" class="note sm">decision model</text>
+  <rect class="abox" x="20" y="390" width="26" height="15" rx="4"/>
+  <text x="62" y="402" text-anchor="start" class="note sm">generator (language model)</text>
+  <rect class="box" x="20" y="412" width="26" height="15" rx="4"/>
+  <text x="62" y="424" text-anchor="start" class="note sm">retriever</text>
+  <text x="16" y="464" text-anchor="start" class="note sm">Not drawn: a node that raises ends the run</text>
+  <text x="16" y="481" text-anchor="start" class="note sm">(an error); a failed decision call abstains.</text>
+  </g>
+</svg>

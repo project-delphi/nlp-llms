@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 3 · Using and aligning LLMs](/day-3.qmd){.module-day} [Module 10]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [14:45 briefing · 15:40 lab · 16:35 debrief]{.module-clock}
+[Day 3 · Using and Aligning LLMs](/day-3.qmd){.module-day} [Module 10]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [14:45 briefing · 15:40 lab · 16:35 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,7 +32,7 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
@@ -40,12 +40,14 @@ In this module you will:
 - Optimize a small LM against a reward model with a KL constraint
 - Apply DPO and compare
 - Name RLHF's failure modes and observe one
+
+New terms, in the [glossary](/glossary.qmd): [KL penalty](/glossary.qmd#kl-penalty), [direct preference optimization (DPO)](/glossary.qmd#dpo).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 9 · Reinforcement and preference learning](/modules/09-preference-learning.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 9 · Reinforcement and Preference Learning](/modules/09-preference-learning.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - API keys are optional. Without them an open model runs in place of the commercial one.
 :::

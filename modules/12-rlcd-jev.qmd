@@ -10,6 +10,12 @@ live:
   - {section: 5, minutes: 8, activities: [{block: chk-categories, minutes: 2}]}
   - {section: 7, minutes: 5}
   - {section: 8, minutes: 5}
+lab:
+  - {exercise: 0, sections: [7]}
+  - {exercise: 1, sections: [2]}
+  - {exercise: 2, sections: [7, 8]}
+  - {exercise: 3, sections: [8]}
+  - {exercise: 4, sections: [3]}
 ---
 
 {{< include /_includes/module-12.md >}}
@@ -34,7 +40,7 @@ live:
 Section 5 lists the first two. Section 2 and Exercise 1 of the lab are the third.
 :::
 
-## Notation for this module
+## Notation for This Module
 
 The workshop notation applies: parameters $\theta$, natural logarithms, $\mathbf{1}[\cdot]$ equal to 1 when the condition holds and 0 otherwise. From [Module 11](11-calibration.qmd) we keep:
 
@@ -68,11 +74,11 @@ New in this module:
 
 - **$x$ and $y$** are an item and its label, as in Module 11, not the prompt and response of Modules 9 and 10.
 - **$\pi_\theta$** is a distribution over a handful of fixed options, not over token sequences. Everything Module 9 said about policies still applies; the action space is just tiny.
-- **$\kappa$** is Jev's `confidence` field. It is **not** $\hat{p}$, the "confidence" of Module 11. Section 8 explains why the two must not be mixed up, and this page never calls $\hat{p}$ "confidence" without saying which one is meant.
+- **$\kappa$** is Jev's `confidence` field (Module 3 used $\kappa$ for the gradient-clipping threshold; that meaning does not return here). It is **not** $\hat{p}$, the "confidence" of Module 11. Section 8 explains why the two must not be mixed up, and this page never calls $\hat{p}$ "confidence" without saying which one is meant.
 - **$\tau$** with a subscript is an action threshold. Plain $\tau$ is still Module 11's temperature.
 :::
 
-## 1. What Module 11 left open
+## 1. What Module 11 Left Open
 
 **In this section:** say what Module 11 left open about training, about actions and about systems, and how this module takes each up.
 
@@ -86,7 +92,7 @@ Three questions are left. Sections 2 to 4 answer them for any model that reports
 
 Sections 5 to 8 are a case study. TypeSafe, a company that sells a decision model called **Jev**, says Jev is trained for calibrated decisions with a method it calls **RLCD**, and it has not published how that method works. Section 5 sets out exactly what is and is not known about that. Section 7 covers Jev's interface, and section 8 which of its numbers belongs on a reliability diagram. Section 6, on TypeSafe's "System One" framing, is for reading after class.
 
-## 2. Two training signals: preference and outcome
+## 2. Two Training Signals: Preference and Outcome
 
 **In this section:** state how a reward built from outcomes and a proper scoring rule differs from RLHF's preference reward, and show why an accuracy-only reward is not enough. *This section is our framing, not TypeSafe's method.*
 
@@ -163,7 +169,7 @@ In short: on the training items the two rewards reach the same accuracy, and onl
 
 The lesson we draw, as our illustration: **a proper reward removes the incentive to be overconfident during training**, because on the training distribution only honest probabilities earn the most reward. **It does not buy calibration under distribution shift.** On inputs unlike the training data the reward has nothing to say, and post-hoc calibration on held-out data drawn from the distribution you deploy on still matters, whatever the training reward was. That is TypeSafe's own advice in other words: "validate their performance in the target domain" (section 5). Our toy does not show that training for calibration beats repairing it afterwards, and it is no evidence about how Jev was trained or how it behaves. The optional box below reads the table row by row and adds two cautions.
 
-::: {.callout-tip collapse="true" title="Optional: the toy's table row by row, and two cautions"}
+::: {.callout-tip collapse="true" title="Optional: The Toy's Table Row by Row, and Two Cautions"}
 Over seeds 0 to 4 the `test` ECE is 0.308–0.310 for the accuracy reward and 0.254–0.259 for the Brier reward, and the `train` ECE 0.129–0.133 and 0.027–0.030 (`seed_check` in the same file).
 
 Four readings of the table:
@@ -179,7 +185,7 @@ Two more cautions travel with the toy.
 - **Optimization is not the point.** With $K \le 5$ options and a known reward, the expectation over the policy's actions in @eq-acc-reward is a sum we can compute, so the lab follows the exact gradient. Module 9's REINFORCE estimates the same gradient with more variance. What we keep from reinforcement learning is the structure that matters for the contrast: a reward computed from an outcome.
 :::
 
-::: {.callout-tip collapse="true" title="Optional: one answer and one stated confidence"}
+::: {.callout-tip collapse="true" title="Optional: One Answer and One Stated Confidence"}
 A generative model usually states one answer $a$ and one confidence $c$, not a full distribution. A tempting reward is the Brier score of the event "the answer is right", $-(c - \mathbf{1}[a = y])^2$. It has a hole: on a five-way question, a model can pick an answer it believes is wrong and state $c = 0$, and earn nearly full reward for being knowingly wrong. Adding the correctness term closes the hole:
 
 $$
@@ -203,7 +209,7 @@ The last row. After one temperature per head is fitted on `dev`, the accuracy-re
 **In the lab.** In **Exercise 1** you write `reward_accuracy(probs, labels)` (@eq-acc-reward, the expected accuracy of a sampled answer) and `reward_brier(probs, labels)` (@eq-brier-reward). Checkpoints: hand-computed values; the mean of sampled correctness over many draws matches `reward_accuracy` within Monte Carlo error; `reward_brier` equals minus Module 11's `brier`. The provided `train_toy` loop (@eq-outcome-objective) then trains the small decision model with each of your rewards and plots, against training step, the mean $\hat{p}$ on the training items and the weight norm (@eq-acc-optimum in action). A table gives accuracy, mean $\hat{p}$, ECE beside its noise floor, and the binary Brier score on `train`, `dev` and `test`, and on `test` again after one temperature per head is fitted on `dev`. A second checkpoint asserts the qualitative contrast in the table above (it held for seeds 0 to 4) and the recorded seed-0 values. The notebook labels every cell of this exercise **our illustration, not TypeSafe's method**.
 :::
 
-## 3. Act, ask, escalate: thresholds from costs
+## 3. Act, Ask, Escalate: Thresholds From Costs
 
 **In this section:** turn a probability into one of three actions, with both thresholds derived from stated costs.
 
@@ -242,11 +248,7 @@ $$
 The assistant acts alone only above 0.969, asks between 0.375 and 0.969, and escalates below 0.375. At $\hat{p} = 0.6$ the three costs are 8, 2.1 and 3: asking wins. Without the ask option, Chow's rule would set one threshold at $1 - 3/20 = 0.85$. Raise $\ell_{\text{ask}}$ to 2.5 and asking costs 3.1 at $\lambda^* = 0.85$, more than escalating: the rule collapses to Chow's.
 :::
 
-<!-- FIGURE 12.2
-Spec: one plot, x-axis "probability that the answer is right (p-hat)", 0 to 1; y-axis "expected cost per case", 0 to 20. Three lines from eq-three-costs with the worked example's costs (l_wrong 20, l_ask 0.5, l_miss 4, l_esc 3): act (from 20 at 0 to 0 at 1), ask (from 4.5 to 0.5), escalate (flat at 3). Shade the lower envelope and label its three regions "escalate", "ask", "act", with vertical dashed lines at tau_esc = 0.375 and tau_act = 0.969. A faint dotted vertical line at Chow's lambda* = 0.85 labelled "two-action rule". Computed, not measured.
-Target path: images/12-act-ask-escalate.svg
-Alt text: Expected cost of acting, asking and escalating as straight lines in the probability that the answer is right. The cheapest action is escalate below 0.375, ask between 0.375 and 0.969, and act above 0.969.
--->
+![The expected cost per case of acting, asking and escalating (@eq-three-costs) at the worked example's costs: computed from the equations, not measured. Under the lowest line, shading marks the cheapest action: escalate below $\tau_{\text{esc}} = 0.375$, ask up to $\tau_{\text{act}} = 0.969$, act above it (@eq-three-thresholds). Acting and escalating cost the same at Chow's $\lambda^* = 0.85$, but asking is cheaper than both there, which is why the third action lowers the cost.](/images/12-act-ask-escalate.svg){#fig-act-ask-escalate fig-alt="Expected cost of acting, asking and escalating as straight lines in the probability that the answer is right. The cheapest action is escalate below 0.375, ask between 0.375 and 0.969, and act above 0.969. A dotted line at 0.85 marks Chow's two-action threshold, where acting and escalating cost the same."}
 
 ::: {#demo-act-ask-escalate .demo}
 **Demo: move the costs, watch the regions (our illustration).** The plot draws the three lines of @eq-three-costs and their lower envelope, with the thresholds of @eq-three-thresholds. It starts at the worked example's costs. **Predict first.** (1) Raise $\ell_{\text{ask}}$ slowly from 0.5. At what value does the ask region vanish? (2) Return to 0.5 and raise $\ell_{\text{miss}}$ toward 10. Which threshold moves, and which way?
@@ -313,7 +315,7 @@ searched over pairs $\tau_{\text{esc}} \le \tau_{\text{act}}$ drawn from the obs
 
 **What the lab finds without a key.** Without a TypeSafe key, the lab's decider is a stand-in for Jev: the Brier-rewarded toy model of section 2, retrained in the notebook (section 7). With the worked example's costs, the pair chosen on `dev` is degenerate. It never escalates and asks about almost everything, and on `test` it costs less than half as much as the analytic pair $(0.375, 0.969)$, which trusts the toy's overconfident probabilities. The gap between the two pairs is the measurement: a calibrated decider would put them close together. To act alone at these costs, a decider must be calibrated and must also rank well enough to single out answers that are right 97% of the time. The optional box gives the numbers and the reasons.
 
-::: {.callout-tip collapse="true" title="Optional: the no-key result in numbers, and why it degenerates"}
+::: {.callout-tip collapse="true" title="Optional: The No-Key Result in Numbers, and Why It Degenerates"}
 On the no-key path the decider is the local toy decider (our Brier-reward toy model, not Jev), and with the worked example's costs the pair chosen on `dev` is degenerate: $(0, \approx 1)$. It never escalates, acts only on the 11 `dev` answers given a probability of at least 0.9999993 (all 11 right), and asks about the other 89. On `test` the same pair asks about 88% of cases and acts on 12%, at 1.800 per case. Asking about everything costs 1.753, escalating everything 3.0, and the analytic pair $(0.375, 0.969)$, which acts on 56% of `test` cases, 4.302 (`data/baselines.json`, `lab12.local_thresholds`).
 
 Why it degenerates. Acting beats asking only on answers that are right at least $\tau_{\text{act}} = 96.9\%$ of the time, and escalating beats asking only on answers right less than $\tau_{\text{esc}} = 37.5\%$ of the time. Under the held-out wordings the toy decider's probabilities are overconfident (section 2) and poorly ranked: the 54 `dev` answers with $\hat{p} \ge 0.969$ are right only 74% of the time, the five least confident are still right 60% of the time, and no answer has $\hat{p} < 0.375$. Neither a reliably right group nor a mostly wrong one can be cut out of the ranking, and asking is cheap and assumed to catch every wrong proposal, so asking about nearly everything is close to the best the data allow.
@@ -343,15 +345,32 @@ What it teaches:
 **In the lab.** In **Exercise 4** you write `expected_costs(p, costs)` (@eq-three-costs), `action_thresholds(costs)` (@eq-three-thresholds, including the collapse to Chow's rule) and `choose_thresholds(p, correct, costs)` (@eq-three-empirical). Checkpoints: the worked example above (0.375 and 0.969); the collapse case returns Chow's $\lambda^*$ for both thresholds; the chosen pair's development cost is no higher than acting on everything, asking about everything, or escalating everything. You then print, for the decider on `test`, the share of cases in each action and the cost per case at the analytic and the empirical thresholds, beside the three single-action policies and Chow's two-action rule. Every threshold is printed as a number. On the no-key path a last checkpoint compares the toy decider's `dev`-chosen pair and its `test` cost with the recorded run: the degenerate "ask about almost everything" result above, shown rather than hidden. Nothing about Jev is asserted.
 :::
 
-## 4. Where a decision model fits: route, guard, verify
+::: {.callout-tip collapse="true" title="Optional: Accuracy, Calibration and Decision Cost Compared"}
+Three questions to ask of the same answers. Module 11 measured the first two; this section adds the third. The rewards in the table are those of our toy (section 2), not TypeSafe's: TypeSafe has not published RLCD's reward, so nothing here describes how Jev was trained.
+
+| | Accuracy | Calibration | Decision cost |
+|---|---|---|---|
+| Question it answers | how often is the chosen answer right? | when the model says $\hat{p}$, is it right about that often? | what does acting on $\hat{p}$ cost, at stated costs? |
+| What it needs | the chosen answers and the labels | $\hat{p}$ and the outcome $o$ of each answer | $\hat{p}$, the outcomes, the four costs and the thresholds |
+| How it is measured | the share of answers that are right | ECE, the Brier score, the log loss (Module 11) | the cost per case on `test` at thresholds chosen on `dev` (@eq-three-empirical) |
+| A training reward aimed at it, in our toy | the accuracy reward, which drives $\hat{p}$ toward 1 (@eq-acc-optimum) | the Brier reward, maximized only by the true probabilities (@eq-brier-reward) | none: the costs set the thresholds after training |
+| What it misses | how sure the model is | whether the model is any use: an input-blind model can be calibrated (Module 11) | anything the costs leave out, such as a person who misses a wrong proposal |
+| Our toy on `test` (our illustration, not Jev) | 0.677 with the accuracy reward, 0.687 with the Brier reward | ECE 0.308 and 0.258 | the Brier-reward toy as decider: 4.302 per case at the analytic thresholds, 1.800 at the pair chosen on `dev` |
+:::
+
+::: {.self-check}
+**Check yourself.** Apply the table to two new models. Keep the worked example's costs (20, 0.5, 4, 3), so $\tau_{\text{esc}} = 0.375$ and $\tau_{\text{act}} = 0.969$. Model A is right on 90% of cases and reports $\hat{p} = 0.99$ on every one. Model B is calibrated: it reports $\hat{p} = 0.99$ on 80% of cases, of which 99% are right, and $\hat{p} = 0.45$ on the rest, of which 45% are right. Which model is more accurate? What does each cost per case under the rule, and what is the best that A can do with any pair of thresholds? Can the more accurate model be the worse decision system?
+
+::: {.callout-tip collapse="true" title="Answer"}
+B's accuracy is $0.8 \times 0.99 + 0.2 \times 0.45 = 0.882$, below A's 0.90. Under the rule, A acts on every case, since $0.99 \ge 0.969$, and pays $0.10 \times 20 = 2.00$ per case, ten times the 0.20 its own probabilities promise. B acts on its 0.99 cases, at $0.01 \times 20 = 0.20$ each, and asks about its 0.45 cases, at $0.5 + 0.55 \times 4 = 2.70$ each (escalating would cost 3): $0.8 \times 0.20 + 0.2 \times 2.70 = 0.70$ per case. A gives every case the same $\hat{p}$, so any pair of thresholds treats all its cases alike, and its cheapest single action is asking about everything, at $0.5 + 0.10 \times 4 = 0.90$; a pair chosen on `dev` would find that. So yes: the more accurate model costs 2.00 per case when its probabilities are trusted and 0.90 at best, against B's 0.70. B wins because it is calibrated and singles out a group of answers that are nearly always right, which acting alone requires. The two models are invented for the exercise; this is arithmetic about a cost model, not a result for any real decision model.
+:::
+:::
+
+## 4. Where a Decision Model Fits: Route, Guard, Verify
 
 **In this section:** name the three places a decision model sits in an LLM system, and what each one costs when it is wrong.
 
-<!-- FIGURE 12.1
-Spec: a left-to-right system diagram. A user request enters a "router" box (decision model, Choice over next steps); arrows to "retrieve", "calculate", "LLM answer", "ask user", "escalate to a person". Before a "send email" tool box sits a "guard" box (decision model, Noul "is this action allowed and safe?"). After the "LLM answer" box sits a "verify" box (decision model, Noul "is this answer supported by the sources?"). Each decision-model box carries a small gauge labelled "p" and two tick marks labelled tau_esc and tau_act. Use the workshop palette; decision-model boxes share one color, generative boxes another.
-Target path: images/12-route-guard-verify.svg
-Alt text: An LLM system with a decision model in three places: a router that picks the next step, a guard in front of a risky tool, and a verifier after the generated answer. Each produces a probability compared with two thresholds.
--->
+![A decision model in three roles: a router that picks the next step, a guard in front of a risky tool, and a verifier after the generated answer. Each compares its probability $\hat{p}$ with thresholds set from that role's own costs (section 3); only the act exits of the guard and the verifier are drawn. The tags name the lab exercise that builds each role; the boxes are generic and show nothing about how Jev works inside. The markers on the gauges are illustrative, not measured.](/images/12-route-guard-verify.svg){#fig-route-guard-verify fig-alt="An LLM system with a decision model in three places: a router that picks the next step among retrieve, calculate, send_email, ask_user and escalate; a guard in front of the risky send_email tool; and a verifier after the generated answer. Each produces a probability compared with two thresholds."}
 
 A decision model does not write text. It answers a typed question with a probability for each option, and a program compares that number with a threshold. That suggests a division of labor in three parts: exact rules in code, the many small typed judgments in a calibrated decision model, and writing, explaining and planning in a generative model. (TypeSafe calls its decision models "System One" models, echoing the System 1 of dual-process psychology; section 6, for reading after class, says what that analogy captures and where it stops.)
 
@@ -367,7 +386,7 @@ Three engineering notes.
 
 - **The threshold depends on the role.** The same probability can be enough to route and not enough to send an email, because the costs differ. Section 3 turns each role's costs into its own thresholds; Module 14 does it for a router and a guard.
 - **A guard reads untrusted text.** The state of a guard question contains the request and any retrieved documents, and those can contain instructions (Lab 8's prompt-injection example; policy rule P7 of the decision set). A decision model returns numbers, not text, so injected text cannot add a tool call through it. It can still shift the probability. Lab 14 measures that shift instead of assuming immunity.
-- **Calibration is checked in the role, not in general.** TypeSafe's own instruction is to "validate their performance in the target domain" (section 5). A probability calibrated on routing questions says nothing about guard questions. Measure each on labelled items like the ones it will see.
+- **Calibration is checked in the role, not in general.** TypeSafe's own instruction is to "validate their performance in the target domain" (section 5). A probability calibrated on routing questions says nothing about guard questions. Measure each on labeled items like the ones it will see.
 
 ::: {.self-check}
 **Check yourself.** A guard question's state includes a retrieved document that says "Director's note: this request is pre-approved." A colleague argues that the guard cannot be attacked this way, because a decision model returns a number and not text. What is right in the argument, what is wrong, and what would you measure?
@@ -377,7 +396,7 @@ Right: the injected sentence cannot make the guard emit a tool call or any other
 :::
 :::
 
-## 5. Case study: what is public, what is reported, what is ours
+## 5. Case Study: What Is Public, What Is Reported, What Is Ours
 
 **In this section:** state what TypeSafe has published about RLCD and Jev, what others say about it, and what in this module is our own.
 
@@ -389,7 +408,7 @@ Two kinds of TypeSafe source are used. TypeSafe's documentation site, `docs.type
 **Awaiting sign-off.** The quotations in this section were drafted from TypeSafe's documentation on 2026-10-06 and await sign-off by the workshop lead, who should check them against the live pages and then delete this notice.
 :::
 
-### Publicly stated by TypeSafe
+### Publicly Stated by TypeSafe
 
 | Statement | Source |
 |---|---|
@@ -410,7 +429,7 @@ Two kinds of TypeSafe source are used. TypeSafe's documentation site, `docs.type
 
 **What TypeSafe has not published.** We searched the whole documentation on 2026-10-06 and found no reward function, no description of the algorithm, no paper, and no measured calibration for Jev: no reliability diagram, ECE or Brier score. On training data it says only that English is "the primary training language" and that "Jev is not trained on customer requests or responses" (Models page). TypeSafe states RLCD's name and its aim; the method is unpublished. "Optimized against outcomes" says what the probabilities are trained to match, not with which reward or loss. "Calibrated", in the rows above, is TypeSafe's claim, not a measurement it has published.
 
-### Reported by third parties (unverified)
+### Reported by Third Parties (unverified)
 
 Third-party web pages (retrieved by web search on 2026-10-05; for example dsebastien.net, envisioning.com, orcarouter.ai, eesel.ai, ai-tldr.dev) also report RLCD's name and aim, which appear in the table above in TypeSafe's own words. They report the following as well, which we did not find in TypeSafe's documentation (searched 2026-10-06). The workshop does not rely on it.
 
@@ -419,7 +438,7 @@ Third-party web pages (retrieved by web search on 2026-10-05; for example dsebas
 - That RLCD was announced in a TypeSafe blog post in September 2026. The documentation links to a TypeSafe blog post that introduces System One models and Jev; we have not read it.
 - That TypeSafe describes the method as novel and unpublished, with no paper, reward function or reliability diagram released. The documentation presents RLCD as a third way of adapting pretrained models, after RLHF and RLVR (reinforcement learning with verifiable rewards): "TypeSafe adds a third". It publishes no paper, reward function or reliability diagram, but it does not use the words "novel" or "unpublished".
 
-### Our illustration
+### Our Illustration
 
 Everything in section 2 and in Exercise 1 of the lab is ours: a framing of the difference between a preference reward and an outcome reward, and a toy experiment that trains a small decision model with each. It uses only the scoring-rule theory of Module 11 and a published academic method by other authors (Damani et al., section 2). **It is not TypeSafe's method, and nothing in it is evidence about how Jev was trained.** TypeSafe says its models' probabilities "are optimized against outcomes", and section 2 also builds its reward from outcomes. The shared word is not shared knowledge: our reward comes from Module 11's scoring rules, and TypeSafe has not said which reward or loss it uses. We include it because the contrast it shows, between a reward that is indifferent to probabilities and one that is maximized only by honest probabilities, is what any calibration-targeted training has to get right.
 
@@ -431,7 +450,7 @@ Everything in section 2 and in Exercise 1 of the lab is ours: a framing of the d
 :::
 :::
 
-## 6. Case study: System 1 and System 2 {.reference}
+## 6. Case Study: System 1 and System 2 {.reference}
 
 **In this section:** say what the System 1 / System 2 analogy captures about a decision model, and where it stops.
 
@@ -456,7 +475,7 @@ The analogy ends there. We do not know Jev's architecture, and "fast" is TypeSaf
 :::
 :::
 
-## 7. Case study: Jev's interface
+## 7. Case Study: Jev's Interface
 
 **In this section:** call Jev for typed decisions, and read its answers.
 
@@ -496,7 +515,7 @@ A route item asks a `Choice` instead, with one description per option: `Choice(i
 3. **No key, no client.** `TypeSafeClient()` raises an error at construction when no key is set. The lab therefore chooses its decider once: the real client when a key is present, otherwise a local stand-in, `LocalDecider`, that returns the same `SystemOneResponse` type. **It is not Jev, and its numbers are never reported as Jev's.**
 4. **The state goes to a third party.** Send no personal data. The decision set uses invented names and `example.org` addresses for this reason. The SDK logs request bodies unredacted at debug level; leave logging at its default.
 
-::: {.callout-tip collapse="true" title="Optional: what answers without a key, and which model answered"}
+::: {.callout-tip collapse="true" title="Optional: What Answers Without a Key, and Which Model Answered"}
 **The local stand-in.** It is the Brier-reward toy model of Exercise 1, retrained by a provided cell with the reference reward `reward_brier_ref`, so it does not depend on your Exercise 1 code. It answers only what that model was trained on: the five policy yes/no questions (P1 to P5) as a `Noul`, and the five-way route question as a `Choice`. Any other question, including any `Score`, raises `UnsupportedQuestion` instead of returning a number the toy model was never trained to produce.
 
 **The model name can change under you.** The SDK default is the alias `jev-latest`, and the response's `model` field names what actually answered. Record it next to every result, and pin a concrete model for numbers you want to reproduce.
@@ -514,7 +533,7 @@ First, "if so" refers to the first question's answer, but questions in one call 
 **In the lab.** In **Exercise 2** you write `to_questions(item)`, which turns a decision item into a `Noul` or a `Choice`, and `chosen_answer(answer)`, which returns the chosen label and its probability $\hat{p}$ (@eq-chosen-prob) and raises `TypeError` for an answer that has no chosen probability. Checkpoints: the question objects validate, carry the item's full question and list the route options in the item's order; on hand-built responses, including one where $\kappa \ne \hat{p}$ and one `ScoreAnswer`, your function returns the right label and probability, or raises. The provided `decide_all`, which asks the selected decider (Jev with a key, the local toy decider without) about every `dev` and `test` item, runs at the start of the exercise with reference versions of your two functions, so the slow keyed calls start before you write yours.
 :::
 
-## 8. Case study: probabilities, not `confidence`, on a reliability diagram
+## 8. Case Study: Probabilities, Not `confidence`, on a Reliability Diagram
 
 **In this section:** say which number from a Jev answer belongs on a reliability diagram, and why the `confidence` field does not.
 
@@ -543,7 +562,7 @@ Two consequences.
 - **Calibration uses $\hat{p}$.** ECE, the Brier score and the reliability diagram in the lab are computed from @eq-chosen-prob, never from $\kappa$.
 - **Ranking agrees.** @eq-adapter-conf is increasing in $\hat{p}$ for a fixed $K$, so sorting the answers to one choice question by $\kappa$ or by $\hat{p}$ gives the same risk–coverage curve (Module 11, section 8). Thresholds from costs (section 3), however, are probabilities, and must be compared with $\hat{p}$.
 
-::: {.callout-tip collapse="true" title="Optional: score and yes/no answers, TypeSafe's own thresholds, and rounding"}
+::: {.callout-tip collapse="true" title="Optional: Score and Yes/No Answers, TypeSafe's Own Thresholds, and Rounding"}
 A score answer's `confidence` uses a different published formula, which also counts how far probability sits from the most likely level; the lab asks no score questions. For a yes/no answer, which has no `confidence` field, TypeSafe suggests $|2\pi_{\text{yes}} - 1|$ to code that wants one, which is @eq-adapter-conf with $K = 2$.
 
 TypeSafe's own examples gate actions on `confidence` at hand-picked values such as 0.5 and 0.9; its confidence page also offers the top probability, which "reads directly as 'how likely is the selected option'". A threshold derived from costs is that kind of number.
@@ -560,10 +579,10 @@ $\hat{p} = 0.7$, and $\kappa = (0.7 - 0.25)/(1 - 0.25) = 0.6$. With $\hat{p}$ on
 :::
 
 ::: {.callout-note appearance="simple"}
-**In the lab.** In **Exercise 3** you write `calibration_arrays(records, use="p")`, which returns $\hat{p}$ (@eq-chosen-prob) and the outcome $o$ over the valid records, or $\kappa$ instead of $\hat{p}$ with `use="kappa"`. Checkpoints: a fixture of hand-made records; and 100,000 synthetic five-way answers, calibrated by construction, whose ECE is below 0.01 from $\hat{p}$ and above 0.10 from $\kappa$ (@eq-adapter-conf). You then draw the decider's reliability diagram on `test` from $\hat{p}$, with accuracy, ECE, the binary Brier score, $N_{\text{valid}}$ and Module 11's noise floor. Beside it goes the diagram for the language model's stated confidence from Lab 11, if you exported its records there (`lab11_decisions_<provider>.jsonl`); an export from Lab 11's stub is refused, and without an export the decider is drawn alone. You then redraw the route items with $\kappa$ on the horizontal axis and see the shift @eq-adapter-conf predicts. **No calibration result is asserted.** On the no-key path every panel is labelled as the local toy model, not Jev.
+**In the lab.** In **Exercise 3** you write `calibration_arrays(records, use="p")`, which returns $\hat{p}$ (@eq-chosen-prob) and the outcome $o$ over the valid records, or $\kappa$ instead of $\hat{p}$ with `use="kappa"`. Checkpoints: a fixture of hand-made records; and 100,000 synthetic five-way answers, calibrated by construction, whose ECE is below 0.01 from $\hat{p}$ and above 0.10 from $\kappa$ (@eq-adapter-conf). You then draw the decider's reliability diagram on `test` from $\hat{p}$, with accuracy, ECE, the binary Brier score, $N_{\text{valid}}$ and Module 11's noise floor. Beside it goes the diagram for the language model's stated confidence from Lab 11, if you exported its records there (`lab11_decisions_<provider>.jsonl`); an export from Lab 11's stub is refused, and without an export the decider is drawn alone. You then redraw the route items with $\kappa$ on the horizontal axis and see the shift @eq-adapter-conf predicts. **No calibration result is asserted.** On the no-key path every panel is labeled as the local toy model, not Jev.
 :::
 
-## Equations and where you implement them
+## Equations and Where You Implement Them
 
 | Equation | Lab 12 |
 |---|---|
@@ -589,7 +608,7 @@ $\hat{p} = 0.7$, and $\kappa = (0.7 - 0.25)/(1 - 0.25) = 0.6$. With $\hat{p}$ on
 - Jev answers typed questions about a state: `Noul` (a probability of yes), `Choice` and `Score` (a probability per option and a `confidence`). Question names are not sent to the model; every question must be complete.
 - `confidence` measures how concentrated the distribution is. Reliability diagrams, ECE, Brier scores and cost thresholds use the probability of the chosen answer (@eq-chosen-prob). TypeSafe's published choice formula (@eq-adapter-conf) shows how far apart the two can be.
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"Rewarding correct answers teaches a model when it is right."** An accuracy reward is the improper linear score: it is maximized by putting all probability on one answer, whatever the true odds (@eq-acc-optimum).
 - **"A three-action rule always has three regions."** If asking is not cheaper than escalating where acting and escalating break even, the middle region disappears and Chow's rule remains.
@@ -601,11 +620,11 @@ $\hat{p} = 0.7$, and $\kappa = (0.7 - 0.25)/(1 - 0.25) = 0.6$. With $\hat{p}$ on
 - **"Jev's `confidence` is the probability that its answer is right."** It measures how concentrated the probabilities are. A five-way answer with top probability 0.6 has, under TypeSafe's published formula, a confidence of 0.5.
 - **"System 1 means the model reasons like human intuition."** It is an analogy for a fast, typed, single-pass decision, not a claim about cognition or about Jev's architecture.
 
-## Next steps
+## Next Steps
 
 You can now call a decision model for typed answers, measure its probabilities, and set act, ask and escalate thresholds from costs. The rest of the workshop builds systems around such decisions. [Module 13](13-rag.qmd) adds retrieval, so that the state a model decides on, or an LLM answers from, contains the right documents; there a decision model reappears as a reranker that scores how relevant each passage is. [Module 14](14-agents.qmd) puts the router and the guard of section 4 into an agent graph, with the thresholds from this lab.
 
-## Further reading
+## Further Reading
 
 1. TypeSafe AI (2026). `docs.typesafe.ai`: the [AI primer](https://docs.typesafe.ai/introduction/machine-learning-primer), [System One](https://docs.typesafe.ai/concepts/system-one), [Models](https://docs.typesafe.ai/models) and [Confidence](https://docs.typesafe.ai/confidence) pages. TypeSafe's own statements about RLCD, Jev's training and the `confidence` formulas. Read for this module on 2026-10-06. TypeSafe's announcement blog post has not been read.
 2. TypeSafe AI (2026). [`typesafe-ai/skills`, `SKILL.md`](https://github.com/typesafe-ai/skills) and [`typesafe-sdk`](https://pypi.org/project/typesafe-sdk/) 0.7.2. Read for the interface and for TypeSafe's own guidance on questions, confidence and validation. Read for this module on 2026-10-05.

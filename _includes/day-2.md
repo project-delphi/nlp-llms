@@ -9,7 +9,7 @@
 ::: {.module-card-body}
 [Module 5]{.eyebrow}
 
-[The transformer](modules/05-transformer-from-scratch.qmd){.module-card-title}
+[The Transformer](modules/05-transformer-from-scratch.qmd){.module-card-title}
 
 Self-attention, multi-head attention and positional encodings, assembled into a small GPT.
 
@@ -27,7 +27,7 @@ Self-attention, multi-head attention and positional encodings, assembled into a 
 ::: {.module-card-body}
 [Module 6]{.eyebrow}
 
-[Pretraining and the Hugging Face stack](modules/06-pretraining-huggingface.qmd){.module-card-title}
+[Pretraining and the Hugging Face Stack](modules/06-pretraining-huggingface.qmd){.module-card-title}
 
 Subword tokenization, masked and causal pretraining, and using pretrained models through Hugging Face.
 
@@ -44,7 +44,7 @@ Subword tokenization, masked and causal pretraining, and using pretrained models
 ::: {.module-card-body}
 [Module 7]{.eyebrow}
 
-[Fine-tuning and LoRA](modules/07-finetuning-lora.qmd){.module-card-title}
+[Fine-Tuning and LoRA](modules/07-finetuning-lora.qmd){.module-card-title}
 
 Turning a pretrained language model into an instruction follower, efficiently.
 

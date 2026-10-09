@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Tokenize text and justify the choices
 - Build and evaluate an n-gram language model
 - Train a linear text classifier and read its errors
+
+New terms, in the [glossary](/glossary.qmd): [token](/glossary.qmd#token), [vocabulary](/glossary.qmd#vocabulary), [n-gram model](/glossary.qmd#n-gram), [smoothing](/glossary.qmd#smoothing), [cross-entropy](/glossary.qmd#cross-entropy), [perplexity](/glossary.qmd#perplexity), [logit](/glossary.qmd#logit), [softmax](/glossary.qmd#softmax), [checkpoint cell](/glossary.qmd#checkpoint-cell).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Setup and environment check](/setup.qmd): the 10-minute notebook that checks your Colab runtime and loads any keys.
+- [Setup and Environment Check](/setup.qmd): the 10-minute notebook that checks your Colab runtime and loads any keys.
 - A Google account. Colab's default CPU runtime is enough.
 - No API keys: the lab runs its own models throughout.
 :::

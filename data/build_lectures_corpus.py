@@ -11,11 +11,12 @@ Rules for `text` (documented in data/README.md):
 - the YAML front matter is removed and the page title (and subtitle, if any) is
   written as a first-level heading;
 - `{{< include /_includes/module-NN.md >}}` becomes the module's summary and
-  objectives from _variables.yml, as plain text;
+  objectives from _variables.yml, as plain text; the generated lab task list
+  (`{{< include /_includes/lab-NN.md >}}`) is logistics and is deleted;
 - `{{< var a.b.c >}}` is resolved from _variables.yml at the same commit;
-- the "## Live plan" section (the lecture's in-room timetable, generated from its
-  front matter) is deleted up to the next second-level heading: it is logistics, not
-  content;
+- the "## Agenda" section (called "## Live plan" before 2026-10-07: the in-room
+  timetable and reading guide, generated from the front matter) is deleted up to the
+  next second-level heading: it is logistics, not content;
 - heading attributes such as `{.reference}` are removed from heading lines (outside
   fenced code, where a `#` line is a comment);
 - Observable JS cells (```` ```{ojs} ```` blocks, with or without options; the
@@ -61,14 +62,18 @@ OUT = ROOT / "data" / "workshop_lectures_v1.jsonl.gz"
 # source_commit, characters, status) before anyone writes a question against the snapshot
 # (data/README.md, "Status: provisional").
 SOURCE_COMMIT = "31d5d92cd1d5ac7c12b05f547caa6d56ca55765d"
-LECTURE = re.compile(r"^lectures/(0[1-9]|1[0-2])-[a-z0-9-]+\.qmd$")
+# The pages moved from lectures/ to modules/ on 2026-10-07.
+LECTURE = re.compile(r"^(?:lectures|modules)/(0[1-9]|1[0-2])-[a-z0-9-]+\.qmd$")
 REFERENCES = "references.qmd"
 
 FRONT_MATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 INCLUDE = re.compile(r"\{\{<\s*include\s+/_includes/module-(\d\d)\.md\s*>\}\}")
 VAR = re.compile(r"\{\{<\s*var\s+([A-Za-z0-9_.]+)\s*>\}\}")
-LIVE_PLAN = re.compile(r"^## Live plan\n.*?(?=^## |\Z)", re.MULTILINE | re.DOTALL)
+LIVE_PLAN = re.compile(r"^## (?:Live plan|Agenda)\n.*?(?=^## |\Z)", re.MULTILINE | re.DOTALL)
+LAB_INCLUDE = re.compile(
+    r"^\{\{<\s*include\s+/_includes/lab-\d\d\.md\s*>\}\}[ \t]*\n?", re.MULTILINE
+)
 OJS_CELL = re.compile(r"^```\{ojs[^}\n]*\}.*?^```[ \t]*\n?", re.MULTILINE | re.DOTALL)
 # Spaces and tabs only around the attributes: `\s` would also eat the line break and
 # the blank line after the heading.
@@ -136,9 +141,11 @@ def module_block(variables: dict, nn: str) -> str:
         "",
         m["summary"],
         "",
-        "## Learning objectives",
+        # The heading and lead-in of the page's own block (gen_tables.module_block); before
+        # 2026-10-07 they read "Learning objectives" and "By the end of this module you can:".
+        "## What You Will Build",
         "",
-        "By the end of this module you can:",
+        "In this module you will:",
         "",
     ]
     lines += [f"- {o}" for o in m["objectives"]]
@@ -153,9 +160,10 @@ def clean(source: str, variables: dict) -> tuple[str, str]:
     meta = yaml.safe_load(resolve_vars(match.group(1), variables))
     body = source[match.end() :]
     body = COMMENT.sub("", body)
-    body = strip_heading_attrs(body)  # first, so "## Live plan {.x}" is found below
+    body = strip_heading_attrs(body)  # first, so "## Agenda {#live-plan}" is found below
     body = LIVE_PLAN.sub("", body)
     body = OJS_CELL.sub("", body)
+    body = LAB_INCLUDE.sub("", body)
     body = INCLUDE.sub(lambda m: module_block(variables, m.group(1)), body)
     body = resolve_vars(body, variables)
     if "{{<" in body:

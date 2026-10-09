@@ -10,6 +10,11 @@ live:
   - {section: 6, minutes: 5, activities: [{block: chk-zero-init, minutes: 2}]}
   - {section: 7, minutes: 4}
   - {section: 8, minutes: 5}
+lab:
+  - {exercise: 1, sections: [4]}
+  - {exercise: 2, sections: [2]}
+  - {exercise: 3, sections: [7]}
+  - {exercise: 4, sections: [6, 7]}
 ---
 
 {{< include /_includes/module-02.md >}}
@@ -24,7 +29,7 @@ live:
 
 {{< include /_includes/live-02.md >}}
 
-## 1. Where counts stop
+## 1. Where Counts Stop
 
 Both models of [Module 1](01-text-as-data.qmd), the n-gram language model and the TF-IDF classifier, fail in the same two ways.
 
@@ -45,7 +50,7 @@ Both distances are $\sqrt{2}$. Two different one-hot vectors differ in exactly t
 :::
 :::
 
-## 2. The distributional hypothesis and dense vectors
+## 2. The Distributional Hypothesis and Dense Vectors
 
 **Distributional hypothesis.** Words that occur in similar contexts tend to have similar meanings (Harris, 1954; Firth, 1957: "You shall know a word by the company it keeps"). The *context* of a word occurrence is the set of words near it.
 
@@ -69,7 +74,7 @@ Dot products: $e_a^\top e_b = 1.8$ and $e_a^\top e_c = 6$, so the dot product pi
 :::
 :::
 
-## 3. Skip-gram with a full softmax
+## 3. Skip-Gram With a Full Softmax
 
 Word2vec's skip-gram model (Mikolov et al., 2013) turns the distributional hypothesis into a training objective: **given a word, predict the words around it.**
 
@@ -114,7 +119,7 @@ The gradient is "observed context vector minus expected context vector". The exp
 :::
 :::
 
-## 4. Negative sampling
+## 4. Negative Sampling
 
 Negative sampling (Mikolov et al., 2013) replaces the $|V|$-way prediction with a much cheaper binary one. This is the derivation the lab implements, so we take it step by step.
 
@@ -269,7 +274,7 @@ It cannot be done. Perplexity needs a normalized next-token distribution $P(w_t 
 :::
 :::
 
-::: {.callout-note collapse="true" title="Optional: subsampling frequent words, and the dynamic window"}
+::: {.callout-note collapse="true" title="Optional: Subsampling Frequent Words, and the Dynamic Window"}
 Words such as *the* appear in almost every window and say little about their neighbors. Mikolov et al. (2013) discard each occurrence of word $v$ before building pairs with probability
 
 $$
@@ -281,7 +286,7 @@ $$ {#eq-subsample}
 word2vec also uses a **dynamic window**: for each center word it draws a width $b$ uniformly from $1, \dots, m$ and pairs the center only with words within $b$ positions. A context word $j$ positions away is used with probability $(m - j + 1)/m$, so near neighbors count more than far ones. The lab does the same, with $m = 5$, and never lets a window cross from one abstract into the next. *Lab: @eq-subsample and the dynamic window are in the provided function `make_pairs`.*
 :::
 
-::: {.callout-note collapse="true" title="Optional: what SGNS is really computing"}
+::: {.callout-note collapse="true" title="Optional: What SGNS Is Really Computing"}
 Levy and Goldberg (2014) showed that, with enough dimensions, the SGNS optimum satisfies
 
 $$
@@ -291,7 +296,7 @@ $$
 where PMI is the pointwise mutual information of the pair, estimated from co-occurrence counts. So SGNS implicitly factorizes a shifted PMI matrix. This connects word2vec back to the count-based methods of Module 1: the neural model is a compact, weighted factorization of a count matrix, not a different kind of object.
 :::
 
-## 5. CBOW and GloVe in brief {.reference}
+## 5. CBOW and GloVe in Brief {.reference}
 
 **CBOW** (continuous bag of words) is skip-gram reversed. It averages the embeddings of the context words and predicts the center word from that average. It trains faster, because there is one prediction per window rather than $2m$; skip-gram tends to do better on rare words.
 
@@ -313,7 +318,7 @@ Note the excluded set: without it the answer is usually one of the three input w
 
 How much of this structure appears depends on the data. Lab 2 trains on about one million tokens of arXiv abstracts and scores its vectors on 20 analogies fixed before training; its stretch section repeats the test with pretrained GloVe vectors, trained on about 6 billion tokens. *Lab: Section A3 also draws a two-dimensional PCA picture of 60 of your embeddings, from four topic groups chosen before training.* The results are in the box after the lab, below.
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 2 measured in Section A3"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 2 Measured in Section A3"}
 Open this after Section A3 of the lab (and its stretch section, for GloVe), so that it does not answer the lab's predictions for you. There, 4 of 20 analogies fixed before training come out right (0.20), mostly word forms such as *dataset : datasets*. The same lists answered with pretrained GloVe vectors, trained on about 6 billion tokens, score 11 of the 19 that GloVe can attempt (0.58), against 4 of the same 19 (0.21) for the lab's vectors. That comparison changes the objective as well as the data, but controlled comparisons find that the choice between SGNS and GloVe matters less than hyperparameters and data (Levy, Goldberg and Dagan, 2015). The amount of data is the likely limit, not the objective.
 
 ![Lab 2's SGNS word vectors for 60 words, chosen before training from four groups and projected to two dimensions by principal component analysis (PCA). The vectors were scaled to unit length and centered first, so the plot shows directions, as cosine similarity sees them. Each group has its own color and marker. Two dimensions keep only part of the variance; a word that looks misplaced may be far away along a direction not shown.](/images/02-embedding-pca.svg){#fig-embedding-pca fig-alt="Scatter plot of 60 labeled words on the first two principal components. The four groups form four separate clouds. Vision words such as image, pixel, camera, depth and lidar are at the top. Language words such as text, sentence, word, translation and english are on the right. Robotics words such as robot, grasping, manipulation, locomotion and drone are on the left. Numbers, spelled out or as digits, such as two, five, ten, 1 and 10, are at the bottom center, with first, second and third closer to the language cloud. The robotics words motion and trajectory sit between the robotics and vision clouds."}
@@ -329,7 +334,7 @@ Most likely $a'$ itself. The query vector is $e_{a'} + (e_b - e_a)$: the vector 
 :::
 :::
 
-## 6. PyTorch refresher
+## 6. PyTorch Refresher
 
 Everything from here to Module 12 is written in PyTorch. Four ideas are enough for today.
 
@@ -375,7 +380,7 @@ It is still $(K + 1)\log 2$, the starting value. Every gradient in @eq-sgns-grad
 :::
 :::
 
-## 7. Feed-forward networks and backpropagation
+## 7. Feed-Forward Networks and Backpropagation
 
 Embeddings give us features. To use them for classification we need a model on top. Module 1's classifier was linear in its input; a feed-forward network adds one nonlinear layer.
 
@@ -404,7 +409,7 @@ Here $h$ is the hidden vector with $d_h$ units, $\mathrm{ReLU}(a) = \max(0, a)$ 
 
 The chain rule does not stop at $x$: through @eq-avg it reaches every embedding in the document, so embeddings can be trained by the classification loss too. In the lab's core path they stay frozen, so that the comparison with TF-IDF measures the features and nothing else.
 
-::: {.callout-tip collapse="true" title="Optional: backpropagation through the network, line by line"}
+::: {.callout-tip collapse="true" title="Optional: Backpropagation Through the Network, Line by Line"}
 Let $\mathrm{onehot}(y) \in \mathbb{R}^C$ be the one-hot vector of the label, $a = W_1 x + b_1$ the hidden pre-activation, and $\delta$ denote the gradient of $\mathcal{L}$ with respect to a layer's pre-activation.
 
 $$
@@ -429,7 +434,7 @@ Zero, for both. In @eq-backprop, $\delta_a = (W_2^\top \delta_z) \odot \mathbf{1
 :::
 :::
 
-::: {.callout-tip collapse="true" title="After the lab: what Lab 2 measured"}
+::: {.callout-tip collapse="true" title="After the Lab: What Lab 2 Measured"}
 Open this after the lab's comparison of the two classifiers, so that it does not answer the lab's prediction for you. Lab 2 trains SGNS embeddings on the text of the 4,800 training abstracts (1,091,692 tokens, labels ignored), then classifies the same 1,600 test abstracts as Lab 1. These are the values recorded in `data/baselines.json`, measured on a CPU; your run will differ slightly.
 
 | Features + model | Dimensions | Test accuracy | Test macro-F1 |
@@ -446,7 +451,7 @@ TF-IDF wins by 27 of the 1,600 papers. In four runs with different random stream
 In this comparison more text did not help unless it was text about the task.
 :::
 
-## 8. Bengio's neural language model
+## 8. Bengio's Neural Language Model
 
 We now have what is needed to repair the n-gram language model. Bengio et al. (2003) keep the n-gram assumption, that the next word depends on the previous $n - 1$ words, but replace the count table with a feed-forward network over embeddings.
 
@@ -471,7 +476,7 @@ This addresses both failures from section 1:
 
 The embeddings here are learned by the language-modeling loss itself. Word2vec, ten years later, kept the embedding table and removed the hidden layer and the full softmax to make training on billions of words practical. *Lab: @eq-nplm is not implemented in Lab 2. Module 3's lab trains a neural language model and compares its perplexity with the n-gram baseline.*
 
-::: {.callout-note collapse="true" title="Optional: details of the original model"}
+::: {.callout-note collapse="true" title="Optional: Details of the Original Model"}
 The model in Bengio et al. (2003) also has optional direct connections from $x$ to the output layer, omitted in @eq-nplm. Its output softmax has the same $O(|V|)$ cost per example as @eq-softmax; that cost is what later work, including hierarchical softmax and negative sampling, set out to reduce.
 :::
 
@@ -491,7 +496,7 @@ Embeddings $|V| d = 1{,}000{,}000$; hidden layer $d_h (n-1) d = 200 \times 300 =
 :::
 :::
 
-## Equations and where you implement them
+## Equations and Where You Implement Them
 
 Function names and signatures are those of the notebook as built.
 
@@ -525,7 +530,7 @@ Function names and signatures are those of the notebook as built.
 - Bengio's neural language model applies the same pieces to next-word prediction and generalizes to unseen n-grams through embedding similarity.
 - Open problem for Module 3: order and long-range dependence.
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 1. **"Negative sampling is a fast approximation of the softmax."** It is a different objective. It does not yield normalized probabilities $P_\theta(o \mid w)$ and cannot be used to compute perplexity.
 2. **"Similar vectors mean synonyms."** Cosine similarity reflects shared contexts. Antonyms (*hot*, *cold*) and co-hyponyms (*Tuesday*, *Friday*) share contexts and end up close.
@@ -534,7 +539,7 @@ Function names and signatures are those of the notebook as built.
 5. **"Dense embeddings must beat TF-IDF."** Averaging discards word order and blurs distinctive words. On topic classification with plenty of labeled data, TF-IDF with a linear model is a strong baseline. Measure before claiming: Lab 2 does, and its result is in the box after the lab in section 7.
 6. **"Each word has one meaning, so one vector is enough."** Static embeddings merge all senses of a word into one point. That limitation motivates the contextual models of Day 2.
 
-## Further reading
+## Further Reading
 
 1. Mikolov, T., Sutskever, I., Chen, K., Corrado, G. and Dean, J. (2013). [Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546). *Advances in Neural Information Processing Systems 26*. The negative-sampling paper: sections 2.2 and 2.3.
 2. Goldberg, Y. and Levy, O. (2014). [word2vec Explained: deriving Mikolov et al.'s negative-sampling word-embedding method](https://arxiv.org/abs/1402.3722). arXiv:1402.3722. A slower version of the derivation in section 4.

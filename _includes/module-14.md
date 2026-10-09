@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 5 · Agents and capstone](/day-5.qmd){.module-day} [Module 14]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
+[Day 5 · Agents and Capstone](/day-5.qmd){.module-day} [Module 14]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,19 +32,21 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
 - Assemble a tool-using agent as an explicit graph by writing its routing edges
 - Drive human-in-the-loop interrupts, and replay and fork a checkpointed run
 - Use a calibrated decision model for routing and tool-call approval, with thresholds from costs
+
+New terms, in the [glossary](/glossary.qmd): [agent state](/glossary.qmd#agent-state), [graph checkpoint](/glossary.qmd#graph-checkpoint), [interrupt](/glossary.qmd#interrupt).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
-- [Module 13 · Retrieval-augmented generation](/modules/13-rag.qmd) and its lab, and the modules before it: this module measures its results against theirs.
+- [Module 13 · Retrieval-Augmented Generation](/modules/13-rag.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account, and the Colab runtime set to **T4 GPU** (Runtime → Change runtime type).
 - API keys are optional. Without them an open model runs in place of the commercial one.
 :::

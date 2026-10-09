@@ -9,6 +9,12 @@ live:
   - {section: 4, minutes: 7}
   - {section: 6, minutes: 12, activities: [{block: chk-dpo-both-fall, minutes: 2}]}
   - {section: 7, minutes: 9, activities: [{block: demo-kl-dial, minutes: 4}, {block: discuss-beta, minutes: 2}]}
+lab:
+  - {exercise: 1, sections: [3]}
+  - {exercise: 2, sections: [4]}
+  - {exercise: 3, sections: [3, 4]}
+  - {exercise: 4, sections: [1, 7]}
+  - {exercise: 5, sections: [6]}
 ---
 
 {{< include /_includes/module-10.md >}}
@@ -23,7 +29,7 @@ live:
 
 {{< include /_includes/live-10.md >}}
 
-## Notation for this module
+## Notation for This Module
 
 The workshop notation applies: tokens $w_1, \dots, w_T$, vocabulary $V$, parameters $\theta$, loss $\mathcal{L}$, the sigmoid $\sigma(a) = 1/(1 + e^{-a})$, natural logarithms. From [Module 9](09-preference-learning.qmd) we keep:
 
@@ -59,7 +65,7 @@ New in this module:
 The value function in section 5 is written $v_\psi$ in lowercase, because $V$ is already the vocabulary (Module 1) and the value matrix (Module 5).
 :::
 
-## 1. What Module 9 left open
+## 1. What Module 9 Left Open
 
 **In this section:** say why plugging a learned reward into the policy gradient is not enough.
 
@@ -85,7 +91,7 @@ This module covers four things:
 3. DPO, which reaches the same objective without a reward model or a sampling loop (section 6);
 4. what still goes wrong when all of this is done correctly (section 7).
 
-## 2. The InstructGPT pipeline
+## 2. The InstructGPT Pipeline
 
 **In this section:** name the three stages of RLHF, what each one produces, and why each one is there.
 
@@ -95,11 +101,7 @@ This module covers four things:
 2. **Reward model.** For a new set of prompts, $\pi_{\text{SFT}}$ samples several responses. People rank them, and each ranking is split into pairs. A reward model $r_\phi$, usually the same kind of transformer with its output layer replaced by a single number, is trained on the pairs with the Bradley–Terry loss of Module 9.
 3. **Policy optimization.** The policy $\pi_\theta$ starts as a copy of $\pi_{\text{SFT}}$. On a third set of prompts it samples responses, $r_\phi$ scores them, and an RL algorithm (PPO, section 5) updates $\theta$ to raise the reward while a KL penalty (section 3) keeps $\pi_\theta$ close to $\pi_{\text{SFT}}$. The frozen $\pi_{\text{SFT}}$ is the reference policy: $\pi_{\text{ref}} = \pi_{\text{SFT}}$.
 
-<!-- FIGURE 10.1
-Spec: three panels left to right, joined by arrows. Panel 1 "Supervised fine-tuning": a pretrained LM box, an arrow labeled "demonstrations (prompt, written response), masked NLL (Module 7)", giving a box pi_SFT. Panel 2 "Reward model": pi_SFT samples several responses y_1..y_K for one prompt; a person icon ranks them; an arrow "pairs (x, y_w, y_l), Bradley–Terry loss (Module 9)" gives a box r_phi(x, y) -> scalar. Panel 3 "Policy optimization": a loop: prompt x -> pi_theta -> sampled y -> r_phi scores it -> policy-gradient update of theta; a frozen box pi_ref (a copy of pi_SFT, drawn with a lock or dashed outline) connected to pi_theta by a dashed line labeled "KL penalty, beta". Under each panel, a small tag: "Lab 7", "Lab 9", "Lab 10". Panel 3's PPO label in small type: "PPO in practice; REINFORCE in the lab".
-Target path: images/10-rlhf-pipeline.svg
-Alt text: The three stages of RLHF: supervised fine-tuning on demonstrations, a reward model trained on ranked pairs, and policy optimization against the reward model with a KL penalty toward the frozen reference policy.
--->
+![The three stages of RLHF. Supervised fine-tuning turns demonstrations into $\pi_{\text{SFT}}$. People rank samples from $\pi_{\text{SFT}}$, and the ranked pairs train the reward model $r_\phi$. Policy optimization then raises $r_\phi$ while a KL penalty with coefficient $\beta$ holds $\pi_\theta$ near the frozen reference $\pi_{\text{ref}} = \pi_{\text{SFT}}$. Lab 10 skips the first stage: its reference is the pretrained GPT-2 (table below).](/images/10-rlhf-pipeline.svg){#fig-rlhf-pipeline fig-alt="The three stages of RLHF: supervised fine-tuning on demonstrations, a reward model trained on ranked pairs, and policy optimization against the reward model with a KL penalty toward the frozen reference policy."}
 
 **Why three stages, and not one.**
 
@@ -126,7 +128,7 @@ The penalty now holds the policy near the wrong place. Its purpose is to keep $\
 :::
 :::
 
-::: {.callout-tip collapse="true" title="Optional: the InstructGPT objective in full"}
+::: {.callout-tip collapse="true" title="Optional: The InstructGPT Objective in Full"}
 Ouyang et al. add a third term to the objective of section 3. Besides the reward and the KL penalty, they mix in the pretraining log-likelihood, weighted by a coefficient $\gamma$:
 
 $$
@@ -136,7 +138,7 @@ $$
 They call this variant PPO-ptx. The extra term targets a specific cost they measured: after RLHF, performance on some standard NLP benchmarks dropped (an "alignment tax"), and mixing in pretraining gradients reduced the drop. The lab does not use this term.
 :::
 
-## 3. The KL-regularized objective
+## 3. The KL-Regularized Objective
 
 **In this section:** write the objective that RLHF optimizes, and explain what the KL term does and does not prevent.
 
@@ -194,7 +196,7 @@ A policy with all its probability on one response $y$ has a single term in @eq-k
 :::
 :::
 
-## 4. Optimizing it: a per-token penalty and the policy gradient
+## 4. Optimizing It: A Per-Token Penalty and the Policy Gradient
 
 **In this section:** turn @eq-rlhf-objective into per-token rewards that the policy gradient of Module 9 can use.
 
@@ -248,7 +250,7 @@ The log-ratios are $(0.5,\ 0,\ 2.0)$, so the penalties are $(-0.05,\ 0,\ -0.2)$,
 :::
 :::
 
-## 5. PPO in outline {.reference}
+## 5. PPO in Outline {.reference}
 
 **In this section:** say what PPO adds to the policy gradient, and why the lab can do without it.
 
@@ -281,7 +283,7 @@ For $\hat{A}_t = +2$: the unclipped term is $1.5 \times 2 = 3.0$ and the clipped
 :::
 :::
 
-## 6. DPO: from the optimal policy to a classification loss
+## 6. DPO: From the Optimal Policy to a Classification Loss
 
 **In this section:** derive the DPO loss from @eq-rlhf-objective, and say what it changes and what it keeps.
 
@@ -402,13 +404,34 @@ The implicit rewards (@eq-implicit-reward) are $0.1 \times (-1) = -0.1$ and $0.1
 :::
 :::
 
-::: {.callout-tip collapse="true" title="Optional: variants of DPO, and when RLHF with sampling still helps"}
+::: {.callout-tip collapse="true" title="Optional: Variants of DPO, and When RLHF With Sampling Still Helps"}
 DPO started a family of offline preference losses. **IPO** (Gheshlaghi Azar et al., 2024) replaces the log-sigmoid with a squared loss, arguing that DPO can overfit when preferences in the data are nearly deterministic, because the implicit reward gap can then grow without bound. Others drop the reference model, or learn from single responses labeled good or bad rather than pairs.
 
 Whether offline methods match online RL with a reward model is an empirical question, and published comparisons disagree across tasks and scales. One structural difference is clear. Online methods sample from the current policy, so the reward model scores the responses the policy actually produces, including its new mistakes. Offline methods only see the responses in the dataset. Iterated or "online" DPO, which samples fresh pairs from the current policy and labels them, is a response to that.
 :::
 
-## 7. Failure modes
+::: {.callout-tip collapse="true" title="Optional: Reward-Model Fitting, Policy Optimization and DPO Compared"}
+Three training steps that are easy to blur, side by side: what each one learns, and from which data.
+
+| | Reward-model fitting (Module 9) | Policy optimization with a KL penalty (sections 3 and 4) | DPO (this section) |
+|---|---|---|---|
+| What is learned | the reward model $r_\phi$: one number per response | the policy $\pi_\theta$ | the policy $\pi_\theta$, and with it the implicit reward $\hat{r}_\theta$ (@eq-implicit-reward) |
+| From which data | preference triples $(x, y_w, y_l)$, on responses written by the reference model | prompts, and the responses the policy samples during training, scored by $r_\phi$ | the same preference triples; nothing is sampled |
+| Loss or objective | the Bradley–Terry loss of Module 9 | @eq-rlhf-objective, through @eq-token-reward and @eq-pg-kl | @eq-dpo |
+| In memory during training | the reward model | the policy, the reference and $r_\phi$; PPO adds a value function | the policy and the reference |
+| Typical failure | trustworthy only on text like its training pairs, which held-out accuracy cannot show | reward hacking: the score of $r_\phi$ rises while the true quality falls, more so as $\beta$ falls (section 7) | the loss does not see drift, so drift must be measured; both log-probabilities can fall |
+| In the lab | Lab 9, Exercise 4 | Lab 10, Exercises 2 to 4 | Lab 10, Exercise 5 |
+:::
+
+::: {.self-check}
+**Check yourself.** Apply the table to new data. A support team logs, for each customer question, two draft replies written by its current model and the one the agent chose to send. (1) Under RLHF, which object is fitted on these logs, and which object is then trained, on what data? Which model should be the reference? (2) Under DPO, what is trained on the logs, and what is no longer needed? (3) Months later the tuned model writes replies unlike either draft. Which numbers can no longer be trusted, and what would you measure?
+
+::: {.callout-tip collapse="true" title="Answer"}
+(1) The reward model $r_\phi$ is fitted to the logged pairs with the Bradley–Terry loss. The policy is then trained on fresh customer questions: it samples its own replies, $r_\phi$ scores them, and the KL penalty holds it near the reference. The reference should be the model that wrote the drafts, because $r_\phi$ can be trusted only on text like its training pairs, and the penalty is there to keep the policy on such text (the check after section 2). (2) DPO trains the policy directly on the logged pairs with @eq-dpo, with the same reference frozen as $\pi_{\text{ref}}$. It needs no reward model and no sampling loop. (3) Under RLHF, the reward model's scores on the new replies are extrapolation, so a rising score is no evidence that the replies got better. Under DPO, nothing in the loss measured the drift in the first place. In both cases, measure the drift from the reference (@eq-kl-chain) and have a sample of replies judged independently, by people or a held-out judge: the lab's gold reward has no counterpart in a real system.
+:::
+:::
+
+## 7. Failure Modes
 
 **In this section:** name four ways RLHF goes wrong, the mechanism behind each, and how you would detect it.
 
@@ -416,11 +439,7 @@ Every failure below follows from one fact: the policy optimizes a learned stand-
 
 **Reward hacking (over-optimization).** Gao, Schulman and Hilton (2023) studied it with a large "gold" reward model playing the part of the humans and smaller proxy reward models trained on its preferences. As the policy drifted further from the reference, measured in KL, the proxy score kept rising, while the gold score rose, peaked and then fell. Stiennon et al. (2020) saw the same with human raters: summaries optimized hard against the reward model scored higher on it and were rated worse by people. The KL penalty is the standard defense: it sets how far along that curve training goes.
 
-<!-- FIGURE 10.2
-Spec: one plot. x-axis "drift from the reference, KL (nats per response)", from 0. y-axis "reward" (no units). Two curves from a common origin: "reward-model score (proxy)" rising monotonically and flattening slowly; "gold reward" rising with it at first, peaking, then falling while the proxy keeps rising. A vertical dashed line at the gold peak labeled "over-optimization starts here". Two shaded markers on the x-axis: "large beta stops here" (left of the peak) and "beta = 0 ends here" (far right). Schematic, no numbers on the axes, caption to say so. When Lab 10's stretch sweep has been run, redraw it from the measured (KL, proxy, gold) points and say so in the caption.
-Target path: images/10-reward-drift.svg
-Alt text: As drift from the reference grows, the reward model's score keeps rising, while the gold reward rises, peaks and then falls.
--->
+![Reward over-optimization, schematic: the axes carry no numbers, and nothing here is measured. As the policy drifts from the reference, the reward model's score keeps rising, while the gold reward rises, peaks and then falls, the shape Gao et al. (2023) report. The KL coefficient $\beta$ sets how far along the curve training goes: a large $\beta$ stops before the peak, and $\beta = 0$ runs far past it.](/images/10-reward-drift.svg){#fig-reward-drift fig-alt="Schematic plot: as drift from the reference grows, the reward model's score keeps rising, while the gold reward rises, peaks and then falls."}
 
 *Detect it:* track drift (@eq-kl-chain) next to reward; hold out a better judge (humans, or a gold reward where one exists) and look for the point where proxy and gold separate; read samples.
 
@@ -527,7 +546,7 @@ They establish large drift and, through the bigram share, a loss of variety: mod
 - DPO keeps the objective and the dependence on the data. It is offline, so its drift must be measured, and its loss sees only a difference of log-ratios.
 - Failure modes: reward hacking, mode collapse, sycophancy, and optimizing for what raters can judge rather than what is true. The last one sets up Module 11.
 
-### Equations and where you implement them
+### Equations and Where You Implement Them
 
 | Equation | Lab 10 |
 |---|---|
@@ -543,7 +562,7 @@ They establish large drift and, through the bigram share, a loss of variety: mod
 | Reward–drift trade-off (section 3) | Stretch: sweep $\beta$ |
 | Sycophancy, rater preference over truth (section 7) | not implemented in this lab; Module 11 measures calibration |
 
-## Gotchas and troubleshooting
+## Gotchas and Troubleshooting
 
 - **"The reward model is what people want."** It is a model fitted to a finite set of comparisons, made on responses from one model. Away from those responses its scores are guesses.
 - **"A higher reward-model score means a better policy."** Only near the reference. Past some drift, the reward-model score and the true quality move apart.
@@ -555,11 +574,11 @@ They establish large drift and, through the bigram share, a loss of variety: mod
 - **"DPO raises the probability of the preferred response."** It raises the gap between the two implicit rewards. Both log-probabilities can fall.
 - **"A preference-tuned model knows when it is wrong."** Nothing in a preference comparison rewards matching confidence to accuracy. Module 11 measures it.
 
-## Next steps
+## Next Steps
 
 You can now train a model to produce what a reward model, and behind it a set of raters, prefers. Section 7 argued that this optimizes what raters can judge, and that a model's confidence is not among the things they judge well. [Module 11](11-calibration.qmd) asks what it would mean for a confidence to be right: it defines calibration, measures it with reliability diagrams, the expected calibration error and the Brier score, and shows why some scoring rules reward honest probabilities and others do not.
 
-## Further reading
+## Further Reading
 
 1. Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C. L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J. and Lowe, R. (2022). [Training Language Models to Follow Instructions with Human Feedback](https://arxiv.org/abs/2203.02155). *NeurIPS*. The three-stage pipeline. Read section 3 for the method.
 2. Schulman, J., Wolski, F., Dhariwal, P., Radford, A. and Klimov, O. (2017). [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347). *arXiv:1707.06347*. The clipped objective; sections 3 and 5 are enough for this module.

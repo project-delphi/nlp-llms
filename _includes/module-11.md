@@ -2,7 +2,7 @@
 
 ::: {.module-header}
 ::: {.module-meta}
-[Day 4 · Calibration, decisions, RAG](/day-4.qmd){.module-day} [Module 11]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
+[Day 4 · Calibration, Decisions, RAG](/day-4.qmd){.module-day} [Module 11]{.module-num} [120 minutes (55 briefing, 55 lab, 10 debrief)]{.module-time} [09:15 briefing · 10:10 lab · 11:05 debrief]{.module-clock}
 :::
 
 ::: {.module-summary}
@@ -32,7 +32,7 @@ Without API keys
 :::
 
 ::: {.module-outcomes}
-## What you will build
+## What You Will Build
 
 In this module you will:
 
@@ -40,10 +40,12 @@ In this module you will:
 - Measure calibration with reliability diagrams, ECE and the Brier score
 - Explain proper scoring rules
 - Use confidence to decide when to abstain
+
+New terms, in the [glossary](/glossary.qmd): [calibration](/glossary.qmd#calibration), [reliability diagram](/glossary.qmd#reliability-diagram), [expected calibration error (ECE)](/glossary.qmd#ece), [proper scoring rule](/glossary.qmd#proper-scoring-rule), [temperature scaling](/glossary.qmd#temperature-scaling), [stated confidence](/glossary.qmd#stated-confidence), [selective prediction (abstention)](/glossary.qmd#selective-prediction).
 :::
 
 ::: {.prerequisites}
-## Before you start
+## Before You Start
 
 - [Module 10 · RLHF](/modules/10-rlhf.qmd) and its lab, and the modules before it: this module measures its results against theirs.
 - A Google account. Colab's default CPU runtime is enough.
