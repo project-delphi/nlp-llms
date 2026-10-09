@@ -53,16 +53,17 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "workshop_lectures_v1.jsonl.gz"
 
 # The commit the v1 pages are read from: the October 8 review's edits (title case, figure
-# captions, spelling, comparison tables; branch improve/review-title-case-learning-aids,
-# 2026-10-08). Module 13 itself is not in the corpus (briefs/13-rag.md). Earlier builds
-# read 31d5d92 (the five-day revision, PR #16), ec97bea (before references.qmd was
-# finished) and 3ba37bc (before the five-day revision).
+# captions, spelling, comparison tables) and the notation-clash flags of October 9 (branch
+# improve/review-title-case-learning-aids). Module 13 itself is not in the corpus
+# (briefs/13-rag.md). Earlier builds read 05da486 (the October 8 edits without the flags),
+# 31d5d92 (the five-day revision, PR #16), ec97bea (before references.qmd was finished)
+# and 3ba37bc (before the five-day revision).
 # STILL PROVISIONAL: lecture 12's quotations of TypeSafe's documentation await sign-off,
 # and lectures may still change after their Colab T4 runs and spoken dry runs. If a page
 # changes, rebuild from the new commit and update _variables.yml (sha256, bytes,
 # source_commit, characters, status) before anyone writes a question against the snapshot
 # (data/README.md, "Status: provisional").
-SOURCE_COMMIT = "05da48646b2c6ffac4752b1c8d40635c4489710d"
+SOURCE_COMMIT = "2182ed1bf02c2a5a9647f0d6a603cf549b036fbc"
 # The pages moved from lectures/ to modules/ on 2026-10-07.
 LECTURE = re.compile(r"^(?:lectures|modules)/(0[1-9]|1[0-2])-[a-z0-9-]+\.qmd$")
 REFERENCES = "references.qmd"
