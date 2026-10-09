@@ -187,7 +187,13 @@ class Harness(unittest.TestCase):
         self.cell("@workshop.solution(1)\ndef double(x):\n    return 2 * x")
         self.assertNotIn("Hint", self.captured("workshop.checkpoint(1)\nassert double(2) == 4"))
 
+    def without_offline_flags(self):
+        """CI's notebook job sets the offline flags for every test, and the path rule reads them."""
+        saved = {f: os.environ.pop(f) for f in harness.OFFLINE_FLAGS if f in os.environ}
+        self.addCleanup(os.environ.update, saved)
+
     def test_the_summary_says_what_ran(self):
+        self.without_offline_flags()
         self.cell(HINTED)
         self.assertIn("real open models", self.captured("workshop.summary()"))
         self.assertIn("a toy model", self.captured("workshop.summary()"))
@@ -199,6 +205,17 @@ class Harness(unittest.TestCase):
         printed = self.captured("workshop.summary()")
         self.assertIn("offline stand-ins", printed)
         self.assertIn("do not measure a model", printed)
+
+    def test_a_cpu_only_note_is_left_out_on_a_gpu(self):
+        self.without_offline_flags()
+        source = harness.harness_source(
+            "toy", "0" * 16, {1: ("double",)}, fallback_note="a shorter CPU run", cpu_only=True
+        )
+        self.cell(source)
+        self.cell("DEVICE = 'cpu'")
+        self.assertIn("a shorter CPU run", self.captured("workshop.summary()"))
+        self.cell("DEVICE = 'cuda'")
+        self.assertNotIn("a shorter CPU run", self.captured("workshop.summary()"))
 
     def test_rerunning_the_harness_starts_a_new_run(self):
         self.cell(SOURCE)

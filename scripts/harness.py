@@ -63,6 +63,7 @@ _EXERCISES = __EXERCISES__
 _HINTS = __HINTS__  # exercises with a folded Hint cell above their TODO cell
 _PATHS = __PATHS__
 _FALLBACK_NOTE = __FALLBACK_NOTE__
+_FALLBACK_CPU_ONLY = __CPU_ONLY__  # the note describes the run a CPU runtime switches to
 _RECORDED_SETTINGS = __SETTINGS__
 _OFFLINE_FLAGS = __OFFLINE__
 _FALLBACK_MARKERS = __MARKERS__
@@ -272,7 +273,9 @@ class _Workshop:
         # _PATHS comes from readiness.paths in _variables.yml; the offline entry says that
         # such numbers check the code, not a model.
         print(f"  What ran: {_PATHS[path]}.")
-        if path == "open" and _FALLBACK_NOTE:
+        # The labs choose their CPU path from DEVICE; on a GPU a CPU-only note does not apply.
+        on_gpu = str(_get_ipython().user_ns.get("DEVICE", "")).startswith("cuda")
+        if path == "open" and _FALLBACK_NOTE and not (_FALLBACK_CPU_ONLY and on_gpu):
             print(f"  Read the numbers with this in mind: {_FALLBACK_NOTE}.")
         lines = {
             "your code": "Checkpoints passed on your code",
@@ -454,6 +457,7 @@ def harness_source(
     hints: list | None = None,
     paths: dict | None = None,
     fallback_note: str | None = None,
+    cpu_only: bool = False,
 ) -> str:
     return (
         HARNESS.replace("__NOTEBOOK__", slug)
@@ -462,6 +466,7 @@ def harness_source(
         .replace("__HINTS__", repr(set(hints)) if hints else "set()")
         .replace("__PATHS__", repr(paths or {p: p for p in ("offline", "open", "keyed")}))
         .replace("__FALLBACK_NOTE__", repr(fallback_note))
+        .replace("__CPU_ONLY__", repr(bool(cpu_only)))
         .replace("__SETTINGS__", repr(RECORDED_SETTINGS))
         .replace("__OFFLINE__", repr(OFFLINE_FLAGS))
         .replace("__MARKERS__", repr(FALLBACK_MARKERS))

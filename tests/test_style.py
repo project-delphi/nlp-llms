@@ -257,6 +257,8 @@ class TitleCase(unittest.TestCase):
             ("The reward–drift trade-off", "The Reward–Drift Trade-Off"),
             ("Lab 8's provider wrapper, restated", "Lab 8's Provider Wrapper, Restated"),
             ("Recall@k and reciprocal rank", "Recall@k and Reciprocal Rank"),
+            ("Calling `generate`: the basics", "Calling `generate`: The Basics"),
+            ("Why $p$: the intuition", "Why $p$: The Intuition"),
             (
                 "Classification: arXiv Topics v1, test split",
                 "Classification: arXiv Topics v1, Test Split",

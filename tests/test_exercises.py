@@ -92,6 +92,17 @@ class Generated(unittest.TestCase):
                 self.assertEqual(text(cells[1]), expected)
                 self.assertIn(f'_CONTENT_SHA = "{run_records.sha_of_cells(cells)}"', expected)
 
+    def test_the_open_path_says_what_each_lab_runs_without_keys(self):
+        # Only an open-model lab runs Hub models in place of others on the open path.
+        said = {}
+        for path in NOTEBOOKS:
+            for line in text(load(path)[1]).splitlines():
+                if line.startswith("_PATHS = "):
+                    said[path.stem] = ast.literal_eval(line.removeprefix("_PATHS = "))["open"]
+        self.assertIn("own code and models", said["01-text-as-data"])
+        self.assertIn("Hugging Face Hub", said["08-llm-apis"])
+        self.assertIn("toy model", said["12-rlcd-jev"])
+
 
 class Exercises(unittest.TestCase):
     def test_each_stub_is_followed_by_its_marked_folded_solution(self):

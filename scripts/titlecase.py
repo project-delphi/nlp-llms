@@ -120,7 +120,9 @@ def title_case(text: str) -> str:
         if not _LETTER.search(bare):
             out.append(piece)
             if "\x00" in piece:
-                start = False  # code or math on its own counts as a word
+                # Code or math on its own counts as a word; a colon after it still opens a
+                # phrase: "Calling `generate`: The Basics".
+                start = bool(_BREAK.search(bare))
             elif _BREAK.search(bare):
                 start = True  # "·", "—"
             # A number or a note keeps the position: "1. The Markov Assumption".

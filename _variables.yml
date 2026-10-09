@@ -407,6 +407,12 @@ readiness:
     none: "One path: the lab always runs its real models"
     open-model: "A real open model runs in place of the commercial one; its numbers are real, but they describe the smaller model"
     toy: "A toy model trained in the lab shows the mechanism; its numbers illustrate, they do not measure the real system"
+  # What a notebook's last cell says ran on the open path (no keys, nothing offline), by
+  # its fallback kind: only an open-model lab runs models from the Hub on that path.
+  open_ran:
+    none: "The notebook's own code and models, no API keys"
+    open-model: "Real open models from the Hugging Face Hub, no API keys"
+    toy: "A toy model trained in the lab in place of the real system, no API keys"
   # Work that blocks teaching a module as designed. Each check is mechanical where it
   # can be; `manual` items close only when someone sets done: true with evidence.
   items:
@@ -625,7 +631,7 @@ modules:
       estimate_minutes: 7
       accounts: [Google]
       cost: free
-      fallback: {kind: open-model, note: "On a CPU runtime, BERT-mini fine-tunes on 800 training texts: a real, smaller model. There is no path without the Hugging Face Hub"}
+      fallback: {kind: open-model, note: "On a CPU runtime, BERT-mini fine-tunes on 800 training texts: a real, smaller model. There is no path without the Hugging Face Hub", cpu_only: true}
       gaps: "The Lab 6 logits file that Lab 11 reads has not been built"
   m07:
     n: 7
@@ -647,7 +653,7 @@ modules:
       estimate_minutes: 7
       accounts: [Google]
       cost: free
-      fallback: {kind: open-model, note: "On a CPU runtime, FAST runs a shorter fine-tune of the same SmolLM2-135M. There is no path without the Hugging Face Hub"}
+      fallback: {kind: open-model, note: "On a CPU runtime, FAST runs a shorter fine-tune of the same SmolLM2-135M. There is no path without the Hugging Face Hub", cpu_only: true}
   m08:
     n: 8
     slug: 08-llm-apis
@@ -713,7 +719,7 @@ modules:
       estimate_minutes: 7
       accounts: [Google]
       cost: free
-      fallback: {kind: open-model, note: "On a CPU runtime, FAST runs short smoke trainings of the same GPT-2; the trained-policy checkpoints are skipped, so reward hacking is not shown"}
+      fallback: {kind: open-model, note: "On a CPU runtime, FAST runs short smoke trainings of the same GPT-2; the trained-policy checkpoints are skipped, so reward hacking is not shown", cpu_only: true}
       gaps: "The trained-policy checkpoints, including the reward-hacking signature, need a GPU; the seed protocol (seeds 0 to 4 on a T4) has not run, so their thresholds are provisional. On the build Mac the CPU FAST path ran, plus one exploratory full-settings run on its GPU (MPS) from a scratch copy (2026-10-06)"
   m11:
     n: 11

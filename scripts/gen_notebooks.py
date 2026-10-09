@@ -110,14 +110,18 @@ def generated_code_cell(cell_id: str, source: str, form: bool = False):
 def harness_cell_source(v: dict, e: dict, body: list) -> str:
     """The harness cell for a notebook whose own cells are `body`."""
     fallback = e.get("readiness", {}).get("fallback", {})
+    kind = fallback.get("kind", "none")
+    # What each path can show, and what runs without keys: one source, _variables.yml. The
+    # open path says what this lab runs without keys, which is a Hub model only for some.
+    paths = {**v["readiness"]["paths"], "open": v["readiness"]["open_ran"][kind]}
     return harness.harness_source(
         e["slug"],
         run_records.sha_of_cells(body),
         harness.exercises_of(body),
         hints=harness.hints_of(body),
-        # What each path can show, and what runs without keys: one source, _variables.yml.
-        paths={k: text[0].lower() + text[1:] for k, text in v["readiness"]["paths"].items()},
-        fallback_note=fallback.get("note") if fallback.get("kind", "none") != "none" else None,
+        paths={k: text[0].lower() + text[1:] for k, text in paths.items()},
+        fallback_note=fallback.get("note") if kind != "none" else None,
+        cpu_only=fallback.get("cpu_only", False),
     )
 
 
