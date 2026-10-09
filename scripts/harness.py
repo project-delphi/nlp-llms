@@ -273,9 +273,11 @@ class _Workshop:
         # _PATHS comes from readiness.paths in _variables.yml; the offline entry says that
         # such numbers check the code, not a model.
         print(f"  What ran: {_PATHS[path]}.")
-        # The labs choose their CPU path from DEVICE; on a GPU a CPU-only note does not apply.
-        on_gpu = str(_get_ipython().user_ns.get("DEVICE", "")).startswith("cuda")
-        if path == "open" and _FALLBACK_NOTE and not (_FALLBACK_CPU_ONLY and on_gpu):
+        # The labs choose their shorter CPU run from DEVICE, and Labs 7 and 10 let a participant
+        # force the full run with FAST = False: a CPU-only note describes only the shorter run.
+        ns = _get_ipython().user_ns
+        short = ns["FAST"] if "FAST" in ns else not str(ns.get("DEVICE", "")).startswith("cuda")
+        if path == "open" and _FALLBACK_NOTE and (short or not _FALLBACK_CPU_ONLY):
             print(f"  Read the numbers with this in mind: {_FALLBACK_NOTE}.")
         lines = {
             "your code": "Checkpoints passed on your code",

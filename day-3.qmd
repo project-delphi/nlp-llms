@@ -31,7 +31,7 @@ Answer alone on paper for 6 minutes, notes closed; compare with a neighbor for 4
 In pairs for 5 minutes, then the room for 10. The facilitator adds today's rows to the board and keeps them for Day 5. The numbers are the room's own, from its runs.
 
 1. **Fixed and left open.** For Modules 8, 9 and 10, which limitation of the step before did each remove, and which did it leave for the next? Start from Module 7: a small model can be tuned to follow instructions, but the strongest models are reached only through an API.
-2. **The running table.** Fill in the room's results. Write the path beside each number, as the notebook's last cell prints it (real open models, commercial APIs, or offline stand-ins, which measure no model); the [results worksheet](worksheet.qmd) has a table per comparison group.
+2. **The running table.** Fill in the room's results. Write the path beside each number, as the notebook's last cell prints it (the lab's own code and models, real open models, commercial APIs, or offline stand-ins, which measure no model); the [results worksheet](worksheet.qmd) has a table per comparison group.
 
    | Lab | Rows | Metric |
    |---|---|---|

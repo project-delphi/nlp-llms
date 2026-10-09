@@ -34,6 +34,11 @@ SOURCES = [
     "notebooks/*.ipynb",
     "scripts/gen_*.py",
     "scripts/harness.py",
+    # The glossary, the worksheet and the reading guides on every module page.
+    "_glossary.yml",
+    "_worksheet.yml",
+    "scripts/learner_pages.py",
+    "scripts/live_plan.py",
 ]
 
 # British spelling -> what to write instead. Stems cover the -ise/-isation families; the

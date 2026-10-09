@@ -206,7 +206,7 @@ class Harness(unittest.TestCase):
         self.assertIn("offline stand-ins", printed)
         self.assertIn("do not measure a model", printed)
 
-    def test_a_cpu_only_note_is_left_out_on_a_gpu(self):
+    def test_a_cpu_only_note_shows_only_for_the_shorter_run(self):
         self.without_offline_flags()
         source = harness.harness_source(
             "toy", "0" * 16, {1: ("double",)}, fallback_note="a shorter CPU run", cpu_only=True
@@ -216,6 +216,10 @@ class Harness(unittest.TestCase):
         self.assertIn("a shorter CPU run", self.captured("workshop.summary()"))
         self.cell("DEVICE = 'cuda'")
         self.assertNotIn("a shorter CPU run", self.captured("workshop.summary()"))
+        self.cell("DEVICE = 'cpu'; FAST = False")  # the full run, forced on a CPU
+        self.assertNotIn("a shorter CPU run", self.captured("workshop.summary()"))
+        self.cell("FAST = True")
+        self.assertIn("a shorter CPU run", self.captured("workshop.summary()"))
 
     def test_rerunning_the_harness_starts_a_new_run(self):
         self.cell(SOURCE)
